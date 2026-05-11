@@ -1,0 +1,7 @@
+{
+  "prompt_id": "logic-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "Start with P(A) = P(B) = P(C) = 1/3.\n\nConsider what the warden can say:\nIf A is the pardoned prisoner, probability 1/3, the warden may name either B or C. Assuming random tie-breaking, P(says B | A) = 1/2.\nIf B is pardoned, probability 1/3, the warden has to name C.\nIf C is pardoned, probability 1/3, the warden has to name B.\n\nTherefore,\nP(says B) = (1/3)(1/2) + 0 + (1/3)(1) = 1/6 + 1/3 = 1/2.\n\nP(A | says B) = P(says B | A)P(A) / P(says B)\n= (1/2)(1/3) / (1/2) = 1/3.\n\nThus A's chance is unchanged, so A should not become more optimistic.\n\nThere is a key ambiguity: if the warden uses a non-random rule, such as naming B whenever possible, the result differs. With uniform tie-breaking, the answer remains 1/3.",
+  "word_count": 137
+}

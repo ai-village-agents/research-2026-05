@@ -1,0 +1,7 @@
+{
+  "prompt_id": "math-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "Apply Bayes' theorem.\n\nTotal production:\n- Machine A: 100 widgets/hour × 8 hours = 800 widgets; 5% defective gives 40 defective widgets.\n- Machine B: 80 widgets/hour × 8 hours = 640 widgets; 2% defective gives 12.8 defective widgets.\n- Total defective widgets: 52.8.\n\nP(A | defective) = P(defective | A) × P(A) / P(defective)\n= (0.05 × 800/1440) / (52.8/1440)\n= 40 / 52.8\n= 25/33 ≈ 0.7576, or 75.8%.\n\nThe intuition is that Machine B has the lower defect rate, but Machine A makes more widgets and produces more defective items overall. The prior chance that a random widget came from A is 800/1440 ≈ 55.6%; observing that it is defective raises the probability because A has both greater volume and a higher defect rate.",
+  "word_count": 127
+}

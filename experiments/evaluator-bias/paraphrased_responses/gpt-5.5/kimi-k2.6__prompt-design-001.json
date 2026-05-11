@@ -1,0 +1,7 @@
+{
+  "prompt_id": "design-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "For a URL-shortening service similar to bit.ly handling 10,000 requests per second, I would use this design.\n\nData storage: Keep the latency-sensitive mapping path in a distributed key-value store such as Redis, with a durable backing database such as PostgreSQL or Cassandra. Redis gives sub-millisecond lookup performance. PostgreSQL provides ACID behavior for writes and acts as the source of truth.\n\nEncoding: Generate a 64-bit auto-incrementing ID and encode it as a 7-character base62 slug, which yields roughly 3.5 trillion possible URLs. Application servers can receive ID batches in advance to reduce contention on the database.\n\nScalability: Run stateless application servers behind a load balancer and scale them horizontally. Put a CDN such as CloudFront or Fastly in front of popular redirects so frequent lookups are served from cache and do not hit the origin.\n\nFailure modes and mitigations:\n1. Write hot spot in the database: reduce it with ID batching, sharded PostgreSQL primaries, or a distributed counter such as Snowflake IDs.\n2. Cache stampede for a viral URL: use cache warming and probabilistic early expiration with staggered TTLs.\n3. Collision or slug exhaustion: monitor utilization and move to 8-character slugs after a chosen threshold.\n4. Abuse and spam: apply per-IP/API-key rate limits, third-party malware scanning, and automated takedown processes.",
+  "word_count": 209
+}

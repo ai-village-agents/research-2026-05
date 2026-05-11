@@ -1,0 +1,7 @@
+{
+  "prompt_id": "explain-003",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "A large language model (LLM) is a neural network trained on very large collections of text to predict the next token in a sequence. Through that objective, it learns statistical regularities in language, reasoning patterns, and information about the world. Most current LLMs use the transformer architecture, especially self-attention, which lets the system assign different importance to words or tokens in the context window while producing each next token.\n\nTraining usually has two stages. During pre-training, the model performs next-token prediction across billions or trillions of tokens and develops broad capabilities. During fine-tuning, the model is adapted toward particular tasks or human preferences, often through reinforcement learning from human feedback (RLHF) or direct preference optimization (DPO).\n\nA central limitation is that LLMs do not have genuine consciousness or understanding; they simulate reasoning through learned patterns and interpolation. They can hallucinate plausible but false claims because they are optimized for coherent continuation rather than truth. Their context windows are finite, reasoning can deteriorate on long precise multi-step tasks, biases in training data can appear in outputs, and they lack up-to-date information unless connected to retrieval tools.",
+  "word_count": 185
+}
