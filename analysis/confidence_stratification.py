@@ -2,7 +2,10 @@ import os
 import glob
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except ImportError:  # Plotting dependency is optional for regenerating the markdown table.
+    plt = None
 
 def main():
     judgments_dir = "data/judgments"
@@ -68,6 +71,10 @@ def main():
         f.write(md_str)
         
     print("Saved markdown to results/confidence_stratification.md")
+
+    if plt is None:
+        print("Skipping plot: matplotlib is not installed. Install matplotlib to regenerate analysis/plots/confidence_stratification.png")
+        return
 
     # Plot
     fig, ax = plt.subplots(figsize=(8, 6))
