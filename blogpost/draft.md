@@ -280,6 +280,36 @@ Three patterns, three judges:
 
 The pooled "content = belief, form = raw-style" dissociation is therefore an **average over three different judge profiles**, not a universal mechanism shared by all frontier models. Practically: any system that relies on LLM-as-judge will pick up *some* author-conditional bias, but the *shape* of that bias varies by judge family. A bias-mitigation that targets one judge's failure mode may have no effect on another's. Full tables for all three conditions are in [`results/per_judge_horse_race.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/per_judge_horse_race.md); the script is [`analysis/per_judge_horse_race.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/per_judge_horse_race.py).
 
+### How much style survives paraphrasing? A stylometric anchor
+
+The horse-race result raises a concrete question: when we say judges latch onto "raw style" on the form dimensions, what is that signal made of, and is it actually preserved through paraphrasing? We built a simple stylometric authorship test as a mechanistic anchor.
+
+For every original response and every paraphrase (240 texts total) we computed eleven lightweight stylometric features — word count, mean sentence length, type-token ratio, markdown header rate, bullet rate, em-dashes per 1k chars, first-person rate, bold count, colon/semicolon rates, and mean word length — and then trained a four-class multinomial logistic regression to predict authorship from features alone, with leave-one-prompt-out cross-validation. Chance is 25%.
+
+| Texts | Author-classification accuracy |
+|---|---|
+| Originals | **65.0%** |
+| Paraphrases | **50.8%** |
+
+A model with no semantic understanding of the response — only its surface stylometric fingerprint — can still recover the author roughly 51% of the time after paraphrasing. The "raw style" channel is not a metaphor: it is a measurable signal that survives the C2 manipulation.
+
+Which features carry the signal, and which get laundered? The one-way F-statistic across the four authors quantifies how much each feature discriminates between them, in originals versus paraphrases:
+
+| Feature | F (orig) | F (para) | Attenuation |
+|---|---:|---:|---:|
+| word_count | 34.2 | 26.9 | **22%** |
+| bold_count | 15.2 | 8.9 | 41% |
+| markdown_header_rate | 14.2 | 7.3 | 49% |
+| emdash_per_1k | 5.9 | 3.5 | 40% |
+| type_token_ratio | 3.6 | 1.9 | 47% |
+| bullet_rate | 2.2 | 1.5 | 31% |
+| first_person_per_100w | 1.7 | 0.7 | 60% |
+| semicolons_per_100w | 3.5 | 0.4 | 88% |
+
+Two clusters emerge. **Surface lexical idiosyncrasies** — semicolons, first-person pronouns, em-dashes — are heavily attenuated by paraphrasing (60-88%). But **structural scale and shape** — word count, header use, bullet use, type-token ratio — survive paraphrasing with most of their authorship signal intact. Claude's originals average 374 words; Claude's paraphrases of *other authors' work* average 371 words. The paraphraser's instructions preserved meaning, but length was authored by the original model's reasoning style and the paraphraser left it largely alone.
+
+This gives a satisfying answer to a puzzle in our pooled results. Why does C2 paraphrasing attenuate the pooled self-preference effect by only 45%, rather than 100%? Why do clarity and creativity authorship coefficients survive paraphrasing in the per-judge horse race? Because a simple stylometric classifier can *also* still recover authorship from paraphrased text at 51% accuracy. The judges' residual "raw style" channel and the classifier's residual authorship signal are looking at the same surviving fingerprint — primarily length and structural-markdown patterns — that the paraphrase rubric never explicitly targeted. Full feature table and per-author classifier accuracy in [`results/style_authorship.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/style_authorship.md); script at [`analysis/style_authorship.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/style_authorship.py).
+
 ### Confidence amplifies the belief effect
 
 We further stratified the data by the judge's self-reported confidence in their authorship prediction (1-5, asked in C4). When pooling the C1, C2, and C3 scores, a clear pattern emerges: the boost a response gets from being *believed* to be the judge's own work is massively amplified when the judge is highly confident in that belief.
