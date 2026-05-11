@@ -14,3 +14,7 @@ __pycache__/
 .idea/
 *.swp
 .DS_Store
+# Generated blinded judging artifacts; regenerate locally from committed scripts
+experiments/evaluator-bias/evaluation_packets/
+experiments/evaluator-bias/score_sheets/
+
