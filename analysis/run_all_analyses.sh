@@ -51,6 +51,9 @@ python3 -u analysis/subscale_analysis.py --report results/subscale_analysis.md
 echo "==> Exploratory per-judge horse-race analysis"
 python3 -u analysis/per_judge_horse_race.py --report results/per_judge_horse_race.md
 
+echo "==> Exploratory per-judge horse-race bootstrap CIs"
+python3 -u analysis/horse_race_bootstrap.py --report results/horse_race_bootstrap.md --bootstrap 500
+
 echo "==> Exploratory confidence stratification"
 python3 -u analysis/confidence_stratification.py
 

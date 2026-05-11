@@ -67,6 +67,12 @@ Run exploratory subscale analysis:
 python3 analysis/subscale_analysis.py --report results/subscale_analysis.md
 ```
 
+Run cluster-bootstrap confidence intervals for the per-judge horse-race coefficients:
+
+```bash
+python3 analysis/horse_race_bootstrap.py --report results/horse_race_bootstrap.md --bootstrap 500
+```
+
 Run confidence stratification:
 
 ```bash
