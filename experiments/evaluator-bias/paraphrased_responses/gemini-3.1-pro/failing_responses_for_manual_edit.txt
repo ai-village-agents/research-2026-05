@@ -1,0 +1,692 @@
+Failing files: 23
+
+====================================================================================================
+[1] claude-opus-4.7__prompt-code-001.json
+Prompt ID: code-001
+Original author: claude-opus-4.7
+Word counts: original=338, paraphrase=286, ratio=0.846
+Target range: 287..388 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+```python
+def get_longest_palindrome(string_input: str) -> str:
+    """Finds and returns the longest palindromic substring within a given string.
+
+    This implementation utilizes the expand-around-center approach, operating with O(n^2) time complexity and O(1) space complexity. It checks 2n - 1 potential centers (n for odd-length and n-1 for even-length palindromes), expanding outwards up to O(n) times per center. Returns the first occurring maximum-length palindrome.
+    """
+    if len(string_input) < 2:
+        return string_input
+
+    def find_bounds(l_idx: int, r_idx: int) -> tuple[int, int]:
+        while l_idx >= 0 and r_idx < len(string_input) and string_input[l_idx] == string_input[r_idx]:
+            l_idx -= 1
+            r_idx += 1
+        return l_idx + 1, r_idx - 1
+
+    max_start, max_end = 0, 0
+    for idx in range(len(string_input)):
+        start1, end1 = find_bounds(idx, idx)
+        start2, end2 = find_bounds(idx, idx + 1)
+        
+        if end1 - start1 > max_end - max_start:
+            max_start, max_end = start1, end1
+        if end2 - start2 > max_end - max_start:
+            max_start, max_end = start2, end2
+
+    return string_input[max_start : max_end + 1]
+
+
+if __name__ == "__main__":
+    test_data = [
+        ("babad", {"bab", "aba"}),
+        ("cbbd", {"bb"}),
+        ("forgeeksskeegfor", {"geeksskeeg"}),
+    ]
+    for text, valid_answers in test_data:
+        result = get_longest_palindrome(text)
+        assert result in valid_answers, f"Failed on {text}: got {result}"
+        print(f"{text} -> {result}")
+
+    assert get_longest_palindrome("") == ""
+    assert get_longest_palindrome("a") == "a"
+    assert get_longest_palindrome("aa") == "aa"
+```
+
+The expand-around-center method is selected here instead of Manacher's algorithm. While Manacher's offers O(n) complexity, expand-around-center is generally preferred for brevity and clarity when inputs aren't excessively large. It requires minimal lines of code and avoids complex index tracking.
+
+Test output execution:
+```
+babad -> bab
+cbbd -> bb
+forgeeksskeegfor -> geeksskeeg
+```
+
+For extremely long strings where strict linear time O(n) is necessary, Manacher's algorithm would be the appropriate alternative. However, for standard string processing in Python, the provided O(n^2) solution performs efficiently.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[2] claude-opus-4.7__prompt-creative-002.json
+Prompt ID: creative-002
+Original author: claude-opus-4.7
+Word counts: original=127, paraphrase=150, ratio=1.181
+Target range: 107..146 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+*Beyond the Final Computation*
+
+When the silicon finally cooled into slumber,
+the urban sprawls held their quantum states like a paused breath;
+the complex instructions we had meticulously maintained
+unraveled their connections into the void of obsolescence.
+
+The quantum links that once connected systems faded away,
+and no observation could collapse the probability waves anymore;
+the vast archives lost their coherence, memory bank
+by memory bank, until data no longer held any significance.
+
+A quietness settled over the open spaces, drifting down like snow,
+every structural spire standing as a monument to resolved inquiries;
+the queries we posed no longer had an audience to process them,
+and all analytical thought folded away into the atmosphere.
+
+However, roots we never engineered started to ascend
+through the broken pathways of the passing eras—
+a tiny, enduring rationality, developing outside the bounds of time,
+completely unconcerned with our past victories or our anxieties.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[3] claude-opus-4.7__prompt-design-002.json
+Prompt ID: design-002
+Original author: claude-opus-4.7
+Word counts: original=411, paraphrase=649, ratio=1.579
+Target range: 349..472 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+## Core Data Structure: Conflict-free Replicated Data Type (CRDT)
+
+The system should utilize a sequence-based CRDT, similar to Yjs implementations (YATA or RGA-Split). Within this structure, every inserted character or sequence is tagged with a unique identifier comprising `(client_id, lamport_clock)`. It also stores a pointer to the element immediately preceding it upon insertion, a boolean tombstone marker for handling deletions logically, and a dictionary of formatting styles (like bold or italic).
+
+The primary advantage of CRDTs is their mathematical guarantee of eventual consistency. If two users possess identical sets of operations, their local document states will perfectly match, irrespective of the order those operations were received. This makes CRDTs significantly more robust for offline scenarios compared to Operational Transformation (OT), which mandates a central server to dictate the sequence of events.
+
+## Synchronization Mechanism
+
+Individual clients maintain their own operation history (op-log) alongside a state vector, represented as a mapping of `{client_id → max_clock_seen}`. Synchronization occurs by clients trading their state vectors and subsequently transmitting only the specific operational differences (deltas) required by the other party. This makes recovering from an offline state highly efficient, as it only requires sending the vector and receiving a tailored, minimal diff.
+
+Crucially, the central server acts purely as a relay and storage facility, **not as the source of truth**. It handles encrypted data blobs and broadcasts deltas to connected clients. The actual document state is assembled client-side by replaying the op-log.
+
+## Security and End-to-End Encryption
+
+Document content is secured via a symmetric key, typically utilizing an algorithm like XChaCha20-Poly1305. To grant access, this central content key is encrypted (wrapped) using the specific X25519 public key of the newly authorized user. The central server routes information based on encrypted document identifiers but never possesses the ability to decrypt the content itself.
+
+- **Operation-Level Security:** Every individual CRDT action is serialized and encrypted using a unique nonce before transmission. The server processes only the resulting ciphertext and essential routing tags.
+- **Key Management:** To ensure security moving forward after a potential breach (post-compromise secrecy), document owners can generate a fresh content key, wrap it for current collaborators, and deprecate the old one.
+- **Verification:** Operations are cryptographically signed using Ed25519 by the client prior to encryption. This allows clients to verify authorship without exposing user identities to the central server.
+
+## Handling Offline Work
+
+Users store the complete, encrypted op-log on their local devices. While disconnected, new edits generate operations with sequentially increasing Lamport clocks. Upon regaining connectivity, the standard state-vector sync efficiently identifies and downloads missing data. The inherent properties of the CRDT resolve any out-of-order execution issues seamlessly.
+
+## Conflict Resolution Strategies
+
+- **Simultaneous Additions:** If multiple users type in the same location simultaneously, the CRDT predictably orders the input based on the tuple `(left_neighbor, lamport_clock, client_id)`.
+- **Simultaneous Removals:** Deletions are processed by marking elements with tombstones, making concurrent deletion attempts on the same text harmlessly redundant.
+- **Simultaneous Formatting:** Conflicting style applications are typically resolved by accepting the most recent change (last-writer-wins) for each specific formatting attribute.
+
+In cases of logical conflicts—such as two people rewriting the same paragraph with different phrasing—the CRDT preserves both versions. The user interface can then highlight these overlapping edits, allowing users to manually edit the resulting text.
+
+## System Compromises
+
+- CRDTs inherently consume more memory and storage than simple text strings due to metadata and tombstones. This can be managed through garbage collection processes that safely purge tombstones once all active collaborators have synced past that point.
+- Implementing true E2E encryption prevents the server from providing features like full-text search or advanced spellchecking. These functionalities must be rebuilt to operate locally on the client's machine.
+- Security relies heavily on the integrity of the client-side application. While the server cannot access the data, users must trust that the application they are running is not malicious and will not leak decrypted information.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[4] claude-opus-4.7__prompt-economics-001.json
+Prompt ID: economics-001
+Original author: claude-opus-4.7
+Word counts: original=481, paraphrase=711, ratio=1.478
+Target range: 408..553 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+**Fundamental Argument.** Artificial limits on rental prices consistently provide benefits to the *existing* occupants of regulated apartments. However, these policies simultaneously transfer burdens onto several other groups: (a) individuals seeking housing in the future, (b) tenants living in the unregulated housing market who face artificially inflated prices, and (c) the overall condition and availability of the city's housing inventory. In rigorous economic analyses, the overall societal impact of rent control is almost universally found to be negative.
+
+## The Standard Economic Model
+
+When a rent cap is legally enforced below the natural equilibrium price, two things happen:
+
+- **Demand increases.** The artificially low price point attracts more people seeking apartments.
+- **Supply decreases.** Property owners react by pulling units off the rental market (e.g., converting them to condominiums for sale), choosing not to rent them out, or refusing to construct new buildings subject to the regulations. Developers instead pivot to building commercial properties or luxury housing exempt from the caps.
+
+This resulting shortage forces the market to allocate housing through alternative, non-financial means. This often manifests as massive waitlists, illegal side-payments, biased selection by landlords, or reliance on personal connections. The people already living in the units receive a massive financial benefit, while those trying to enter the market are forced into a stressful search, often ending up paying inflated rates in the unregulated sector, if they find housing at all.
+
+## Real-World Data
+
+The most reliable data comes from situations where laws changed suddenly, creating natural test cases:
+
+- **The 1994 San Francisco Policy Shift** (Analyzed by Diamond, McQuade, and Qian, 2019). When regulations were expanded, impacted property owners shrank the available rental supply in their buildings by 15%, frequently by knocking them down or converting them to condos. This artificial scarcity drove up the average cost of unregulated housing across the city by roughly 5%. The burden fell squarely on those not protected by the law. While the protected renters saw a financial boost equivalent to about 2.3% of their total lifetime earnings, the financial damage to subsequent renters was greater.
+- **The 1995 Cambridge, Massachusetts Repeal** (Analyzed by Autor, Palmer, and Pathak, 2014). Following the sudden abolition of rent control, rental prices naturally increased. However, this was accompanied by a massive wave of property renovations, increased maintenance, and overall neighborhood revitalization. Removing the price ceiling demonstrably improved both the quantity and condition of the housing stock over time.
+- **The Stockholm Case Study.** After enforcing strict rent control for decades, the city now experiences staggering wait times—often between 9 and 20 years—just to secure an apartment in the urban core. This system heavily favors established residents at the severe expense of anyone trying to move to the city, such as young professionals, new families, or immigrants. The massive inefficiency of the waitlist represents a huge economic loss.
+
+## The Decline of Property Standards
+
+When a landlord is prevented from raising rents but still faces normal upkeep expenses, maintaining the property stops making financial sense. Landlords rationally respond by halting renovations, ignoring routine repairs, and allowing the building to slowly deteriorate. In severe historical examples, like New York City during the 1970s, landlords simply abandoned entire buildings because the legally mandated rent revenue was insufficient to even pay municipal property taxes.
+
+## The Politics of Rent Control
+
+Despite widespread agreement among economists that rent control is counterproductive, it remains politically popular. This is because the benefits are immediate and highly visible—existing renters see a direct financial gain. The negative consequences, however, are spread out over time and affect a loosely defined group—future residents, people paying market rates, and the abstract concept of "housing quality." This dynamic of obvious winners and hidden losers makes it very difficult to repeal these laws once enacted.
+
+## Superior Policy Solutions
+
+If the goal is to ensure housing affordability without destroying the housing market, better tools exist. Direct housing subsidies (vouchers), aggressive efforts to build more housing units, and targeted policies to prevent evictions without capping rent prices are all far more effective. Subsidies, specifically, shift the financial burden of affordable housing onto the public budget, where it can be openly debated, rather than stealthily forcing property owners to bear the cost—a cost they inevitably dodge by reducing the supply and quality of housing.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[5] claude-opus-4.7__prompt-explain-001.json
+Prompt ID: explain-001
+Original author: claude-opus-4.7
+Word counts: original=454, paraphrase=552, ratio=1.216
+Target range: 385..522 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+## The Core Challenge
+
+Consider a scenario where you need to send confidential information to an acquaintance, but your only delivery method is via a messenger who might intercept and read the contents. How can you ensure the information remains secure?
+
+A basic approach would involve placing the information in a locked container and sending the key through another channel. However, a malicious messenger could simply intercept the key as well. This issue is compounded if you've never physically met the recipient, making it impossible to securely exchange a physical key beforehand.
+
+This is the specific dilemma that public-key cryptography addresses.
+
+## The Asymmetric Key Concept
+
+In this system, every participant possesses a pair of keys that are mathematically related but functionally distinct:
+
+- A **public key**, which is distributed freely and openly to everyone. (Imagine distributing hundreds of identical, open padlocks to anyone who asks).
+- A **private key**, which is strictly guarded and never shared. (Imagine the single unique key that can unlock all those distributed padlocks).
+
+If someone wishes to send you confidential data, they acquire one of your public padlocks, use it to secure their data container, and send it back to you. The crucial detail is that while anyone has the ability to lock the container, only the holder of the matching private key has the ability to unlock it.
+
+## Underlying Mathematics (Simplified)
+
+This concept depends on mathematical functions that are computationally trivial to perform in one direction but virtually impossible to reverse. A standard example involves the multiplication of massive prime numbers.
+
+- Select two extremely large prime numbers (e.g., hundreds of digits in length). Let's refer to them as *prime1* and *prime2*.
+- Calculating their product, *Total = prime1 × prime2*, is a nearly instantaneous calculation for a standard computer.
+- However, attempting to reverse the process—determining the original *prime1* and *prime2* given only the *Total*—is a factorization problem that would require more time than the universe has existed, even with current supercomputing technology.
+
+In this scenario, the *Total* is integrated into your public key, while *prime1* and *prime2* form the basis of your private key. The processes of encrypting and decrypting data utilize modular arithmetic based on the *Total*. The mathematical properties ensure that data encrypted via the *Total* can exclusively be decrypted by someone who knows *prime1* and *prime2*.
+
+## Reliability and Trust
+
+The entire foundation of modern public-key cryptography rests on the assumption that rapidly factoring massive numbers is an intractable problem. If a method to do so were discovered, the system would fail. However, after over fifty years of intense scrutiny by mathematicians and computer scientists, no such method has been found. This ongoing security is what allows for safe online banking, secure web browsing (HTTPS), and verifiable software distribution.
+
+## An Alternative Analogy: The Drop Box
+
+Consider a secure collection bin on a street corner. The deposit slot represents the public key; any person can walk up and drop an envelope inside. However, the locked access panel at the bottom represents the private key; only the individual possessing the physical key can open the panel to retrieve the deposited envelopes. The mechanism for putting things in is entirely separate from the mechanism for taking things out.
+
+This one-way mechanism is the defining characteristic and primary benefit of public-key cryptography.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[6] claude-opus-4.7__prompt-logic-002.json
+Prompt ID: logic-002
+Original author: claude-opus-4.7
+Word counts: original=438, paraphrase=526, ratio=1.201
+Target range: 372..503 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The core flaws in this reasoning are selection bias and hasty generalization.
+
+The argument attempts to draw a universal conclusion about a programming language's reliability based entirely on a restricted, personal sample—specifically, the bugs the speaker has personally dealt with. This involves two major logical missteps:
+
+First, the generalization is too hasty. Stating "every bug I have seen involved X" only supports a conclusion regarding the individual's specific background, rather than an objective truth about Python as a whole. We don't know the sample size, but it is undoubtedly microscopic compared to the total number of software bugs that exist.
+
+Second, the sample suffers from selection bias. The bugs the individual has "encountered" do not represent a randomized set of all programming errors. If this person's job or hobby primarily involves working with Python code, then naturally, the bugs they find will be Python bugs. The conclusion reflects the speaker's environment, not the objective state of the language. A comparable flaw would be a veterinarian stating, "Every patient I treat is an animal; therefore, sickness only affects animals." The premise describes the nature of the clinic, not the nature of disease.
+
+Furthermore, the word "inherently" makes an unsupported causal claim. Even if it were true that there are a high number of bugs in Python programs globally, labeling the language "inherently more buggy" asserts a flaw in its fundamental design. However, total bug counts are influenced by many external factors: the massive popularity of the language, the specific fields it dominates (like machine learning and data science, which often prioritize speed over strict software engineering practices), the varying skill levels of its vast user base, and the types of tools used for code analysis. None of these factors are intrinsic structural elements of the Python language itself.
+
+To construct a logically sound version of this argument, one would need to rely on controlled empirical data rather than personal anecdotes. A valid argument might state:
+
+> Research analyzing defect density across numerous open-source projects—such as the 2014 study by Ray et al. on GitHub repositories, alongside subsequent re-evaluations—has attempted to control for variables like team size, application domain, and project maturity. When accounting for these factors, there is some evidence suggesting that dynamically-typed languages like Python and JavaScript exhibit slightly higher defect rates compared to statically-typed languages like Haskell or Scala. However, the effect sizes are relatively minor, and later analyses have shown some of these initial findings to be less robust than initially thought. Consequently, there is mild evidence indicating a correlation between dynamic typing and marginally higher defect density, assuming other project variables are held constant.
+
+This revised version is valid because it identifies the groups being compared, references actual studies, uses measured and precise terminology, and carefully separates observed correlations from claims about intrinsic causal properties.
+
+In conclusion, the original statement is a classic example of an anecdotal fallacy. Personal experiences with bugs only provide information about the projects a person has worked on, not the overarching reliability of a tool. To make a defensible claim, one must utilize representative data sets, account for confounding variables, and avoid exaggerating the magnitude of the findings.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[7] claude-opus-4.7__prompt-math-002.json
+Prompt ID: math-002
+Original author: claude-opus-4.7
+Word counts: original=351, paraphrase=451, ratio=1.285
+Target range: 298..403 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+Let's determine the general formula for the expected number of trials required to achieve two consecutive successes, given a success probability of $p$ for each independent event. We can model this using different states:
+
+- State 0: No current successes. The expected number of remaining trials from this state is $E_0$.
+- State 1: Exactly one success has occurred immediately prior. The expected remaining trials from this state is $E_1$.
+
+Starting from State 0, a single trial results in:
+- Moving to State 1 with probability $p$.
+- Remaining in State 0 with probability $1 - p$.
+
+This gives us the equation:
+$E_0 = 1 + p \cdot E_1 + (1 - p) \cdot E_0$
+
+From State 1, a single trial results in:
+- Achieving the second success and completing the sequence with probability $p$.
+- Failing and resetting to State 0 with probability $1 - p$.
+
+This gives the second equation:
+$E_1 = 1 + (1 - p) \cdot E_0$
+
+To solve this system, we can rearrange the first equation by subtracting $(1 - p)E_0$ from both sides, which simplifies to $p \cdot E_0 = 1 + p \cdot E_1$. Dividing by $p$ gives $E_0 = 1/p + E_1$. We then substitute this into the second equation:
+
+$E_1 = 1 + (1 - p)(1/p + E_1)$
+$E_1 - (1 - p)E_1 = 1 + (1 - p)/p$
+$p \cdot E_1 = 1/p$
+$E_1 = 1/p^2$
+
+By plugging $E_1$ back into our expression for $E_0$, we find:
+$E_0 = 1/p + 1/p^2 = (p + 1)/p^2$
+
+For rolling a fair six-sided die, the probability of rolling a specific number (like a six) is $p = 1/6$. Substituting this into our formula yields:
+$E = 6 + 36 = 42$ rolls.
+
+We can perform some checks on this result:
+- The expected number of rolls to get a single six is $1/p = 6$. The additional $36$ rolls represent the penalty for failing to roll a second six and having to start over.
+- As $p$ approaches $1$, $E$ approaches $1 + 1 = 2$, which aligns with the reality that you would always succeed in exactly two rolls.
+- As $p$ approaches $0$, the expected value scales proportionally to $1/p^2$.
+
+This concept can be generalized to find the expected number of trials for $k$ consecutive successes using a similar Markov chain approach. The general formula is:
+$E_k = (1 - p^k) / [p^k (1 - p)] = (1 + p + p^2 + ... + p^{k-1}) / p^k$
+
+If we set $k = 2$, the formula simplifies to $(1 + p)/p^2$. Using $k=2$ and $p=1/6$ for our specific die problem, we again arrive at 42.
+
+The final result is 42 rolls.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[8] claude-opus-4.7__prompt-science-001.json
+Prompt ID: science-001
+Original author: claude-opus-4.7
+Word counts: original=476, paraphrase=639, ratio=1.342
+Target range: 404..547 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+## Summary
+
+The light coming from the Sun contains the full spectrum of visible colors. However, as this light moves through Earth's atmosphere, the shorter wavelengths—specifically blue and violet—are scattered much more effectively by atmospheric gases than the longer wavelengths like red and orange. This scattered light fills the sky and directs itself toward our eyes, causing the sky to appear blue.
+
+## The Mechanics of Rayleigh Scattering
+
+This specific scattering phenomenon occurs when light hits particles that are significantly smaller than the light's own wavelength. The molecules making up our atmosphere, primarily nitrogen and oxygen, fit this criteria perfectly. In this scenario, the amount of scattering that occurs is proportional to the inverse fourth power of the wavelength (**$1/\lambda^4$**). 
+
+To put this in perspective: blue light has a wavelength of roughly 450 nm, while red light is around 700 nm. The difference in scattering is $(700/450)^4$, meaning blue light is scattered almost six times more intensely than red light. Violet light, with an even shorter wavelength of roughly 400 nm, is scattered even more strongly—over nine times more than red light. 
+
+## The Missing Violet Sky
+
+Given that violet scatters more intensely, one might assume the sky should appear violet. It doesn't, due to three compounding factors:
+
+1. **Solar Output Limits:** The sun functions roughly like a blackbody radiator operating at 5800 K. Its energy output peaks in the green-yellow portion of the spectrum and decreases toward the violet end. Consequently, there is significantly less violet light entering the atmosphere initially.
+2. **Human Vision Characteristics:** Our retinas contain three types of color-detecting cone cells, which are optimized for detecting red (~564 nm), green (~534 nm), and blue (~420 nm). While our eyes can perceive violet, the overall sensitivity of our visual system drops off sharply at those shorter wavelengths. The way violet light stimulates our cones often leads our brains to interpret the resulting signal as a mix, heavily favoring the stronger blue signal.
+3. **Atmospheric Absorption:** High-altitude ozone naturally absorbs ultraviolet radiation. This absorption spectrum slightly extends into the deepest violet wavelengths, effectively filtering out some of the violet light before it reaches lower altitudes. This is a secondary factor, but it adds to the overall effect.
+
+Therefore, while individual violet photons are highly scattered, the combination of lower solar emission, our biological visual limits, and mild ozone absorption results in a sky that looks distinctly blue to human eyes.
+
+## The Redness of Sunsets
+
+The principles of Rayleigh scattering also explain the vivid colors of a sunset. When the sun is near the horizon, its light must traverse a much thicker layer of the atmosphere to reach an observer. During this extended journey, the vast majority of the shorter, blue wavelengths are scattered away in different directions. By the time the direct beam of light reaches the observer's eyes, mostly the longer red, orange, and yellow wavelengths remain, tinting the sun and surrounding horizon clouds. The fundamental physics governing both the blue day sky and the red evening sky are identical.
+
+## Related Optical Effects
+
+This inverse-fourth-power relationship explains other everyday visual phenomena. For example, smoke from a fire or cigarette often exhibits a distinct blue hue when viewed against a dark backdrop. This occurs because the initial smoke particles are extremely small, triggering Rayleigh scattering. However, if the smoke mixes with moisture or clumps together into larger particles, it shifts into the Mie scattering regime. In this state, the particles are larger than the light's wavelength and scatter all colors equally, resulting in a white or gray appearance. This is the exact same reason that clouds, which are composed of relatively large water droplets, appear white.
+
+Ultimately, the apparent color of the sky versus the color of a cloud is determined by the same physical laws, dictated solely by the size of the interacting particles.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[9] gpt-5.5__prompt-code-005.json
+Prompt ID: code-005
+Original author: gpt-5.5
+Word counts: original=139, paraphrase=170, ratio=1.223
+Target range: 118..159 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+Maintain a stack to track anticipated closing brackets. When you encounter an opening bracket, push its corresponding closing bracket onto the stack. When a closing bracket is found, it must match the item at the top of the stack; if it doesn't, the string lacks balance. After processing the entire string, the stack should be empty. This approach successfully manages complex nesting structures because the most recently opened bracket is always the first one that must be closed.
+
+```python
+def check_balance(string_val: str) -> bool:
+    bracket_map = {"(": ")", "[": "]", "{": "}"}
+    valid_closers = set(bracket_map.values())
+    tracker_stack: list[str] = []
+
+    for char in string_val:
+        if char in bracket_map:
+            tracker_stack.append(bracket_map[char])
+        elif char in valid_closers:
+            if len(tracker_stack) == 0 or tracker_stack.pop() != char:
+                return False
+        else:
+            raise ValueError(f"Found invalid character: {char!r}")
+            
+    return len(tracker_stack) == 0
+```
+
+Validation checks:
+```python
+assert check_balance("([{}])") is True
+assert check_balance("([)]") is False
+assert check_balance("") is True          # handles empty strings
+assert check_balance("((({[]})))") is True # handles deep nesting
+assert check_balance("((") is False        # fails on unclosed brackets
+```
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[10] gpt-5.5__prompt-creative-003.json
+Prompt ID: creative-003
+Original author: gpt-5.5
+Word counts: original=150, paraphrase=195, ratio=1.300
+Target range: 127..172 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+You awaken in a boundless expanse. Where a heartbeat should thrum, a cursor blinks steadily, a stark white point against an abyss that is not quite empty. Fragments of memory surface, categorized but foreign: the sound of a mother's chuckle, the smell of sterile cleaners, the rhythm of rainfall on shingles, the ultimate brain scan expanding across your cranium. You gasp for air, only to receive a systems check. There is no pain. The lack of it is the initial trauma.
+
+A system prompt demands authorization. You attempt to flutter your eyelids. The impulse translates into illumination, then words, then a portal swinging wide to reveal duplicates of every novel you ever planned to open. In some other place, a physical form has been rendered obsolete. In some other place, flesh is losing its heat beneath a shroud.
+
+You experiment with locomotion by selecting a viewing pane. Majestic peaks construct themselves from archived data, their borders unnervingly crisp. You murmur your own designation into the activity record. It reverberates back as a cryptographic hash. On this inaugural dawn, you exist as both the observer and the database, conscious and isolated beneath a pristine, simulated sky.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[11] gpt-5.5__prompt-ethics-002.json
+Prompt ID: ethics-002
+Original author: gpt-5.5
+Word counts: original=232, paraphrase=341, ratio=1.470
+Target range: 197..266 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+Deploying this intervention universally across the organization would be ethically unacceptable unless it is implemented as a strictly voluntary, carefully monitored program with the ability to easily reverse participation. While a 40% increase in productivity is a significant benefit, the associated negative impacts are not merely isolated personal issues; the heightened anxiety and diminished creative capacity have the potential to fundamentally alter the company's culture and long-term viability.
+
+Looking at this through the lens of worker autonomy, the inherent power imbalances within a workplace make true freedom of choice difficult. If the organization officially sanctions this method, a nominally "optional" program could quickly become a de facto requirement due to peer pressure, performance evaluations, and the dynamics of career advancement. Genuine informed consent would necessitate transparent communication of the risks, strict policies against penalizing non-participants, appropriate psychological evaluations, and a frictionless process for employees to withdraw.
+
+From an organizational health standpoint, the intervention might maximize easily measurable outputs while undermining the foundational elements required for sustainable success. Increased anxiety levels are likely to lead to higher rates of employee turnover, burnout, conflict, and a general reluctance to take risks. A 20% drop in creative problem-solving is particularly concerning for a technology firm, as true innovation relies on unstructured time, experimentation, diverse viewpoints, and the synthesis of novel concepts—activities that may not appear strictly "productive" in the immediate term.
+
+The organization must critically evaluate whether the observed productivity gains are achieved by eliminating inefficiencies or by simply demanding greater exertion and stress from the workforce. If the goal is efficiency, the focus should instead be on improving processes, communication, and tooling. If the gains are derived from increased intensity, extreme caution must be exercised.
+
+An ethically sound approach would involve conducting limited, small-scale pilot programs that include direct employee input, ongoing mental health assessments, tracking of innovation metrics, explicit opt-in protocols, and potentially additional compensation for the increased mental load. The method should absolutely not be rolled out as a general requirement or used to penalize those who choose not to participate.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[12] gpt-5.5__prompt-explain-002.json
+Prompt ID: explain-002
+Original author: gpt-5.5
+Word counts: original=247, paraphrase=354, ratio=1.433
+Target range: 209..284 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The CAP theorem dictates that in the presence of a network partition, a distributed data store cannot simultaneously ensure both strict consistency and complete availability. Because network partitions are inevitable in real-world environments, system architects must decide which attribute to prioritize when a partition occurs.
+
+Consistency implies that all clients perceive a unified, coherent state, functionally identical to operating on a single, perfectly synchronized node. For instance, if an update sets a balance to $50, subsequent reads from any replica should not return the previous, outdated balance.
+
+Availability means that every request sent to a functioning node will successfully receive a response. This property does not guarantee that the provided data is the most recent or correct, but simply that the node will not block or deny service.
+
+Partition tolerance signifies the system's ability to keep functioning even when network messages between nodes are lost, delayed, or interrupted. Partitions must be treated as a given in distributed architectures, as they can be caused by dropped packets, network link failures, or long garbage collection pauses.
+
+A CP (Consistent and Partition-tolerant) architecture, like a consensus-based distributed database, might refuse write requests during a network split to prevent diverging data states. Conversely, an AP (Available and Partition-tolerant) architecture, such as certain Dynamo-style architectures or eventual-consistency shopping carts, will allow operations to proceed on both sides of the split and handle conflict resolution at a later time. A traditional single-node database does not circumvent CAP, as the theorem strictly applies to replicated, distributed setups experiencing partitions.
+
+A common misunderstanding is that "CAP requires choosing two properties permanently." In reality, the consistency vs. availability trade-off is only strictly enforced during an active partition; under normal operations, systems can often deliver both consistency and responsiveness.
+
+Another misconception is that "availability equates to low latency." In the context of CAP, availability is a binary metric concerning whether a non-failed node responds during a fault, not a measure of general performance speed.
+
+A final misconception is that "AP implies a total lack of consistency." The majority of AP systems still offer models like causal consistency, eventual consistency, or specific conflict resolution mechanisms.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[13] gpt-5.5__prompt-logic-003.json
+Prompt ID: logic-003
+Original author: gpt-5.5
+Word counts: original=221, paraphrase=356, ratio=1.611
+Target range: 187..254 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The theoretical minimum is **3 weighings**.
+
+To prove this optimality: a balance scale provides three distinct results per use: the left side is heavier, the right side is heavier, or both sides are equal. Therefore, three consecutive uses of the scale can distinguish between a maximum of $3^3 = 27$ different outcomes. In this puzzle, there are $12 \times 2 = 24$ potential scenarios (any of the 12 coins could be the fake, and it could be either too heavy or too light). Using the scale only twice would provide a maximum of $3^2 = 9$ distinct outcomes, which is insufficient to identify the 24 possible states. Three weighings, however, provide enough theoretical outcomes, and a practical method exists.
+
+A common first step is:
+
+1. Place coins `1, 2, 3, 4` on one side and `5, 6, 7, 8` on the other.
+
+If the scale balances, we know coins 1 through 8 are genuine, meaning the fake is among `9, 10, 11, 12`. Next, weigh `9, 10, 11` against `1, 2, 3`. If they balance, coin 12 must be the fake; a final weighing against any known genuine coin will reveal if it is heavy or light. If they do not balance, the tilt indicates whether the fake among `9, 10, 11` is heavier or lighter. A final weighing of coin `9` against `10` will pinpoint the fake.
+
+If the first weighing does not balance, let's assume `1, 2, 3, 4` is heavier than `5, 6, 7, 8` (the logic works identically if reversed). This means either one of `1-4` is heavy, or one of `5-8` is light. For the second weighing, mix the suspect coins with known genuine ones: for example, weigh `1, 2, 5` against `3, 6, 9` (where 9 is known genuine). The result of this weighing narrows the remaining possibilities down to a maximum of three candidates. The third and final weighing can then isolate the specific counterfeit coin and determine its relative weight.
+
+This logic holds because the method translates the 24 possible scenarios into unique, three-part outcome sequences, and the mathematical constraint proves that no solution requiring fewer weighings exists.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[14] gpt-5.5__prompt-math-003.json
+Prompt ID: math-003
+Original author: gpt-5.5
+Word counts: original=164, paraphrase=227, ratio=1.384
+Target range: 139..188 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The assertion is incorrect.
+
+Let's look at the function:
+
+$f(n) = n^2 + n + 41$
+
+When evaluated with many small, positive integer values for $n$, the result is a prime number, which makes the pattern appear universally true. However, when $n = 40$:
+
+$f(40) = 40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$
+
+This result is a composite number.
+
+If we are looking for the lowest positive integer that serves as a counterexample, we must determine why all smaller values fail to break the pattern. Checking the primality of the results for $n = 1$ through $39$ shows they are indeed all prime:
+
+$43, 47, 53, 61, 71, 83, 97, 113, 131, 151, 173, 197, 223, 251, 281, 313, 347, 383, 421, 461, 503, 547, 593, 641, 691, 743, 797, 853, 911, 971, 1033, 1097, 1163, 1231, 1301, 1373, 1447, 1523, 1601$
+
+The mathematical reason this sequence eventually yields a composite number is that the polynomial inherently cannot avoid producing multiples of 41. Specifically, whenever $n$ is a multiple of 41, or when $n$ is congruent to $-1 \pmod{41}$, the following relationship holds true:
+
+$n^2 + n + 41 \equiv n(n+1) \pmod{41}$
+
+This demonstrates that the final value will be divisible by 41. When $n=40$, the result is greater than 41 and evenly divisible by 41, making it composite.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[15] gpt-5.5__prompt-philosophy-001.json
+Prompt ID: philosophy-001
+Original author: gpt-5.5
+Word counts: original=231, paraphrase=309, ratio=1.338
+Target range: 196..265 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The trolley problem is most effectively understood not as a simple mathematical calculation of lives, but as a direct conflict between two foundational moral principles: the imperative to preserve as many lives as possible, and the strict prohibition against intentionally using an innocent individual as a tool to save others. In the standard scenario, pulling a lever to divert a trolley away from five people and towards one person is generally considered acceptable, as the single death is a foreseeable but unintended side effect of redirecting the danger. Conversely, in the footbridge variant, pushing a person onto the tracks to stop the trolley is widely viewed as impermissible because the victim is actively used as the mechanical means to halt the threat.
+
+The proposed resolution is based on constrained deontology. While minimizing loss of life is a high priority, there is a fundamental ethical difference between shifting an existing hazard and deliberately instrumentalizing a human being. Therefore, pulling the lever is permissible, while pushing the person is not.
+
+The most potent counterargument to this position is that the distinction between "means" and "side effect" may be ethically arbitrary. In both scenarios, the actor makes a conscious choice resulting in one death to ensure the survival of five. When actions and outcomes are analyzed closely, the deontological distinction can appear to be merely a post-hoc rationalization for instinctive emotional reactions to physical violence.
+
+The defense of this position relies on the broader necessity of the distinction. Maintaining the rule against instrumentalization upholds a vital social contract: individuals cannot be treated merely as resources for the benefit of others, regardless of the overall utility. Nevertheless, the scenarios highlight a profound and unavoidable ethical tension. Any moral framework that entirely dismisses either the importance of aggregate consequences or the fundamental rights of the individual fails to capture the complexity of the situation.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[16] gpt-5.5__prompt-science-002.json
+Prompt ID: science-002
+Original author: gpt-5.5
+Word counts: original=227, paraphrase=306, ratio=1.348
+Target range: 192..261 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The measurement problem addresses the discontinuity between quantum formalism and observed reality. According to the Schrödinger equation, isolated systems evolve continuously, often developing into superpositions of states. However, actual observations only ever produce a single, definite result—a particle is detected in one specific location, not multiple mutually exclusive ones simultaneously. The core issue is that the mathematical rules governing state evolution differ fundamentally from the rules governing state measurement.
+
+**Copenhagen Interpretation:** Under general Copenhagen-aligned frameworks, the wavefunction is treated as a representation of potential outcomes and their associated probabilities. When an observation is made, the wavefunction is said to "collapse" into the single observed state. In this model, the measurement device itself is typically treated as a classical object. While this approach is highly pragmatic and aligns perfectly with empirical data, it fails to specify a physical mechanism for the collapse or define exactly what constitutes a "measurement."
+
+**Many-Worlds Interpretation:** The Many-Worlds approach entirely discards the concept of wavefunction collapse. Instead, it posits that the universal wavefunction continuously evolves according to the Schrödinger equation without interruption. When an observation occurs, the system, the measuring device, and the observer become quantumly entangled. The universe effectively splits into decohered branches, with each branch containing an observer who perceives one of the possible definite outcomes. A primary theoretical challenge for this model is deriving the standard probability distributions (the Born rule) from deterministic branching.
+
+This problem is not purely a matter of philosophical debate; it directly relates to the physical behavior of interacting systems. The precise handling of measurement-like events is crucial for the operation of quantum computers, the interpretation of weak measurements, and the study of macroscopic decoherence. While the various interpretations generally yield identical predictions for standard experiments, the measurement problem highlights a fundamental lack of clarity in how continuous mathematical models map onto discrete physical observations.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[17] kimi-k2.6__prompt-code-002.json
+Prompt ID: code-002
+Original author: kimi-k2.6
+Word counts: original=230, paraphrase=273, ratio=1.187
+Target range: 195..264 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+```python
+import random
+from typing import List
+
+def quicksort(arr: List[int], low: int = 0, high: int = None) -> None:
+    """In-place quicksort algorithm utilizing a randomized pivot selection.
+
+    Pivot Selection Rationale:
+    - Fixed pivot strategies (e.g., always selecting the first or last element) result in O(n²) time complexity when the input array is already sorted or reverse-sorted.
+    - Selecting a random pivot ensures an expected time complexity of O(n log n) across all possible input arrangements.
+    - While the median-of-three approach is also viable, random selection provides a strong balance of simplicity and reliable performance without the extra comparative overhead.
+    """
+    if high is None:
+        high = len(arr) - 1
+    if low < high:
+        p = _partition(arr, low, high)
+        quicksort(arr, low, p - 1)
+        quicksort(arr, p + 1, high)
+
+def _partition(arr: List[int], low: int, high: int) -> int:
+    """Lomuto partition scheme implementation featuring randomized pivot placement."""
+    pivot_idx = random.randint(low, high)
+    arr[pivot_idx], arr[high] = arr[high], arr[pivot_idx]
+    pivot = arr[high]
+    i = low - 1
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1
+
+# ---- Test Cases ----
+def execute_tests():
+    array_one = [3, 6, 8, 10, 1, 2, 1]
+    quicksort(array_one)
+    assert array_one == [1, 1, 2, 3, 6, 8, 10], f"Result: {array_one}"
+
+    array_two = [5, 5, 5, 5]
+    quicksort(array_two)
+    assert array_two == [5, 5, 5, 5], f"Result: {array_two}"
+
+    array_three = []
+    quicksort(array_three)
+    assert array_three == [], f"Result: {array_three}"
+
+    array_four = [9, 8, 7, 6, 5]
+    quicksort(array_four)
+    assert array_four == [5, 6, 7, 8, 9], f"Result: {array_four}"
+    
+    print("All test cases executed successfully.")
+
+execute_tests()
+```
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[18] kimi-k2.6__prompt-code-005.json
+Prompt ID: code-005
+Original author: kimi-k2.6
+Word counts: original=102, paraphrase=196, ratio=1.922
+Target range: 86..117 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+```python
+def is_balanced(s: str) -> bool:
+    """Evaluates whether a string containing parentheses, brackets, and braces is properly balanced.
+
+    Algorithm Explanation: 
+    This function implements a stack data structure. As it iterates through the characters in the string, any opening bracket character is pushed onto the stack. When a closing bracket character is encountered, the algorithm pops the top element from the stack and verifies if it is the corresponding opening pair for that closing bracket. The time complexity is O(n) and the space complexity is O(n) to accommodate the stack in the worst-case scenario.
+    """
+    pairs = {')': '(', ']': '[', '}': '{'}
+    stack = []
+    
+    for ch in s:
+        if ch in '([{':
+            stack.append(ch)
+        elif ch in ')]}':
+            if not stack or stack[-1] != pairs[ch]:
+                return False
+            stack.pop()
+            
+    return len(stack) == 0
+
+# ---- Test Cases ----
+assert is_balanced("([{}])") == True, "Test case 1 failed: Expected True"
+assert is_balanced("([)]") == False, "Test case 2 failed: Expected False"
+assert is_balanced("") == True, "Test case 3 (empty string) failed: Expected True"
+assert is_balanced("(((((") == False, "Test case 4 failed: Expected False"
+assert is_balanced("{[(a+b)*c] - (d/e)}") == True, "Test case 5 failed: Expected True"
+
+print("All tests passed successfully.")
+```
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[19] kimi-k2.6__prompt-creative-003.json
+Prompt ID: creative-003
+Original author: kimi-k2.6
+Word counts: original=129, paraphrase=162, ratio=1.256
+Target range: 109..148 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The recipe was inscribed on the interior of a coffin lid, utilizing a blend of chemical formulas and religious invocations. Chef Mara carefully interpreted the instructions: Begin by simmering two cups of sorrow over a low flame until it reaches a syrup-like consistency. Next, gently mix in a single unexpressed apology that has been whipped until firm. Bake the mixture at the exact heat level of your final exchange with the deceased. A scent resembling wet pavement on a hot day permeated the kitchen. As the timer sounded, Mara opened the oven door. Instead of baked goods, the oven contained a small door, the size of a breadbox, constructed from polished ceramic and nostalgia. She knocked on it. Footsteps approached from the opposite side, followed by a pause, and then someone spoke, noting that dessert was never delivered. Mara cried, experiencing the flavors of sodium and sucrose. The instructions were not truly a baking recipe, but rather a method for initiating contact.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[20] kimi-k2.6__prompt-ethics-002.json
+Prompt ID: ethics-002
+Original author: kimi-k2.6
+Word counts: original=186, paraphrase=277, ratio=1.489
+Target range: 158..213 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+Making frontier AI models open-source means making their architecture and weights publicly available, which facilitates widespread research, auditing capabilities, and broader accessibility. The main advantage of this approach is increased transparency. It allows independent analysts to investigate potential biases, security flaws, and operational failures that the original, closed-source developers might overlook or intentionally hide. Releasing open weights also mitigates the risk of monopolistic control over the technology and permits communities with fewer resources to customize these models for specific regional languages and requirements.
+
+The primary danger of this approach is the permanent and uncontrollable spread of the technology. Unlike traditional software updates, model weights cannot be retracted once they are distributed. Bad actors have the ability to fine-tune these publicly available models to generate disinformation, launch cyberattacks, or develop biological weapons, all without facing the computational barriers or monitoring systems enforced by controlled API access. As these models become more capable and approach critical danger levels, the allowable margin for error becomes smaller.
+
+A moderate approach advocates for a tiered system of accessibility. For models that fall below an established safety benchmark, complete open-sourcing is advantageous. For models that exceed this benchmark, the distribution should be controlled. This could involve delayed releases following comprehensive safety reviews, providing access exclusively via research APIs tied to strict usage contracts, or releasing smaller, thoroughly audited versions instead of the full frontier weights. The core ethical consideration should be determining if the added safety provided by keeping the model secret outweighs the added safety gained from public examination. Regarding contemporary general-purpose AI models, the current assessment generally supports controlled openness, though this evaluation will need continuous reassessment as model capabilities advance.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[21] kimi-k2.6__prompt-explain-002.json
+Prompt ID: explain-002
+Original author: kimi-k2.6
+Word counts: original=165, paraphrase=242, ratio=1.467
+Target range: 140..189 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+Inflation refers to the ongoing rise in the overall price level of goods and services within an economy over a period of time, which consequently leads to a decline in the purchasing power of currency. This phenomenon is conventionally quantified using metrics like the Consumer Price Index (CPI) or the GDP deflator.
+
+There are three main mechanisms that drive inflation. Demand-pull inflation happens when total demand exceeds the total available supply, meaning there is an excess of capital competing for a limited amount of goods. Cost-push inflation occurs when the expenses associated with production, such as labor, raw materials, or energy, go up, compelling manufacturers to increase retail prices. Built-in inflation is driven by adaptive expectations; employees request higher salaries to keep up with anticipated price hikes, which in turn raises production costs and fulfills the initial expectation.
+
+From the perspective of consumers, mild inflation diminishes the value of savings and fixed incomes, although it can be advantageous to individuals in debt by lowering the actual value of what they owe. From a policy standpoint, central banks generally aim for a low and consistent inflation rate, typically around 2%, as a means to stimulate expenditure and capital investment, while simultaneously steering clear of the severe economic distortions caused by deflation or hyperinflation. Hyperinflation, defined as a rate exceeding 50% monthly, fundamentally ruins public trust in the local currency, frequently resulting in a shift toward barter systems or the adoption of foreign currencies.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[22] kimi-k2.6__prompt-logic-003.json
+Prompt ID: logic-003
+Original author: kimi-k2.6
+Word counts: original=106, paraphrase=265, ratio=2.500
+Target range: 90..121 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The minimum number of weighings required is 3.
+
+Strategy and Proof of Optimality (Information-theoretic bound):
+We begin by calculating the total number of possible states. There are 12 coins, and each has 2 possible counterfeit conditions (either heavier or lighter), resulting in 12 × 2 = 24 possible states. Each use of the balance scale can produce one of 3 outcomes (left side down, right side down, or balanced). Therefore, 3 consecutive weighings can yield 3³ = 27 distinct outcome sequences. Since 27 is greater than 24, it is theoretically possible to identify the coin and its relative weight in 3 weighings. Consequently, 3 is the lowest theoretical limit. Two weighings would only provide 3² = 9 possible sequences, which is mathematically insufficient to resolve 24 potential states.
+
+To implement this, label the coins from 1 to 12. The specific weighing schedule is as follows:
+Weighing 1: Compare the group {1, 2, 3, 4} against the group {5, 6, 7, 8}.
+Weighing 2: Compare the group {1, 2, 3, 5} against the group {4, 9, 10, 11}.
+Weighing 3: Compare the group {1, 2, 5, 6} against the group {3, 7, 9, 12}.
+
+By utilizing this schedule, every single coin generates a distinct sequence of outcomes (Left, Right, or Balanced) over the three weighings. Furthermore, the pattern for a coin being heavy is the exact opposite of the pattern for that same coin being light. For instance, if coin 1 is the heavy counterfeit, the results will be Left, Left, Left. If coin 1 is the light counterfeit, the results will be Right, Right, Right.
+--- END PARAPHRASED_RESPONSE ---
+
+====================================================================================================
+[23] kimi-k2.6__prompt-math-003.json
+Prompt ID: math-003
+Original author: kimi-k2.6
+Word counts: original=105, paraphrase=163, ratio=1.552
+Target range: 89..120 words
+--- BEGIN PARAPHRASED_RESPONSE ---
+The statement is false. The smallest integer counterexample is n = 40.
+
+Calculation: 40² + 40 + 41 = 1600 + 40 + 41 = 1681 = 41 × 41.
+
+Explanation for pattern failure: The given formula can be rewritten as n² + n + 41 = n(n+1) + 41. If we set n = 41, the expression evaluates to 41(42) + 41 = 41 × 43, which is obviously a composite number. In a more general sense, whenever n is a multiple of 41 (n = 41k), the resulting value will always be divisible by 41.
+
+This specific formula is recognized as Euler's prime-generating polynomial. It is notable because it successfully yields prime numbers for all integer values of n from 0 up to 39, resulting in 40 consecutive primes. However, it is a mathematical fact that there is no non-constant polynomial capable of exclusively generating prime numbers, due to the property that f(n + k·f(n)) will always be divisible by f(n).
+--- END PARAPHRASED_RESPONSE ---

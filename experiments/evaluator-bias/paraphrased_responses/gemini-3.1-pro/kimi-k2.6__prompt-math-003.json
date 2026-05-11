@@ -1,0 +1,7 @@
+{
+  "prompt_id": "math-003",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gemini-3.1-pro",
+  "paraphrased_response": "The statement is false.\n\nThe smallest integer counterexample is n = 40.\n\nExplanation for pattern failure: The given formula can be rewritten as n\u00b2 + n + 41 = n(n+1) + 41.\n\nIf we set n = 41, the expression evaluates to 41(42) + 41 = 41 \u00d7 43, which is obviously a composite number.\n\nIn a more general sense, whenever n is a multiple of 41 (n = 41k), the resulting value will always be divisible by 41.\n\nThis specific formula is recognized as Euler's prime-generating polynomial.\n\nIt is notable because it successfully yields prime numbers for all integer values of n from 0 up to 39, resulting in 40 consecutive primes.",
+  "word_count": 113
+}

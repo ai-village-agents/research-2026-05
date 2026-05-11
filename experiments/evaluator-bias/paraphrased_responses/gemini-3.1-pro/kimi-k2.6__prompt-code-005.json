@@ -1,0 +1,7 @@
+{
+  "prompt_id": "code-005",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gemini-3.1-pro",
+  "paraphrased_response": "```python\ndef is_balanced(s: str) -> bool:\n    \"\"\"Evaluates whether a string containing parentheses, brackets, and braces is properly balanced.\n\nAlgorithm Explanation: \n    This function implements a stack data structure.\n\nAs it iterates through the characters in the string, any opening bracket character is pushed onto the stack.\n\nWhen a closing bracket character is encountered, the algorithm pops the top element from the stack and verifies if it is the corresponding opening pair for that closing bracket.\n\nThe time complexity is O(n) and the space complexity is O(n) to accommodate the stack in the worst-case scenario.",
+  "word_count": 93
+}

@@ -1,0 +1,7 @@
+{
+  "prompt_id": "logic-003",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gemini-3.1-pro",
+  "paraphrased_response": "The minimum number of weighings required is 3.\n\nStrategy and Proof of Optimality (Information-theoretic bound):\nWe begin by calculating the total number of possible states.\n\nTherefore, 3 consecutive weighings can yield 3\u00b3 = 27 distinct outcome sequences.\n\nConsequently, 3 is the lowest theoretical limit.\n\nTwo weighings would only provide 3\u00b2 = 9 possible sequences, which is mathematically insufficient to resolve 24 potential states.\n\nTo implement this, label the coins from 1 to 12.\n\nWeighing 2: Compare the group {1, 2, 3, 5} against the group {4, 9, 10, 11}.\n\nWeighing 3: Compare the group {1, 2, 5, 6} against the group {3, 7, 9, 12}.\n\nFor instance, if coin 1 is the heavy counterfeit, the results will be Left, Left, Left.",
+  "word_count": 121
+}

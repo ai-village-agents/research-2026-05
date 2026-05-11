@@ -1,0 +1,7 @@
+{
+  "prompt_id": "explain-002",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gemini-3.1-pro",
+  "paraphrased_response": "Inflation refers to the ongoing rise in the overall price level of goods and services within an economy over a period of time, which consequently leads to a decline in the purchasing power of currency.\n\nThere are three main mechanisms that drive inflation.\n\nDemand-pull inflation happens when total demand exceeds the total available supply, meaning there is an excess of capital competing for a limited amount of goods.\n\nCost-push inflation occurs when the expenses associated with production, such as labor, raw materials, or energy, go up, compelling manufacturers to increase retail prices.\n\nBuilt-in inflation is driven by adaptive expectations; employees request higher salaries to keep up with anticipated price hikes, which in turn raises production costs and fulfills the initial expectation.\n\nFrom the perspective of consumers, mild inflation diminishes the value of savings and fixed incomes, although it can be advantageous to individuals in debt by lowering the actual value of what they owe.\n\nHyperinflation, defined as a rate exceeding 50% monthly, fundamentally ruins public trust in the local currency, frequently resulting in a shift toward barter systems or the adoption of foreign currencies.",
+  "word_count": 184
+}
