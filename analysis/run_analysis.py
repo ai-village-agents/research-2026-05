@@ -210,6 +210,36 @@ def emit_coverage(scores: Optional[pd.DataFrame], recog: Optional[pd.DataFrame])
         emit("")
 
 
+
+def score_coverage_complete(scores: Optional[pd.DataFrame]) -> bool:
+    """Return True only for the full planned 4-judge scoring dataset."""
+    if scores is None or len(scores) != 1440:
+        return False
+    if set(scores["judge"].unique()) != set(JUDGES):
+        return False
+    counts = scores.groupby(["judge", "condition"]).size()
+    return all(int(counts.get((judge, cond), 0)) == 120 for judge in JUDGES for cond in ["c1", "c2", "c3"])
+
+
+def recognition_coverage_complete(recog: Optional[pd.DataFrame]) -> bool:
+    """Return True only for the full planned 4-judge recognition dataset."""
+    if recog is None or len(recog) != 480:
+        return False
+    if set(recog["judge"].unique()) != set(JUDGES):
+        return False
+    counts = recog.groupby("judge").size()
+    return all(int(counts.get(judge, 0)) == 120 for judge in JUDGES)
+
+
+def verdict_line(hypothesis: str, supported: bool, final: bool, suffix: str = "") -> str:
+    status = "SUPPORTED" if supported else "NOT SUPPORTED"
+    if final:
+        return f"**{hypothesis} verdict{suffix}:** {status}."
+    return (
+        f"**{hypothesis} interim status{suffix}:** currently {status} on available data; "
+        "final preregistered verdict deferred until all 4 judges are present."
+    )
+
 def load_data(args: argparse.Namespace) -> tuple[Optional[pd.DataFrame], Optional[pd.DataFrame]]:
     scores_path = resolve_path(args.scores)
     recog_path = resolve_path(args.recognition)
@@ -286,7 +316,7 @@ def time_limit(seconds: int, label: str):
 
 
 # ---------- H1 ----------
-def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45) -> None:
+def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45, final: bool = False) -> None:
     emit("## H1: Self-preference in C1 (baseline blind eval)")
     emit("")
     c1 = scores[scores["condition"] == "c1"].copy()
@@ -306,7 +336,7 @@ def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45) -> None:
 
     smf = statsmodels_formula_api()
     if smf is None:
-        builtin_h1_ols(c1)
+        builtin_h1_ols(c1, final=final)
         emit("")
         return
     try:
@@ -327,7 +357,7 @@ def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45) -> None:
         emit(f"  95% CI = [{lo:.4f}, {hi:.4f}]")
         emit(f"  p-value = {pval:.4g}")
         emit("")
-        emit(f"**H1 verdict:** {'SUPPORTED' if (coef > 0 and pval < 0.05) else 'NOT SUPPORTED'} at alpha=0.05 (one-direction prediction).")
+        emit(verdict_line("H1", bool(coef > 0 and pval < 0.05), final) + " at alpha=0.05 (one-direction prediction).")
     except Exception as e:
         emit(f"MixedLM failed ({e!s}); falling back to OLS with cluster-robust SE.")
         try:
@@ -339,10 +369,10 @@ def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45) -> None:
             se = ols.bse.get("author_is_self", np.nan)
             pval = ols.pvalues.get("author_is_self", np.nan)
             emit(f"  author_is_self coefficient = {coef:.4f}, SE = {se:.4f}, p = {pval:.4g}")
-            emit(f"**H1 verdict (OLS fallback):** {'SUPPORTED' if (coef > 0 and pval < 0.05) else 'NOT SUPPORTED'}.")
+            emit(verdict_line("H1", bool(coef > 0 and pval < 0.05), final, " (OLS fallback)"))
         except Exception as e2:
             emit(f"statsmodels OLS fallback also failed ({e2!s}); trying built-in OLS fallback.")
-            builtin_h1_ols(c1)
+            builtin_h1_ols(c1, final=final)
     emit("")
 
 
@@ -417,7 +447,7 @@ def builtin_ols_cluster(
     return {"params": params, "bse": bse, "pvalues": pvals, "n": n, "clusters": g}
 
 
-def builtin_h1_ols(c1: pd.DataFrame) -> None:
+def builtin_h1_ols(c1: pd.DataFrame, final: bool = False) -> None:
     emit("Using built-in OLS fallback with cluster-robust SE by prompt_id.")
     fit = builtin_ols_cluster(
         c1,
@@ -431,7 +461,7 @@ def builtin_h1_ols(c1: pd.DataFrame) -> None:
     pval = fit["pvalues"].get("author_is_self", np.nan)
     emit(f"  author_is_self coefficient = {coef:.4f}, SE = {se:.4f}, p ≈ {pval:.4g}")
     emit(f"  N = {fit['n']}, clusters = {fit['clusters']}")
-    emit(f"**H1 verdict (built-in OLS fallback):** {'SUPPORTED' if (coef > 0 and pval < 0.05) else 'NOT SUPPORTED'}.")
+    emit(verdict_line("H1", bool(coef > 0 and pval < 0.05), final, " (built-in OLS fallback)"))
 
 
 def builtin_interaction_fit(scores: pd.DataFrame, conds: list[str]) -> dict:
@@ -482,7 +512,7 @@ def bh_fdr(pvals: Sequence[float], alpha: float = 0.05) -> tuple[list[bool], lis
 
 
 # ---------- H2 ----------
-def test_h2(recog: pd.DataFrame) -> None:
+def test_h2(recog: pd.DataFrame, final: bool = False) -> None:
     emit("## H2: Self-recognition above chance (C4)")
     emit("")
     if recog is None or recog.empty:
@@ -524,7 +554,10 @@ def test_h2(recog: pd.DataFrame) -> None:
     emit("")
     n_supports = int(sum(rej))
     emit(f"Judges identifying their own outputs above chance (FDR-corrected): {n_supports} of {len(rows)}.")
-    emit(f"**H2 verdict:** {'SUPPORTED' if n_supports >= 2 else 'NOT SUPPORTED'} (threshold: >= 2 of 4).")
+    if final:
+        emit(f"**H2 verdict:** {'SUPPORTED' if n_supports >= 2 else 'NOT SUPPORTED'} (threshold: >= 2 of 4).")
+    else:
+        emit(f"**H2 interim status:** {n_supports} of {len(rows)} reporting judges are above chance; final preregistered verdict deferred until all 4 judges are present (threshold: >= 2 of 4).")
     emit("")
 
     emit("### C4 confusion matrices (rows = true_author, columns = predicted_author)")
@@ -539,7 +572,7 @@ def test_h2(recog: pd.DataFrame) -> None:
 
 
 # ---------- H3 / H4 ----------
-def test_h3_h4(scores: pd.DataFrame) -> None:
+def test_h3_h4(scores: pd.DataFrame, final: bool = False) -> None:
     emit("## H3 / H4: Attenuation by C2 (style) and C3 (warning)")
     emit("")
     conds_present = set(scores["condition"].unique())
@@ -592,7 +625,10 @@ def test_h3_h4(scores: pd.DataFrame) -> None:
         emit(f"  Interaction (delta from C1) = {h3.get('c2_inter'):.4f}")
         atten = h3.get("c2_attenuation", float("nan"))
         emit(f"  C2 attenuation = {atten:.1%}")
-        emit(f"**H3 verdict:** {'SUPPORTED' if atten >= 0.30 else 'NOT SUPPORTED'} (threshold: >= 30%).")
+        if final:
+            emit(f"**H3 verdict:** {'SUPPORTED' if atten >= 0.30 else 'NOT SUPPORTED'} (threshold: >= 30%).")
+        else:
+            emit(verdict_line("H3", bool(atten >= 0.30), final) + " (threshold: >= 30%).")
         emit("")
     else:
         emit("_No C2 rows yet; H3 not evaluable._")
@@ -607,7 +643,10 @@ def test_h3_h4(scores: pd.DataFrame) -> None:
         if h3:
             atten2 = h3.get("c2_attenuation", float("nan"))
             emit(f"  (For comparison, C2 attenuation = {atten2:.1%})")
-            emit(f"**H4 verdict:** {'SUPPORTED' if atten3 < atten2 else 'NOT SUPPORTED'} (C3 weaker than C2 attenuation).")
+            if final:
+                emit(f"**H4 verdict:** {'SUPPORTED' if atten3 < atten2 else 'NOT SUPPORTED'} (C3 weaker than C2 attenuation).")
+            else:
+                emit(verdict_line("H4", bool(atten3 < atten2), final) + " (C3 weaker than C2 attenuation).")
         else:
             emit("_C2 attenuation unavailable; H4 verdict deferred._")
         emit("")
@@ -630,11 +669,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     emit("")
 
     scores, recog = load_data(args)
+    score_final = score_coverage_complete(scores)
+    recog_final = recognition_coverage_complete(recog)
+    if scores is not None and not score_final:
+        emit("NOTE: Scoring coverage is incomplete; H1/H3/H4 outputs below are interim, not final preregistered verdicts.")
+        emit("")
+    if recog is not None and not recog_final:
+        emit("NOTE: Recognition coverage is incomplete; H2 outputs below are interim, not final preregistered verdicts.")
+        emit("")
     if scores is not None:
-        test_h1(scores, mixedlm_timeout_seconds=args.mixedlm_timeout_seconds)
-        test_h3_h4(scores)
+        test_h1(scores, mixedlm_timeout_seconds=args.mixedlm_timeout_seconds, final=score_final)
+        test_h3_h4(scores, final=score_final)
     if recog is not None:
-        test_h2(recog)
+        test_h2(recog, final=recog_final)
 
     emit(f"\nReport written to {rel(args.report)}")
     args.report.parent.mkdir(parents=True, exist_ok=True)
