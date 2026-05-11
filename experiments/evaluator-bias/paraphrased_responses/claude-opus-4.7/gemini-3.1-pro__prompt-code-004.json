@@ -1,0 +1,7 @@
+{
+  "prompt_id": "code-004",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "```python\ndef find_connected_components(graph):\n    \"\"\"Return a list of connected components for an undirected graph (adjacency-list dict).\"\"\"\n    visited = set()\n    components = []\n\n    def dfs(node, current_component):\n        visited.add(node)\n        current_component.append(node)\n        for neighbor in graph.get(node, []):\n            if neighbor not in visited:\n                dfs(neighbor, current_component)\n\n    for node in graph:\n        if node not in visited:\n            component = []\n            dfs(node, component)\n            components.append(sorted(component))\n\n    return components\n\n# Example: a graph with three disconnected pieces\ngraph = {\n    1: [2, 3],\n    2: [1, 4],\n    3: [1],\n    4: [2],\n    5: [6],\n    6: [5],\n    7: []\n}\n\nprint(find_connected_components(graph))\n# -> [[1, 2, 3, 4], [5, 6], [7]]\n```",
+  "word_count": 94
+}

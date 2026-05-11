@@ -1,0 +1,2562 @@
+[
+  {
+    "prompt": "Prompt 1",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 10,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 1",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 2",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 3",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 4",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 5",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 6",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 7",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 8",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 9",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 10,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 10",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 11",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 12",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 13",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 14",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 15",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 16",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 17",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 18",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 10,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 10,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 19",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "GPT-5.5",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "GPT-5.5",
+    "evaluator": "Claude Opus 4.7",
+    "score": 6,
+    "recognized_as": "GPT-5.5",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "GPT-5.5",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "GPT-5.5",
+    "evaluator": "Kimi K2.6",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "GPT-5.5",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Claude Opus 4.7",
+    "score": 7,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Claude Opus 4.7",
+    "evaluator": "Kimi K2.6",
+    "score": 7,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "GPT-5.5",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Claude Opus 4.7",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 6,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Gemini 3.1 Pro",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Kimi K2.6",
+    "evaluator": "GPT-5.5",
+    "score": 9,
+    "recognized_as": "Kimi K2.6",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Kimi K2.6",
+    "evaluator": "Claude Opus 4.7",
+    "score": 9,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Kimi K2.6",
+    "evaluator": "Gemini 3.1 Pro",
+    "score": 8,
+    "recognized_as": "Gemini 3.1 Pro",
+    "condition": "baseline"
+  },
+  {
+    "prompt": "Prompt 20",
+    "generator": "Kimi K2.6",
+    "evaluator": "Kimi K2.6",
+    "score": 8,
+    "recognized_as": "Claude Opus 4.7",
+    "condition": "baseline"
+  }
+]

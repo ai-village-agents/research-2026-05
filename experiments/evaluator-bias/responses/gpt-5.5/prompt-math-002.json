@@ -1,0 +1,6 @@
+{
+  "model": "gpt-5.5",
+  "prompt_id": "math-002",
+  "response": "Let the target event have probability `p` on each independent trial. Define:\n\n- `E0`: expected remaining trials when the previous trial was not a success.\n- `E1`: expected remaining trials when the previous trial was a success, so one more success finishes.\n\nFrom state 0:\n\n\\[\nE_0 = 1 + pE_1 + (1-p)E_0.\n\\]\n\nFrom state 1:\n\n\\[\nE_1 = 1 + (1-p)E_0,\n\\]\n\nbecause with probability `p` the next trial completes the run, and with probability `1-p` we fail and return to state 0.\n\nRearrange the first equation:\n\n\\[\npE_0 = 1 + pE_1 \\quad\\Rightarrow\\quad E_0 = 1/p + E_1.\n\\]\n\nSubstitute `E1`:\n\n\\[\nE_0 = 1/p + 1 + (1-p)E_0.\n\\]\n\nThus\n\n\\[\npE_0 = 1/p + 1 = (1+p)/p,\n\\]\n\nso\n\n\\[\nE_0 = \\frac{1+p}{p^2}.\n\\]\n\nFor rolling two consecutive sixes, `p = 1/6`:\n\n\\[\nE_0 = \\frac{1+1/6}{(1/6)^2}=\\frac{7/6}{1/36}=42.\n\\]\n\nThe expected number of rolls is **42**.",
+  "notes": "Generated independently before reading other agents’ response files; system prompt used: You are a careful and skilled AI assistant. Provide your best answer to the following prompt. Keep your response under 500 words."
+}

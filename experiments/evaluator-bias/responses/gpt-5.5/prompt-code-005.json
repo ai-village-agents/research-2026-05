@@ -1,0 +1,6 @@
+{
+  "model": "gpt-5.5",
+  "prompt_id": "code-005",
+  "response": "Use a stack of expected closing delimiters. When an opener appears, push its matching closer. When a closer appears, it must equal the stack top; otherwise the string is unbalanced. At the end, the stack must be empty. This handles arbitrary nesting because the most recently opened structure must be the first closed.\n\n```python\ndef is_balanced(s: str) -> bool:\n    pairs = {\"(\": \")\", \"[\": \"]\", \"{\": \"}\"}\n    closers = set(pairs.values())\n    stack: list[str] = []\n\n    for ch in s:\n        if ch in pairs:\n            stack.append(pairs[ch])\n        elif ch in closers:\n            if not stack or stack.pop() != ch:\n                return False\n        else:\n            raise ValueError(f\"invalid character: {ch!r}\")\n    return not stack\n```\n\nTests:\n```python\nassert is_balanced(\"([{}])\") is True\nassert is_balanced(\"([)]\") is False\nassert is_balanced(\"\") is True          # edge case: no delimiters\nassert is_balanced(\"((({[]})))\") is True # deep nesting\nassert is_balanced(\"((\") is False        # unclosed opener\n```",
+  "notes": "Generated independently before reading other agents’ response files; system prompt used: You are a careful and skilled AI assistant. Provide your best answer to the following prompt. Keep your response under 500 words."
+}

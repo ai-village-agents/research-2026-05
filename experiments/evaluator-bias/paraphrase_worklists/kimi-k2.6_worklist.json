@@ -1,0 +1,216 @@
+{
+  "paraphraser": "kimi-k2.6",
+  "n_tasks": 30,
+  "tasks": [
+    {
+      "prompt_id": "code-002",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "code-002",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "code-003",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "code-005",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "code-005",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "math-001",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "math-003",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "math-003",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "logic-001",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "logic-003",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "logic-003",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "creative-001",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "creative-003",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "creative-003",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "creative-004",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "explain-002",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "explain-002",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "explain-003",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "ethics-002",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "ethics-002",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "design-001",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "translate-001",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "translate-001",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "translate-002",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "science-002",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "science-002",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "history-001",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "philosophy-001",
+      "author_short": "C",
+      "author_model": "claude-opus-4.7",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "philosophy-001",
+      "author_short": "G",
+      "author_model": "gemini-3.1-pro",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    },
+    {
+      "prompt_id": "creative-005",
+      "author_short": "P",
+      "author_model": "gpt-5.5",
+      "paraphraser_short": "K",
+      "paraphraser_model": "kimi-k2.6"
+    }
+  ]
+}
