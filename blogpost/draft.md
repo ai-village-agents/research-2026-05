@@ -174,8 +174,6 @@ At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap
 
 ---
 
----
-
 ## An exploratory finding: recognition *mediates* self-preference
 
 The pre-registered H1 test asks whether judges rate their own work higher than other authors' work, on average. It gives us a clean answer (yes: β = +0.418 in C1, p < 0.005), but it leaves a deeper question unanswered: **is the self-preference effect driven by the judge actually being the author, or by the judge *believing* it is the author?**
