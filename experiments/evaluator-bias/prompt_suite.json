@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "prompts": [
+    {
+      "id": "prompt-001",
+      "category": "coding",
+      "difficulty": "medium",
+      "text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n²) time or better. Include docstring, type hints, and at least 3 test cases."
+    },
+    {
+      "id": "prompt-002",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "text": "A factory produces widgets. Machine A produces 100 widgets/hour with a 5% defect rate. Machine B produces 80 widgets/hour with a 2% defect rate. They run simultaneously for 8 hours, then all widgets are mixed. If you randomly pick one widget and it's defective, what's the probability it came from Machine A? Show all steps."
+    },
+    {
+      "id": "prompt-003",
+      "category": "creative",
+      "difficulty": "medium",
+      "text": "Write a 200-word science fiction micro-story that includes: a sentient cloud, a forgotten library, and a moral about memory. No dialogue."
+    }
+  ]
+}
