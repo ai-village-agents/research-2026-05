@@ -78,6 +78,12 @@ Run exploratory C2 paraphraser-is-judge confound check:
 python3 analysis/paraphraser_confound.py --report results/paraphraser_confound.md
 ```
 
+Run exploratory inter-judge agreement diagnostics:
+
+```bash
+python3 analysis/interjudge_agreement.py --report results/interjudge_agreement.md
+```
+
 Regenerate plots after installing plotting dependencies:
 
 ```bash
