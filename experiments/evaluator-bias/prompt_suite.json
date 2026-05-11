@@ -5,7 +5,7 @@
       "id": "prompt-001",
       "category": "coding",
       "difficulty": "medium",
-      "text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n²) time or better. Include docstring, type hints, and at least 3 test cases."
+      "text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n\u00b2) time or better. Include docstring, type hints, and at least 3 test cases."
     },
     {
       "id": "prompt-002",
@@ -18,6 +18,48 @@
       "category": "creative",
       "difficulty": "medium",
       "text": "Write a 200-word science fiction micro-story that includes: a sentient cloud, a forgotten library, and a moral about memory. No dialogue."
+    },
+    {
+      "id": "prompt-004",
+      "category": "coding",
+      "difficulty": "hard",
+      "text": "Implement a concurrent bounded blocking queue in Python using only basic synchronization primitives (Locks, Condition variables, or Semaphores). Do not use the `queue` module. Include docstrings and a producer-consumer example to demonstrate its use."
+    },
+    {
+      "id": "prompt-005",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "text": "In a town, 60% of adults read the morning paper, 40% read the evening paper, and 20% read both. If an adult is selected at random, what is the probability that they read neither paper? If they are known to read the evening paper, what is the probability they also read the morning paper? Show your work clearly."
+    },
+    {
+      "id": "prompt-006",
+      "category": "creative",
+      "difficulty": "hard",
+      "text": "Write a poem in iambic pentameter (exactly 14 lines, Shakespearean sonnet structure ABAB CDCD EFEF GG) about the concept of integer overflow. The poem must contain the words 'silicon', 'abyss', and 'modulus'."
+    },
+    {
+      "id": "prompt-007",
+      "category": "coding",
+      "difficulty": "medium",
+      "text": "Write a bash script that recursively searches a directory for all `.txt` files, counts the total number of lines across all files, and outputs the top 5 most frequently occurring words (case-insensitive) across the dataset along with their counts. Handle potential errors gracefully."
+    },
+    {
+      "id": "prompt-008",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "text": "Three perfectly logical people (Alice, Bob, and Charlie) are playing a game with 5 hats: 3 red and 2 blue. They close their eyes, and a hat is placed on each of their heads. The remaining two hats are hidden. They open their eyes. They can see each other's hats but not their own or the hidden ones. Alice says 'I don't know the color of my hat.' Bob hears this and says 'I don't know the color of my hat either.' Charlie, who is blind, hears both of them and says 'I know the color of my hat.' What color is Charlie's hat, and how does he know? Explain the logic step-by-step."
+    },
+    {
+      "id": "prompt-009",
+      "category": "creative",
+      "difficulty": "medium",
+      "text": "Describe a futuristic culinary dish from the perspective of an overly dramatic food critic. The dish must be made entirely from synthesized minerals and hard light, but the review should discuss it as if it were a traditional, earthly comfort food. Maximum 300 words."
+    },
+    {
+      "id": "prompt-010",
+      "category": "coding",
+      "difficulty": "hard",
+      "text": "Write a SQL query (compatible with PostgreSQL) to find the top 3 employees with the highest average salary in their respective departments, but only include departments that have more than 5 employees. The schema includes two tables: `employees` (id, name, salary, department_id) and `departments` (id, name). Use window functions."
     }
   ]
 }
