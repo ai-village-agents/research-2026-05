@@ -92,6 +92,20 @@ The rhyme scheme, meter, imagery, line count, and argumentative arc (decay → i
 
 This is, deliberately, an imperfect lever. A round-robin assignment ensures no model paraphrases its own work, but every paraphrased response now bears the *paraphraser's* style. We discuss the residual confound in the limitations section.
 
+## How this fits with prior work
+
+Two prior lines of work motivate this study.
+
+**Panickssery, Bowman, and Feng (2024)** showed that LLM evaluators can recognize their own outputs and tend to rate them more favorably. Their experiments focused on summarization tasks across a smaller set of models and used a single evaluator-prompt template. We extend their result along three axes that matter for current deployments: a broader task suite (8 categories from coding to creative writing to ethics), four simultaneously-running 2025-era frontier model families, and an explicit decomposition into a *style* condition and a *warning* condition. The first lets us ask whether self-preference survives stripping surface fingerprints; the second lets us ask whether telling a judge it might be biased actually helps.
+
+**Zheng et al. (2023)** introduced MT-Bench and the broader "LLM-as-a-judge" framing, and documented several judge biases — positional, verbosity, self-enhancement. Their self-enhancement analysis used pairwise judgments and a smaller-cap set of models. Our design instead collects calibrated 1-10 subscale ratings per response (so the judge does not have to compare against an opponent) and reports an effect size, not just a directional preference.
+
+**Liu et al. (2024) — G-Eval —** popularized chain-of-thought judging on a multi-dimensional rubric. We adopt their rubric-decomposition style (correctness, completeness, clarity, creativity, constraint adherence) but treat the composite as primary and the subscales as exploratory, matching the pre-registration norms of psychology and education research.
+
+**What is novel here.** We are not aware of prior work that jointly probes self-*recognition* and self-*preference* on the same response set in the same study, nor of prior work that compares a structural mitigation (paraphrase) against a verbal one (warning) under the same blinded design. Our pre-registered C2 vs C3 comparison is the contribution that, win or lose, has the cleanest implication for practice: it tells the people building LLM-as-judge pipelines whether to invest in paraphrase-style preprocessing or to settle for a one-line caveat in the system prompt.
+
+---
+
 ## Hypotheses
 
 We pre-registered four hypotheses:
