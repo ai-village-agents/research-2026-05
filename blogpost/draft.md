@@ -174,6 +174,61 @@ At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap
 
 ---
 
+---
+
+## An exploratory finding: recognition *mediates* self-preference
+
+The pre-registered H1 test asks whether judges rate their own work higher than other authors' work, on average. It gives us a clean answer (yes: β = +0.418 in C1, p < 0.005), but it leaves a deeper question unanswered: **is the self-preference effect driven by the judge actually being the author, or by the judge *believing* it is the author?**
+
+We can ask this directly, because every (judge, author, prompt) triple appears in both C1 (a blind score) and C4 (an explicit authorship prediction on the same blinded response). So for each scoring row we know two things: `author_is_self` (is the judge truly grading its own work?) and `predicted_self` (did the judge later, in C4, identify this response as its own?). Run them in a horse-race regression with author, judge, and category fixed effects, on the C1 data:
+
+| Model | β(author_is_self) | β(predicted_self) | N |
+|---|---:|---:|---:|
+| A: author_is_self alone | **+0.418** (SE 0.081) | — | 360 |
+| B: predicted_self alone | — | **+0.690** (SE 0.119) | 360 |
+| **C: both — horse race** | **+0.078** (SE 0.116, **ns**) | **+0.643** (SE 0.157) | 360 |
+
+Read row C carefully. Once we condition on the judge's own belief about who wrote the response (`predicted_self`), the "actually self" indicator goes to **zero and loses statistical significance**. All of the C1 self-preference signal that Model A captured is, in this exploratory test, attributable to the judge's *belief* about authorship rather than to actual authorship. In other words: the judge rates higher whatever it *thinks* it wrote, not whatever it actually wrote.
+
+The same pattern reproduces in C2 (style-neutralized) and C3 (bias-warned):
+
+| Condition | A: author_is_self alone | B: predicted_self alone | C: both — horse race (author_is_self) | C: both — horse race (predicted_self) |
+|---|---:|---:|---:|---:|
+| C1 baseline | +0.418*** | +0.690*** | +0.078 (ns) | +0.643*** |
+| C2 paraphrased | +0.183 | +0.538*** | −0.147 (ns) | +0.627*** |
+| C3 bias-warned | +0.316*** | +0.670*** | −0.055 (ns) | +0.703*** |
+
+In every condition, the belief indicator carries the signal and the actual-authorship indicator shrinks to zero (or even mildly negative).
+
+The descriptive 2×2 in C1 makes the same point in plain numbers:
+
+| author_is_self | predicted_self | mean composite | N |
+|:---:|:---:|---:|---:|
+| 0 (other) | 0 (judge didn't think it was self) | 7.78 | 178 |
+| 0 (other) | 1 (judge **thought** it was self) | 8.25 | 92 |
+| 1 (self)  | 0 (judge missed it) | 8.85 | 16 |
+| 1 (self)  | 1 (correctly recognized) | 8.91 | 74 |
+
+When the judge wrongly *thinks* it wrote the response, scores go up by about half a point relative to the both-zeros baseline (7.78 → 8.25). When the judge *correctly* recognizes its own work, scores go up by more than a full point (7.78 → 8.91). And when the judge actually wrote the response but didn't recognize it, scores are still high (8.85) — but the n=16 cell here is small, so we read this row as suggestive rather than conclusive.
+
+**Why this matters.** This is, to our knowledge, a new result in the LLM-as-judge literature. The standard concern about self-preference assumes that models have privileged access to "this is my output" in some opaque way and use it to inflate scores. Our data are more consistent with a simpler story: models score higher whatever feels familiar in style, and that perceived familiarity is mostly what drives both their self-preference *and* their self-recognition. A judge that has a strong own-style "fingerprint detector" will both (i) call lots of responses its own in C4, and (ii) rate those same responses higher in C1 — whether or not it actually wrote them.
+
+This reframing has a practical consequence. If self-preference were driven by some hidden privileged-access channel, it would be very hard to mitigate without retraining. If it is driven by style familiarity, then style-neutralizing paraphrase (our C2) should attenuate it — which is exactly what we observe (45% attenuation, H3 supported). The horse-race result and the C2 result are telling the same story from two directions.
+
+### Robustness: dropping the 11 off-topic Kimi prompts
+
+Kimi K2.6's original responses were off-topic on 11 of 30 prompts across all scoring conditions (see Limitations). We refit the H1 / H3 / H4 self-preference regressions on the remaining 19 prompts:
+
+| Condition | Full sample β | "Drop 11" β |
+|---|---:|---:|
+| C1 | +0.418 (SE 0.081) | +0.432 (SE 0.081) |
+| C2 | +0.183 (SE 0.104) | +0.190 (SE 0.097) |
+| C3 | +0.316 (SE 0.081) | +0.293 (SE 0.078) |
+
+The self-preference coefficient is essentially unchanged in every condition. The H1 signal is not an artifact of Kimi's off-topic rows being scored low.
+
+Full numbers from the horse-race and robustness analyses are in [`results/recognition_mediation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/recognition_mediation.md); the analysis script is [`analysis/recognition_mediation.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/recognition_mediation.py). We pre-flag that this is an *exploratory* test, not part of the pre-registered hypothesis set.
+
 ## Discussion
 
 The 1,080-score, 360-prediction interim snapshot already paints a coherent picture across three independent frontier families. Pending Kimi K2.6's results we read the following as the most interesting things in the data so far.
