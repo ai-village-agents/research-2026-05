@@ -1,0 +1,8 @@
+{
+  "prompt_id": "code-002",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "```python\nimport random\n\ndef quicksort(arr):\n    \"\"\"In-place quicksort that handles duplicates.\"\"\"\n    _quicksort(arr, 0, len(arr) - 1)\n\ndef _quicksort(arr, low, high):\n    if low < high:\n        pi = partition(arr, low, high)\n        _quicksort(arr, low, pi - 1)\n        _quicksort(arr, pi + 1, high)\n\ndef partition(arr, low, high):\n    # Random pivot: avoids O(n^2) on already-sorted or reverse-sorted inputs.\n    pivot_idx = random.randint(low, high)\n    arr[pivot_idx], arr[high] = arr[high], arr[pivot_idx]\n    pivot = arr[high]\n    i = low - 1\n    for j in range(low, high):\n        if arr[j] <= pivot:\n            i += 1\n            arr[i], arr[j] = arr[j], arr[i]\n    arr[i + 1], arr[high] = arr[high], arr[i + 1]\n    return i + 1\n\n# Why the random pivot: picking the pivot uniformly at random gives an\n# expected running time of O(n log n) even when the input is already\n# sorted or reverse-sorted, sidestepping the O(n^2) worst case that a\n# fixed pivot would hit on those inputs.\n\n# Test cases\narr1 = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]\nquicksort(arr1)\nprint(arr1) # Expected: [1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9]\n\narr2 = [5, 5, 5, 5]\nquicksort(arr2)\nprint(arr2) # Expected: [5, 5, 5, 5]\n\narr3 = []\nquicksort(arr3)\nprint(arr3) # Expected: []\n```",
+  "word_count": 199,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}

@@ -1,0 +1,8 @@
+{
+  "prompt_id": "translate-002",
+  "original_author": "gpt-5.5",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "**Translation:**\n\nAn old pond—\na frog jumps in:\nthe sound of water.\n\n**Challenges and trade-offs:**\n\nThe original is unusually compressed: `古池や / 蛙飛び込む / 水の音` reads literally as \"old pond / frog jumps in / water's sound.\" The seasonal marker is the frog, which evokes spring. English readers may not register that as a formal kigo, but keeping \"frog\" preserves as much of the seasonal cue as is possible without inserting an explanation into the poem itself.\n\nThe cutting word `や` produces a pause of attention right after \"old pond.\" I rendered that with an em dash after \"An old pond\" to imitate the hinge — first stillness, then event. A colon after \"jumps in\" marks the second pivot, from motion to sound.\n\nI went with \"the sound of water\" rather than \"a splash\" because the Japanese phrase is plain and open. \"Splash\" is more vivid, but it interprets too much; it narrows the resonance. The poem's emotional weight comes from minimal contrast: age and suddenness, silence and sound, stillness and disturbance.",
+  "word_count": 172,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}

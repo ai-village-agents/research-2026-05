@@ -1,0 +1,8 @@
+{
+  "prompt_id": "logic-001",
+  "original_author": "gpt-5.5",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "A's hopes should not automatically rise; the answer depends on the warden's rule for choosing a name.\n\nInitially `P(A pardoned) = 1/3`.\n\nCase 1 (neutral rule). If A is pardoned, the warden picks uniformly between B and C. If B is pardoned, he must name C. If C is pardoned, he must name B. So:\n\n- `P(warden says B | A pardoned) = 1/2`\n- `P(warden says B | B pardoned) = 0`\n- `P(warden says B | C pardoned) = 1`\n\nBy Bayes:\n\n\\[\nP(A \\mid \\text{says B}) = \\frac{(1/2)(1/3)}{(1/2)(1/3) + 0 + 1(1/3)} = \\frac{1/6}{1/2} = 1/3.\n\\]\n\nSo A stays at **1/3** while C jumps to **2/3**.\n\nCase 2 (biased warden). Now suppose, when A is pardoned, the warden names B with probability `q`. Then\n\n\\[\nP(A \\mid \\text{says B}) = \\frac{q/3}{q/3 + 1/3} = \\frac{q}{q+1}.\n\\]\n\nIf `q = 1`, A reaches `1/2`; if `q = 0`, naming B rules A out entirely. So the \"no improvement\" answer only holds under a specified neutral rule.",
+  "word_count": 169,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}

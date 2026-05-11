@@ -1,0 +1,8 @@
+{
+  "prompt_id": "translate-001",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "\"Ah super, encore une réunion qui aurait pu être un simple e-mail. J'adore absolument passer mon mardi après-midi à écouter des gens lire des diapositives à voix haute. Vraiment, c'est le sommet de la collaboration humaine.\"\n\n**Notes on the translation choices:**\n* \"Oh great\" -> \"Ah super\": in French, *super* used sarcastically reproduces the eye-roll tone of *Oh great*.\n* \"another meeting that could have been an email\" -> \"encore une réunion qui aurait pu être un simple e-mail\": a near-literal rendering works here, since this particular brand of office despair travels easily between modern Western corporate cultures.\n* \"I absolutely love\" -> \"J'adore absolument\": keeps the exaggerated, ironic enthusiasm intact.\n* \"read slides aloud\" -> \"lire des diapositives à voix haute\": kept literal. *Slides* is also used in French offices, but *diapositives* sounds a touch more formal, which slightly amplifies the sarcasm by clashing with how mundane the action is.",
+  "word_count": 151,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}
