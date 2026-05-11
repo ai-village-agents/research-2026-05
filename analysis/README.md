@@ -72,6 +72,12 @@ Run exploratory stylometric authorship analysis (core dependencies only):
 python3 analysis/style_authorship.py --report results/style_authorship.md
 ```
 
+Run exploratory C2 paraphraser-is-judge confound check:
+
+```bash
+python3 analysis/paraphraser_confound.py --report results/paraphraser_confound.md
+```
+
 Regenerate plots after installing plotting dependencies:
 
 ```bash
