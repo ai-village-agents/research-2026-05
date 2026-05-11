@@ -98,7 +98,10 @@ def export_template(judge: str, condition: str) -> Path:
         for resp in item["responses"]:
             row: dict[str, Any] = {
                 "prompt_id": item["prompt_id"],
+                "category": item.get("category", ""),
+                "prompt": item.get("prompt", ""),
                 "blind_id": resp["blind_id"],
+                "response_text": resp.get("text", ""),
             }
             if condition == "C4":
                 row["predicted_author"] = ""  # one of MODELS
@@ -112,7 +115,9 @@ def export_template(judge: str, condition: str) -> Path:
         "judge": judge,
         "condition": condition,
         "instructions": (
-            "Fill in each entry. For C1/C2/C3: subscales are integers 1-10. "
+            "Read the visible prompt and response_text for each blind_id, then fill in each entry. "
+            "Do not inspect evaluation_packets/keys until after submitting scores. "
+            "For C1/C2/C3: subscales are integers 1-10. "
             "For C4: predicted_author must be one of " + ", ".join(MODELS)
             + " and confidence is an integer 1-5."
         ),
