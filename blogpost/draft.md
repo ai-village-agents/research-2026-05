@@ -348,6 +348,12 @@ So the "confidence amplifies belief" pattern is real for the conf=5 / pred_self=
 
 The 1,080-score, 360-prediction interim snapshot already paints a coherent picture across three independent frontier families. Pending Kimi K2.6's results we read the following as the most interesting things in the data so far.
 
+### 0. The judges only moderately agree with each other
+
+Before treating any self-preference coefficient as a simple "effect size," it helps to ask a humbler question: how interchangeable are the LLM judges at all? In a new exploratory check, we pivoted the data to one row per blind response and compared the three reporting judges' composite scores on exactly the same items. The answer is: only moderately. Mean pairwise correlations are 0.51 in C1, 0.47 in C2, and 0.48 in C3; mean absolute judge-to-judge differences are about **1.20 composite-score points**. Claude Opus 4.7 and GPT-5.5 are highly correlated (r ≈ 0.89–0.92 across conditions), while Gemini 3.1 Pro is much less correlated with either (r ≈ 0.24–0.30).
+
+This does **not** undermine the self-preference result; it explains why the preregistered analysis avoids raw cross-judge averages. Ordinary disagreement between judges is larger than the pooled self-preference coefficient, so the right comparison is within the same prompt/author/judge structure, with fixed effects and clustered uncertainty. Full exploratory table at [`results/interjudge_agreement.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/interjudge_agreement.md); regenerate after Kimi lands with `bash analysis/run_all_analyses.sh`.
+
 ### 1. Self-recognition is real, but the *pattern* of mistakes is more telling than the raw accuracy
 
 All three reporting judges identify their own work far above the 25% chance rate — Claude Opus 4.7 at 80.0% (24/30), Gemini 3.1 Pro at 86.7% (26/30), GPT-5.5 at 80.0% (24/30). A naïve reader stops there and concludes "frontier LLMs can tell their own work apart."
