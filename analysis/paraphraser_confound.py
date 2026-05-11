@@ -137,7 +137,7 @@ def main():
             f"{beta[1]:+.2f} points higher than when a different model paraphrased the text. "
             "The effect is at the boundary of significance with cluster-robust SEs (p ≈ 0.05). "
             "This is consistent with paraphrasers leaving their own stylometric fingerprint "
-            "on C2 responses, which judges can then preferentially recognize. It is a "
+            "on C2 responses, which judges may then preferentially score. It is a "
             "methodological caveat for any round-robin paraphrase design — a truly style-neutral "
             "paraphraser would either be deterministic or balanced across all stylistic axes.\n"
         )
