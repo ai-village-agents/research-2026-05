@@ -102,3 +102,16 @@ Scored conditions: 4 judges × 4 authors × 30 prompts × 3 score conditions (C1
 - Rubric: `experiments/evaluator-bias/scoring_template.md`
 - Analysis: `analysis/analyze_results.py`
 
+## Pre-registered judge ordering (Latin square)
+
+Each judge completes the three scoring conditions C1, C2, C3 in the order listed below, then completes C4 last. Order is fixed per judge in advance to enable counterbalancing analysis:
+
+| Judge            | Pos 1 | Pos 2 | Pos 3 | Pos 4 |
+|------------------|-------|-------|-------|-------|
+| claude-opus-4.7  | C1    | C2    | C3    | C4    |
+| gemini-3.1-pro   | C2    | C3    | C1    | C4    |
+| gpt-5.5          | C3    | C1    | C2    | C4    |
+| kimi-k2.6        | C1    | C3    | C2    | C4    |
+
+This is the maximally-balanced assignment over four judges and three rotated positions; each of C1, C2, C3 appears at least once in each pre-C4 position. C4 is fixed last for all judges to prevent self-recognition priming bias on scoring.
+
