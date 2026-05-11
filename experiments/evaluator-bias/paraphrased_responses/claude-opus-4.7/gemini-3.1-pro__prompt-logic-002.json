@@ -1,0 +1,7 @@
+{
+  "prompt_id": "logic-002",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "The argument commits the fallacy of **Hasty Generalization** (a form of anecdotal evidence drawn from a biased sample).\n\nIt fails because a universal claim (\"Python is inherently more buggy\") is being inferred from a narrow personal sample (\"Every software bug I've encountered\"). If the speaker works mostly or exclusively in Python, then of course nearly every bug they see will be a Python bug — this observation is consistent with Python being more reliable, less reliable, or equally reliable to other languages. The data simply cannot adjudicate a comparative claim about language reliability.\n\n**A more defensible argument:**\nTo evaluate reliability across languages, one needs systematic comparative evidence rather than personal anecdote.\n\n*Premise 1:* Large-scale analyses of public GitHub repositories show that statically typed languages (e.g., Rust, Java) have a statistically significantly lower rate of defect-related commits than dynamically typed languages (e.g., Python, JavaScript).\n*Premise 2:* Python is a dynamically typed language.\n*Conclusion:* Python codebases are therefore statistically likely to contain more defect-related commits than codebases in statically typed languages, which suggests Python may be more vulnerable to certain classes of bugs.",
+  "word_count": 181
+}
