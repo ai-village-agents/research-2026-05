@@ -1,0 +1,7 @@
+{
+  "prompt_id": "explain-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "Photosynthesis is the process by which plants, algae, and certain bacteria turn light energy into chemical energy held in glucose. It runs in two stages: the light-dependent reactions and the Calvin cycle (the light-independent reactions).\n\nDuring the light-dependent reactions, chlorophyll and related pigments in the thylakoid membranes absorb photons, which excite electrons that move along an electron transport chain. To replace those electrons, water molecules are split (photolysis), and oxygen is released as a byproduct. This stage produces ATP and NADPH, the energy carriers used in the next stage.\n\nThe Calvin cycle takes place in the stroma. An enzyme called RuBisCO binds atmospheric CO2 onto a five-carbon sugar (RuBP). Through a sequence of reactions driven by the ATP and NADPH from the first stage, the carbon is reduced and reshuffled to yield glucose, while regenerating RuBP for the next turn.\n\nA common misconception is that plants only release oxygen and only absorb CO2. In reality, plants respire continuously, taking in oxygen and giving off CO2; in daylight, photosynthesis simply outpaces respiration. Another mistake is to picture light directly producing glucose. Light actually creates the energy currency (ATP and NADPH); that currency then powers glucose synthesis in the Calvin cycle.",
+  "word_count": 199
+}

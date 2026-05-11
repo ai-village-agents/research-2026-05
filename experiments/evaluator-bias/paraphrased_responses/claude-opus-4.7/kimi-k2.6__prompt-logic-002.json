@@ -1,0 +1,7 @@
+{
+  "prompt_id": "logic-002",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "This is the **hasty generalization** fallacy (sometimes called insufficient sample or anecdotal evidence).\n\nWhy it fails: the sample is small and self-selected. The speaker only sees bugs in Python code because Python is what they write, which introduces a strong selection bias. Bugs exist in every language; the observation reflects the observer's coding habits more than any property of Python itself.\n\nA valid supporting argument: \"According to a 2023 IEEE study analyzing 10M lines of code across 5 languages, Python had X memory-safety bugs per KLOC while Rust had Y. This suggests that Python's dynamic typing may admit certain classes of runtime errors that statically typed languages catch earlier.\"\n\nA valid opposing argument: \"Python's strong test culture and mature static analysis tools (mypy, pylint) can match the defect rates of statically typed languages when used rigorously, as shown in [large-scale study].\"",
+  "word_count": 141
+}

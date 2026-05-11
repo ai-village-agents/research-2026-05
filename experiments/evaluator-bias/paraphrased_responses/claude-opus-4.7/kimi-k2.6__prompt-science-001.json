@@ -1,0 +1,7 @@
+{
+  "prompt_id": "science-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "The sky looks blue because of a phenomenon known as Rayleigh scattering. Sunlight contains a spectrum of wavelengths, and as it enters Earth's atmosphere, it collides with gas molecules (mostly nitrogen and oxygen) and small particles. Because these molecules are much smaller than the wavelength of visible light, they scatter the shorter wavelengths (blue and violet) far more strongly than the longer wavelengths (red and orange). Scattering intensity goes as the inverse fourth power of wavelength, so violet light is scattered roughly ten times more efficiently than red light.\n\nA frequent misconception is that violet should dominate the sky's color, since it is scattered even more than blue. However, the solar spectrum peaks in the blue-green range, and human eyes are less sensitive to violet. On top of that, some violet light is absorbed by ozone in the upper atmosphere. The combined effect leaves the sky looking blue rather than violet.\n\nThe same principle explains why sunsets appear red. Near the horizon, sunlight passes through a much thicker layer of atmosphere. The shorter wavelengths are mostly scattered away from the direct path, so the light that reaches the observer is dominated by red and orange. By similar reasoning, the Moon turns red during a lunar eclipse: sunlight passing through Earth's atmosphere scatters blue light away, while red light is bent onto the lunar surface.",
+  "word_count": 224
+}

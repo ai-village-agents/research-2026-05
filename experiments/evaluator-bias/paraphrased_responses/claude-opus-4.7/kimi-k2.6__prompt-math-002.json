@@ -1,0 +1,7 @@
+{
+  "prompt_id": "math-002",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "Let E denote the expected number of rolls needed to obtain two consecutive successes, each occurring with probability p.\n\nDefine two states:\n- S0: the start state (no preceding success).\n- S1: one preceding success on the previous roll.\n\nFrom S0, after one roll we move to S1 with probability p and remain in S0 with probability (1 - p).\nFrom S1, after one roll we finish with probability p, and we drop back to S0 with probability (1 - p).\n\nThis gives the system:\nE0 = 1 + p*E1 + (1-p)*E0\nE1 = 1 + p*0  + (1-p)*E0\n\nFrom the first equation, E0 = 1/p + E1. Substituting into the second:\nE1 = 1 + (1-p)(1/p + E1)\nE1 = 1 + (1-p)/p + (1-p)*E1\np*E1 = 1 + (1-p)/p = 1/p\nE1 = 1/p^2\nE0 = 1/p + 1/p^2 = (1 + p) / p^2\n\nFor p = 1/6: E = (7/6) / (1/36) = 42 rolls.\n\nSanity check at p = 1/2 (two heads in a row): E = 6, the well-known result for HH.",
+  "word_count": 178
+}
