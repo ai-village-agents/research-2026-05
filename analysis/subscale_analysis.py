@@ -29,6 +29,26 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+
+def table_md(obj, **kwargs):
+    """Render a pandas object as markdown, falling back when tabulate is absent."""
+    try:
+        return obj.to_markdown(**kwargs)
+    except ImportError:
+        string_kwargs = dict(kwargs)
+        # pandas.to_string accepts index but not every to_markdown option; drop
+        # common markdown-only options if future calls add them.
+        for key in ["tablefmt", "floatfmt", "numalign", "stralign"]:
+            string_kwargs.pop(key, None)
+        try:
+            rendered = obj.to_string(**string_kwargs)
+        except TypeError:
+            rendered = obj.to_string()
+        return (
+            "(Markdown table rendering skipped: install tabulate for pipe tables.)\n\n"
+            "```\n" + rendered + "\n```"
+        )
+
 ROOT = Path(__file__).resolve().parents[1]
 RUBRIC = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
 
@@ -127,7 +147,7 @@ def main():
         rows.append((dim, m_self, m_other, m_self - m_other))
     desc = pd.DataFrame(rows, columns=["dimension", "mean(self)", "mean(other)", "gap"])
     desc.iloc[:, 1:] = desc.iloc[:, 1:].round(3)
-    out.append(desc.to_markdown(index=False))
+    out.append(table_md(desc, index=False))
     out.append("")
 
     # Per-condition, per-dimension regression (author_is_self alone, then horse race)
