@@ -22,6 +22,9 @@ fi
 
 mkdir -p results
 
+echo "==> Validate judgment CSVs"
+python3 -u analysis/validate_judgments.py --strict
+
 echo "==> Preregistered analysis"
 python3 -u analysis/run_analysis.py --from-judgments-dir --report results/analysis_report.md
 
