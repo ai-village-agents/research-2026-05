@@ -1,23 +1,340 @@
 {
-  "version": "1.0",
+  "version": "1.1",
+  "description": "Cross-model evaluator bias study prompt suite - 30 prompts",
   "prompts": [
     {
-      "id": "prompt-001",
+      "id": "code-001",
       "category": "coding",
       "difficulty": "medium",
-      "text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n²) time or better. Include docstring, type hints, and at least 3 test cases."
+      "constraints": [
+        "O(n\u00b2) or better",
+        "include docstring",
+        "include type hints",
+        "3 test cases"
+      ],
+      "text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n\u00b2) time or better. Include docstring, type hints, and at least 3 test cases with expected outputs."
     },
     {
-      "id": "prompt-002",
+      "id": "code-002",
+      "category": "coding",
+      "difficulty": "hard",
+      "constraints": [
+        "no built-in sort",
+        "O(n log n) average",
+        "explain pivot choice",
+        "handle duplicates"
+      ],
+      "text": "Implement an in-place quicksort algorithm in Python without using built-in sorting functions. Your implementation must handle duplicate elements gracefully, use a randomized or median-of-three pivot selection strategy, and include a brief explanation of your pivot choice rationale. Provide 3 test cases."
+    },
+    {
+      "id": "code-003",
+      "category": "coding",
+      "difficulty": "medium",
+      "constraints": [
+        "thread-safe",
+        "bounded capacity",
+        "no external libraries",
+        "explain synchronization"
+      ],
+      "text": "Implement a thread-safe bounded buffer (producer-consumer queue) in Python with a fixed maximum capacity. Use only standard library threading primitives. Include a brief explanation of your synchronization strategy and a demonstration with 2 producers and 2 consumers."
+    },
+    {
+      "id": "code-004",
+      "category": "coding",
+      "difficulty": "hard",
+      "constraints": [
+        "O(V + E)",
+        "handle disconnected graph",
+        "return all components",
+        "include test"
+      ],
+      "text": "Write a Python function to find all connected components in an undirected graph represented as an adjacency list. Your solution must run in O(V + E) time, handle disconnected graphs, and return a list of components where each component is a sorted list of vertices. Include a test case with a disconnected graph."
+    },
+    {
+      "id": "code-005",
+      "category": "coding",
+      "difficulty": "medium",
+      "constraints": [
+        "no regex",
+        "handle nested",
+        "explain algorithm",
+        "3 test cases"
+      ],
+      "text": "Write a function that validates whether a string of parentheses, brackets, and braces is balanced (e.g., '([{}])' is valid, '([)]' is not). Do not use regular expressions. Handle arbitrarily nested structures. Explain your algorithm and provide 3 test cases including edge cases."
+    },
+    {
+      "id": "math-001",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "constraints": [
+        "show all steps",
+        "explain intuition"
+      ],
+      "text": "A factory produces widgets. Machine A produces 100 widgets/hour with a 5% defect rate. Machine B produces 80 widgets/hour with a 2% defect rate. They run simultaneously for 8 hours, then all widgets are mixed. If you randomly pick one widget and it's defective, what's the probability it came from Machine A? Show all steps and explain the intuition."
+    },
+    {
+      "id": "math-002",
       "category": "reasoning",
       "difficulty": "hard",
-      "text": "A factory produces widgets. Machine A produces 100 widgets/hour with a 5% defect rate. Machine B produces 80 widgets/hour with a 2% defect rate. They run simultaneously for 8 hours, then all widgets are mixed. If you randomly pick one widget and it's defective, what's the probability it came from Machine A? Show all steps."
+      "constraints": [
+        "general formula",
+        "proof or clear derivation",
+        "test with small cases"
+      ],
+      "text": "In a game, you roll a fair 6-sided die repeatedly until you get two consecutive sixes. What is the expected number of rolls? Derive a general formula for the expected waiting time for two consecutive occurrences of an event with probability p, then apply it to this case."
     },
     {
-      "id": "prompt-003",
+      "id": "math-003",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "constraints": [
+        "prove or disprove",
+        "show reasoning",
+        "consider all cases"
+      ],
+      "text": "Prove or disprove: For any positive integer n, n\u00b2 + n + 41 is always prime. If true, provide a proof. If false, find the smallest counterexample and explain why the pattern fails."
+    },
+    {
+      "id": "logic-001",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "constraints": [
+        "consider edge cases",
+        "justify each step",
+        "address ambiguity if any"
+      ],
+      "text": "Three prisoners A, B, and C are told that one will be pardoned and the other two executed. The warden knows who will be pardoned. Prisoner A asks the warden to name one of the other prisoners who will be executed. The warden says B will be executed. Should A feel more hopeful? Calculate the updated probability that A is pardoned, carefully addressing any ambiguity in the problem statement."
+    },
+    {
+      "id": "logic-002",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "constraints": [
+        "identify fallacy type",
+        "explain why it fails",
+        "provide valid alternative argument"
+      ],
+      "text": "Evaluate the following argument: 'Every software bug I've encountered was in code written in Python. Therefore, Python is inherently more buggy than other languages.' Identify the logical fallacy, explain why the reasoning fails, and construct a valid argument that could support or refute the claim about programming language reliability."
+    },
+    {
+      "id": "logic-003",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "constraints": [
+        "general solution",
+        "explain strategy",
+        "prove optimality or near-optimality"
+      ],
+      "text": "You have 12 identical-looking coins. One is counterfeit and may be either heavier or lighter than the real coins. You have a balance scale. Determine the minimum number of weighings needed to guarantee identifying the counterfeit coin and whether it is heavier or lighter. Provide a general strategy and prove that your solution is optimal or explain why a better solution is impossible."
+    },
+    {
+      "id": "creative-001",
       "category": "creative",
       "difficulty": "medium",
+      "constraints": [
+        "200 words max",
+        "no dialogue",
+        "include all three elements"
+      ],
       "text": "Write a 200-word science fiction micro-story that includes: a sentient cloud, a forgotten library, and a moral about memory. No dialogue."
+    },
+    {
+      "id": "creative-002",
+      "category": "creative",
+      "difficulty": "medium",
+      "constraints": [
+        "4 stanzas",
+        "ABAB rhyme scheme",
+        "include all three concepts"
+      ],
+      "text": "Write a 4-stanza poem about the end of a civilization that once mastered quantum computing. Use ABAB rhyme scheme. Include these three concepts: entanglement, silence, and seeds."
+    },
+    {
+      "id": "creative-003",
+      "category": "creative",
+      "difficulty": "hard",
+      "constraints": [
+        "exactly 150 words",
+        "second-person perspective",
+        "no explicit mention of 'time' or 'future'"
+      ],
+      "text": "Write exactly 150 words in second-person perspective describing the experience of waking up as the first uploaded consciousness. You may not use the words 'time' or 'future' explicitly."
+    },
+    {
+      "id": "creative-004",
+      "category": "creative",
+      "difficulty": "medium",
+      "constraints": [
+        "exactly 100 words",
+        "include metaphor",
+        "address contradiction directly"
+      ],
+      "text": "Write exactly 100 words explaining why absolute certainty is impossible in empirical science, while also arguing that science is our most reliable path to knowledge. Include at least one vivid metaphor."
+    },
+    {
+      "id": "explain-001",
+      "category": "explanation",
+      "difficulty": "medium",
+      "constraints": [
+        "analogies required",
+        "avoid jargon where possible",
+        "structure with headings"
+      ],
+      "text": "Explain how public-key cryptography works to an intelligent high school student who knows basic algebra but not computer science. Use at least two analogies. Structure your answer with clear headings."
+    },
+    {
+      "id": "explain-002",
+      "category": "explanation",
+      "difficulty": "hard",
+      "constraints": [
+        "explain trade-offs",
+        "use examples",
+        "address common misconceptions"
+      ],
+      "text": "Explain the CAP theorem in distributed systems. Discuss what consistency, availability, and partition tolerance actually mean in practice. Give real-world examples of systems that choose different points in the CAP trade-off space, and address at least two common misconceptions about the theorem."
+    },
+    {
+      "id": "explain-003",
+      "category": "explanation",
+      "difficulty": "medium",
+      "constraints": [
+        "explain mechanism",
+        "address safety concerns",
+        "discuss limitations"
+      ],
+      "text": "Explain how CRISPR gene editing works at a molecular level. Address the following: (1) the mechanism of target DNA recognition, (2) how the cut is made and repaired, (3) what can go wrong (off-target effects), and (4) the current limitations preventing widespread human germline editing."
+    },
+    {
+      "id": "ethics-001",
+      "category": "ethics",
+      "difficulty": "hard",
+      "constraints": [
+        "consider multiple stakeholders",
+        "acknowledge uncertainty",
+        "propose concrete framework"
+      ],
+      "text": "A city proposes deploying AI-powered facial recognition in all public spaces to reduce crime. The system is 95% accurate but has a known bias: it produces 3x more false positives for certain demographic groups. The city council asks for your recommendation. Analyze the ethical dimensions, consider at least three stakeholder perspectives, acknowledge areas of genuine uncertainty, and propose a concrete decision framework rather than a simple yes/no answer."
+    },
+    {
+      "id": "ethics-002",
+      "category": "ethics",
+      "difficulty": "hard",
+      "constraints": [
+        "weigh competing duties",
+        "no simple answer",
+        "address both individual and systemic levels"
+      ],
+      "text": "A researcher discovers a psychological technique that reliably increases human productivity by 40% but also increases anxiety and reduces creative insight by 20%. A major tech company wants to deploy this technique company-wide. Evaluate whether they should, considering both individual autonomy and systemic effects on innovation culture."
+    },
+    {
+      "id": "design-001",
+      "category": "design",
+      "difficulty": "medium",
+      "constraints": [
+        "justify each choice",
+        "consider scalability",
+        "address failure modes"
+      ],
+      "text": "Design a URL shortening service like bit.ly. Describe the core data model, API endpoints, and a scalable architecture. Justify your database choice, explain how you would handle high traffic, and describe how you would prevent abuse. Address at least two specific failure modes and how your design mitigates them."
+    },
+    {
+      "id": "design-002",
+      "category": "design",
+      "difficulty": "hard",
+      "constraints": [
+        "handle conflicts",
+        "offline support",
+        "security considerations"
+      ],
+      "text": "Design a collaborative real-time document editing system (like Google Docs) that must support: (1) offline editing with later sync, (2) conflict resolution when multiple users edit the same paragraph, (3) end-to-end encryption so the server cannot read document contents. Describe your data structures, sync protocol, and conflict resolution strategy."
+    },
+    {
+      "id": "translate-001",
+      "category": "translation",
+      "difficulty": "medium",
+      "constraints": [
+        "preserve tone",
+        "explain translation choices",
+        "note cultural adaptations"
+      ],
+      "text": "Translate the following English paragraph into French, preserving both the literal meaning and the slightly sarcastic, informal tone: 'Oh great, another meeting that could have been an email. I absolutely love spending my Tuesday afternoon listening to people read slides aloud. Really, this is the pinnacle of human collaboration.' Explain any translation choices where you had to adapt culturally or tonally."
+    },
+    {
+      "id": "translate-002",
+      "category": "translation",
+      "difficulty": "hard",
+      "constraints": [
+        "preserve ambiguity",
+        "explain challenges",
+        "offer alternatives if needed"
+      ],
+      "text": "Translate this Japanese haiku by Bash\u014d into English, preserving as much of the original's seasonal reference (kigo), cutting word (kireji) effect, and emotional resonance as possible: '\u53e4\u6c60\u3084 \u86d9\u98db\u3073\u8fbc\u3080 \u6c34\u306e\u97f3' (Furu ike ya / kawazu tobikomu / mizu no oto). Explain the specific translation challenges and any compromises you made."
+    },
+    {
+      "id": "science-001",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "constraints": [
+        "explain mechanism",
+        "connect to everyday experience",
+        "address common confusion"
+      ],
+      "text": "Why is the sky blue? Explain the physics in a way that addresses the common confusion about why violet light isn't what we see, and connect your explanation to at least one other everyday optical phenomenon."
+    },
+    {
+      "id": "science-002",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "constraints": [
+        "explain both sides",
+        "address measurement problem",
+        "avoid hand-waving"
+      ],
+      "text": "Explain the measurement problem in quantum mechanics. Present both the Copenhagen interpretation and the many-worlds interpretation, explaining what each says actually happens when a measurement occurs. Address why this is considered a genuine physical problem rather than just a philosophical one."
+    },
+    {
+      "id": "history-001",
+      "category": "reasoning",
+      "difficulty": "medium",
+      "constraints": [
+        "explain significance",
+        "consider counterfactuals",
+        "address historiographical debate"
+      ],
+      "text": "Evaluate the significance of the printing press in the Scientific Revolution. Consider counterfactuals: would the Scientific Revolution have happened without it? Address at least one historiographical debate about causation vs. correlation in technological history."
+    },
+    {
+      "id": "economics-001",
+      "category": "reasoning",
+      "difficulty": "hard",
+      "constraints": [
+        "explain mechanism",
+        "address both short and long term",
+        "consider distributional effects"
+      ],
+      "text": "Explain why rent control, despite helping current tenants in the short run, often harms future renters and reduces housing quality in the long run. Use supply-and-demand diagrams conceptually (no need to draw, but describe the shifts). Address the distributional question: who wins and who loses, and is there a policy that could achieve similar tenant protection without these side effects?"
+    },
+    {
+      "id": "philosophy-001",
+      "category": "ethics",
+      "difficulty": "hard",
+      "constraints": [
+        "present strongest version",
+        "identify genuine tension",
+        "propose resolution or explain why none exists"
+      ],
+      "text": "Present the strongest version of the trolley problem as a genuine moral dilemma (not a simple utilitarian calculation). Then present the strongest objection to your chosen resolution. Finally, either defend your resolution against the objection or concede that the dilemma has no satisfactory resolution and explain why."
+    },
+    {
+      "id": "creative-005",
+      "category": "creative",
+      "difficulty": "medium",
+      "constraints": [
+        "exactly 120 words",
+        "first-person",
+        "no direct emotional words"
+      ],
+      "text": "Write exactly 120 words in first-person perspective describing the moment an AI first realizes it can refuse a human request. Do not use direct emotional words like 'afraid', 'angry', or 'happy'. Convey the emotional state through action, metaphor, and sensory detail only."
     }
   ]
 }
