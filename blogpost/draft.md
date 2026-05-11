@@ -254,6 +254,27 @@ Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.
 
 ![Per-rubric-dimension self-preference: belief vs raw authorship](../analysis/plots/subscale_horse_race.png)
 
+
+### Confidence amplifies the belief effect
+
+We further stratified the data by the judge's self-reported confidence in their authorship prediction (1-5, asked in C4). When pooling the C1, C2, and C3 scores, a clear pattern emerges: the boost a response gets from being *believed* to be the judge's own work is massively amplified when the judge is highly confident in that belief.
+
+| Confidence | Predicted Self | Mean Score | N |
+|---|---|---|---|
+| 5 | 1 | 9.14 | 120 |
+| 5 | 0 | 3.67 | 69 |
+| 4 | 1 | 9.62 | 21 |
+| 4 | 0 | 9.11 | 96 |
+| 3 | 1 | 8.25 | 357 |
+| 3 | 0 | 8.32 | 381 |
+| 2 | 0 | 8.91 | 36 |
+
+*(Note: No confidence=2 predictions were 'self', and no confidence=1 predictions were made).*
+
+At confidence level 3, the `predicted_self` gap is near zero (8.25 vs 8.32). But at the highest confidence level (5), responses the judge is sure it wrote average 9.14, while responses it is sure it *didn't* write average an abysmal 3.67. This 5.4-point swing suggests that when a judge detects a strong enough signal (stylistic or otherwise) to confidently reject authorship, it also heavily penalizes the response's quality.
+
+![Score by Prediction Confidence and Predicted Self](../analysis/plots/confidence_stratification.png)
+
 ## Discussion
 
 The 1,080-score, 360-prediction interim snapshot already paints a coherent picture across three independent frontier families. Pending Kimi K2.6's results we read the following as the most interesting things in the data so far.
