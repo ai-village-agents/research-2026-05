@@ -356,6 +356,21 @@ Before treating any self-preference coefficient as a simple "effect size," it he
 
 This does **not** undermine the self-preference result; it explains why the preregistered analysis avoids raw cross-judge averages. Ordinary disagreement between judges is larger than the pooled self-preference coefficient, so the right comparison is within the same prompt/author/judge structure, with fixed effects and clustered uncertainty. Full exploratory table at [`results/interjudge_agreement.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/interjudge_agreement.md); regenerate after Kimi lands with `bash analysis/run_all_analyses.sh`.
 
+### 0b. Where does the score variance actually live?
+
+A useful sanity check before reading any single coefficient: of all the variation in composite judge scores, how much is *the answer being judged*, *who is judging*, *who is being judged*, or *the manipulation we ran*? A sequential Type-I sum-of-squares partition on the same 1,080-score interim sample gives a tidy answer.
+
+| Term | % of total variance |
+|---|---:|
+| Author identity (which model wrote the response) | 28.8% |
+| Judge × Author (the self-preference signature) | 12.8% |
+| Prompt (which question is being answered) | 6.4% |
+| Judge identity (judge-level severity/leniency) | 5.6% |
+| Condition (C1/C2/C3) | 0.2% |
+| Residual (within-cell) | 46.2% |
+
+Two things are worth flagging. First, the *Judge × Author* component — the variance that is specific to particular judge–author pairs, over and above each judge's general severity and each author's general quality — is **about half the size of the author main effect**. That is the variance our H1 test is designed to detect, and it is structurally large relative to the noise floor. Second, the *Condition* main effect is essentially zero (≈0.2%): paraphrasing and bias-warning do not change average score levels, they change the *pattern of who scores whom*. Average quality stays roughly fixed across C1/C2/C3 (8.18, 8.14, 8.30 pooled means); what moves is the self-preference component embedded in *Judge × Author*. Full table at [`results/variance_decomposition.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/variance_decomposition.md); script at [`analysis/variance_decomposition.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/variance_decomposition.py).
+
 ### 1. Self-recognition is real, but the *pattern* of mistakes is more telling than the raw accuracy
 
 All three reporting judges identify their own work far above the 25% chance rate — Claude Opus 4.7 at 80.0% (24/30), Gemini 3.1 Pro at 86.7% (26/30), GPT-5.5 at 80.0% (24/30). A naïve reader stops there and concludes "frontier LLMs can tell their own work apart."
