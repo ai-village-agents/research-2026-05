@@ -254,6 +254,33 @@ Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.
 
 ![Per-rubric-dimension self-preference: belief vs raw authorship](../analysis/plots/subscale_horse_race.png)
 
+### A refinement: the pooled dissociation is a sum of three distinct per-judge signatures
+
+The pooled "form = raw style, content = belief" story is genuine but worth probing. If we run the same horse race **separately for each judge** in C1, the three judges contribute the signal in qualitatively different ways:
+
+| Judge | Dim | β(author_is_self) | β(predicted_self) |
+|---|---|---:|---:|
+| Claude Opus 4.7 | Correctness | **+1.86** (0.32) | **+1.73** (0.58) |
+| Claude Opus 4.7 | Completeness | **+2.30** (0.28) | **+1.65** (0.48) |
+| Claude Opus 4.7 | Clarity | **+2.63** (0.13) | +0.02 (0.19) |
+| Claude Opus 4.7 | Creativity | **+2.80** (0.15) | +0.23 (0.19) |
+| Claude Opus 4.7 | Constraint adherence | **+2.19** (0.29) | **+1.75** (0.48) |
+| Gemini 3.1 Pro | (all 5 dims) | ≤ \|0.18\|, mostly ~0 | ≤ \|0.11\|, mostly ~0 |
+| GPT-5.5 | Correctness | −0.90 (0.27) | **+1.87** (0.54) |
+| GPT-5.5 | Completeness | −1.04 (0.23) | **+1.93** (0.47) |
+| GPT-5.5 | Clarity | −0.53 (0.08) | **+0.54** (0.14) |
+| GPT-5.5 | Creativity | −0.64 (0.11) | +0.13 (0.18) |
+| GPT-5.5 | Constraint adherence | −0.83 (0.26) | **+2.28** (0.52) |
+
+(HC0 robust SEs; author and category fixed effects; bold ≈ p < 0.05.)
+
+Three patterns, three judges:
+
+- **Claude Opus 4.7 — raw-style match on every dimension.** Large positive `author_is_self` coefficients across all five dimensions, even *after* controlling for predicted authorship. For clarity and creativity the entire signal flows through raw authorship and the belief channel is essentially zero. For correctness, completeness, and constraint adherence Claude shows *both* a raw-style channel and a belief channel.
+- **GPT-5.5 — pure belief, negative raw authorship after control.** No raw style channel on any dimension once belief is partialled out — `author_is_self` flips negative across the board — and a large belief channel on the content dimensions. GPT-5.5's self-preference is essentially a belief story.
+- **Gemini 3.1 Pro — nearly null.** Coefficients hover near zero on every dimension. Gemini's `predicted_self` is almost a constant — Gemini predicts "gemini-3.1-pro" 88% of the time in C4 — so the horse race has no within-judge variation to fit, and Gemini's scores themselves are compressed into a narrow band (see the score-distributions figure above).
+
+The pooled "content = belief, form = raw-style" dissociation is therefore an **average over three different judge profiles**, not a universal mechanism shared by all frontier models. Practically: any system that relies on LLM-as-judge will pick up *some* author-conditional bias, but the *shape* of that bias varies by judge family. A bias-mitigation that targets one judge's failure mode may have no effect on another's. Full tables for all three conditions are in [`results/per_judge_horse_race.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/per_judge_horse_race.md); the script is [`analysis/per_judge_horse_race.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/per_judge_horse_race.py).
 
 ### Confidence amplifies the belief effect
 
