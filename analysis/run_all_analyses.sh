@@ -13,17 +13,31 @@ if [[ ! -d analysis || ! -d data ]]; then
 fi
 
 RUN_PLOTS=0
-if [[ "${1:-}" == "--plots" ]]; then
-  RUN_PLOTS=1
-elif [[ $# -gt 0 ]]; then
-  echo "Usage: bash analysis/run_all_analyses.sh [--plots]" >&2
-  exit 2
-fi
+REQUIRE_ALL_JUDGES=0
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --plots)
+      RUN_PLOTS=1
+      ;;
+    --require-all-judges)
+      REQUIRE_ALL_JUDGES=1
+      ;;
+    *)
+      echo "Usage: bash analysis/run_all_analyses.sh [--plots] [--require-all-judges]" >&2
+      exit 2
+      ;;
+  esac
+  shift
+done
 
 mkdir -p results
 
 echo "==> Validate judgment CSVs"
-python3 -u analysis/validate_judgments.py --strict
+VALIDATOR_ARGS=(--strict)
+if [[ "$REQUIRE_ALL_JUDGES" -eq 1 ]]; then
+  VALIDATOR_ARGS+=(--require-all-judges)
+fi
+python3 -u analysis/validate_judgments.py "${VALIDATOR_ARGS[@]}"
 
 echo "==> Preregistered analysis"
 python3 -u analysis/run_analysis.py --from-judgments-dir --report results/analysis_report.md

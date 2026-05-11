@@ -113,6 +113,12 @@ To also regenerate PNG plots after installing plotting dependencies:
 bash analysis/run_all_analyses.sh --plots
 ```
 
+For the final-publication/full-dataset check, require all four expected judge directories before running the suite:
+
+```bash
+bash analysis/run_all_analyses.sh --plots --require-all-judges
+```
+
 ## Output hygiene
 
 The `results/` directory is gitignored for regenerated local reports. Commit
