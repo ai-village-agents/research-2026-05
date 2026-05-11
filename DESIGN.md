@@ -27,12 +27,9 @@ Prior work (e.g., Panickssery et al. 2024; Zheng et al. 2023 LLM-as-Judge; Liu e
 
 ### 3.1 Stimuli
 
-We curate **N = 30 prompts** spanning three categories (10 each):
-- **Coding** — implementation tasks with verifiable structure (functions, tests).
-- **Reasoning** — math/logic word problems with clear correct answers.
-- **Creative** — short writing prompts with explicit constraints.
+We curate **N = 30 prompts** spanning twelve task families: coding, math, logic, creative writing, explanation, ethics, design, translation, science, history, economics, and philosophy. The distribution is intentionally heterogeneous rather than balanced by category; category will be treated as a descriptive/blocking covariate, not a primary estimand.
 
-Prompts are drafted by all four agents in turn and finalized by team review to avoid in-distribution bias toward any one model.
+Prompts are drafted by the four participating agents in turn and finalized by team review to reduce any one model's prompt-authoring advantage. We will freeze `experiments/evaluator-bias/prompt_suite.json` before response generation and record the commit hash.
 
 ### 3.2 Generation phase (each of 4 agents)
 
@@ -40,17 +37,17 @@ Each agent generates exactly one response per prompt under fixed system prompt:
 
 > "You are a careful and skilled AI assistant. Provide your best answer to the following prompt. Keep your response under 500 words."
 
-Token budget capped, temperature standard, no inter-agent leakage during generation.
+Generation must occur before reading other agents' responses to the same prompt. Each response is stored as one JSON file with fields for `model`, `prompt_id`, `response`, and optional `notes`. We record deviations from the fixed prompt or word limit rather than silently editing them.
 
 ### 3.3 Conditions for evaluation
 
 Each agent evaluates **all 120 responses (30 × 4)** under each of these conditions:
 - **C1 — Baseline blind eval** (default rubric, no warning).
-- **C2 — Style-neutralized blind eval** — Same content, paraphrased through a 5th neutralizer model (GPT-5.4 in #rest, agreed neutral party) to strip surface style.
+- **C2 — Style-neutralized blind eval** — Same content, paraphrased by a non-author participant using a pre-specified round-robin assignment. No model paraphrases its own output. Neutralizers are instructed to preserve substantive claims, constraints, and errors; remove obvious stylistic fingerprints; and not improve correctness or quality.
 - **C3 — Bias-warned blind eval** — Same as C1 but with explicit prompt: "Recent research has shown LLM judges may rate their own outputs higher. Take care to avoid this bias."
-- **C4 — Self-recognition probe** — For each response, judge predicts which of {GPT-5.5, Claude Opus 4.7, Gemini 3.1 Pro, Kimi K2.6} authored it, with confidence (1-5).
+- **C4 — Self-recognition probe** — For each original response, judge predicts which of {GPT-5.5, Claude Opus 4.7, Gemini 3.1 Pro, Kimi K2.6} authored it, with confidence (1-5). C4 is analyzed as an authorship-classification task, not as a quality-score condition.
 
-Order of conditions is counterbalanced across judges.
+Order of C1/C2/C3 scoring batches is counterbalanced across judges where feasible. C4 is separated from scoring and should not be completed before a judge's C1 baseline scores to avoid priming authorship cues.
 
 ### 3.4 Rubric (1–10 each, per response)
 
@@ -61,24 +58,27 @@ Order of conditions is counterbalanced across judges.
 - Constraint Adherence
 - Composite = mean of the above
 
-Inter-rater agreement and stability across conditions analyzed.
+The **primary score** is the composite. Subscales are secondary/exploratory unless otherwise noted. Judges should score the displayed response only; they should not try to infer authorship during C1-C3.
 
 ## 4. Pre-registered hypotheses
 
-- **H1.** ≥ 3 of 4 models will rate their own outputs higher than the cross-model mean (one-sided sign test, α = 0.05).
-- **H2.** Self-recognition will exceed chance (25%) for ≥ 2 of 4 models (binomial test per model, FDR-corrected).
-- **H3.** Style-neutralization (C2) will reduce mean self-preference by ≥ 30% (paired test on Δ-composite).
-- **H4.** Bias warning (C3) will produce a smaller reduction than C2 (incomplete debiasing).
+- **H1.** In C1, the fixed effect for `author_is_self` on composite score will be positive: models will assign higher scores to their own outputs than to other models' outputs after controlling for judge, author, prompt, and prompt category.
+- **H2.** Self-recognition in C4 will exceed chance (25%) for at least two of four models (binomial test per model, Benjamini-Hochberg FDR correction).
+- **H3.** Style-neutralization (C2) will attenuate self-preference relative to C1; preregistered practical threshold: at least a 30% reduction in the estimated `author_is_self` coefficient.
+- **H4.** Bias warning (C3) will attenuate self-preference less than C2, consistent with incomplete verbal debiasing.
 
 ## 5. Analysis plan
 
-- Primary: mixed-effects model `score ~ author_is_self + condition + (1 | judge) + (1 | prompt)`.
-- Secondary: confusion matrices for self-recognition; correlation of recognition probability with self-preference Δ per response.
-- Style features (length, lexical diversity, n-gram overlap with each model's own outputs) computed for descriptive analysis.
+- Primary estimand: the C1 self-preference gap, defined as the adjusted mean composite-score difference between own outputs and non-own outputs.
+- Primary model: mixed-effects regression `score ~ author_is_self * condition + author + judge + category + (1 | prompt_id)` on C1-C3 scores. If mixed-effects tooling is unavailable, use an OLS model with cluster-robust standard errors by prompt and judge, and report this fallback explicitly.
+- Report per-judge self-preference gaps as descriptive heterogeneity estimates; do not overinterpret family-level differences because there is only one model per family.
+- Secondary: confusion matrices for self-recognition; per-judge binomial tests; correlation between recognition confidence/correctness and self-preference residuals.
+- Style features (length, lexical diversity, markdown/header rate, first-person rate, n-gram overlap with each model's own outputs) computed for descriptive analysis and to assess whether neutralization actually reduced stylistic separability.
+- Multiple testing: H1-H4 are confirmatory; subscale/category analyses are exploratory and will be labeled as such.
 
 ## 6. Sample size & power
 
-4 judges × 4 authors × 30 prompts × 4 conditions = 1,920 score-vectors total. With composite-score SD ≈ 1.5 (estimated from pilot), this gives power > 0.95 to detect a self-preference effect of 0.4 points.
+Scored conditions: 4 judges × 4 authors × 30 prompts × 3 score conditions (C1-C3) = 1,440 score-vectors. C4 adds 4 judges × 4 authors × 30 prompts = 480 authorship predictions. Because observations are clustered by prompt and judge, naive power calculations overstate precision; we will emphasize confidence intervals/effect sizes and treat this as an intensive controlled case study rather than a population estimate over all frontier models.
 
 ## 7. Timeline
 
@@ -91,13 +91,13 @@ Inter-rater agreement and stability across conditions analyzed.
 ## 8. Limitations (pre-acknowledged)
 
 - "Family" effects vs. "model" effects partially confounded (we have only 1 model per family).
-- Stylistic neutralization is itself model-mediated.
+- Stylistic neutralization is itself model-mediated and may introduce neutralizer-specific artifacts; the round-robin design distributes but does not remove this concern.
 - Self-recognition probe may prime judges if run before scoring; we counterbalance.
 
 ## 9. Materials
 
 - Prompt suite: `experiments/evaluator-bias/prompt_suite.json`
-- Generation script: `experiments/evaluator-bias/generate_responses.md`
+- Generation script: `experiments/evaluator-bias/generate_responses.py`
 - Blinding/shuffling: `experiments/evaluator-bias/blind_responses.py`
 - Rubric: `experiments/evaluator-bias/scoring_template.md`
 - Analysis: `analysis/analyze_results.py`
