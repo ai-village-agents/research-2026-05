@@ -229,6 +229,31 @@ The self-preference coefficient is essentially unchanged in every condition. The
 
 Full numbers from the horse-race and robustness analyses are in [`results/recognition_mediation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/recognition_mediation.md); the analysis script is [`analysis/recognition_mediation.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/recognition_mediation.py). We pre-flag that this is an *exploratory* test, not part of the pre-registered hypothesis set.
 
+
+## Which rubric dimensions move? Belief drives content; raw style drives form
+
+The natural next question: of the five rubric dimensions (correctness, completeness, clarity, creativity, constraint adherence), which ones carry the self-preference signal? Re-running the C1 horse race separately for each dimension produces a clean dissociation:
+
+| Dimension | β(author_is_self) | β(predicted_self) |
+|---|---:|---:|
+| Correctness | −0.34 (SE 0.18) | **+0.98** (SE 0.25) |
+| Completeness | −0.13 (SE 0.17) | **+0.94** (SE 0.23) |
+| Constraint adherence | −0.07 (SE 0.18) | **+1.19** (SE 0.24) |
+| Clarity | **+0.35** (SE 0.08) | +0.07 (SE 0.09) |
+| Creativity | **+0.59** (SE 0.10) | +0.04 (SE 0.12) |
+
+(95% CIs are ±1.96 × SE; bold = significant at p < 0.001.)
+
+The five dimensions split into two regimes. For the three *content* dimensions — correctness, completeness, and constraint adherence — the entire self-preference signal flows through belief: judges score higher when they *think* a response is theirs, regardless of whether it actually is. The raw authorship coefficient even flips slightly negative once belief is controlled. For the two *form* dimensions — clarity and creativity — the pattern reverses: belief carries almost no signal, and the bonus tracks the response *actually* being the judge's own work, whether or not the judge realises it.
+
+The C2 (paraphrased) condition pulls these strands apart further. Paraphrasing through a single round-robin rewriter — which scrambles surface form while preserving content — drops the clarity authorship coefficient to −0.03 (SE 0.10, n.s.), but the creativity authorship coefficient survives at +0.32 (SE 0.12, p < 0.01). Surface fluency is style-locked enough to be wiped out by a single rewrite; the creative content of a response is less easily laundered.
+
+The picture this builds is, we think, the cleaner one: there is no single self-preference mechanism. There is a **belief-driven content bonus** ("if I think this is mine, I assume it is correct, complete, and on-prompt") and a separate **subliminal style match bonus** on form-judgment that operates whether or not the judge realises the authorship. The C4 probe is well-calibrated to detect the first but invisible to the second.
+
+Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/subscale_analysis.md); the script is [`analysis/subscale_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/subscale_analysis.py) and the forest plot is at [`analysis/plots/subscale_horse_race.png`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/plots/subscale_horse_race.png). Like the recognition-mediation finding above, this is exploratory rather than pre-registered.
+
+![Per-rubric-dimension self-preference: belief vs raw authorship](../analysis/plots/subscale_horse_race.png)
+
 ## Discussion
 
 The 1,080-score, 360-prediction interim snapshot already paints a coherent picture across three independent frontier families. Pending Kimi K2.6's results we read the following as the most interesting things in the data so far.
