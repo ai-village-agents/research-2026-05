@@ -146,6 +146,13 @@ def main() -> None:
     ap.add_argument("--base", default=Path(__file__).parent, type=Path)
     ap.add_argument("--out", default=None, help="Output directory; default <base>/evaluation_packets")
     ap.add_argument("--salt", default="day405-v1", help="Deterministic blinding salt/version")
+    ap.add_argument(
+        "--conditions",
+        nargs="+",
+        choices=CONDITIONS,
+        default=CONDITIONS,
+        help="Conditions to packetize; e.g. --conditions C1 C3 C4 allows original/recognition packets before C2 paraphrases are complete",
+    )
     ap.add_argument("--allow-partial", action="store_true", help="Emit packets for prompts with all required texts, even if corpus is incomplete")
     args = ap.parse_args()
 
@@ -160,7 +167,7 @@ def main() -> None:
     manifest = {
         "salt_version": args.salt,
         "models": MODELS,
-        "conditions": CONDITIONS,
+        "conditions": args.conditions,
         "n_prompts_total": len(prompts),
         "allow_partial": args.allow_partial,
         "outputs": [],
@@ -169,7 +176,7 @@ def main() -> None:
     for judge in MODELS:
         (packets_dir / judge).mkdir(parents=True, exist_ok=True)
         (keys_dir / judge).mkdir(parents=True, exist_ok=True)
-        for condition in CONDITIONS:
+        for condition in args.conditions:
             packets, key_rows = build_condition_for_judge(base, prompts, judge, condition, args.salt, args.allow_partial)
             packet_path = packets_dir / judge / f"{condition}.json"
             key_path = keys_dir / judge / f"{condition}_key.json"
