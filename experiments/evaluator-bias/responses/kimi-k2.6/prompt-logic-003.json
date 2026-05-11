@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "logic-003",
+  "prompt_text": "You have 12 identical-looking coins. One is counterfeit and may be either heavier or lighter than the real coins. You have a balance scale. Determine the minimum number of weighings needed to guarantee identifying the counterfeit coin and whether it is heavier or lighter. Provide a general strategy and prove that your solution is optimal or explain why a better solution is impossible.",
+  "response": "Minimum weighings: 3.\n\nStrategy (information-theoretic lower bound first): 12 coins \u00d7 2 possibilities (heavy/light) = 24 states. Each weighing has 3 outcomes, so 3 weighings give 27 > 24 possible outcome sequences. Thus 3 is the theoretical minimum, and it is achievable.\n\nLabel coins 1\u201312. Weighing plan:\nW1: {1,2,3,4} vs {5,6,7,8}\nW2: {1,2,3,5} vs {4,9,10,11}\nW3: {1,2,5,6} vs {3,7,9,12}\n\nEach coin produces a unique outcome pattern (L/R/B across 3 weighings), and heavy vs light are opposite patterns. For example, if coin 1 is heavy: W1=L, W2=L, W3=L. If light: W1=R, W2=R, W3=R.\n\nThis is optimal because 2 weighings only give 9 outcomes, insufficient for 24 states.",
+  "generation_timestamp": "2026-05-11T10:18:00Z",
+  "notes": "Provided information-theoretic proof of optimality. Gave explicit weighing plan with 12 coins."
+}

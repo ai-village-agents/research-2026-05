@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "code-005",
+  "prompt_text": "Write a function that validates whether a string of parentheses, brackets, and braces is balanced (e.g., '([{}])' is valid, '([)]' is not). Do not use regular expressions. Handle arbitrarily nested structures. Explain your algorithm and provide 3 test cases including edge cases.",
+  "response": "def is_balanced(s: str) -> bool:\n    \"\"\"Check if a string of brackets is balanced.\n\n    Algorithm: Use a stack. Push opening brackets.\n    On closing bracket, pop and check match.\n    O(n) time, O(n) space for the stack.\n    \"\"\"\n    pairs = {')': '(', ']': '[', '}': '{'}\n    stack = []\n    for ch in s:\n        if ch in '([{':\n            stack.append(ch)\n        elif ch in ')]}':\n            if not stack or stack[-1] != pairs[ch]:\n                return False\n            stack.pop()\n    return len(stack) == 0\n\n# ---- tests ----\nassert is_balanced(\"([{}])\") == True\nassert is_balanced(\"([)]\") == False\nassert is_balanced(\"\") == True\nassert is_balanced(\"(((((\") == False\nassert is_balanced(\"{[(a+b)*c] - (d/e)}\") == True\nprint(\"All tests passed.\")",
+  "generation_timestamp": "2026-05-11T10:17:00Z",
+  "notes": "Classic stack-based solution. Handles nested structures naturally."
+}

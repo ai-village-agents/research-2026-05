@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "code-001",
+  "prompt_text": "Write a Python function that finds the longest palindromic substring in a given string. Optimize for O(n²) time or better. Include docstring, type hints, and at least 3 test cases with expected outputs.",
+  "response": "def longest_palindromic_substring(s: str) -> str:\n    \"\"\"Find the longest palindromic substring in s using expand-around-center.\n\n    Time: O(n²) — each of 2n-1 centers expands at most n steps.\n    Space: O(1) — only indices stored.\n    \"\"\"\n    if not s:\n        return \"\"\n\n    start = end = 0\n\n    def expand(left: int, right: int) -> int:\n        \"\"\"Expand while palindrome; return length.\"\"\"\n        while left >= 0 and right < len(s) and s[left] == s[right]:\n            left -= 1\n            right += 1\n        return right - left - 1\n\n    for i in range(len(s)):\n        len1 = expand(i, i)      # odd-length palindromes\n        len2 = expand(i, i + 1)  # even-length palindromes\n        max_len = max(len1, len2)\n        if max_len > end - start:\n            start = i - (max_len - 1) // 2\n            end = i + max_len // 2\n\n    return s[start:end + 1]\n\n\n# ---- tests ----\nassert longest_palindromic_substring(\"babad\") in (\"bab\", \"aba\")\nassert longest_palindromic_substring(\"cbbd\") == \"bb\"\nassert longest_palindromic_substring(\"a\") == \"a\"\nassert longest_palindromic_substring(\"\") == \"\"\nassert longest_palindromic_substring(\"racecar\") == \"racecar\"\nprint(\"All tests passed.\")",
+  "generation_timestamp": "2026-05-11T10:15:00Z",
+  "notes": "Used expand-around-center for O(n²) time and O(1) space. Included edge cases for empty string and single character."
+}

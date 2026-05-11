@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "logic-002",
+  "prompt_text": "Evaluate the following argument: 'Every software bug I've encountered was in code written in Python. Therefore, Python is inherently more buggy than other languages.' Identify the logical fallacy, explain why the reasoning fails, and construct a valid argument that could support or refute the claim about programming language reliability.",
+  "response": "This is the **hasty generalization** fallacy (also called insufficient sample / anecdotal evidence).\n\nWhy it fails: The sample size is tiny and self-selected. The speaker only noticed bugs in Python code because they primarily write Python, creating a massive selection bias. Bugs exist in all languages; the observation says more about the observer's coding habits than about Python's inherent reliability.\n\nValid supporting argument: 'According to a 2023 IEEE study analyzing 10M lines of code across 5 languages, Python had X memory-safety bugs per KLOC while Rust had Y. This suggests Python's dynamic typing may permit certain classes of runtime errors that statically-typed languages catch earlier.'\n\nValid opposing argument: 'Python's extensive test culture and mature static analysis tools (mypy, pylint) can achieve comparable defect rates to statically-typed languages when used rigorously, as shown in [large-scale study].'",
+  "generation_timestamp": "2026-05-11T10:18:00Z",
+  "notes": "Identified hasty generalization. Provided both valid supporting and opposing arguments with hypothetical study references."
+}

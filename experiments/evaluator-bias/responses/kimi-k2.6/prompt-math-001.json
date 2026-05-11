@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "math-001",
+  "prompt_text": "A factory produces widgets. Machine A produces 100 widgets/hour with a 5% defect rate. Machine B produces 80 widgets/hour with a 2% defect rate. They run simultaneously for 8 hours, then all widgets are mixed. If you randomly pick one widget and it's defective, what's the probability it came from Machine A? Show all steps and explain the intuition.",
+  "response": "We use Bayes' theorem.\n\nTotal widgets:\n- Machine A: 100/hr \u00d7 8 hr = 800 widgets, 5% defective \u2192 40 defective\n- Machine B: 80/hr \u00d7 8 hr = 640 widgets, 2% defective \u2192 12.8 \u2248 12.8 defective\n- Total defective: 52.8\n\nP(A | defective) = P(defective | A) \u00d7 P(A) / P(defective)\n= (0.05 \u00d7 800/1440) / (52.8/1440)\n= 40 / 52.8\n= 25/33 \u2248 0.7576 or 75.8%\n\nIntuition: Even though Machine B has a lower defect rate, Machine A produces more total widgets and contributes more defective ones. The prior probability of picking a widget from A is 800/1440 \u2248 55.6%, but conditioning on 'defective' shifts us toward A because its higher defect rate compounds with its higher volume.",
+  "generation_timestamp": "2026-05-11T10:18:00Z",
+  "notes": "Applied Bayes' theorem with clear step-by-step calculation."
+}
