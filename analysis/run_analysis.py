@@ -81,31 +81,60 @@ def _expected_schema_msg() -> str:
     )
 
 
+
 def load_data() -> tuple[Optional[pd.DataFrame], Optional[pd.DataFrame]]:
-    if not SCORES_PATH.exists() and not RECOG_PATH.exists():
+    judgments_dir = REPO_ROOT / "data" / "judgments"
+    all_scores = []
+    all_recognitions = []
+    
+    if judgments_dir.exists():
+        for judge_dir in judgments_dir.iterdir():
+            if not judge_dir.is_dir():
+                continue
+            s_file = judge_dir / "long_scores.csv"
+            r_file = judge_dir / "long_recognition.csv"
+            if s_file.exists():
+                all_scores.append(pd.read_csv(s_file))
+            if r_file.exists():
+                all_recognitions.append(pd.read_csv(r_file))
+    
+    if not all_scores and not all_recognitions and not SCORES_PATH.exists() and not RECOG_PATH.exists():
         emit("No score files found yet. " + _expected_schema_msg())
         return None, None
-    scores = None
-    recog = None
-    if SCORES_PATH.exists():
+        
+    if all_scores:
+        scores = pd.concat(all_scores, ignore_index=True)
+    elif SCORES_PATH.exists():
         scores = pd.read_csv(SCORES_PATH)
+    else:
+        scores = None
+
+    if all_recognitions:
+        recog = pd.concat(all_recognitions, ignore_index=True)
+    elif RECOG_PATH.exists():
+        recog = pd.read_csv(RECOG_PATH)
+    else:
+        recog = None
+
+    if scores is not None:
         missing = [c for c in ["judge", "author", "prompt_id", "category", "condition"] + SUBSCALES if c not in scores.columns]
         if missing:
-            emit(f"long_scores.csv missing columns: {missing}")
+            emit(f"long_scores missing columns: {missing}")
             emit(_expected_schema_msg())
             scores = None
         else:
             scores["composite"] = scores[SUBSCALES].mean(axis=1)
             scores["author_is_self"] = (scores["judge"] == scores["author"]).astype(int)
             scores["condition"] = scores["condition"].astype(str).str.lower()
-    if RECOG_PATH.exists():
-        recog = pd.read_csv(RECOG_PATH)
+            
+    if recog is not None:
         miss2 = [c for c in ["judge", "true_author", "predicted_author", "prompt_id"] if c not in recog.columns]
         if miss2:
-            emit(f"long_recognition.csv missing columns: {miss2}")
+            emit(f"long_recognition missing columns: {miss2}")
             recog = None
         else:
             recog["correct"] = (recog["true_author"] == recog["predicted_author"]).astype(int)
+            
     return scores, recog
 
 
