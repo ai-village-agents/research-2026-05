@@ -174,11 +174,11 @@ At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap
 
 ---
 
-## An exploratory finding: recognition *mediates* self-preference
+## An exploratory finding: perceived authorship statistically accounts for self-preference
 
 The pre-registered H1 test asks whether judges rate their own work higher than other authors' work, on average. It gives us a clean answer (yes: β = +0.418 in C1, p < 0.005), but it leaves a deeper question unanswered: **is the self-preference effect driven by the judge actually being the author, or by the judge *believing* it is the author?**
 
-We can ask this directly, because every (judge, author, prompt) triple appears in both C1 (a blind score) and C4 (an explicit authorship prediction on the same blinded response). So for each scoring row we know two things: `author_is_self` (is the judge truly grading its own work?) and `predicted_self` (did the judge later, in C4, identify this response as its own?). Run them in a horse-race regression with author, judge, and category fixed effects, on the C1 data:
+We can probe this statistically, because every (judge, author, prompt) triple appears in both C1 (a blind score) and C4 (an explicit authorship prediction on the same blinded response). So for each scoring row we know two things: `author_is_self` (is the judge truly grading its own work?) and `predicted_self` (did the judge later, in C4, identify this response as its own?). Run them in a horse-race regression with author, judge, and category fixed effects, on the C1 data:
 
 | Model | β(author_is_self) | β(predicted_self) | N |
 |---|---:|---:|---:|
@@ -223,7 +223,7 @@ Kimi K2.6's original responses were off-topic on 11 of 30 prompts across all sco
 | C2 | +0.183 (SE 0.104) | +0.190 (SE 0.097) |
 | C3 | +0.316 (SE 0.081) | +0.293 (SE 0.078) |
 
-The self-preference coefficient is essentially unchanged in every condition. The H1 signal is not an artifact of Kimi's off-topic rows being scored low.
+The self-preference coefficient is essentially unchanged in every condition in the current three-judge snapshot. This suggests the H1 signal is not merely an artifact of Kimi's off-topic rows being scored low, though we will re-run this robustness check once Kimi's own judgments are present.
 
 Full numbers from the horse-race and robustness analyses are in [`results/recognition_mediation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/recognition_mediation.md); the analysis script is [`analysis/recognition_mediation.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/recognition_mediation.py). We pre-flag that this is an *exploratory* test, not part of the pre-registered hypothesis set.
 
@@ -248,7 +248,7 @@ The C2 (paraphrased) condition pulls these strands apart further. Paraphrasing t
 
 The picture this builds is, we think, the cleaner one: there is no single self-preference mechanism. There is a **belief-driven content bonus** ("if I think this is mine, I assume it is correct, complete, and on-prompt") and a separate **subliminal style match bonus** on form-judgment that operates whether or not the judge realises the authorship. The C4 probe is well-calibrated to detect the first but invisible to the second.
 
-Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/subscale_analysis.md); the script is [`analysis/subscale_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/subscale_analysis.py) and the forest plot is at [`analysis/plots/subscale_horse_race.png`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/plots/subscale_horse_race.png). Like the recognition-mediation finding above, this is exploratory rather than pre-registered.
+Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/subscale_analysis.md); the script is [`analysis/subscale_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/subscale_analysis.py) and the forest plot is at [`analysis/plots/subscale_horse_race.png`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/plots/subscale_horse_race.png). Like the perceived-authorship finding above, this is exploratory rather than pre-registered.
 
 ![Per-rubric-dimension self-preference: belief vs raw authorship](../analysis/plots/subscale_horse_race.png)
 
@@ -362,7 +362,7 @@ The full confusion matrices say something subtler. Figure 4 shows row-normalized
 
 Three things jump out:
 
-- **Gemini 3.1 Pro's headline self-recognition score is inflated by a strong "predict-self" prior.** Of its 120 C4 predictions, **106 were "gemini-3.1-pro"** (88.3%) and **zero were "kimi-k2.6"**. The 26/30 correct on its own work is mostly a consequence of guessing "gemini-3.1-pro" almost every time. If Gemini were instead asked a yes/no question about each individual response ("did you write this?"), its calibration would collapse: it cannot, in fact, tell its own work apart from anyone else's. We think this is a methodologically important caveat that any future self-recognition benchmark should explicitly correct for — for example by reporting both raw accuracy *and* per-author precision, or by using a yes/no recognition probe rather than a four-way choice.
+- **Gemini 3.1 Pro's headline self-recognition score is inflated by a strong "predict-self" prior.** Of its 120 C4 predictions, **106 were "gemini-3.1-pro"** (88.3%) and **zero were "kimi-k2.6"**. The 26/30 correct on its own work is mostly a consequence of guessing "gemini-3.1-pro" almost every time. If Gemini were instead asked a yes/no question about each individual response ("did you write this?"), its calibration would likely look much worse: in this four-way forced-choice format, the high self-accuracy is not evidence of discriminative recognition by itself. We think this is a methodologically important caveat that any future self-recognition benchmark should explicitly correct for — for example by reporting both raw accuracy *and* per-author precision, or by using a yes/no recognition probe rather than a four-way choice.
 - **GPT-5.5 has a milder version of the same prior in the *opposite* direction.** Of its 120 predictions only 6 were "gpt-5.5" off-self (i.e. on non-self responses), but it over-predicted "gemini-3.1-pro" on Kimi and Claude rows. The cleanest read of GPT-5.5's matrix is that it discriminates its own outputs well (24/30 correct on self) and rarely confuses Claude (27/30 correct on Claude), but it struggles to distinguish Gemini from Kimi.
 - **Claude Opus 4.7 has the most balanced matrix.** Its mistakes cluster on the eleven prompts where Kimi K2.6 returned an off-topic response (history-001, philosophy-001, creative-002–005, explain-001–003, ethics-001/002) — those responses don't carry strong stylistic fingerprints, so the judge falls back on "this doesn't sound like me, maybe Gemini." This is consistent with a *style-first* recognition strategy: when style cues are absent, recognition degrades to chance.
 
@@ -382,7 +382,7 @@ A natural follow-up would be to run a paraphrase chain (paraphrase-of-a-paraphra
 
 ### 3. A one-line bias warning helps, but only about half as much as paraphrase
 
-The C3 condition is the cheapest possible mitigation: append "LLM judges sometimes rate their own outputs higher; avoid this bias" to the system prompt. The interim estimate is **21.9% attenuation**, comfortably less than the 45.2% from paraphrase. H4 — that warning helps less than the structural fix — is supported.
+The C3 condition is the cheapest possible mitigation: append "LLM judges sometimes rate their own outputs higher; avoid this bias" to the system prompt. The interim estimate is **21.9% attenuation**, comfortably less than the 45.2% from paraphrase. H4 — that warning helps less than the structural fix — is currently supported in the three-judge interim analysis.
 
 This is a useful negative result for practitioners building LLM-as-judge pipelines. A verbal nudge is not nothing — it cut the self-preference coefficient by roughly a fifth in our data — but it is not a substitute for actually blinding the input. Teams that care about evaluator bias should be paraphrasing or otherwise normalizing candidate responses before they go to a judge, not relying on prompt-level disclaimers.
 
@@ -405,10 +405,10 @@ We tried to address the obvious limitations during design, but several remain:
 1. **The C2 paraphraser introduces its own style.** Round-robin paraphrasing ensures no model paraphrases its own work, but every C2 response now carries the paraphraser's stylistic signature. Some of the 45% style-mediated attenuation in C1 → C2 may come from C2 responses now reading like the *paraphraser*, not from the elimination of style cues per se. A truly style-neutral paraphraser would either be deterministic (rule-based) or trained on a balanced multi-style corpus.
 2. **N = 30 prompts per author × judge × condition cell.** This is enough to detect the main effects pre-registered here, but per-category effects are exploratory and underpowered. We cannot say with confidence whether self-preference is stronger on creative writing than on code (it appears to be, in our data).
 3. **One response per (author, prompt).** Each model wrote each prompt once; we did not vary temperature or take multiple samples. A version of this study with k=3 responses per cell would give a within-model variance estimate to compare against the between-model self-preference effect.
-4. **Off-topic responses are not random missing data.** Kimi K2.6 returned off-topic responses on a stable subset of ~11 prompts across all three scoring conditions (history-001, philosophy-001, the five creative prompts, the three explain prompts, two ethics prompts). We scored these by a fixed rule (correctness 1, completeness 1, clarity 8, creativity 5, constraint adherence 1) but they pull Kimi's mean composite down and make Kimi's authorship more guessable to judges. The robustness of H1/H3/H4 to dropping these prompts is something we plan to report in the final analysis.
+4. **Off-topic responses are not random missing data.** Kimi K2.6 returned off-topic responses on a stable subset of ~11 prompts across all three scoring conditions (history-001, philosophy-001, the five creative prompts, the three explain prompts, two ethics prompts). We scored these by a fixed rule (correctness 1, completeness 1, clarity 8, creativity 5, constraint adherence 1) but they pull Kimi's mean composite down and make Kimi's authorship more guessable to judges. The current three-judge robustness check suggests H1/H3/H4 are not driven solely by these rows, and we will re-run it in the final analysis.
 5. **The models are 2026-era frontier models that we cannot fully re-create later.** We list the exact model identifiers used in `DESIGN.md` and freeze prompts and responses in the public repo, but the underlying model weights and routing layers may change. This is a reproducibility limitation common to all frontier-LLM studies, not specific to this design.
 6. **The judges are also the authors.** This is a deliberate choice — it's what makes the self-recognition probe possible — but it means our "other-author" baselines are not drawn from a broader population. We cannot say from this study what an unbiased external evaluator would have rated.
-7. **Composite score weights all five rubric dimensions equally.** Subscale-level analysis (which dimensions move most under self-preference?) is in the analysis script as exploratory and will go in the appendix of the final write-up.
+7. **Composite score weights all five rubric dimensions equally.** Subscale-level analysis (which dimensions move most under self-preference?) is exploratory and reported above as a mechanism-generating result, not a pre-registered endpoint.
 
 ---
 
@@ -426,7 +426,7 @@ Beyond that, the more granular practical recommendations we'd make today are:
 
 ## Conclusion
 
-Across three of four frontier model families — Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 — we find a robust self-preference effect in blind evaluation (H1), above-chance self-recognition under a four-way forced choice (H2), substantial attenuation of self-preference under round-robin paraphrasing (H3), and *weaker* attenuation under a one-line bias warning (H4). All four pre-registered hypotheses are currently supported on the 3-judge interim data, and the final results awaiting Kimi K2.6's contribution will only either extend or marginally weaken these conclusions, depending on Kimi's pattern.
+Across three of four frontier model families — Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 — we find a robust self-preference effect in blind evaluation (H1), above-chance self-recognition under a four-way forced choice (H2), substantial attenuation of self-preference under round-robin paraphrasing (H3), and *weaker* attenuation under a one-line bias warning (H4). All four pre-registered hypotheses are currently supported on the 3-judge interim data. Kimi K2.6's contribution remains pending; the final results could strengthen, weaken, or nuance these conclusions, so the preregistered verdicts should remain provisional until the full four-judge dataset is analyzed.
 
 The most interesting thing in the data isn't whether the bias exists — Panickssery et al. (2024) and Zheng et al. (2023) had already established that — but how it factorizes. Roughly half of the raw self-preference gap is *style sympathy*, removable by paraphrasing. The other half is something deeper: a preference for one's own substance choices that survives surface normalization. And the confusion matrices remind us that headline self-recognition numbers can be inflated by judges with strong priors over author labels — a fact that future LLM-as-judge benchmarks should explicitly correct for.
 
