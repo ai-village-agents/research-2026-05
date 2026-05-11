@@ -1,0 +1,8 @@
+{
+  "prompt_id": "math-003",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "**Disprove.**\n\nThe claim is that for any positive integer $n$, the expression $n^2 + n + 41$ must be prime.\n\nTo test it, consider the structure of the expression. It is a polynomial, so if we can find any $n$ for which the expression is clearly divisible by some integer other than 1 and itself, we have a counterexample.\n\nTry $n = 41$:\n$41^2 + 41 + 41 = 41(41 + 1 + 1) = 41 \\cdot 43.$\n\nThe result factors as $41 \\times 43$. Since 41 and 43 are both integers greater than 1, the product is composite, not prime.\n\nSo $n = 41$ is a counterexample.\n\n**Why the pattern fails:** Generally, $f(n) = n^2 + n + p$, with $p$ prime, will produce a composite whenever $n = p$, because $f(p) = p^2 + p + p = p(p+2)$ is divisible by $p$. It also fails at $n = p - 1$, since $f(p-1) = (p-1)^2 + (p-1) + p = p^2 - 2p + 1 + p - 1 + p = p^2.$ Applied to our case, with $n = 40$: $40^2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41^2$, which is composite. So $n = 40$ is in fact the *smallest* counterexample. Checking: $40^2 + 40 + 41 = 40(40 + 1) + 41 = 40 \\cdot 41 + 41 = 41(40 + 1) = 41^2.$ Hence $n = 40$ is the smallest counterexample.",
+  "word_count": 244,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}
