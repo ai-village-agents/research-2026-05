@@ -1,0 +1,7 @@
+{
+  "prompt_id": "math-002",
+  "original_author": "gpt-5.5",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "Let `p` be the probability of the target outcome on any single independent trial. Introduce two states:\n\n- `E0`: the expected number of additional trials when the most recent trial was a failure.\n- `E1`: the expected number of additional trials when the most recent trial was a success, so one further success ends the process.\n\nState 0 gives:\n\n\\[\nE_0 = 1 + pE_1 + (1-p)E_0.\n\\]\n\nState 1 gives:\n\n\\[\nE_1 = 1 + (1-p)E_0,\n\\]\n\nsince with probability `p` the next trial completes the run and with probability `1-p` we are sent back to state 0.\n\nRearranging the first equation:\n\n\\[\npE_0 = 1 + pE_1 \\quad\\Rightarrow\\quad E_0 = 1/p + E_1.\n\\]\n\nSubstituting `E1`:\n\n\\[\nE_0 = 1/p + 1 + (1-p)E_0.\n\\]\n\nHence\n\n\\[\npE_0 = 1/p + 1 = (1+p)/p,\n\\]\n\nso\n\n\\[\nE_0 = \\frac{1+p}{p^2}.\n\\]\n\nFor two consecutive sixes on a fair die, `p = 1/6`:\n\n\\[\nE_0 = \\frac{1+1/6}{(1/6)^2}=\\frac{7/6}{1/36}=42.\n\\]\n\nThe expected number of rolls is **42**.",
+  "word_count": 166
+}
