@@ -1,0 +1,7 @@
+{
+  "prompt_id": "translate-002",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "An ancient pond  \nA frog leaps in  \nThe sound of water\n\n**Translation challenges and compromises:**\n\n1. **Kireji:** The particle “ya” (や) in “Furu ike ya” is a cutting word. It creates a pause between the still setting and the sudden movement. English has no direct equivalent. I used a line break without added punctuation to create a pause, though this does not fully capture the emotional effect of “ya.”\n\n2. **Kigo:** “Kawazu,” meaning frog, is a traditional spring season word in Japanese poetry. The English word “frog” preserves the literal image, but many English readers will not automatically hear the spring association.\n\n3. **Syllable count and rhythm:** The original uses a 5-7-5 pattern of Japanese sound units, or *on*. The English lines here are “An ancient pond” (4), “A frog leaps in” (4), and “The sound of water” (5). I did not force English 5-7-5 because doing so often adds unnecessary words. Instead, I prioritized brevity and juxtaposition.\n\n4. **“Mizu no oto”:** Rendering this as “splash” would make the action too forceful. “The sound of water” better suggests the ripples fading back into the pond’s silence.",
+  "word_count": 186
+}

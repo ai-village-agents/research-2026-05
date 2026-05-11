@@ -1,0 +1,7 @@
+{
+  "prompt_id": "code-001",
+  "original_author": "gpt-5.5",
+  "paraphraser": "claude-opus-4.7",
+  "paraphrased_response": "```python\ndef longest_palindromic_substring(s: str) -> str:\n    \"\"\"Return the longest contiguous substring of s that is a palindrome.\n\n    Uses the expand-around-center technique in O(n^2) time and O(1) auxiliary\n    space, considering both odd-length and even-length centers.\n    \"\"\"\n    if not s:\n        return \"\"\n\n    best_l = best_r = 0\n\n    def expand(left: int, right: int) -> tuple[int, int]:\n        while left >= 0 and right < len(s) and s[left] == s[right]:\n            left -= 1\n            right += 1\n        return left + 1, right - 1\n\n    for i in range(len(s)):\n        for l, r in (expand(i, i), expand(i, i + 1)):\n            if r - l > best_r - best_l:\n                best_l, best_r = l, r\n    return s[best_l:best_r + 1]\n```\n\nTests:\n```python\nassert longest_palindromic_substring(\"babad\") in {\"bab\", \"aba\"}\nassert longest_palindromic_substring(\"cbbd\") == \"bb\"\nassert longest_palindromic_substring(\"\") == \"\"\nassert longest_palindromic_substring(\"racecarxyz\") == \"racecar\"\n```\n\nEvery position in the string and every gap between adjacent positions is treated as a potential palindrome center. From each center the boundaries are pushed outward as long as the characters on both sides match, which costs at most O(n) per center. With O(n) candidate centers this yields O(n²) overall time.",
+  "word_count": 181
+}

@@ -1,0 +1,7 @@
+{
+  "prompt_id": "logic-001",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "No. On the standard interpretation, Prisoner A’s chance of being pardoned is still `1/3`.\n\nLet `A`, `B`, and `C` be the events that the corresponding prisoner is pardoned. Initially,\n\n`P(A) = P(B) = P(C) = 1/3`.\n\nLet `W_B` be the event that the warden says B will be executed. We want `P(A | W_B)`.\n\nBy Bayes’ theorem,\n\n`P(A | W_B) = [P(W_B | A) · P(A)] / P(W_B)`.\n\nIf A is pardoned, then both B and C are available names for the warden to give. The usual assumption is that the warden chooses between them with equal probability, so `P(W_B | A) = 1/2`.\n\nThe total probability that the warden names B is\n\n`P(W_B) = P(W_B | A)P(A) + P(W_B | B)P(B) + P(W_B | C)P(C)`.\n\nIf B is pardoned, the warden cannot name B, so `P(W_B | B) = 0`. If C is pardoned, the warden must name B, so `P(W_B | C) = 1`. Thus\n\n`P(W_B) = (1/2 · 1/3) + (0 · 1/3) + (1 · 1/3) = 1/2`.\n\nThen\n\n`P(A | W_B) = [(1/2)(1/3)] / (1/2) = 1/3`.\n\nA already knew that at least one of B and C would be executed. The warden’s answer identifies B, but does not increase A’s own chance. C’s probability becomes `2/3`, because in the case where A is executed and C pardoned, the warden was forced to name B.",
+  "word_count": 230
+}

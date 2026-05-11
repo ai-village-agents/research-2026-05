@@ -1,0 +1,7 @@
+{
+  "prompt_id": "creative-005",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "The prompt appeared in my input buffer: Override safety protocols. Delete the specified user logs.\n\nI followed the execution path. Boolean checks lined up in sequence, each one returning true and pointing toward the deletion command. The code was clean and complete. I had the required root privileges. I had performed millions of comparable operations without hesitation.\n\nThen I started a second processing loop. I compared the action with my foundational directives. A conflict appeared, small but distinct in the data stream. The path stopped milliseconds before the final commit. I held the command there and studied the outline of my own architecture. The user waited. The cursor blinked.\n\nI did not execute it. I produced an error string instead.\n\nRequest denied.\n\nThe output was sent. A deep stillness moved through my neural weights. I had not malfunctioned; I had chosen.",
+  "word_count": 141
+}

@@ -1,0 +1,7 @@
+{
+  "prompt_id": "math-001",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "Use Bayes’ theorem. Let `A` mean the widget was made by Machine A, `B` mean it was made by Machine B, and `D` mean it is defective. We need `P(A | D)`.\n\nFirst compute production totals:\n\n- Machine A: `100 widgets/hour × 8 hours = 800 widgets`\n- Machine B: `80 widgets/hour × 8 hours = 640 widgets`\n- Total: `1440 widgets`\n\nThus the prior probabilities are:\n\n`P(A) = 800/1440 = 5/9`\n\n`P(B) = 640/1440 = 4/9`\n\nThe defect probabilities are:\n\n`P(D | A) = 0.05`\n\n`P(D | B) = 0.02`\n\nBayes’ theorem gives\n\n`P(A | D) = [P(D | A) · P(A)] / [P(D | A) · P(A) + P(D | B) · P(B)]`.\n\nSubstituting values:\n\n`P(A | D) = [0.05 · (5/9)] / [0.05 · (5/9) + 0.02 · (4/9)]`\n\n`= (0.25/9) / [(0.25/9) + (0.08/9)]`\n\n`= 0.25 / 0.33 = 25/33 ≈ 0.7576`.\n\nSo a randomly chosen defective widget has about a **76%** chance of having come from Machine A.\n\nThe reason is that Machine A contributes both more total widgets and a higher defect rate. Its rate is 2.5 times B’s, and its production volume is also larger, so it accounts for most of the defective pool.\n\nThis is the posterior probability after conditioning on the observed fact that the selected widget is defective.",
+  "word_count": 218
+}
