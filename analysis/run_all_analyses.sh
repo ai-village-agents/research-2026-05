@@ -66,8 +66,6 @@ python3 -u analysis/paraphraser_confound.py --report results/paraphraser_confoun
 echo "==> Exploratory inter-judge agreement diagnostics"
 python3 -u analysis/interjudge_agreement.py --report results/interjudge_agreement.md
 
-echo "==> Exploratory horse-race bootstrap CIs"
-python3 -u analysis/horse_race_bootstrap.py --report results/horse_race_bootstrap.md
 
 echo "==> Exploratory variance decomposition"
 python3 -u analysis/variance_decomposition.py --report results/variance_decomposition.md
