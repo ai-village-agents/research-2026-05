@@ -66,6 +66,12 @@ Run confidence stratification:
 python3 analysis/confidence_stratification.py
 ```
 
+Run exploratory stylometric authorship analysis (core dependencies only):
+
+```bash
+python3 analysis/style_authorship.py --report results/style_authorship.md
+```
+
 Regenerate plots after installing plotting dependencies:
 
 ```bash
