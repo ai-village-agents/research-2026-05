@@ -42,6 +42,13 @@ will not run until the plotting dependencies are installed.
 
 ## Example commands
 
+Validate per-judge judgment CSVs before final reruns:
+
+```bash
+python3 analysis/validate_judgments.py --strict
+python3 analysis/validate_judgments.py --require-all-judges --strict
+```
+
 Run the preregistered analysis on per-judge judgment directories:
 
 ```bash
