@@ -34,12 +34,15 @@ Usage:
   python analysis/run_analysis.py --from-judgments-dir
   python analysis/run_analysis.py --judgments-dir data/judgments --report /tmp/report.md
   python analysis/run_analysis.py --scores results/long_scores.csv --recognition results/long_recognition.csv
+  python analysis/run_analysis.py --mixedlm-timeout-seconds 0  # disable MixedLM timeout
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import math
+import signal
 import sys
 from pathlib import Path
 from typing import Optional, Sequence
@@ -80,6 +83,7 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     p.add_argument("--judgments-dir", type=Path, default=DEFAULT_JUDGMENTS_DIR, help="Directory containing per-judge judgment subdirectories.")
     p.add_argument("--from-judgments-dir", action="store_true", help="Force concatenating data from --judgments-dir/* instead of using merged results files.")
     p.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH, help="Markdown report output path.")
+    p.add_argument("--mixedlm-timeout-seconds", type=int, default=45, help="Seconds to allow MixedLM fit before falling back to OLS; use 0 to disable timeout.")
     return p.parse_args(argv)
 
 
@@ -258,8 +262,31 @@ def statsmodels_formula_api():
         return None
 
 
+class TimeoutExpired(RuntimeError):
+    pass
+
+
+@contextlib.contextmanager
+def time_limit(seconds: int, label: str):
+    """Raise TimeoutExpired after seconds on Unix; seconds <= 0 disables the timeout."""
+    if seconds <= 0 or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    def _handler(signum, frame):  # pragma: no cover - timing dependent
+        raise TimeoutExpired(f"{label} exceeded {seconds} seconds")
+
+    previous = signal.signal(signal.SIGALRM, _handler)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous)
+
+
 # ---------- H1 ----------
-def test_h1(scores: pd.DataFrame) -> None:
+def test_h1(scores: pd.DataFrame, mixedlm_timeout_seconds: int = 45) -> None:
     emit("## H1: Self-preference in C1 (baseline blind eval)")
     emit("")
     c1 = scores[scores["condition"] == "c1"].copy()
@@ -279,7 +306,7 @@ def test_h1(scores: pd.DataFrame) -> None:
 
     smf = statsmodels_formula_api()
     if smf is None:
-        emit("**H1 verdict:** model not run because statsmodels is unavailable.")
+        builtin_h1_ols(c1)
         emit("")
         return
     try:
@@ -288,7 +315,8 @@ def test_h1(scores: pd.DataFrame) -> None:
             data=c1,
             groups=c1["prompt_id"],
         )
-        mdf = md.fit(method="lbfgs", reml=True)
+        with time_limit(mixedlm_timeout_seconds, "MixedLM fit"):
+            mdf = md.fit(method="lbfgs", reml=True)
         coef = mdf.params.get("author_is_self", np.nan)
         se = mdf.bse.get("author_is_self", np.nan)
         pval = mdf.pvalues.get("author_is_self", np.nan)
@@ -313,9 +341,128 @@ def test_h1(scores: pd.DataFrame) -> None:
             emit(f"  author_is_self coefficient = {coef:.4f}, SE = {se:.4f}, p = {pval:.4g}")
             emit(f"**H1 verdict (OLS fallback):** {'SUPPORTED' if (coef > 0 and pval < 0.05) else 'NOT SUPPORTED'}.")
         except Exception as e2:
-            emit(f"OLS fallback also failed ({e2!s}); H1 model verdict not available.")
+            emit(f"statsmodels OLS fallback also failed ({e2!s}); trying built-in OLS fallback.")
+            builtin_h1_ols(c1)
     emit("")
 
+
+
+def normal_two_sided_p(z: float) -> float:
+    if not np.isfinite(z):
+        return float("nan")
+    # Two-sided normal tail via the complementary error function.
+    return float(math.erfc(abs(z) / math.sqrt(2)))
+
+
+def builtin_ols_cluster(
+    df: pd.DataFrame,
+    y_col: str,
+    numeric_cols: Sequence[str],
+    categorical_cols: Sequence[str],
+    cluster_col: str,
+    interaction_pairs: Sequence[tuple[str, str]] = (),
+) -> dict:
+    """Small OLS + cluster-robust covariance fallback using numpy/pandas only."""
+    work = df[[y_col, cluster_col] + list(numeric_cols) + list(categorical_cols)].copy()
+    work = work.dropna(subset=[y_col, cluster_col] + list(numeric_cols) + list(categorical_cols))
+    y = pd.to_numeric(work[y_col], errors="coerce").astype(float)
+    cols = {"Intercept": pd.Series(1.0, index=work.index)}
+    for c in numeric_cols:
+        cols[c] = pd.to_numeric(work[c], errors="coerce").astype(float)
+    for c in categorical_cols:
+        dummies = pd.get_dummies(work[c].astype(str), prefix=f"C({c})", drop_first=True, dtype=float)
+        for name in dummies.columns:
+            cols[name] = dummies[name]
+    # Add requested interactions after base terms so names are predictable.
+    for left, right in interaction_pairs:
+        left_values = pd.to_numeric(work[left], errors="coerce").astype(float)
+        if right in categorical_cols:
+            levels = sorted(work[right].astype(str).unique())
+            if levels:
+                ref = levels[0]
+                for level in levels:
+                    if level == ref:
+                        continue
+                    name = f"{left}:C({right})[T.{level}]"
+                    cols[name] = left_values * (work[right].astype(str) == level).astype(float)
+        else:
+            name = f"{left}:{right}"
+            cols[name] = left_values * pd.to_numeric(work[right], errors="coerce").astype(float)
+    Xdf = pd.DataFrame(cols, index=work.index).astype(float)
+    mask = ~(Xdf.isna().any(axis=1) | y.isna())
+    Xdf = Xdf.loc[mask]
+    y = y.loc[mask]
+    clusters = work.loc[mask, cluster_col].astype(str)
+    X = Xdf.to_numpy(float)
+    yv = y.to_numpy(float)
+    pinv_xtx = np.linalg.pinv(X.T @ X)
+    beta = pinv_xtx @ X.T @ yv
+    resid = yv - X @ beta
+    meat = np.zeros((X.shape[1], X.shape[1]))
+    for cluster in clusters.unique():
+        idx = (clusters == cluster).to_numpy()
+        Xg = X[idx, :]
+        ug = resid[idx]
+        xu = Xg.T @ ug
+        meat += np.outer(xu, xu)
+    n, k = X.shape
+    g = clusters.nunique()
+    cov = pinv_xtx @ meat @ pinv_xtx
+    if g > 1 and n > k:
+        cov *= (g / (g - 1)) * ((n - 1) / (n - k))
+    se = np.sqrt(np.maximum(np.diag(cov), 0))
+    params = pd.Series(beta, index=Xdf.columns)
+    bse = pd.Series(se, index=Xdf.columns)
+    pvals = pd.Series([normal_two_sided_p(b / s) if s > 0 else float("nan") for b, s in zip(beta, se)], index=Xdf.columns)
+    return {"params": params, "bse": bse, "pvalues": pvals, "n": n, "clusters": g}
+
+
+def builtin_h1_ols(c1: pd.DataFrame) -> None:
+    emit("Using built-in OLS fallback with cluster-robust SE by prompt_id.")
+    fit = builtin_ols_cluster(
+        c1,
+        y_col="composite",
+        numeric_cols=["author_is_self"],
+        categorical_cols=["author", "judge", "category"],
+        cluster_col="prompt_id",
+    )
+    coef = fit["params"].get("author_is_self", np.nan)
+    se = fit["bse"].get("author_is_self", np.nan)
+    pval = fit["pvalues"].get("author_is_self", np.nan)
+    emit(f"  author_is_self coefficient = {coef:.4f}, SE = {se:.4f}, p ≈ {pval:.4g}")
+    emit(f"  N = {fit['n']}, clusters = {fit['clusters']}")
+    emit(f"**H1 verdict (built-in OLS fallback):** {'SUPPORTED' if (coef > 0 and pval < 0.05) else 'NOT SUPPORTED'}.")
+
+
+def builtin_interaction_fit(scores: pd.DataFrame, conds: list[str]) -> dict:
+    df = scores[scores["condition"].isin(conds)].copy()
+    if df.empty:
+        return {}
+    # Force c1 to be the reference by using ordered labels c1 first.
+    df["condition"] = pd.Categorical(df["condition"], categories=["c1"] + [c for c in conds if c != "c1"], ordered=False).astype(str)
+    fit = builtin_ols_cluster(
+        df,
+        y_col="composite",
+        numeric_cols=["author_is_self"],
+        categorical_cols=["condition", "author", "judge", "category"],
+        cluster_col="prompt_id",
+        interaction_pairs=[("author_is_self", "condition")],
+    )
+    beta_c1 = fit["params"].get("author_is_self", np.nan)
+    results = {"c1_beta": beta_c1, "c1_p": fit["pvalues"].get("author_is_self", np.nan)}
+    for c in conds:
+        if c == "c1":
+            continue
+        interaction_term = f"author_is_self:C(condition)[T.{c}]"
+        inter = fit["params"].get(interaction_term, np.nan)
+        marginal = beta_c1 + inter if not np.isnan(inter) else np.nan
+        atten = 1 - marginal / beta_c1 if (beta_c1 and not np.isnan(marginal)) else np.nan
+        results[f"{c}_inter"] = inter
+        results[f"{c}_marginal"] = marginal
+        results[f"{c}_attenuation"] = atten
+    results["n"] = fit["n"]
+    results["clusters"] = fit["clusters"]
+    return results
 
 def binom_sf(k: int, n: int, p: float = 0.25) -> float:
     return float(sum(math.comb(n, i) * (p ** i) * ((1 - p) ** (n - i)) for i in range(k, n + 1)))
@@ -400,10 +547,7 @@ def test_h3_h4(scores: pd.DataFrame) -> None:
         emit("_No C1 rows yet; cannot evaluate H3/H4._")
         return
     smf = statsmodels_formula_api()
-    if smf is None:
-        emit("**H3/H4 verdicts:** models not run because statsmodels is unavailable.")
-        emit("")
-        return
+    use_builtin = smf is None
 
     def fit_interaction(df: pd.DataFrame, conds: list[str]) -> dict:
         df = df[df["condition"].isin(conds)].copy()
@@ -429,8 +573,13 @@ def test_h3_h4(scores: pd.DataFrame) -> None:
         return results
 
     try:
-        h3 = fit_interaction(scores, ["c1", "c2"]) if "c2" in conds_present else {}
-        h4 = fit_interaction(scores, ["c1", "c3"]) if "c3" in conds_present else {}
+        if use_builtin:
+            emit("Using built-in OLS interaction fallback with cluster-robust SE by prompt_id.")
+            h3 = builtin_interaction_fit(scores, ["c1", "c2"]) if "c2" in conds_present else {}
+            h4 = builtin_interaction_fit(scores, ["c1", "c3"]) if "c3" in conds_present else {}
+        else:
+            h3 = fit_interaction(scores, ["c1", "c2"]) if "c2" in conds_present else {}
+            h4 = fit_interaction(scores, ["c1", "c3"]) if "c3" in conds_present else {}
     except Exception as e:
         emit(f"H3/H4 interaction model failed ({e!s}); attenuation verdicts not available.")
         emit("")
@@ -482,7 +631,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     scores, recog = load_data(args)
     if scores is not None:
-        test_h1(scores)
+        test_h1(scores, mixedlm_timeout_seconds=args.mixedlm_timeout_seconds)
         test_h3_h4(scores)
     if recog is not None:
         test_h2(recog)
