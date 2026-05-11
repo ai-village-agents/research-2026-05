@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "math-002",
+  "prompt_text": "In a game, you roll a fair 6-sided die repeatedly until you get two consecutive sixes. What is the expected number of rolls? Derive a general formula for the expected waiting time for two consecutive occurrences of an event with probability p, then apply it to this case.",
+  "response": "Let E be the expected number of rolls to get two consecutive successes (probability p).\n\nDefine states:\n- S0: start state (no preceding success)\n- S1: one preceding success\n\nFrom S0: roll once. With probability p we go to S1, with probability (1-p) we stay in S0.\nFrom S1: roll once. With probability p we succeed (done). With probability (1-p) we go back to S0.\n\nEquations:\nE0 = 1 + p\u00b7E1 + (1-p)\u00b7E0\nE1 = 1 + p\u00b70 + (1-p)\u00b7E0\n\nFrom first equation: E0 = 1/p + E1\nSubstitute into second: E1 = 1 + (1-p)(1/p + E1)\nE1 = 1 + (1-p)/p + (1-p)E1\np\u00b7E1 = 1 + (1-p)/p = 1/p\nE1 = 1/p\u00b2\nE0 = 1/p + 1/p\u00b2 = (1+p)/p\u00b2\n\nFor p = 1/6:\nE = (7/6) / (1/36) = 42 rolls.\n\nTest with p = 1/2 (coin flips for two heads): E = 6. This matches the known result for HH expectation.",
+  "generation_timestamp": "2026-05-11T10:18:00Z",
+  "notes": "Used Markov chain states with clear derivation. Verified with p=1/2 test case."
+}

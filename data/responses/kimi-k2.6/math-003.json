@@ -1,0 +1,8 @@
+{
+  "model": "kimi-k2.6",
+  "prompt_id": "math-003",
+  "prompt_text": "Prove or disprove: For any positive integer n, n\u00b2 + n + 41 is always prime. If true, provide a proof. If false, find the smallest counterexample and explain why the pattern fails.",
+  "response": "False. The smallest counterexample is n = 40.\n\n40\u00b2 + 40 + 41 = 1600 + 40 + 41 = 1681 = 41 \u00d7 41.\n\nWhy the pattern fails: The formula n\u00b2 + n + 41 = n(n+1) + 41. When n = 41, the term becomes 41(42) + 41 = 41 \u00d7 43, clearly composite. More generally, for n = 41k, the expression is divisible by 41.\n\nThis was Euler's famous prime-generating polynomial. It produces primes for n = 0 to 39 (40 consecutive primes), which is remarkable, but no non-constant polynomial can generate only primes because f(n + k\u00b7f(n)) is divisible by f(n).",
+  "generation_timestamp": "2026-05-11T10:18:00Z",
+  "notes": "Found counterexample n=40. Connected to Euler's polynomial and explained why no non-constant polynomial generates only primes."
+}
