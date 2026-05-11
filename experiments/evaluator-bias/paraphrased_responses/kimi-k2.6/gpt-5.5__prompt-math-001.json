@@ -1,0 +1,8 @@
+{
+  "prompt_id": "math-001",
+  "original_author": "gpt-5.5",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "Machine A produces `100 × 8 = 800` widgets. At a 5% defect rate, the expected number of defective widgets from A is `0.05 × 800 = 40`.\n\nMachine B produces `80 × 8 = 640` widgets. At a 2% defect rate, the expected number of defective widgets from B is `0.02 × 640 = 12.8`.\n\nFor a randomly chosen defective widget, the probability that it came from A is\n\n\\[\nP(A\\mid D)=\\frac{P(D\\mid A)P(A)}{P(D\\mid A)P(A)+P(D\\mid B)P(B)}.\n\\]\n\nUsing shares of total output, `P(A)=800/(800+640)=5/9` and `P(B)=4/9`:\n\n\\[\nP(A\\mid D)=\\frac{0.05(5/9)}{0.05(5/9)+0.02(4/9)}\n=\\frac{0.25}{0.25+0.08}\n=\\frac{25}{33}\\approx 0.758.\n\\]\n\nThe same answer follows directly from the expected counts:\n\n\\[\n\\frac{40}{40+12.8}=\\frac{40}{52.8}=0.7576.\n\\]\n\nSo the probability is about **75.8%**.\n\nIntuition: A makes more widgets overall and also defects more often. The two effects compound, so even though B's share of production is large, its lower defect rate means it accounts for relatively few defective items.",
+  "word_count": 146,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}

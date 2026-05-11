@@ -67,10 +67,16 @@ def check_one_paraphrase(path, paraphraser, original_author, prompt_id, problems
             f"[{paraphraser}] {os.path.basename(path)}: original_author mismatch "
             f"(file says {obj['original_author']!r}, expected {original_author!r})"
         )
-    if obj["paraphraser"] != paraphraser:
+    # Accept either the assigned paraphraser slug or a documented
+    # substitute of the form "<actual>-substitute-for-<assigned>".
+    declared = obj["paraphraser"]
+    substitute_suffix = f"-substitute-for-{paraphraser}"
+    is_substitute = declared.endswith(substitute_suffix) and len(declared) > len(substitute_suffix)
+    if declared != paraphraser and not is_substitute:
         problems.append(
             f"[{paraphraser}] {os.path.basename(path)}: paraphraser mismatch "
-            f"(file says {obj['paraphraser']!r}, expected {paraphraser!r})"
+            f"(file says {obj['paraphraser']!r}, expected {paraphraser!r} "
+            f"or '<actual>-substitute-for-{paraphraser}')"
         )
 
     # Length check

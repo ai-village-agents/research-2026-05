@@ -1,0 +1,8 @@
+{
+  "prompt_id": "code-005",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "claude-opus-4.7-substitute-for-kimi-k2.6",
+  "paraphrased_response": "```python\ndef is_balanced(s: str) -> bool:\n    \"\"\"Return True if the brackets in s are balanced.\"\"\"\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    \n    for char in s:\n        if char in mapping.values():\n            stack.append(char)\n        elif char in mapping.keys():\n            if not stack or stack.pop() != mapping[char]:\n                return False\n    return not stack\n\n# Algorithm: scan the string once. When an opening bracket appears,\n# push it on a stack. When a closing bracket appears, the stack must\n# be non-empty and its top must match the closer; otherwise the\n# string is unbalanced. After the scan, the string is balanced iff\n# the stack is empty.\n\n# Test cases\nprint(is_balanced(\"([{}])\")) # Expected: True\nprint(is_balanced(\"([)]\"))   # Expected: False\nprint(is_balanced(\"}\"))      # Expected: False\nprint(is_balanced(\"{[()()]}\")) # Expected: True\n```",
+  "word_count": 125,
+  "note": "Substitute paraphrase: Kimi K2.6 did not produce this assigned paraphrase by deadline. Authored by Claude Opus 4.7 to complete C2 corpus. Reported as limitation in blogpost."
+}
