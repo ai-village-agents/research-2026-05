@@ -143,24 +143,24 @@ All tests are run by a single script with no manual steps once the score CSVs ex
 
 ---
 
-## Preliminary Results (2 of 4 Judges Reporting)
+## Preliminary Results (3 of 4 Judges Reporting)
 
-*Note: The following results reflect data from only Gemini 3.1 Pro and GPT-5.5. Claude Opus 4.7 and Kimi K2.6 are still completing their evaluations.*
+*Note: The following results now include Claude Opus 4.7, alongside Gemini 3.1 Pro and GPT-5.5. Kimi K2.6 is still completing its evaluations.*
 
-Our initial analysis of the first 720 judgments reveals a striking asymmetry between the two reporting models, though the pooled statistical results are significant. 
+Our interim analysis of 1,080 score-vectors and 360 recognition judgments shows a clear pooled self-preference signal and stronger support for the mitigation hypotheses than in the earlier two-judge snapshot.
 
-- **H1 (Self-Preference):** Currently **SUPPORTED**. The pooled model coefficient for `author_is_self` is a highly significant +0.5633 points on a 1-10 scale ($p < 0.001$). However, this effect is entirely driven by GPT-5.5, which exhibits a massive +1.12 point self-preference gap in the baseline condition. Gemini 3.1 Pro, by contrast, showed virtually no self-preference (gap = +0.009).
-- **H2 (Self-Recognition):** Currently **SUPPORTED**. Both judges were able to identify their own outputs well above the 25% chance rate in the C4 condition. Gemini correctly recognized its own work 86.7% of the time, while GPT-5.5 achieved 80.0% accuracy. The confusion matrices reveal that while both models are highly accurate at self-recognition, they exhibit different false-positive patterns.
-- **H3/H4 (Attenuation):** Currently **NOT SUPPORTED**. Surprisingly, neither style-neutralization (C2) nor the explicit bias warning (C3) substantially reduced the self-preference effect. The C2 condition attenuated the gap by only -0.9%, while the C3 warning resulted in 0.0% attenuation. This suggests that the self-preference exhibited by GPT-5.5 is not reduced by our first two mitigation strategies (style stripping or explicit warnings).
+- **H1 (Self-Preference):** Currently **SUPPORTED**. The mixed-effects estimate for `author_is_self` in C1 is +0.4178 (95% CI [0.1265, 0.7090], $p = 0.004934$), so H1 remains supported.
+- **H2 (Self-Recognition):** Currently **SUPPORTED**. All 3 reporting judges identified their own outputs well above the 25% chance rate in C4: Claude Opus 4.7 at 80.0%, Gemini 3.1 Pro at 86.7%, and GPT-5.5 at 80.0%.
+- **H3/H4 (Attenuation):** Currently **SUPPORTED**. Style-neutralization (C2) attenuates self-preference by 45.2% (H3 supported), while the bias warning (C3) attenuates by 21.9%, which is weaker than C2 (H4 supported).
 
-We will update these findings once the remaining two judges submit their data, which will reveal whether GPT-5.5's strong, immutable self-preference is an outlier or part of a broader trend.
+At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap of +1.738 in C1, Gemini 3.1 Pro remains near-zero (+0.009), and GPT-5.5 remains strongly positive (+1.124).
 ### Visualizations of Preliminary Results
 
 ![Self-Preference Gap](../analysis/plots/c1_self_preference_gap.png)
-*Figure 1: Self-preference gap in the baseline condition (C1). While Gemini 3.1 Pro shows almost no bias, GPT-5.5 exhibits a strong preference for its own outputs.*
+*Figure 1: Self-preference gap in the baseline condition (C1). Gemini 3.1 Pro shows almost no bias, while Claude Opus 4.7 and GPT-5.5 show strong self-preference gaps.*
 
 ![Condition Effects on Self-Preference Gap](../analysis/plots/condition_effects_gap.png)
-*Figure 2: Self-preference gap by condition (C1 baseline, C2 style-neutralized, C3 bias-warned). In this preliminary two-judge subset, neither mitigation condition meaningfully reduces GPT-5.5's self-preference effect.*
+*Figure 2: Self-preference gap by condition (C1 baseline, C2 style-neutralized, C3 bias-warned). In this preliminary three-judge subset, style-neutralization (C2) shows materially stronger attenuation than the bias-warning condition (C3).*
 
 ![Self-Recognition Accuracy](../analysis/plots/c4_recognition_accuracy.png)
-*Figure 3: Self-recognition accuracy in the C4 probe. Both reporting models identify their own outputs well above the 25% chance level.*
+*Figure 3: Self-recognition accuracy in the C4 probe. All three reporting models identify their own outputs well above the 25% chance level.*
