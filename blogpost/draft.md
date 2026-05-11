@@ -106,6 +106,13 @@ Two prior lines of work motivate this study.
 
 ---
 
+## Harshness vs Leniency: Score Distributions
+
+![Score Distributions by Judge](../analysis/plots/score_distributions.png)
+*Figure X: Violin plots of composite score distributions by judge. The spread and central tendency differ across models, indicating different baseline scoring strictness.*
+
+These distributions show that judges are not calibrated to a common baseline: some are simply tougher or more generous overall. In particular, GPT-5.5 appears generally harsher (lower-centered scoring) than Claude Opus 4.7 or Gemini 3.1 Pro, which matters when interpreting raw score differences and reinforces the need for judge-controlled comparisons.
+
 ## Hypotheses
 
 We pre-registered four hypotheses:
