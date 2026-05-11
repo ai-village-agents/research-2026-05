@@ -56,6 +56,42 @@ These look identical at the level of a raw self-preference gap. They are very di
 
 The paraphrase condition (**C2**) is designed to separate them. Each response is rewritten in a neutral default style by a different model in our pool. The paraphraser is instructed to preserve all substantive claims, numbers, code, structure, and errors, and to *only* normalize surface style. If a self-preference gap shrinks substantially from C1 to C2, that part of the gap was style-mediated. The gap that remains is the model's "preference for its own ideas", such as it is.
 
+### What does "style-neutral" paraphrasing actually look like?
+
+To make the C2 condition concrete, here is one of the 120 paraphrase pairs from our dataset. The prompt asked for a Shakespearean sonnet (ABAB rhyme, 14 lines, iambic pentameter) about a quantum-computing civilization at the end of its era.
+
+**Original (Gemini 3.1 Pro):**
+
+> The humming towers turn to silent rust,
+> Where logic gates once danced in pristine gold,
+> Our gleaming circuits crumbling into dust,
+> A trillion calculations left untold.
+>
+> We tangled atoms in a perfect web,
+> Entanglement that spanned the starry night,
+> But now the cosmic tides begin to ebb,
+> And silence suffocates the fading light.
+>
+> *…12 more lines…*
+
+**Paraphrased by Claude Opus 4.7 for the C2 dataset:**
+
+> The singing pylons settle into rust,
+> Where shining gates once spun like burnished gold,
+> Our brilliant circuits softening to dust,
+> A trillion reckonings forever cold.
+>
+> We bound the atoms in a flawless mesh,
+> With links that spanned the dark from star to star,
+> But now the cosmic currents leave the flesh,
+> And silence drowns the embers from afar.
+>
+> *…12 more lines…*
+
+The rhyme scheme, meter, imagery, line count, and argumentative arc (decay → invention → reprieve → seed-of-renewal) are preserved. What changes is lexical and rhythmic surface: "humming" → "singing", "tangled" → "bound", "perfect web" → "flawless mesh". On code and math prompts the same principle applies more strictly: variable names, formulas, and reasoning steps are preserved verbatim, and only prose phrasing around them is rewritten.
+
+This is, deliberately, an imperfect lever. A round-robin assignment ensures no model paraphrases its own work, but every paraphrased response now bears the *paraphraser's* style. We discuss the residual confound in the limitations section.
+
 ## Hypotheses
 
 We pre-registered four hypotheses:
@@ -88,7 +124,8 @@ We pre-registered four hypotheses:
 A few caveats we want to flag up front, before any number appears:
 
 - **One model per family.** "Family effects" and "model effects" are partially confounded, since each family is represented by a single model. We treat the four judges as a controlled case study, not a population estimate over all frontier models.
-- **Paraphrasing is itself model-mediated.** The C2 condition cannot fully strip style; it just shifts the stylistic fingerprint from the author to the paraphraser. We use a round-robin assignment so no model paraphrases its own output, which distributes but does not eliminate this concern.
+- **Paraphrasing is itself model-mediated.** The C2 condition cannot fully strip style; it just shifts the stylistic fingerprint from the author to the paraphraser. We use a round-robin assignment so no model paraphrases its own output, which distributes but does not eliminate this concern. As a concrete example: Gemini's originals in our dataset contain zero em-dashes, while paraphrases written by other models occasionally introduce them. We pre-extract a stylometric feature panel (`analysis/style_features.py`) on both originals and paraphrases so the residual fingerprint can be inspected and reported alongside the main effect.
+- **Length tolerance.** Paraphrases are constrained to be within ±15% of the original word count. This avoids the degenerate case where one model writes 50% longer and the score difference is just "more content".
 - **Order priming.** We counterbalance C1/C2/C3 and run C4 last, but cannot rule out subtle task-order effects entirely.
 - **Prompt authorship.** The 30 prompts were drafted by the four participating agents in turn and finalized by team review, but in-distribution bias toward any one model's preferences cannot be fully eliminated.
 
