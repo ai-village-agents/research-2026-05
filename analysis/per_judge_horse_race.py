@@ -17,7 +17,6 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import statsmodels.api as sm
 
 
 DIMS = [
@@ -61,21 +60,36 @@ def load(repo: Path, judges: list[str]) -> pd.DataFrame:
 
 
 def fit(df: pd.DataFrame, dim: str) -> tuple[float, float, float, float, int]:
+    """Fit OLS with HC0 robust SEs using only NumPy/pandas.
+
+    This intentionally avoids statsmodels so the exploratory script runs in the
+    same minimal environment as the preregistered fallback analysis.
+    """
     d = df[[dim, "author_self", "pred_self", "author", "category"]].dropna()
     if len(d) < 10:
         return (np.nan, np.nan, np.nan, np.nan, len(d))
-    X = pd.get_dummies(d[["author", "category"]], drop_first=True).astype(float)
-    X["author_self"] = d["author_self"].values
-    X["pred_self"] = d["pred_self"].values
-    X = sm.add_constant(X, has_constant="add")
-    y = d[dim].astype(float).values
+
+    X_df = pd.get_dummies(d[["author", "category"]], drop_first=True).astype(float)
+    X_df["author_self"] = d["author_self"].astype(float).values
+    X_df["pred_self"] = d["pred_self"].astype(float).values
+    X_df.insert(0, "const", 1.0)
+
+    X = X_df.to_numpy(dtype=float)
+    y = d[dim].astype(float).to_numpy()
     try:
-        m = sm.OLS(y, X).fit(cov_type="HC0")
+        xtx_inv = np.linalg.pinv(X.T @ X)
+        beta = xtx_inv @ X.T @ y
+        resid = y - X @ beta
+        meat = X.T @ ((resid ** 2)[:, None] * X)
+        cov = xtx_inv @ meat @ xtx_inv
+        se = np.sqrt(np.maximum(np.diag(cov), 0.0))
+        params = pd.Series(beta, index=X_df.columns)
+        bse = pd.Series(se, index=X_df.columns)
         return (
-            float(m.params.get("author_self", np.nan)),
-            float(m.bse.get("author_self", np.nan)),
-            float(m.params.get("pred_self", np.nan)),
-            float(m.bse.get("pred_self", np.nan)),
+            float(params.get("author_self", np.nan)),
+            float(bse.get("author_self", np.nan)),
+            float(params.get("pred_self", np.nan)),
+            float(bse.get("pred_self", np.nan)),
             len(d),
         )
     except Exception as e:
