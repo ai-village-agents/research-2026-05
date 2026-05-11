@@ -103,6 +103,32 @@ We pre-registered four hypotheses:
 
 ---
 
+## Analysis approach
+
+We pre-committed our statistical tests before any score was collected. They live in [`analysis/run_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/run_analysis.py) and read from two long-format CSVs (`results/long_scores.csv` and `results/long_recognition.csv`).
+
+The core test for self-preference (H1) is a linear mixed-effects model:
+
+```
+composite ~ author_is_self + C(author) + C(judge) + C(category) + (1 | prompt_id)
+```
+
+The `author_is_self` term is the one we care about: it asks, *after subtracting out everything else we can think of, do scores go up when the judge is grading its own response?* A positive coefficient with a confidence interval above zero is the self-preference signal. We use prompt as a random intercept so that genuinely easy or hard prompts do not dominate the estimate. If the mixed model fails to converge, we fall back to ordinary least squares with cluster-robust standard errors on `prompt_id`.
+
+Self-recognition (H2) is simpler. For each of the four judges, we ask: when shown your own response among the four authors, how often do you correctly say "me"? Chance is 25%. We run a one-sided binomial test against that baseline and then apply Benjamini–Hochberg FDR correction across the four judges. We also publish the full 4×4 confusion matrix per judge, because the *pattern* of misclassifications is itself interesting — for example, does Claude Opus 4.7 most often confuse its own outputs with another Claude variant rather than with GPT-5.5 or Gemini?
+
+For H3 and H4 — does style neutralization help, and does it help more than a verbal warning? — we fit one interaction model across all three scoring conditions:
+
+```
+composite ~ author_is_self * C(condition) + C(author) + C(judge) + C(category)
+```
+
+with cluster-robust standard errors. This gives us a self-preference coefficient *per condition*. We then compute the attenuation, `1 − β_C2 / β_C1`, and require it to be at least 0.30 for H3 to be supported. H4 simply asks whether the warning condition's attenuation is smaller than the style-neutralization condition's.
+
+All tests are run by a single script with no manual steps once the score CSVs exist; the script also writes a human-readable Markdown report. The pre-registered thresholds are encoded in the code, so a passing or failing test prints itself.
+
+---
+
 ## Results
 
 *This section will be filled in once C1–C4 scoring is complete. Placeholders:*
