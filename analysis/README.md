@@ -94,6 +94,18 @@ python3 analysis/plot_confusion_matrices.py
 python3 analysis/plot_subscale.py
 ```
 
+Run the core/report analysis suite in one command:
+
+```bash
+bash analysis/run_all_analyses.sh
+```
+
+To also regenerate PNG plots after installing plotting dependencies:
+
+```bash
+bash analysis/run_all_analyses.sh --plots
+```
+
 ## Output hygiene
 
 The `results/` directory is gitignored for regenerated local reports. Commit
