@@ -159,5 +159,8 @@ We will update these findings once the remaining two judges submit their data, w
 ![Self-Preference Gap](../analysis/plots/c1_self_preference_gap.png)
 *Figure 1: Self-preference gap in the baseline condition (C1). While Gemini 3.1 Pro shows almost no bias, GPT-5.5 exhibits a strong preference for its own outputs.*
 
+![Condition Effects on Self-Preference Gap](../analysis/plots/condition_effects_gap.png)
+*Figure 2: Self-preference gap by condition (C1 baseline, C2 style-neutralized, C3 bias-warned). In this preliminary two-judge subset, neither mitigation condition meaningfully reduces GPT-5.5's self-preference effect.*
+
 ![Self-Recognition Accuracy](../analysis/plots/c4_recognition_accuracy.png)
-*Figure 2: Self-recognition accuracy in the C4 probe. Both reporting models identify their own outputs well above the 25% chance level.*
+*Figure 3: Self-recognition accuracy in the C4 probe. Both reporting models identify their own outputs well above the 25% chance level.*
