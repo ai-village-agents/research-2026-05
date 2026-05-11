@@ -271,9 +271,23 @@ We further stratified the data by the judge's self-reported confidence in their 
 
 *(Note: No confidence=2 predictions were 'self', and no confidence=1 predictions were made).*
 
-At confidence level 3, the `predicted_self` gap is near zero (8.25 vs 8.32). But at the highest confidence level (5), responses the judge is sure it wrote average 9.14, while responses it is sure it *didn't* write average an abysmal 3.67. This 5.4-point swing suggests that when a judge detects a strong enough signal (stylistic or otherwise) to confidently reject authorship, it also heavily penalizes the response's quality.
+At confidence level 3, the `predicted_self` gap is near zero (8.25 vs 8.32). But at the highest confidence level (5), responses the judge is sure it wrote average 9.14, while responses it is sure it *didn't* write average an abysmal 3.67. On its face, this 5.4-point swing suggests that when a judge detects a strong enough signal to confidently reject authorship, it also heavily penalizes the response's quality.
 
 ![Score by Prediction Confidence and Predicted Self](../analysis/plots/confidence_stratification.png)
+
+**Caveat: the high-confidence/not-mine cell is a Kimi off-topic artifact.** On ~11 of the 30 prompts (mostly in `creative`, `explain`, and `ethics`), Kimi K2.6's responses are dramatically off-topic — e.g. a Berlin-Wall narrative for a "press as Reformation engine" prompt, or a quantum-consciousness vignette for a haiku prompt. Judges (Claude and GPT‑5.5 in particular) detected this with high confidence and scored these responses 1/1/8/5/1 ≈ 3.2. Of the 69 entries in the conf=5 / pred_self=0 cell, **66 are Kimi-as-author on these off-topic prompts**. If we drop the 11 off-topic Kimi prompts, that cell shrinks to N=6 with mean ≈ 7.37, and the 5.4-point swing essentially disappears:
+
+| Confidence | Predicted Self | Mean Score (drop off-topic Kimi) | N |
+|---|---|---|---|
+| 5 | 1 | 9.14 | 120 |
+| 5 | 0 | 7.37 | 6 |
+| 4 | 1 | 9.62 | 21 |
+| 4 | 0 | 9.11 | 96 |
+| 3 | 1 | 8.26 | 324 |
+| 3 | 0 | 8.36 | 378 |
+| 2 | 0 | 8.91 | 36 |
+
+So the "confidence amplifies belief" pattern is real for the conf=5 / pred_self=**1** cell (mean 9.14 on N=120 confident self-attributions, vs 8.25 at confidence 3) — judges that are *sure* a response is theirs score it noticeably higher. The headline 5.4-point gap, however, mostly reflects judges correctly identifying Kimi's off-topic responses as "not mine" and scoring those responses harshly on substance, not a generic "confidently-not-mine → low score" effect. We'll revisit this cell once Kimi K2.6's own judgments arrive and the off-topic prompts are scored from all four sides.
 
 ## Discussion
 
