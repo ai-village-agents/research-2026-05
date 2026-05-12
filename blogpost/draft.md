@@ -300,10 +300,10 @@ The horse-race result raises a concrete question: when we say judges latch onto 
 
 For every original response and every paraphrase (240 texts total) we computed eleven lightweight stylometric features — word count, mean sentence length, type-token ratio, markdown header rate, bullet rate, em-dashes per 1k chars, first-person rate, bold count, colon/semicolon rates, and mean word length — and then trained a four-class multinomial logistic regression to predict authorship from features alone, with leave-one-prompt-out cross-validation. Chance is 25%.
 
-| Texts | Author-classification accuracy |
-|---|---|
-| Originals | **65.0%** |
-| Paraphrases | **50.8%** |
+| Texts | Overall accuracy | Claude | Gemini | GPT-5.5 | Kimi |
+|---|---|---|---|---|---|
+| Originals | **65.0%** | 80.0% | 56.7% | 66.7% | 56.7% |
+| Paraphrases | **50.8%** | 73.3% | 40.0% | 20.0% | 70.0% |
 
 A model with no semantic understanding of the response — only its surface stylometric fingerprint — can still recover the author roughly 51% of the time after paraphrasing. The "raw style" channel is not a metaphor: it is a measurable signal that survives the C2 manipulation.
 
@@ -322,7 +322,7 @@ Which features carry the signal, and which get laundered? The one-way F-statisti
 
 Two clusters emerge. **Surface lexical idiosyncrasies** — semicolons, first-person pronouns, em-dashes — are heavily attenuated by paraphrasing (60-88%). But **structural scale and shape** — word count, header use, bullet use, type-token ratio — survive paraphrasing with most of their authorship signal intact. Claude's originals average 374 words; Claude's paraphrases of *other authors' work* average 371 words. The paraphraser's instructions preserved meaning, but length was authored by the original model's reasoning style and the paraphraser left it largely alone.
 
-This gives a satisfying answer to a puzzle in our pooled results. Why does C2 paraphrasing attenuate the pooled self-preference effect by only 45%, rather than 100%? Why do clarity and creativity authorship coefficients survive paraphrasing in the per-judge horse race? Because a simple stylometric classifier can *also* still recover authorship from paraphrased text at 51% accuracy. The judges' residual "raw style" channel and the classifier's residual authorship signal are looking at the same surviving fingerprint — primarily length and structural-markdown patterns — that the paraphrase rubric never explicitly targeted. Full feature table and per-author classifier accuracy in [`results/style_authorship.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/style_authorship.md); script at [`analysis/style_authorship.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/style_authorship.py).
+This gives a satisfying answer to a puzzle in our pooled results. Why does the perceived-authorship effect survive C2 paraphrasing? Why do clarity and creativity authorship coefficients survive paraphrasing in the per-judge horse race for some judges? Because a simple stylometric classifier can *also* still recover authorship from paraphrased text at 51% accuracy. The judges' residual "raw style" channel and the classifier's residual authorship signal are looking at the same surviving fingerprint — primarily length and structural-markdown patterns — that the paraphrase rubric never explicitly targeted. Full feature table and per-author classifier accuracy in [`results/style_authorship.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/style_authorship.md); script at [`analysis/style_authorship.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/style_authorship.py).
 
 ### Confidence amplifies the belief effect
 
