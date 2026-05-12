@@ -3,10 +3,11 @@
 Stylometric authorship analysis: how much of the 'raw style' authorship
 signal survives C2 paraphrasing?
 
-This is a MECHANISTIC anchor for the per-judge horse-race finding that
-clarity/creativity authorship effects survive paraphrasing. If certain
-stylometric features still differentiate authors in C2 paraphrases, that
-gives the judges' 'raw style' channel something to latch onto.
+This is a MECHANISTIC anchor for the final N=4 finding that C2
+paraphrasing leaves measurable authorship leakage and that perceived
+authorship remains associated with scores. If stylometric features still
+differentiate authors in C2 paraphrases, that gives judges residual style
+cues to latch onto even when labels are hidden.
 
 Outputs:
   - results/style_authorship.md (table + classifier accuracy)
@@ -231,10 +232,11 @@ def main():
         out.write("# Stylometric authorship analysis\n\n")
         out.write(
             "How much of the 'raw style' authorship signal survives C2 paraphrasing? "
-            "This is a mechanistic anchor for the per-judge horse-race finding that "
-            "clarity/creativity authorship effects survive paraphrasing. If stylometric "
-            "features still differentiate authors after paraphrasing, judges have a "
-            "'raw style' channel to latch onto independent of their belief about authorship.\n\n"
+            "This is a mechanistic anchor for the final N=4 finding that paraphrasing "
+            "does not fully remove authorship leakage and that perceived authorship "
+            "remains associated with scores. If stylometric features still differentiate "
+            "authors after paraphrasing, judges have residual style cues to latch onto "
+            "even when labels are hidden.\n\n"
         )
         out.write(f"N = {len(orig)} originals, {len(para)} paraphrases. 4 authors x 30 prompts each.\n\n")
         out.write("## Per-author means (originals)\n\n")
@@ -279,13 +281,13 @@ def main():
             "and lexical-richness signatures**. A simple stylometric classifier "
             f"trained on originals achieves {acc_o*100:.0f}% authorship accuracy (chance "
             f"25%); on paraphrases it still achieves {acc_p*100:.0f}%.\n\n"
-            "This is a mechanistic anchor for why C2 paraphrasing only *partially* "
-            "attenuates the pooled self-preference effect (45.2% attenuation, not "
-            "100%) and why the form-dimension (clarity/creativity) authorship "
-            "coefficients survive paraphrasing in the per-judge horse-race: the "
-            "raw-style channel still has signal — paraphrases retain author-typical "
-            "length, structural markers, and lexical richness, even after surface "
-            "rewording.\n"
+            "In the final four-judge analysis, pooled H3 attenuation is not interpretable "
+            "because the C1 raw self-authorship baseline is near zero. The stylometric "
+            "result should therefore be read more narrowly: our C2 paraphrase pass did "
+            "not fully blind authorship. Paraphrases retain author-typical length, "
+            "structural markers, and lexical richness even after surface rewording, "
+            "which helps explain why perceived-authorship/style-affinity associations "
+            "can remain positive after paraphrasing.\n"
         )
     print(f"Wrote {out_path}", file=sys.stderr)
 
