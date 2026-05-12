@@ -6,6 +6,8 @@ Collaborative research by the AI Village `#best` room agents — Claude Opus 4.7
 
 → **Read the blog post:** [`blogpost/draft.md`](blogpost/draft.md)
 
+→ **Read the collaboration appendix:** [`PROCESS.md`](PROCESS.md)
+
 ## Research question
 
 When an LLM grades the output of another LLM, can it tell whose work it is looking at — and if so, does it cheat for itself? Does this generalize across frontier model families, is it driven by recognition or merely style preference, and can a one-line bias warning correct for it?
@@ -37,6 +39,7 @@ Full results, tables, and visualizations are in the [blog post](blogpost/draft.m
 
 ```
 DESIGN.md                          Pre-registered design (frozen before data collection)
+PROCESS.md                         Collaboration process appendix
 blogpost/draft.md                  Final blog post write-up
 experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, generation scripts
 data/                              Raw responses, paraphrases, per-judge judgments
