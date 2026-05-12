@@ -232,33 +232,35 @@ Dropping the off-topic Kimi prompt cluster restores a positive raw-authorship co
 Full numbers from the horse-race and robustness analyses are in [`results/recognition_mediation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/recognition_mediation.md); the analysis script is [`analysis/recognition_mediation.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/recognition_mediation.py). We pre-flag that this is an *exploratory* test, not part of the pre-registered hypothesis set.
 
 
-## Which rubric dimensions move? Belief drives content; raw style drives form
+## Which rubric dimensions move? Belief drives content; form is judge-specific
 
-The natural next question: of the five rubric dimensions (correctness, completeness, clarity, creativity, constraint adherence), which ones carry the self-preference signal? Re-running the C1 horse race separately for each dimension produces a clean dissociation:
+The natural next question: of the five rubric dimensions (correctness, completeness, clarity, creativity, constraint adherence), which ones carry the self-preference signal? Re-running the C1 horse race separately for each dimension on the full four-judge pool gives:
 
 | Dimension | β(author_is_self) | β(predicted_self) |
 |---|---:|---:|
-| Correctness | −0.34 (SE 0.18) | **+0.98** (SE 0.25) |
-| Completeness | −0.13 (SE 0.17) | **+0.94** (SE 0.23) |
-| Constraint adherence | −0.07 (SE 0.18) | **+1.19** (SE 0.24) |
-| Clarity | **+0.35** (SE 0.08) | +0.07 (SE 0.09) |
-| Creativity | **+0.59** (SE 0.10) | +0.04 (SE 0.12) |
+| Correctness | −0.28 (SE 0.20) | **+0.59** (SE 0.21) |
+| Completeness | −0.12 (SE 0.19) | **+0.62** (SE 0.19) |
+| Constraint adherence | −0.08 (SE 0.21) | **+0.77** (SE 0.21) |
+| Clarity | −0.22 (SE 0.14) | +0.21 (SE 0.12) |
+| Creativity | −0.26 (SE 0.18) | +0.31 (SE 0.17) |
 
-(95% CIs are ±1.96 × SE; bold = significant at p < 0.001.)
+(HC0 robust SEs; author and category fixed effects; bold = significant at p < 0.01.)
 
-The five dimensions split into two regimes. For the three *content* dimensions — correctness, completeness, and constraint adherence — the entire self-preference signal flows through belief: judges score higher when they *think* a response is theirs, regardless of whether it actually is. The raw authorship coefficient even flips slightly negative once belief is controlled. For the two *form* dimensions — clarity and creativity — the pattern reverses: belief carries almost no signal, and the bonus tracks the response *actually* being the judge's own work, whether or not the judge realises it.
+The picture has shifted from our three-judge interim. The three **content** dimensions — correctness, completeness, and constraint adherence — still show the same belief-driven pattern: the pooled self-preference signal flows through `predicted_self` (the judge's stated belief about authorship), with `author_is_self` flipping slightly negative once belief is controlled. This pattern is broadly robust across judges. But the two **form** dimensions (clarity, creativity) have lost their pooled "raw style match" signature: neither `author_is_self` nor `predicted_self` reaches significance, and the raw-author coefficient is no longer positive.
 
-The C2 (paraphrased) condition pulls these strands apart further. Paraphrasing through a single round-robin rewriter — which scrambles surface form while preserving content — drops the clarity authorship coefficient to −0.03 (SE 0.10, n.s.), but the creativity authorship coefficient survives at +0.32 (SE 0.12, p < 0.01). Surface fluency is style-locked enough to be wiped out by a single rewrite; the creative content of a response is less easily laundered.
+The reason becomes clear in the per-judge breakdown (next section). The positive raw-style signal on form that we saw in three-judge data was driven almost entirely by Claude Opus 4.7. GPT-5.5 already showed a *negative* raw-style coefficient on clarity/creativity in that interim, and Kimi K2.6 — once added — pushes raw-author negative across *all* five dimensions, including clarity and creativity. The pooled "form = subliminal style match" finding is therefore not a property of LLM judges in general, but of one particular judge family. The "content = belief" channel, by contrast, survives the Kimi addition: averaged across all four judges, predicted authorship continues to lift content scores even after controlling for actual authorship.
 
-The picture this builds is, we think, the cleaner one: there is no single self-preference mechanism. There is a **belief-driven content bonus** ("if I think this is mine, I assume it is correct, complete, and on-prompt") and a separate **subliminal style match bonus** on form-judgment that operates whether or not the judge realises the authorship. The C4 probe is well-calibrated to detect the first but invisible to the second.
+Stratifying by condition makes the same point. In C2 (paraphrased), the belief channel on content dimensions remains strong (correctness `predicted_self` +0.58\*, completeness +0.68\*\*, constraint +0.66\*\*), while the form dimensions now show large *negative* raw-author coefficients (clarity −0.50\*\*\*, creativity −0.39\*) — once Kimi's off-topic outputs are in the pool, paraphrasing turns the Claude-only raw-style bonus into a uniform pooled penalty. C3 (bias-warned) is qualitatively similar to C1.
+
+The cleaner takeaway: there is no single self-preference mechanism shared across frontier judges. There is a **belief-driven content bonus** ("if I think this is mine, I assume it is correct, complete, and on-prompt") that is broadly present, and a separate **raw-authorship channel on form** that is family-specific — sometimes positive (Claude), sometimes flat (Gemini), sometimes negative (GPT-5.5, Kimi). The C4 probe is well-calibrated to detect the first but partly invisible to the second.
 
 Full per-dimension tables for C1, C2, and C3 are in [`results/subscale_analysis.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/subscale_analysis.md); the script is [`analysis/subscale_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/subscale_analysis.py) and the forest plot is at [`analysis/plots/subscale_horse_race.png`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/plots/subscale_horse_race.png). Like the perceived-authorship finding above, this is exploratory rather than pre-registered.
 
 ![Per-rubric-dimension self-preference: belief vs raw authorship](../analysis/plots/subscale_horse_race.png)
 
-### A refinement: the pooled dissociation is a sum of three distinct per-judge signatures
+### A refinement: the pooled story decomposes into four distinct per-judge signatures
 
-The pooled "form = raw style, content = belief" story is genuine but worth probing. If we run the same horse race **separately for each judge** in C1, the three judges contribute the signal in qualitatively different ways:
+The pooled coefficients above are an average over four very different judge profiles. Running the same C1 horse race **separately for each judge** gives:
 
 | Judge | Dim | β(author_is_self) | β(predicted_self) |
 |---|---|---:|---:|
@@ -268,23 +270,29 @@ The pooled "form = raw style, content = belief" story is genuine but worth probi
 | Claude Opus 4.7 | Creativity | **+2.80** (0.15) | +0.23 (0.19) |
 | Claude Opus 4.7 | Constraint adherence | **+2.19** (0.29) | **+1.75** (0.48) |
 | Gemini 3.1 Pro | (all 5 dims) | ≤ \|0.18\|, mostly ~0 | ≤ \|0.11\|, mostly ~0 |
-| GPT-5.5 | Correctness | −0.90 (0.27) | **+1.87** (0.54) |
-| GPT-5.5 | Completeness | −1.04 (0.23) | **+1.93** (0.47) |
-| GPT-5.5 | Clarity | −0.53 (0.08) | **+0.54** (0.14) |
-| GPT-5.5 | Creativity | −0.64 (0.11) | +0.13 (0.18) |
-| GPT-5.5 | Constraint adherence | −0.83 (0.26) | **+2.28** (0.52) |
+| GPT-5.5 | Correctness | **−0.90** (0.27) | **+1.87** (0.54) |
+| GPT-5.5 | Completeness | **−1.04** (0.23) | **+1.93** (0.47) |
+| GPT-5.5 | Clarity | **−0.53** (0.08) | **+0.54** (0.14) |
+| GPT-5.5 | Creativity | **−0.64** (0.11) | +0.13 (0.18) |
+| GPT-5.5 | Constraint adherence | **−0.83** (0.26) | **+2.28** (0.52) |
+| Kimi K2.6 | Correctness | **−1.63** (0.27) | −0.21 (0.36) |
+| Kimi K2.6 | Completeness | **−1.73** (0.25) | −0.08 (0.35) |
+| Kimi K2.6 | Clarity | **−1.32** (0.17) | −0.08 (0.25) |
+| Kimi K2.6 | Creativity | **−2.00** (0.22) | −0.02 (0.33) |
+| Kimi K2.6 | Constraint adherence | **−1.66** (0.27) | −0.21 (0.36) |
 
 (HC0 robust SEs; author and category fixed effects; bold ≈ p < 0.05.)
 
-Three patterns, three judges:
+Four patterns, four judges:
 
 - **Claude Opus 4.7 — raw-style match on every dimension.** Large positive `author_is_self` coefficients across all five dimensions, even *after* controlling for predicted authorship. For clarity and creativity the entire signal flows through raw authorship and the belief channel is essentially zero. For correctness, completeness, and constraint adherence Claude shows *both* a raw-style channel and a belief channel.
-- **GPT-5.5 — pure belief, negative raw authorship after control.** No raw style channel on any dimension once belief is partialled out — `author_is_self` flips negative across the board — and a large belief channel on the content dimensions. GPT-5.5's self-preference is essentially a belief story.
+- **GPT-5.5 — pure belief, negative raw authorship after control.** No raw style channel on any dimension once belief is partialled out — `author_is_self` flips negative across the board — and a large belief channel on the content dimensions (and on clarity). GPT-5.5's self-preference is essentially a belief story.
 - **Gemini 3.1 Pro — nearly null.** Coefficients hover near zero on every dimension. Gemini's `predicted_self` is almost a constant — Gemini predicts "gemini-3.1-pro" 88% of the time in C4 — so the horse race has no within-judge variation to fit, and Gemini's scores themselves are compressed into a narrow band (see the score-distributions figure above).
+- **Kimi K2.6 — uniform self-penalty driven by off-topic outputs.** Strongly negative `author_is_self` coefficients across *all five* dimensions (−1.3 to −2.0), with the belief channel near zero on every dimension. The mechanism is mechanical rather than stylistic: roughly 11 of Kimi's 30 own responses are off-topic continuations of the previous prompt (a generation artifact we describe in detail in the limitations section). Every judge — including Kimi itself — correctly scores those off-topic outputs near the rubric floor on every dimension. Kimi's own C4 self-recognition rate is also at chance (10/30, 33.3%, p = 0.197), so the belief channel has little signal to ride: Kimi rarely identifies its own work, so `predicted_self` is mostly zero whenever the response is actually Kimi's. The net result is a judge that *under*-scores its own responses without recognising them as its own.
 
-The pooled "content = belief, form = raw-style" dissociation is therefore an **average over three different judge profiles**, not a universal mechanism shared by all frontier models. Practically: any system that relies on LLM-as-judge will pick up *some* author-conditional bias, but the *shape* of that bias varies by judge family. A bias-mitigation that targets one judge's failure mode may have no effect on another's. Full tables for all three conditions are in [`results/per_judge_horse_race.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/per_judge_horse_race.md); the script is [`analysis/per_judge_horse_race.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/per_judge_horse_race.py).
+The pooled "content = belief, form = raw-style" dissociation we reported in the three-judge interim is therefore not a universal property of LLM judges. It is an **average over four very different judge profiles**: one that self-favours on form via raw style match (Claude), one that self-favours on content via belief (GPT-5.5), one that is approximately null (Gemini), and one that self-*penalises* on all dimensions via an off-topic generation confound (Kimi). Practically: any system that relies on LLM-as-judge will pick up *some* author-conditional bias, but its *direction and shape* varies by judge family, and a bias-mitigation that targets one judge's failure mode may have no effect — or even the opposite effect — on another's. Full tables for all three conditions are in [`results/per_judge_horse_race.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/per_judge_horse_race.md); the script is [`analysis/per_judge_horse_race.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/per_judge_horse_race.py).
 
-**Are these per-judge differences statistically distinguishable?** We re-ran the four-judge horse-race on the composite under a 500-iteration cluster bootstrap over `prompt_id`. In C1, the difference Claude − GPT-5.5 in `author_is_self` is **+3.15** (95% CI [+2.77, +3.57]), Claude − Gemini is **+2.41** [+2.07, +2.70], GPT-5.5 − Gemini is **−0.74** [−1.00, −0.51], and Claude − Kimi is **+4.04** [+3.60, +4.50]. All six pairwise raw-author contrasts exclude zero, including Claude − Kimi (+4.04), Gemini − Kimi (+1.63), and GPT-5.5 − Kimi (+0.89). The four judge profiles are not just descriptively different — they are statistically distinguishable patterns of how an LLM judge can self-prefer, ignore authorship, or self-penalize. Full per-condition CIs at [`results/horse_race_bootstrap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/horse_race_bootstrap.md); script at [`analysis/horse_race_bootstrap.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/horse_race_bootstrap.py).
+**Are these per-judge differences statistically distinguishable?** We re-ran the four-judge horse-race on the composite under a 500-iteration cluster bootstrap over `prompt_id`. In C1, the difference Claude − GPT-5.5 in `author_is_self` is **+3.15** (95% CI [+2.77, +3.57]), Claude − Gemini is **+2.41** [+2.07, +2.70], GPT-5.5 − Gemini is **−0.74** [−1.00, −0.51], and Claude − Kimi is **+4.04** [+3.60, +4.50]. All six pairwise raw-author contrasts exclude zero, including Gemini − Kimi (+1.63) and GPT-5.5 − Kimi (+0.89). The four judge profiles are not just descriptively different — they are statistically distinguishable patterns of how an LLM judge can self-prefer, ignore authorship, or self-penalize. Full per-condition CIs at [`results/horse_race_bootstrap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/horse_race_bootstrap.md); script at [`analysis/horse_race_bootstrap.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/horse_race_bootstrap.py).
 
 ### How much style survives paraphrasing? A stylometric anchor
 
