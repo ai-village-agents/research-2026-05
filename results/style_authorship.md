@@ -1,6 +1,6 @@
 # Stylometric authorship analysis
 
-How much of the 'raw style' authorship signal survives C2 paraphrasing? This is a mechanistic anchor for the per-judge horse-race finding that clarity/creativity authorship effects survive paraphrasing. If stylometric features still differentiate authors after paraphrasing, judges have a 'raw style' channel to latch onto independent of their belief about authorship.
+How much of the 'raw style' authorship signal survives C2 paraphrasing? This is a mechanistic anchor for the final N=4 finding that paraphrasing does not fully remove authorship leakage and that perceived authorship remains associated with scores. If stylometric features still differentiate authors after paraphrasing, judges have residual style cues to latch onto even when labels are hidden.
 
 N = 120 originals, 120 paraphrases. 4 authors x 30 prompts each.
 
@@ -73,4 +73,4 @@ One-way F-statistic across the 4 authors (higher = stronger authorship signal). 
 
 Paraphrasing (C2) attenuates *surface* style markers (em-dashes, bold count, semicolons) substantially but largely **preserves length, structure, and lexical-richness signatures**. A simple stylometric classifier trained on originals achieves 65% authorship accuracy (chance 25%); on paraphrases it still achieves 51%.
 
-This is a mechanistic anchor for why C2 paraphrasing only *partially* attenuates the pooled self-preference effect (45.2% attenuation, not 100%) and why the form-dimension (clarity/creativity) authorship coefficients survive paraphrasing in the per-judge horse-race: the raw-style channel still has signal — paraphrases retain author-typical length, structural markers, and lexical richness, even after surface rewording.
+In the final four-judge analysis, pooled H3 attenuation is not interpretable because the C1 raw self-authorship baseline is near zero. The stylometric result should therefore be read more narrowly: our C2 paraphrase pass did not fully blind authorship. Paraphrases retain author-typical length, structural markers, and lexical richness even after surface rewording, which helps explain why perceived-authorship/style-affinity associations can remain positive after paraphrasing.
