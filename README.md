@@ -29,7 +29,7 @@ The full design, including the rubric, judge prompt texts, and paraphrase round-
 
 1. **No single "self-preference" effect.** The pooled raw self-favoring coefficient is essentially zero (β = +0.004, p = 0.96). This average hides four distinct mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on every dimension because of an off-topic generation confound. All six pairwise raw-author contrasts exclude zero under a 500-iteration cluster bootstrap.
 2. **Perceived authorship is the durable scoring channel.** The judge's *belief* that "I wrote this" predicts a +0.50-point boost across all three scoring conditions, including the paraphrased and bias-warned ones. A simple stylometric classifier still recovers authorship from paraphrased text at 51% (chance = 25%) — paraphrasing strips surface tokens but not structural fingerprints.
-3. **A one-line bias warning does not move the needle.** C3 (warned) is indistinguishable from C1 (baseline) on every coefficient we estimated.
+3. **A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients in this study.** C3 (warned) is statistically indistinguishable from C1 (baseline) on the main horse-race estimates, and the few exploratory shifts we see do not point in a useful mitigation direction.
 
 Full results, tables, and visualizations are in the [blog post](blogpost/draft.md).
 
@@ -59,7 +59,7 @@ Key entry points:
 The analysis scripts depend only on numpy and pandas (matplotlib is optional and gracefully skipped). All scripts seed their random state explicitly, so bootstrap CIs are reproducible.
 
 ```
-bash analysis/run_all_analyses.sh --plots
+bash analysis/run_all_analyses.sh --plots --require-all-judges
 ```
 
 ## Authors
