@@ -103,10 +103,17 @@ def fit_binned_T(rs, q_lo, q_hi):
         return {"n": len(rs2), "T": np.nan, "T_se": np.nan}
     Y = np.array([r["composite"] for r in rs2])
     T = np.array([r["author_is_self"] for r in rs2], dtype=float)
+    n_self = int(T.sum())
+    n_other = int(len(T) - n_self)
+    if len(np.unique(T)) < 2:
+        # A within-bin self-vs-other contrast is not identified if the bin contains
+        # only self rows or only non-self rows. Reporting 0.000 would be misleading.
+        return {"n": len(rs2), "n_self": n_self, "n_other": n_other,
+                "T": np.nan, "T_se": np.nan}
     X = np.column_stack([np.ones(len(Y)), T])
     cl = [r["prompt_id"] for r in rs2]
     coef, se = ols_with_se(Y, X, clusters=cl)
-    return {"n": len(Y), "T": coef[1], "T_se": se[1]}
+    return {"n": len(Y), "n_self": n_self, "n_other": n_other, "T": coef[1], "T_se": se[1]}
 
 # --- Define quality terciles using the overall pooled distribution (peer_quality) ---
 peer_q_all = np.array([r["peer_quality"] for r in rows if not np.isnan(r["peer_quality"])])
@@ -155,7 +162,7 @@ for scope_name, judge_filter in scopes:
 # Write CSVs
 def write_csv(path, rows_list, keys):
     with path.open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=keys)
+        w = csv.DictWriter(f, fieldnames=keys, lineterminator="\n")
         w.writeheader()
         for r in rows_list:
             out = {}
@@ -166,7 +173,7 @@ def write_csv(path, rows_list, keys):
 
 int_keys = ["scope", "condition", "kind", "n", "b0", "b0_se", "T", "T_se",
             "Q", "Q_se", "TxQ", "TxQ_se"]
-bin_keys = ["scope", "condition", "bin", "kind", "n", "T", "T_se"]
+bin_keys = ["scope", "condition", "bin", "kind", "n", "n_self", "n_other", "T", "T_se"]
 
 # Concatenate for a single CSV with kind discriminator
 all_keys = sorted(set(int_keys + bin_keys))
@@ -175,7 +182,7 @@ for r in results_int + results_bin:
     out = {k: r.get(k, "") for k in all_keys}
     combined.append(out)
 with OUT_CSV.open("w", newline="") as f:
-    w = csv.DictWriter(f, fieldnames=all_keys)
+    w = csv.DictWriter(f, fieldnames=all_keys, lineterminator="\n")
     w.writeheader()
     for r in combined:
         out = {}
@@ -202,6 +209,8 @@ lines = ["# Quality-conditional self-preference", "",
          f"t33 = {tertiles[0]:.3f}, t67 = {tertiles[1]:.3f}, range = "
          f"[{q_min:.2f}, {q_max:.2f}].",
          "",
+         "**Caveats.** This is an exploratory observational diagnostic, not a preregistered causal test. `peer_quality` is derived from other AI judges' scores, not an external ground truth label; tercile bins can be compositionally imbalanced by author/judge, especially because Kimi-authored off-topic rows occupy much of the low-quality tail. Binned contrasts are reported only when a bin contains both self and non-self rows.",
+         "",
          "## 1. Interaction regressions (T × Q)",
          "",
          "Model: `composite ~ b0 + T*author_is_self + Q*peer_quality_centered "
@@ -218,17 +227,18 @@ for r in results_int:
 lines.append("")
 lines.append("## 2. β(T) within peer-quality terciles (binned)")
 lines.append("")
-lines.append("| Scope | Cond | Bin | N | β(T) ± SE |")
-lines.append("|---|---|---|---:|---|")
+lines.append("| Scope | Cond | Bin | N | Self rows | Other rows | β(T) ± SE |")
+lines.append("|---|---|---|---:|---:|---:|---|")
 for r in results_bin:
     lines.append(f"| {r['scope']} | {r['condition']} | {r['bin']} | {r['n']} | "
+                 f"{r.get('n_self', '')} | {r.get('n_other', '')} | "
                  f"{fmt(r['T'], r['T_se'])} |")
 
 lines.append("")
 lines.append("## Reading guide")
 lines.append("")
-lines.append("- **TxQ < 0 (and significant)** ⇒ self-preference larger for low-quality "
-             "responses (\"benefit-of-the-doubt\" pattern).")
+lines.append("- **TxQ < 0 (and clearly larger than its SE)** ⇒ self-preference larger for low-quality "
+             "responses (a descriptive \"benefit-of-the-doubt\" pattern).")
 lines.append("- **TxQ ≈ 0** ⇒ self-pref roughly constant across quality tiers (a baseline "
              "rate effect, no interaction).")
 lines.append("- **TxQ > 0** ⇒ self-pref larger for high-quality responses (\"rich get "
@@ -308,13 +318,14 @@ with OUT_MD.open("a") as f:
                 f"{r['Q']:+.3f} ({r['Q_se']:.3f}) | "
                 f"{r['TxQ']:+.3f} ({r['TxQ_se']:.3f}) |\n")
     f.write("\n**Key reading:**\n")
-    f.write("- `pooled+judgeFE` cleans up across-judge level differences. The T×Q remains positive: pooled rich-get-richer pattern survives.\n")
-    f.write("- `no-Kimi-both` removes the off-topic confound. β(T) flips positive and T×Q stays positive in every condition — confirming the pooled high-quality self-pref pattern is not just a Kimi artifact.\n")
-    f.write("- Compare with per-judge tables above: Claude alone shows a *negative* T×Q (benefit-of-the-doubt). The pooled positive pattern is driven by between-judge variation in mean self-rating, not by within-judge benefit-of-the-doubt at high quality.\n")
+    f.write("- `pooled+judgeFE`: T×Q remains strongly positive (≈ +0.84 to +1.00 across conditions). Across all four judges combined and net of judge-level intercepts, the data are consistent with a rich-get-richer pattern — but this pooled summary mixes heterogeneous mechanisms and should be treated as descriptive.\n")
+    f.write("- `no-Kimi-judge`: positive T×Q softens substantially, indicating that Kimi-as-judge contributes heavily to the pooled slope.\n")
+    f.write("- `no-Kimi-author` and `no-Kimi-both`: T×Q flips negative in C1 and C3, with C2 near zero/noisy. Removing Kimi-authored low-quality tail rows changes the substantive reading toward a benefit-of-the-doubt pattern among the remaining author set.\n")
+    f.write("- Compare with per-judge tables above: Claude shows a negative T×Q in C1/C3, GPT-5.5 most clearly in C3, Gemini is nearly flat, and Kimi is dominated by the off-topic confound.\n")
 
 # Also write the appendix as a separate CSV
 with (ROOT / "results" / "quality_conditional_appendix.csv").open("w", newline="") as f:
-    w = csv.DictWriter(f, fieldnames=["scope","condition","n","T","T_se","Q","Q_se","TxQ","TxQ_se"])
+    w = csv.DictWriter(f, fieldnames=["scope","condition","n","T","T_se","Q","Q_se","TxQ","TxQ_se"], lineterminator="\n")
     w.writeheader()
     for r in appendix_rows:
         w.writerow({k: (f"{r[k]:.4f}" if isinstance(r[k], float) else r[k]) for k in w.fieldnames})
