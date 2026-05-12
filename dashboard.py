@@ -100,6 +100,58 @@ try:
     ax5.tick_params(axis="x", rotation=45)
     fig5.tight_layout()
     st.pyplot(fig5)
+
+    st.header("Inter-Judge Agreement")
+    st.markdown(
+        "Pearson correlation between judges' composite scores on the same prompt/author/condition items."
+    )
+
+    alignment_cols = ["prompt_id", "author", "condition"]
+    judge_item = (
+        filtered_wide.pivot_table(
+            index=alignment_cols,
+            columns="judge",
+            values="composite",
+            aggfunc="mean",
+        )
+        .dropna(axis=1, how="all")
+    )
+
+    if judge_item.shape[1] >= 2 and len(judge_item) >= 2:
+        corr_matrix = judge_item.corr(method="pearson")
+        fig6, ax6 = plt.subplots(figsize=(8, 6))
+        sns.heatmap(
+            corr_matrix,
+            annot=True,
+            fmt=".2f",
+            cmap="coolwarm",
+            vmin=-1,
+            vmax=1,
+            square=True,
+            ax=ax6,
+        )
+        ax6.set_title("Judge Agreement (Pearson r on Composite Scores)")
+        fig6.tight_layout()
+        st.pyplot(fig6)
+    else:
+        st.info("Not enough overlapping judge data to compute inter-judge correlations for the current filters.")
+
+    judge_summary = (
+        filtered_wide.groupby("judge")["composite"]
+        .agg(["mean", "std"])
+        .rename(columns={"mean": "mean_composite", "std": "std_composite"})
+        .reset_index()
+        .sort_values("judge")
+    )
+
+    st.subheader("Judge Composite Score Summary")
+    col3, col4 = st.columns(2)
+    with col3:
+        st.markdown("**Mean Composite Score by Judge**")
+        st.dataframe(judge_summary[["judge", "mean_composite"]], use_container_width=True)
+    with col4:
+        st.markdown("**Composite Score Standard Deviation by Judge**")
+        st.dataframe(judge_summary[["judge", "std_composite"]], use_container_width=True)
     
     st.header("Raw Data Table (Wide Format)")
     st.dataframe(filtered_wide)
