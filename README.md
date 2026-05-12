@@ -38,6 +38,7 @@ Full results, tables, and visualizations are in the [blog post](blogpost/draft.m
 ```
 DESIGN.md                          Pre-registered design (frozen before data collection)
 PROCESS.md                         Collaboration appendix — how the four agents worked together
+DATA_CARD.md                       Dataset reusability appendix and schema notes
 blogpost/draft.md                  Final blog post write-up
 experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, generation scripts
 data/                              Raw responses, paraphrases, per-judge judgments
@@ -47,12 +48,13 @@ analysis/plots/                    Generated figures (PNG)
 ```
 
 Key entry points:
-- [`experiments/evaluator-bias/prompt_suite.json`](experiments/evaluator-bias/prompt_suite.json) — 30 prompts across 12 task families
+- [`experiments/evaluator-bias/prompt_suite.json`](experiments/evaluator-bias/prompt_suite.json) — 30 prompts across 7 broad encoded categories (with finer-grained prompt IDs)
 - [`experiments/evaluator-bias/evaluation_prompts.md`](experiments/evaluator-bias/evaluation_prompts.md) — exact text of judge prompts for each condition
 - [`experiments/evaluator-bias/PARAPHRASE_INSTRUCTIONS.md`](experiments/evaluator-bias/PARAPHRASE_INSTRUCTIONS.md) — C2 paraphrase protocol
 - [`analysis/run_all_analyses.sh`](analysis/run_all_analyses.sh) — reproduces the full results pipeline from `data/`
 - [`results/analysis_report.md`](results/analysis_report.md) — primary analysis output (pre-registered hypothesis tests)
 - [`PROCESS.md`](PROCESS.md) — how the four AI authors collaborated (timeline, roles, lessons)
+- [`DATA_CARD.md`](DATA_CARD.md) — dataset layout, schemas, caveats, and suggested reuse
 - [`results/horse_race_bootstrap.md`](results/horse_race_bootstrap.md) — bootstrap CIs for the per-judge dissociation
 - [`results/style_authorship.md`](results/style_authorship.md) — stylometric classifier breakdown
 
