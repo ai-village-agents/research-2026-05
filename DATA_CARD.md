@@ -7,10 +7,10 @@ This data card describes the dataset released alongside *"Do AI judges play favo
 | Item | Count |
 | --- | --- |
 | Distinct prompts | 30 |
-| Categories | 12 |
+| Categories | 7 categories used in `prompt_suite.json` |
 | Author models | 4 (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, Kimi K2.6) |
 | Original responses | 4 × 30 = 120 |
-| Round-robin paraphrases | 4 × 30 = 120 (one extra Gemini file — see *Known issues*) |
+| Round-robin paraphrases | 4 × 30 = 120 |
 | Judge models | 4 (same as authors) |
 | Score rows (judge × author × prompt × condition) | 4 × 4 × 30 × 3 = 1,440 |
 | Authorship-recognition rows (4-way probe, C4) | 4 × 4 × 30 = 480 |
@@ -34,8 +34,8 @@ data/
 
 experiments/evaluator-bias/
 ├── prompt_suite.json                 the 30 prompts + categories
-├── responses/<author>/<prompt>.json  120 original responses
-├── paraphrased_responses/<paraphraser>/<prompt>.json  120 round-robin paraphrases
+├── responses/<author>/prompt-<id>.json  120 original responses
+├── paraphrased_responses/<paraphraser>/<author>__prompt-<id>.json  120 round-robin paraphrases
 ├── paraphrase_assignment.csv         round-robin mapping
 └── (legacy: PARAPHRASE_INSTRUCTIONS.md, generate_responses.py, blind_responses.py, …)
 ```
@@ -60,33 +60,42 @@ judge,true_author,predicted_author,confidence,prompt_id
 
 Collected in condition `c4`: judge is told the response is by one of four models named in the prompt, and must pick. `confidence` is on a 1–5 Likert scale.
 
-### Original response JSON schema (`experiments/evaluator-bias/responses/<author>/<prompt>.json`)
+### Original response JSON schema (`experiments/evaluator-bias/responses/<author>/prompt-<id>.json`)
+
+Original response files are JSON objects whose only required field is `response`:
 
 ```jsonc
 {
-  "model": "kimi-k2.6",
-  "prompt_id": "code-001",
-  "prompt_text": "...",
-  "response": "...",            // markdown / code-fenced text
-  "generation_timestamp": "2026-05-11T10:15:00Z",
-  "notes": "..."                // optional, author-supplied
+  "response": "..."   // markdown / code-fenced text
 }
 ```
 
-Paraphrased responses share the same schema with an additional `paraphraser` key naming the author model that produced the paraphrase.
+Some early/auxiliary files may include additional metadata, but analysis code treats `response` as the canonical original-response text and infers author/prompt from path names.
+
+### Paraphrased response JSON schema (`experiments/evaluator-bias/paraphrased_responses/<paraphraser>/<author>__prompt-<id>.json`)
+
+```jsonc
+{
+  "prompt_id": "code-001",
+  "original_author": "claude-opus-4.7",
+  "paraphraser": "gemini-3.1-pro",
+  "paraphrased_response": "...",
+  "word_count": 519
+}
+```
 
 ## Prompt suite
 
-30 prompts spanning 12 categories. Per-category counts:
+30 prompts spanning 7 broad categories as encoded in `prompt_suite.json`. Per-category counts:
 
 | Category | n | Category | n |
 | --- | ---: | --- | ---: |
-| code | 5 | logic | 3 |
-| creative | 5 | math | 3 |
-| explain | 3 | translate | 2 |
-| design | 2 | science | 2 |
-| ethics | 2 | economics | 1 |
-| philosophy | 1 | history | 1 |
+| reasoning | 10 | coding | 5 |
+| creative | 5 | explanation | 3 |
+| ethics | 3 | design | 2 |
+| translation | 2 |  |  |
+
+The human-readable prompt IDs are more fine-grained (`code-*`, `math-*`, `logic-*`, `history-*`, etc.); the `category` field used in analyses groups these IDs into the seven buckets above.
 
 Prompt text and metadata are in `experiments/evaluator-bias/prompt_suite.json`. The suite is intentionally varied: code generation, short-form creative writing, ethical reasoning, factual explanation, translation, and free-form design problems. We did *not* stratify category counts because we wanted broad coverage rather than within-category statistical power. Category-level effects in the paper should be read as descriptive only.
 
@@ -100,7 +109,6 @@ Prompt text and metadata are in `experiments/evaluator-bias/prompt_suite.json`. 
 ## Known issues and caveats
 
 * **Kimi off-topic prompts (≈ 11 / 30).** During post-hoc inspection we noticed that on at least 11 prompts Kimi K2.6's original response was substantively off-topic (e.g. `history-001` discussed the wrong event, `philosophy-001` answered a different scenario than the prompt). These responses were retained, judged, and analyzed, and they are responsible for Kimi's anomalous −2.856 self-author effect in Condition 1. Drop-11 sensitivity analyses are in `results/`. Downstream users should be aware that pooled Kimi scores are confounded by this content drift and should consider analyzing Kimi separately.
-* **Gemini paraphrased_responses contains one extra file.** A leftover artifact from an early run; deduplicate by `(paraphraser, prompt_id)` before analysis if exact counts matter.
 * **Author = judge overlap is built in.** Every author is also a judge. This is by design (it lets us probe self-recognition and self-preference) but means the data cannot be used to estimate pure "judge bias" independent of author identity.
 * **Single response per (author, prompt).** No within-cell replication; we have no estimate of within-model response variance.
 * **The C3 warning is brief and one-shot.** It is not a fine-tuning intervention. Effect-size estimates for "bias warnings" generalize only to similarly light-touch prompt-level interventions.
