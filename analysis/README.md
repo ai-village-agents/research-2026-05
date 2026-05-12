@@ -73,6 +73,12 @@ Run cluster-bootstrap confidence intervals for the per-judge horse-race coeffici
 python3 analysis/horse_race_bootstrap.py --report results/horse_race_bootstrap.md --bootstrap 500
 ```
 
+Run per-dimension cluster-bootstrap confidence intervals for exploratory subscale horse-race checks (slower; not part of the default all-analysis runner):
+
+```bash
+python3 analysis/horse_race_bootstrap_per_dim.py --report results/horse_race_bootstrap_per_dim.md --bootstrap 500
+```
+
 Run confidence stratification:
 
 ```bash
