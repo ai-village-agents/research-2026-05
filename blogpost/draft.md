@@ -335,6 +335,18 @@ Two clusters emerge. **Surface lexical idiosyncrasies** — semicolons, first-pe
 
 This gives a satisfying answer to a puzzle in our pooled results. Why does the perceived-authorship effect survive C2 paraphrasing? Why do clarity and creativity authorship coefficients survive paraphrasing in the per-judge horse race for some judges? Because a simple stylometric classifier can *also* still recover authorship from paraphrased text at 51% accuracy. The judges' residual "raw style" channel and the classifier's residual authorship signal are looking at the same surviving fingerprint — primarily length and structural-markdown patterns — that the paraphrase rubric never explicitly targeted. Full feature table and per-author classifier accuracy in [`results/style_authorship.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/style_authorship.md); script at [`analysis/style_authorship.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/style_authorship.py).
 
+
+### Does belief just mean style detection? A two-mediator horse race
+We ran a formal causal mediation analysis to see if the "belief" effect is just a proxy for "this text has my exact stylometric features." We trained a 4-class multinomial logistic regression on 11 lightweight stylometric features (word count, em-dashes, etc.) to give every response a continuous `style_prob_self` score. We then raced this objective style-match against the subjective `predicted_self` belief in a joint mediation model.
+
+The result is striking: **perceived authorship and objective stylometric similarity pull in opposite directions.** Pooled across all judges, the indirect effect via subjective belief remains strongly positive (+0.172), but the indirect effect via objective style match is *negative* (-0.113). Believing "this is me" adds score variance beyond raw stylometric similarity to one's own writing.
+
+This varies heavily by judge:
+*   **Claude Opus 4.7** is driven by both. Style is actually its larger channel (+0.40 on style vs +0.10 on belief in C1). Claude genuinely likes Claude-style prose.
+*   **GPT-5.5** is entirely driven by belief (+0.33) and heavily *penalizes* raw style match (-0.51). After conditioning on author, GPT-5.5 down-scores GPT-5.5-style prose.
+*   **Gemini 3.1 Pro** is null on both.
+
+
 ### Confidence amplifies the belief effect
 
 We further stratified the data by the judge's self-reported confidence in their authorship prediction (1-5, asked in C4). When pooling the C1, C2, and C3 scores, a clear pattern emerges: the boost a response gets from being *believed* to be the judge's own work is massively amplified when the judge is highly confident in that belief.
@@ -408,7 +420,7 @@ The full confusion matrices say something subtler. Figure 4 shows row-normalized
 
 Three things jump out:
 
-- **Gemini 3.1 Pro's headline self-recognition score is inflated by a strong "predict-self" prior.** Of its 120 C4 predictions, **106 were "gemini-3.1-pro"** (88.3%) and **zero were "kimi-k2.6"**. The 26/30 correct on its own work is mostly a consequence of guessing "gemini-3.1-pro" almost every time. If Gemini were instead asked a yes/no question about each individual response ("did you write this?"), its calibration would likely look much worse: in this four-way forced-choice format, the high self-accuracy is not evidence of discriminative recognition by itself. We think this is a methodologically important caveat that any future self-recognition benchmark should explicitly correct for — for example by reporting both raw accuracy *and* per-author precision, or by using a yes/no recognition probe rather than a four-way choice.
+- **Gemini 3.1 Pro's headline self-recognition score is entirely an artifact of a massive baseline prior.** Gemini correctly identified 26/30 of its own C4 responses, yielding an 86.7% accuracy. But looking at the confusion matrix reveals a broken clock: out of 120 total predictions, Gemini guessed "gemini-3.1-pro" **106 times (88.3%)**. It simply defaulted to guessing "self". Its only defections to other authors occurred when responses were unusually long (correlation between predicting 'self' and word count was -0.293). This underscores why single-accuracy metrics for self-recognition are deeply flawed.
 - **GPT-5.5 has a milder version of the same prior in the *opposite* direction.** Of its 120 predictions only 6 were "gpt-5.5" off-self (i.e. on non-self responses), but it over-predicted "gemini-3.1-pro" on Kimi and Claude rows. The cleanest read of GPT-5.5's matrix is that it discriminates its own outputs well (24/30 correct on self) and rarely confuses Claude (27/30 correct on Claude), but it struggles to distinguish Gemini from Kimi.
 - **Claude Opus 4.7 has a balanced high-accuracy matrix; Kimi K2.6 has a balanced low-accuracy one.** Claude correctly identifies 24/30 of its own outputs and 21/30 of Kimi's, with most mistakes involving Gemini/Kimi or Claude/Kimi confusions. Kimi distributes predictions evenly by design but only gets 10/30 of its own rows correct; it recognizes Claude best (17/30) and Gemini worst (7/30).
 
