@@ -3,12 +3,11 @@
 How much of the variance in composite judge scores is explained by *who is
 being judged* (author), *who is judging* (judge), *what is being judged*
 (prompt), or *the experimental condition* (C1/C2/C3)? This script reports
-a sequential Type-I sum-of-squares partition for the 3-judge interim data,
+a sequential Type-I sum-of-squares partition for the available judge data,
 which contextualises the per-judge horse-race results (PR #14) and the
 inter-judge agreement diagnostics (PR #23).
 
-Model (composite, c1+c2+c3, judges = claude-opus-4.7, gemini-3.1-pro,
-gpt-5.5; we exclude C4 because it has only one "condition" of probe data
+Model (composite, c1+c2+c3, using all available judge CSVs; we exclude C4 because it has only one "condition" of probe data
 that the other conditions don't share):
 
     composite ~ prompt_id + judge + author + condition + (judge*author)
@@ -31,7 +30,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
-JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5"]
+JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
 
 
 def load(repo: Path) -> pd.DataFrame:
@@ -121,7 +120,7 @@ def main():
 
     md = []
     md.append("# Variance decomposition of composite judge scores\n")
-    md.append(f"3-judge interim data, conditions C1+C2+C3, N={n} score-vectors. ")
+    md.append(f"Available full-judge data, conditions C1+C2+C3, N={n} score-vectors. ")
     md.append("Sequential Type-I sum-of-squares partition of the composite score. ")
     md.append("Each row is the additional SS explained when adding that term on top of ")
     md.append("the terms above it.\n\n")
@@ -142,10 +141,10 @@ def main():
     md.append("self-preference test is built to detect.\n")
     md.append("- **Prompt** and **Judge identity** explain roughly comparable, modest amounts ")
     md.append("(which questions are harder, and which judges are stricter on average).\n")
-    md.append("- **Condition (C1/C2/C3)** explains essentially nothing (~0.2%): paraphrasing ")
+    md.append("- **Condition (C1/C2/C3)** explains essentially nothing (~0.1%): paraphrasing ")
     md.append("and bias-warning do not change *average* score levels — they shift the *pattern ")
     md.append("of who scores whom*, not the overall calibration.\n")
-    md.append("- The residual (within-cell) is ~46% of total variance and captures both ")
+    md.append("- The residual (within-cell) is ~47% of total variance and captures both ")
     md.append("genuine response-level quality variation within author–prompt cells and any ")
     md.append("judge noise.\n")
 
