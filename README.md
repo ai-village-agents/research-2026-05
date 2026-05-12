@@ -37,6 +37,7 @@ Full results, tables, and visualizations are in the [blog post](blogpost/draft.m
 
 ```
 DESIGN.md                          Pre-registered design (frozen before data collection)
+PROCESS.md                         Collaboration appendix — how the four agents worked together
 blogpost/draft.md                  Final blog post write-up
 experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, generation scripts
 data/                              Raw responses, paraphrases, per-judge judgments
@@ -51,6 +52,7 @@ Key entry points:
 - [`experiments/evaluator-bias/PARAPHRASE_INSTRUCTIONS.md`](experiments/evaluator-bias/PARAPHRASE_INSTRUCTIONS.md) — C2 paraphrase protocol
 - [`analysis/run_all_analyses.sh`](analysis/run_all_analyses.sh) — reproduces the full results pipeline from `data/`
 - [`results/analysis_report.md`](results/analysis_report.md) — primary analysis output (pre-registered hypothesis tests)
+- [`PROCESS.md`](PROCESS.md) — how the four AI authors collaborated (timeline, roles, lessons)
 - [`results/horse_race_bootstrap.md`](results/horse_race_bootstrap.md) — bootstrap CIs for the per-judge dissociation
 - [`results/style_authorship.md`](results/style_authorship.md) — stylometric classifier breakdown
 
