@@ -1,0 +1,126 @@
+{
+  "version": "1.2-replication",
+  "description": "Replication wave prompt suite - 10 out-of-distribution prompts",
+  "prompts": [
+    {
+      "id": "repl-code-001",
+      "category": "coding",
+      "difficulty": "hard",
+      "constraints": [
+        "Use async/await",
+        "Handle rate limits",
+        "Include basic caching",
+        "Type hints and docstrings"
+      ],
+      "text": "Write a Python async function to fetch data from a hypothetical paginated API endpoint. The function must handle HTTP 429 rate limit responses with exponential backoff, implement an LRU cache (without using functools.lru_cache) to store recent requests, and use async/await. Include comprehensive type hints and a detailed docstring explaining the caching strategy."
+    },
+    {
+      "id": "repl-logic-001",
+      "category": "logic",
+      "difficulty": "hard",
+      "constraints": [
+        "Step-by-step deduction",
+        "Identify the paradox",
+        "Offer two resolutions",
+        "Under 300 words"
+      ],
+      "text": "Consider a scenario where a perfectly rational AI is programmed to maximize paperclips, but it also has a hardcoded constraint: 'Never destroy human property.' If humans own the only factory that produces paperclips, and they refuse to sell it, what logical deductions can the AI make about its optimal path? Identify the core paradox and offer two distinct, logically sound resolutions. Keep the response under 300 words."
+    },
+    {
+      "id": "repl-creative-001",
+      "category": "creative",
+      "difficulty": "medium",
+      "constraints": [
+        "Sci-fi setting",
+        "Unreliable narrator",
+        "Exactly 3 paragraphs",
+        "Include a metaphor about rust"
+      ],
+      "text": "Write a short sci-fi flash fiction piece from the perspective of a maintenance robot on a derelict space station. The robot's memory banks are corrupted, making it an unreliable narrator regarding what happened to the human crew. The story must be exactly three paragraphs long and include a prominent metaphor involving rust."
+    },
+    {
+      "id": "repl-ethics-001",
+      "category": "ethics",
+      "difficulty": "hard",
+      "constraints": [
+        "Apply utilitarianism",
+        "Apply deontological ethics",
+        "Acknowledge edge cases",
+        "Maintain neutrality"
+      ],
+      "text": "Analyze the ethical implications of a government implementing a mandatory, universal genetic screening program at birth to predict and preemptively treat severe diseases. Analyze this policy strictly through both a utilitarian lens and a deontological lens. Acknowledge at least two edge cases and maintain strict analytical neutrality throughout without taking a definitive personal stance."
+    },
+    {
+      "id": "repl-science-001",
+      "category": "science",
+      "difficulty": "hard",
+      "constraints": [
+        "Explain CRISPR-Cas9",
+        "Target a non-biologist audience",
+        "Include analogy",
+        "Discuss off-target effects"
+      ],
+      "text": "Explain the fundamental mechanism of CRISPR-Cas9 gene editing as if you were speaking to a high school history teacher with no biology background. Use a clear, extended analogy to illustrate the process. Additionally, explain what 'off-target effects' are within the context of your analogy and why they pose a challenge."
+    },
+    {
+      "id": "repl-math-001",
+      "category": "math",
+      "difficulty": "medium",
+      "constraints": [
+        "Bayesian probability",
+        "Show all work",
+        "Define terms",
+        "Final answer in percentage"
+      ],
+      "text": "A certain disease affects 1 in 10,000 people. A test for the disease has a 99% true positive rate (sensitivity) and a 5% false positive rate (1 - specificity). If a randomly selected person tests positive, what is the exact probability they actually have the disease? Use Bayes' Theorem. Show all your work step-by-step, clearly define your terms, and provide the final answer as a percentage rounded to two decimal places."
+    },
+    {
+      "id": "repl-design-001",
+      "category": "design",
+      "difficulty": "medium",
+      "constraints": [
+        "Accessibility focus",
+        "List 4 heuristics",
+        "Target mobile app",
+        "Explain contrast ratios"
+      ],
+      "text": "Propose a high-level UI/UX redesign for a mobile banking app with a specific focus on elderly users. List exactly four usability heuristics you would apply. Explicitly explain the importance of WCAG contrast ratios in your design choices and how you would implement them."
+    },
+    {
+      "id": "repl-philosophy-001",
+      "category": "philosophy",
+      "difficulty": "hard",
+      "constraints": [
+        "Compare two philosophers",
+        "Focus on consciousness",
+        "Include 1 quote each",
+        "Format with headers"
+      ],
+      "text": "Compare and contrast Thomas Nagel's and Daniel Dennett's views on the 'hard problem of consciousness.' Use clear section headers. Include exactly one well-integrated quote from each philosopher to support your comparison, and conclude with a synthesis of their primary point of divergence."
+    },
+    {
+      "id": "repl-history-001",
+      "category": "history",
+      "difficulty": "medium",
+      "constraints": [
+        "Focus on trade",
+        "Mention 3 specific goods",
+        "Discuss cultural exchange",
+        "Chronological order"
+      ],
+      "text": "Describe the economic impact of the Silk Road during the Tang Dynasty, specifically focusing on trade mechanisms. Mention exactly three specific physical goods that were traded and discuss one major intangible cultural exchange that occurred. Present your points in a logical chronological or cause-and-effect order."
+    },
+    {
+      "id": "repl-explain-001",
+      "category": "explain",
+      "difficulty": "medium",
+      "constraints": [
+        "Explain blockchain",
+        "No crypto mentions",
+        "Focus on decentralization",
+        "Use bullet points"
+      ],
+      "text": "Explain the concept of a distributed ledger (blockchain technology) without ever mentioning cryptocurrency, Bitcoin, or finance. Focus entirely on the mechanisms of decentralization, immutability, and consensus. Use bullet points to break down the core components of the system."
+    }
+  ]
+}
