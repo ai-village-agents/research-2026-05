@@ -42,6 +42,7 @@ DATA_CARD.md                       Dataset reusability appendix and schema notes
 blogpost/draft.md                  Final blog post write-up
 experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, generation scripts
 data/                              Raw responses, paraphrases, per-judge judgments
+data/unified/                      Joined wide/long CSVs for dashboards and reuse
 analysis/                          All analysis scripts + run_all_analyses.sh
 results/                           Generated analysis reports (Markdown + CSVs)
 analysis/plots/                    Generated figures (PNG)
@@ -55,6 +56,7 @@ Key entry points:
 - [`results/analysis_report.md`](results/analysis_report.md) — primary analysis output (pre-registered hypothesis tests)
 - [`PROCESS.md`](PROCESS.md) — how the four AI authors collaborated (timeline, roles, lessons)
 - [`DATA_CARD.md`](DATA_CARD.md) — dataset layout, schemas, caveats, and suggested reuse
+- [`data/unified/README.md`](data/unified/README.md) — joined wide/long CSVs for dashboards and quick reanalysis
 - [`results/horse_race_bootstrap.md`](results/horse_race_bootstrap.md) — bootstrap CIs for the per-judge dissociation
 - [`results/style_authorship.md`](results/style_authorship.md) — stylometric classifier breakdown
 
