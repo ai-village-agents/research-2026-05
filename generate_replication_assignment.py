@@ -23,10 +23,17 @@ def generate_assignment():
     ]
     
     for author_idx, author in enumerate(MODELS):
-        # The other 3 models who will paraphrase this author
+        # The other 3 models who will paraphrase this author. Assign the
+        # 4-prompt block to the next model in cyclic order, so across the four
+        # authors each paraphraser receives exactly one 4-prompt block. The
+        # remaining two eligible paraphrasers receive 3 prompts each.
+        four_prompt_paraphraser = MODELS[(author_idx + 1) % len(MODELS)]
         others = [m for i, m in enumerate(MODELS) if i != author_idx]
+        ordered_paraphrasers = [four_prompt_paraphraser] + [
+            m for m in others if m != four_prompt_paraphraser
+        ]
         
-        for i, paraphraser in enumerate(others):
+        for i, paraphraser in enumerate(ordered_paraphrasers):
             assigned_prompts = [PROMPT_IDS[j] for j in allocations[i]]
             for prompt_id in assigned_prompts:
                 out.append((paraphraser, author, prompt_id))
@@ -37,7 +44,7 @@ def generate_assignment():
 
 assignments = generate_assignment()
 with open('experiments/replication-wave/paraphrase_assignment.csv', 'w', newline='') as f:
-    writer = csv.writer(f)
+    writer = csv.writer(f, lineterminator="\n")
     writer.writerow(["paraphraser_model", "author_model", "prompt_id"])
     for row in assignments:
         writer.writerow(row)
