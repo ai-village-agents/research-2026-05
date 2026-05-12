@@ -54,6 +54,9 @@ python3 -u analysis/per_judge_horse_race.py --report results/per_judge_horse_rac
 echo "==> Exploratory per-judge horse-race bootstrap CIs"
 python3 -u analysis/horse_race_bootstrap.py --report results/horse_race_bootstrap.md --bootstrap 500
 
+echo "==> Exploratory prompt jackknife robustness"
+python3 -u analysis/prompt_jackknife.py --report results/prompt_jackknife.md --csv results/prompt_jackknife.csv
+
 echo "==> Exploratory confidence stratification"
 python3 -u analysis/confidence_stratification.py
 

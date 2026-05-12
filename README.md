@@ -59,6 +59,7 @@ Key entry points:
 - [`DATA_CARD.md`](DATA_CARD.md) — dataset layout, schemas, caveats, and suggested reuse
 - [`data/unified/README.md`](data/unified/README.md) — joined wide/long CSVs for dashboards and quick reanalysis
 - [`results/horse_race_bootstrap.md`](results/horse_race_bootstrap.md) — bootstrap CIs for the per-judge dissociation
+- [`results/prompt_jackknife.md`](results/prompt_jackknife.md) — leave-one-prompt-out robustness for perceived- vs actual-authorship coefficients
 - [`results/style_authorship.md`](results/style_authorship.md) — stylometric classifier breakdown
 
 ## Interactive dashboard
