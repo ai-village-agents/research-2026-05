@@ -1,0 +1,118 @@
+# Quality-conditional self-preference
+
+**Question.** Is self-preference larger when external quality is *ambiguous* (mid-tier responses) than when responses are clearly excellent or clearly weak?
+
+**Quality proxy.** `peer_quality` = mean composite from the 3 *other* judges of the same (author, prompt, condition). Computed leave-one-out so the focal judge's own score never enters its own quality control.
+
+**Tercile cutpoints (pooled distribution of peer_quality):** t33 = 8.400, t67 = 8.933, range = [2.87, 9.87].
+
+## 1. Interaction regressions (T × Q)
+
+Model: `composite ~ b0 + T*author_is_self + Q*peer_quality_centered + TxQ`. SEs clustered by prompt_id. A **negative TxQ** would mean self-preference shrinks as quality rises (ambiguous-quality hypothesis).
+
+| Scope | Cond | N | β(T) | β(Q) | β(T×Q) |
+|---|---|---:|---|---|---|
+| pooled | c1 | 480 | +0.006 (0.059) | +0.656 (0.013) | +0.886 (0.063) |
+| pooled | c2 | 480 | -0.217 (0.092) | +0.639 (0.018) | +0.738 (0.119) |
+| pooled | c3 | 480 | -0.092 (0.055) | +0.638 (0.019) | +0.914 (0.047) |
+| claude-opus-4.7 | c1 | 120 | +0.690 (0.399) | +1.410 (0.022) | -0.699 (0.391) |
+| claude-opus-4.7 | c2 | 120 | -0.441 (0.284) | +1.556 (0.043) | -0.015 (0.274) |
+| claude-opus-4.7 | c3 | 120 | +0.751 (0.216) | +1.515 (0.033) | -1.213 (0.219) |
+| gemini-3.1-pro | c1 | 120 | +0.008 (0.019) | +0.022 (0.007) | +0.100 (0.027) |
+| gemini-3.1-pro | c2 | 120 | -0.034 (0.024) | +0.020 (0.009) | +0.046 (0.041) |
+| gemini-3.1-pro | c3 | 120 | -0.004 (0.020) | +0.020 (0.007) | +0.110 (0.037) |
+| gpt-5.5 | c1 | 120 | +0.425 (0.311) | +1.219 (0.029) | +0.038 (0.676) |
+| gpt-5.5 | c2 | 120 | +0.341 (0.251) | +1.193 (0.048) | +0.318 (0.503) |
+| gpt-5.5 | c3 | 120 | +0.995 (0.277) | +1.179 (0.037) | -1.251 (0.689) |
+| kimi-k2.6 | c1 | 120 | +0.046 (0.152) | +0.748 (0.131) | +1.204 (0.161) |
+| kimi-k2.6 | c2 | 120 | -0.431 (0.166) | +0.555 (0.127) | +1.080 (0.183) |
+| kimi-k2.6 | c3 | 120 | -0.085 (0.164) | +0.853 (0.161) | +0.963 (0.185) |
+
+## 2. β(T) within peer-quality terciles (binned)
+
+| Scope | Cond | Bin | N | β(T) ± SE |
+|---|---|---|---:|---|
+| pooled | c1 | low | 184 | -0.390 (0.205) |
+| pooled | c1 | mid | 142 | +0.081 (0.116) |
+| pooled | c1 | high | 143 | +0.554 (0.082) |
+| pooled | c2 | low | 170 | -1.053 (0.299) |
+| pooled | c2 | mid | 154 | -0.033 (0.106) |
+| pooled | c2 | high | 144 | +0.478 (0.086) |
+| pooled | c3 | low | 153 | -0.944 (0.228) |
+| pooled | c3 | mid | 156 | +0.150 (0.097) |
+| pooled | c3 | high | 161 | +0.456 (0.098) |
+| claude-opus-4.7 | c1 | low | 52 | +1.708 (0.615) |
+| claude-opus-4.7 | c1 | mid | 37 | +0.742 (0.181) |
+| claude-opus-4.7 | c1 | high | 27 | +0.276 (0.197) |
+| claude-opus-4.7 | c2 | low | 58 | -0.179 (1.775) |
+| claude-opus-4.7 | c2 | mid | 41 | -0.034 (0.189) |
+| claude-opus-4.7 | c2 | high | 19 | +0.206 (0.091) |
+| claude-opus-4.7 | c3 | low | 54 | +1.731 (0.374) |
+| claude-opus-4.7 | c3 | mid | 36 | +0.663 (0.066) |
+| claude-opus-4.7 | c3 | high | 27 | +0.180 (0.170) |
+| gemini-3.1-pro | c1 | low | 43 | +0.052 (0.041) |
+| gemini-3.1-pro | c1 | mid | 25 | +0.097 (0.045) |
+| gemini-3.1-pro | c1 | high | 48 | +0.058 (0.014) |
+| gemini-3.1-pro | c2 | low | 36 | +0.017 (0.049) |
+| gemini-3.1-pro | c2 | mid | 29 | +0.010 (0.047) |
+| gemini-3.1-pro | c2 | high | 51 | -0.011 (0.052) |
+| gemini-3.1-pro | c3 | low | 34 | +0.015 (0.045) |
+| gemini-3.1-pro | c3 | mid | 29 | +0.130 (0.058) |
+| gemini-3.1-pro | c3 | high | 55 | +0.073 (0.014) |
+| gpt-5.5 | c1 | low | 31 | +0.000 (0.000) |
+| gpt-5.5 | c1 | mid | 49 | +0.839 (0.213) |
+| gpt-5.5 | c1 | high | 38 | -0.129 (0.249) |
+| gpt-5.5 | c2 | low | 26 | +2.417 (0.806) |
+| gpt-5.5 | c2 | mid | 43 | +0.880 (0.243) |
+| gpt-5.5 | c2 | high | 47 | -0.063 (0.168) |
+| gpt-5.5 | c3 | low | 21 | +0.000 (0.000) |
+| gpt-5.5 | c3 | mid | 51 | +1.064 (0.156) |
+| gpt-5.5 | c3 | high | 46 | -0.406 (0.191) |
+| kimi-k2.6 | c1 | low | 58 | -2.701 (0.601) |
+| kimi-k2.6 | c1 | mid | 31 | -0.174 (0.211) |
+| kimi-k2.6 | c1 | high | 30 | +0.000 (0.000) |
+| kimi-k2.6 | c2 | low | 50 | -3.380 (0.643) |
+| kimi-k2.6 | c2 | mid | 41 | -0.345 (0.181) |
+| kimi-k2.6 | c2 | high | 27 | +0.000 (0.000) |
+| kimi-k2.6 | c3 | low | 44 | -3.282 (0.654) |
+| kimi-k2.6 | c3 | mid | 40 | -0.237 (0.135) |
+| kimi-k2.6 | c3 | high | 33 | +0.000 (0.000) |
+
+## Reading guide
+
+- **TxQ < 0 (and significant)** ⇒ self-preference larger for low-quality responses ("benefit-of-the-doubt" pattern).
+- **TxQ ≈ 0** ⇒ self-pref roughly constant across quality tiers (a baseline rate effect, no interaction).
+- **TxQ > 0** ⇒ self-pref larger for high-quality responses ("rich get richer" pattern; would suggest judges *recognize own work better* when it's good, then amplify).
+
+Compare TxQ across the four judges — given the different mechanisms each exhibits in v1.0.0 (Claude raw +1.74, GPT perceived +1.35, Kimi off-topic, Gemini ~0), we expect heterogeneous TxQ.
+
+_Generated by `analysis/quality_conditional_selfpref.py`. Random seed 20260512._
+
+## Appendix: Judge fixed-effects and Kimi-exclusion sensitivity
+
+Within-judge specification (judge FE absorbed) and Kimi exclusions. SEs clustered by prompt_id.
+
+| Scope | Cond | N | β(T) | β(Q) | β(T×Q) |
+|---|---|---:|---|---|---|
+| pooled+judgeFE | c1 | 480 | +0.006 (0.058) | +0.909 (0.015) | +1.004 (0.068) |
+| pooled+judgeFE | c2 | 480 | -0.222 (0.095) | +0.872 (0.025) | +0.840 (0.125) |
+| pooled+judgeFE | c3 | 480 | -0.093 (0.055) | +0.896 (0.015) | +0.929 (0.055) |
+| no-Kimi-judge | c1 | 360 | +0.482 (0.051) | +0.688 (0.016) | +0.253 (0.070) |
+| no-Kimi-judge | c2 | 360 | +0.158 (0.104) | +0.729 (0.041) | +0.357 (0.164) |
+| no-Kimi-judge | c3 | 360 | +0.436 (0.056) | +0.654 (0.022) | +0.094 (0.075) |
+| no-Kimi-author | c1 | 360 | +0.508 (0.047) | +0.766 (0.060) | -0.356 (0.133) |
+| no-Kimi-author | c2 | 360 | +0.227 (0.046) | +0.642 (0.050) | +0.209 (0.288) |
+| no-Kimi-author | c3 | 360 | +0.374 (0.047) | +0.702 (0.078) | -0.444 (0.091) |
+| no-Kimi-both | c1 | 270 | +0.509 (0.048) | +0.773 (0.048) | -0.357 (0.132) |
+| no-Kimi-both | c2 | 270 | +0.229 (0.046) | +0.674 (0.068) | +0.211 (0.296) |
+| no-Kimi-both | c3 | 270 | +0.369 (0.047) | +0.656 (0.068) | -0.432 (0.087) |
+
+**Key reading:**
+- `pooled+judgeFE`: T×Q remains strongly positive (≈ +0.84 to +1.00 across conditions). Across all four judges combined and net of judge-level intercepts, the data are consistent with a **rich-get-richer pattern** — judges add more self-credit on top of already-high peer scores. But this pooled summary mixes the four heterogeneous mechanisms; treat it as descriptive.
+- `no-Kimi-judge`: positive T×Q (≈ +0.10 to +0.36) — most of the pooled effect was Kimi-as-judge rating its own off-topic outputs low (T=1 at low Q), inflating the pooled slope. Drop Kimi-as-judge and the slope softens substantially.
+- `no-Kimi-author` and `no-Kimi-both`: T×Q **flips negative** in C1 (−0.36) and C3 (−0.43), with the C2 estimate near zero and noisy. With Kimi-authored responses removed from the quality distribution (they dominate the low-Q tercile), the remaining within-judge pattern is **benefit-of-the-doubt**: among Claude/Gemini/GPT authors, judges add the most self-credit when peer quality is *low*, not high.
+- Per-judge tables above show this most cleanly: **Claude** has β(T×Q) = −0.70 (C1), −0.02 (C2), −1.21 (C3) — and bin-by-tercile β(T) drops from +1.71 (low-Q) to +0.28 (high-Q) in C1. **GPT-5.5** shows the same C3 pattern (−1.25). **Gemini** is flat across all bins. **Kimi**'s pattern is the off-topic confound: T=1 rows are concentrated at low Q where Kimi rates its own responses low.
+
+**Bottom line.** "Quality-conditional self-preference" has two answers depending on what we ask:
+- *Across the full 4-judge dataset, pooled with judge FE:* high-quality responses get bigger own-author boosts (T×Q > 0), but this is mostly driven by Kimi-author rows piling up in the low-Q tail.
+- *Within Claude and within GPT-5.5 (the two judges with meaningful raw self-pref), restricted to non-Kimi authors:* self-preference is **larger when peer quality is low** — judges defend their own work more vigorously when it's mediocre. This is a novel, mechanism-relevant finding not present in v1.0.0.
