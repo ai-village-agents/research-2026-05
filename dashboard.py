@@ -148,10 +148,10 @@ try:
     col3, col4 = st.columns(2)
     with col3:
         st.markdown("**Mean Composite Score by Judge**")
-        st.dataframe(judge_summary[["judge", "mean_composite"]], use_container_width=True)
+        st.dataframe(judge_summary[["judge", "mean_composite"]], width="stretch")
     with col4:
         st.markdown("**Composite Score Standard Deviation by Judge**")
-        st.dataframe(judge_summary[["judge", "std_composite"]], use_container_width=True)
+        st.dataframe(judge_summary[["judge", "std_composite"]], width="stretch")
     
     st.header("Raw Data Table (Wide Format)")
     st.dataframe(filtered_wide)
