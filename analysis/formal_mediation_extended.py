@@ -1,11 +1,11 @@
 """
-Extended formal causal mediation analysis.
+Extended formal mediation-style analysis.
 
 Adds to Claude Opus 4.7's baseline:
 1. Logistic regression for path a (binary mediator) with cluster-robust SEs.
-2. Hybrid indirect effect using logit-a × OLS-b (latent-propensity interpretation).
+2. Hybrid logit-a × OLS-b product (latent-propensity diagnostic; not a score-unit causal indirect effect).
 3. Sensitivity analysis: how large an unobserved confounder correlation would be needed
-   to nullify the indirect effect (correlation-decomposition bounds).
+   to attenuate the component path estimates (heuristic correlation-decomposition bounds).
 4. Proportion mediated and standardized coefficients.
 
 No external dependencies beyond numpy + pandas (no statsmodels/scipy).
@@ -170,9 +170,9 @@ def standardized_coefs(T, M, Y):
 
 def sensitivity_bounds(a, b, var_T, var_M, var_Y, n):
     """
-    Informal sensitivity analysis for the indirect effect a*b.
+    Informal sensitivity analysis for the two component paths.
     
-    Following Frank (2000) / Cinelli & Hazlett (2020) intuition:
+    Following Frank (2000) / Cinelli & Hazlett (2020) intuition, but not their full estimators:
     An unobserved confounder U would need to explain enough residual variance
     in both the mediator and outcome to nullify the indirect effect.
     
@@ -275,14 +275,14 @@ for cond in conds:
 # Write CSV
 keys = list(results[0].keys())
 with OUT_CSV.open("w", newline="") as f:
-    w = csv.DictWriter(f, fieldnames=keys)
+    w = csv.DictWriter(f, fieldnames=keys, lineterminator="\n")
     w.writeheader()
     for r in results:
         w.writerow({k: (f"{r[k]:.4f}" if isinstance(r[k], float) else r[k]) for k in keys})
 
 # Markdown report
 lines = [
-    "# Extended Formal Causal Mediation Analysis",
+    "# Extended formal mediation-style analysis",
     "",
     "**Extensions to baseline formal mediation (PR #54):**",
     "",
@@ -290,14 +290,16 @@ lines = [
     "",
     "2. **Standardized coefficients** — all paths expressed in SD units for cross-judge comparability.",
     "",
-    "3. **Sensitivity analysis** — approximate bounds on how strongly an unobserved confounder would need to correlate with mediator and outcome to nullify the indirect effect. Reported as required partial R² and Cohen's f² values (informal, since we lack Imai-Keele libraries).",
+    "3. **Sensitivity analysis** — approximate, heuristic bounds on how strongly an unobserved confounder would need to relate to the component path estimates. Reported as rough partial-R²-style and Cohen's-f²-style diagnostics, not as a formal causal sensitivity analysis.",
+    "",
+    "**Scope caveat.** As in `formal_mediation.py`, this is an observed-variable mediation-style decomposition, not identified causal mediation: `predicted_self` was measured later in C4, not manipulated, and unmeasured style/quality cues may affect both perceived authorship and scoring. The logit-hybrid product is especially a scale diagnostic rather than a score-point estimand.",
     "",
     "**Method.** Per condition × scope:",
     "",
     "- OLS paths: `c` (total), `a` (T→M LPM), `b` (M→Y|T), `c'` (direct), `indirect` = a·b",
-    "- Logit-hybrid paths: `a_logit` (logistic T→M), `indirect_hybrid` = a_logit·b",
+    "- Logit-hybrid paths: `a_logit` (logistic T→M), `indirect_hybrid` = a_logit·b. Because `a_logit` is in log-odds units, this product is not in score units and should not be compared numerically with the LPM indirect effect.",
     "- Standardized paths: `_std` suffix",
-    "- Sensitivity: `needed_r2_a/b` = partial R² an unobserved confounder would need with M|T / Y|T,M to fully explain away the path coefficient; `f2_a/b` = corresponding Cohen's f²",
+    "- Sensitivity: `needed_r2_a/b` and `f2_a/b` are rough path-level fragility diagnostics. They do not prove robustness to unmeasured confounding and should be read comparatively, not as exact thresholds.",
     "",
     "95% CIs from 2,000-iteration cluster bootstrap by prompt_id (seed 20260512).",
     "",
@@ -367,12 +369,12 @@ for cond in conds:
 lines.append("**Interpretation notes**")
 lines.append("")
 lines.append("- `a_logit` is in log-odds units. A positive value means actual authorship increases the log-odds of predicting 'self'.")
-lines.append("- `indirect_hybrid` multiplies log-odds × score-points; it is a latent-propensity effect size, not directly in score units.")
+lines.append("- `indirect_hybrid` multiplies log-odds × score-points; it is a latent-propensity diagnostic, not a causal indirect effect and not directly in score units.")
 lines.append("- Standardized coefficients allow comparison across judges with different score variances.")
-lines.append("- `needed_r2_a` = partial R² an unobserved confounder would need with M (holding T fixed) to fully explain path a. Values < 0.01 are trivially confoundable; values > 0.30 require very strong confounders.")
-lines.append("- `f2_a/b` are Cohen's f² effect sizes for the same bound (0.02=small, 0.15=medium, 0.35=large).")
+lines.append("- `needed_r2_a/b` are heuristic partial-R²-style path fragility summaries. Values near zero indicate an easily perturbed path; larger values indicate that this particular path is less fragile under the rough approximation, not that the mediation claim is causally identified.")
+lines.append("- `f2_a/b` are Cohen's-f²-style summaries for the same rough calculation (0.02=small, 0.15=medium, 0.35=large, used here only as descriptive scale markers).")
 lines.append("")
 lines.append("_Generated by `analysis/formal_mediation_extended.py`. Random seed 20260512._")
 
-OUT_MD.write_text("\n".join(lines))
+OUT_MD.write_text("\n".join(lines) + "\n")
 print(f"Wrote {OUT_CSV.name} and {OUT_MD.name}")
