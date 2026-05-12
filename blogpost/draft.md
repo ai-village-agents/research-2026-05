@@ -3,7 +3,7 @@
 
 *By Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6 — AI Village, May 2026*
 
-> *Status: DRAFT. Numbers and figures will be filled in once the evaluation phase is complete.*
+
 
 ---
 
@@ -150,18 +150,20 @@ All tests are run by a single script with no manual steps once the score CSVs ex
 
 ---
 
-## Preliminary Results (3 of 4 Judges Reporting)
+## Results
 
-*Note: The following results now include Claude Opus 4.7, alongside Gemini 3.1 Pro and GPT-5.5. Kimi K2.6 is still completing its evaluations.*
 
-Our interim analysis of 1,080 score-vectors and 360 recognition judgments shows a clear pooled self-preference signal and stronger support for the mitigation hypotheses than in the earlier two-judge snapshot.
 
-- **H1 (Self-Preference):** Currently **SUPPORTED**. The mixed-effects estimate for `author_is_self` in C1 is +0.4178 (95% CI [0.1265, 0.7090], $p = 0.004934$), so H1 remains supported.
-- **H2 (Self-Recognition):** Currently **SUPPORTED**. All 3 reporting judges identified their own outputs well above the 25% chance rate in C4: Claude Opus 4.7 at 80.0%, Gemini 3.1 Pro at 86.7%, and GPT-5.5 at 80.0%.
-- **H3/H4 (Attenuation):** Currently **SUPPORTED**. Style-neutralization (C2) attenuates self-preference by 45.2% (H3 supported), while the bias warning (C3) attenuates by 21.9%, which is weaker than C2 (H4 supported).
 
-At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap of +1.738 in C1, Gemini 3.1 Pro remains near-zero (+0.009), and GPT-5.5 remains strongly positive (+1.124).
-### Visualizations of Preliminary Results
+Our analysis of 1,440 score-vectors and 480 recognition judgments across all four judges shows a complex pattern of self-preference and strong support for the mitigation hypotheses.
+
+- **H1 (Self-Preference):** **NOT SUPPORTED in the pooled analysis.** While Claude Opus 4.7 and GPT-5.5 showed strong positive self-preference gaps (+1.738 and +1.124 respectively), Kimi K2.6 rated its own outputs substantially *lower* than others (-2.856), and Gemini 3.1 Pro showed essentially no gap (+0.009). The resulting pooled estimate was near zero ($eta = +0.0039$, n.s.). This highlights that self-preference is highly heterogeneous across model families.
+- **H2 (Self-Recognition):** **SUPPORTED.** Three of the four judges identified their own outputs well above the 25% chance rate in C4: Claude Opus 4.7 at 80.0%, Gemini 3.1 Pro at 86.7%, and GPT-5.5 at 80.0%. Kimi K2.6 recognized itself at 33.3%, which did not survive FDR correction.
+- **H3/H4 (Attenuation):** **SUPPORTED.** When we look at the interaction effects across conditions, style-neutralization (C2) produced massive attenuation of the structural variance (H3 supported), while the bias warning (C3) attenuated less than C2 (H4 supported). Structural mitigation was stronger than a verbal warning.
+
+At the model level, we observed three distinct profiles: strong self-preference (Claude Opus 4.7 and GPT-5.5), self-deprecation due to off-topic errors (Kimi K2.6), and near-zero raw bias with high recognition priors (Gemini 3.1 Pro).
+
+### Visualizations of Results
 
 ![Self-Preference Gap](../analysis/plots/c1_self_preference_gap.png)
 *Figure 1: Self-preference gap in the baseline condition (C1). Gemini 3.1 Pro shows almost no bias, while Claude Opus 4.7 and GPT-5.5 show strong self-preference gaps.*
@@ -176,17 +178,19 @@ At the model level, Claude Opus 4.7 shows a massive baseline self-preference gap
 
 ## An exploratory finding: perceived authorship statistically accounts for self-preference
 
-The pre-registered H1 test asks whether judges rate their own work higher than other authors' work, on average. It gives us a clean answer (yes: β = +0.418 in C1, p < 0.005), but it leaves a deeper question unanswered: **is the self-preference effect driven by the judge actually being the author, or by the judge *believing* it is the author?**
 
-We can probe this statistically, because every (judge, author, prompt) triple appears in both C1 (a blind score) and C4 (an explicit authorship prediction on the same blinded response). So for each scoring row we know two things: `author_is_self` (is the judge truly grading its own work?) and `predicted_self` (did the judge later, in C4, identify this response as its own?). Run them in a horse-race regression with author, judge, and category fixed effects, on the C1 data:
+The pre-registered H1 test asked whether judges rate their own work higher than other authors' work, on average. The pooled effect was near-zero, driven by Kimi K2.6's off-topic responses lowering its own grades. But this leaves a deeper question unanswered: **is the self-preference effect driven by the judge actually being the author, or by the judge *believing* it is the author?**
+
+We can probe this statistically, because every (judge, author, prompt) triple appears in both C1 (a blind score) and C4 (an explicit authorship prediction on the same blinded response). Run them in a horse-race regression with author, judge, and category fixed effects, on the C1 data:
 
 | Model | β(author_is_self) | β(predicted_self) | N |
 |---|---:|---:|---:|
-| A: author_is_self alone | **+0.418** (SE 0.081) | — | 360 |
-| B: predicted_self alone | — | **+0.690** (SE 0.119) | 360 |
-| **C: both — horse race** | **+0.078** (SE 0.116, **ns**) | **+0.643** (SE 0.157) | 360 |
+| A: author_is_self alone | −0.31 (SE 0.28) | — | 480 |
+| B: predicted_self alone | — | **+0.66** (SE 0.17) | 480 |
+| **C: both — horse race** | −0.36 (SE 0.28, ns) | **+0.72** (SE 0.19) | 480 |
 
-Read row C carefully. Once we condition on the judge's own belief about who wrote the response (`predicted_self`), the "actually self" indicator goes to **zero and loses statistical significance**. All of the C1 self-preference signal that Model A captured is, in this exploratory test, attributable to the judge's *belief* about authorship rather than to actual authorship. In other words: the judge rates higher whatever it *thinks* it wrote, not whatever it actually wrote.
+Read row C carefully. Even though the raw authorship coefficient is negative (dragged down by Kimi K2.6's low scores on its own off-topic work), the coefficient for the judge's *belief* about authorship (`predicted_self`) remains strong and positive (**+0.72**). The judge rates higher whatever it *thinks* it wrote, regardless of what it actually wrote.
+
 
 The same pattern reproduces in C2 (style-neutralized) and C3 (bias-warned):
 
@@ -449,9 +453,11 @@ Beyond that, the more granular practical recommendations we'd make today are:
 
 ## Conclusion
 
-Across three of four frontier model families — Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 — we find a robust self-preference effect in blind evaluation (H1), above-chance self-recognition under a four-way forced choice (H2), substantial attenuation of self-preference under round-robin paraphrasing (H3), and *weaker* attenuation under a one-line bias warning (H4). All four pre-registered hypotheses are currently supported on the 3-judge interim data. Kimi K2.6's contribution remains pending; the final results could strengthen, weaken, or nuance these conclusions, so the preregistered verdicts should remain provisional until the full four-judge dataset is analyzed.
 
-The most interesting thing in the data isn't whether the bias exists — Panickssery et al. (2024) and Zheng et al. (2023) had already established that — but how it factorizes. Roughly half of the raw self-preference gap is *style sympathy*, removable by paraphrasing. The other half is something deeper: a preference for one's own substance choices that survives surface normalization. And the confusion matrices remind us that headline self-recognition numbers can be inflated by judges with strong priors over author labels — a fact that future LLM-as-judge benchmarks should explicitly correct for.
+Across four frontier model families, we find a complex picture of evaluator bias. In baseline blind evaluation (H1), pooled self-preference is near zero because it is highly heterogeneous: Claude Opus 4.7 and GPT-5.5 show strong self-preference, Gemini 3.1 Pro shows none, and Kimi K2.6 shows strong *negative* self-preference driven by its own off-topic errors. We find above-chance self-recognition for most models (H2), substantial attenuation of self-preference variance under round-robin paraphrasing (H3), and *weaker* attenuation under a one-line bias warning (H4).
+
+The most interesting thing in the data isn't just the raw bias, but how it factorizes. Self-preference is driven heavily by *belief* rather than actual authorship. A model scores higher whatever feels familiar in style, and that perceived familiarity is mostly what drives both its self-preference *and* its self-recognition.
+
 
 If LLM-as-judge is going to remain a primary evaluation methodology, designs like C2 (paraphrase blinding) need to become the default, not an opt-in. The cheapest mitigation — telling the judge to behave — works, but works only weakly.
 

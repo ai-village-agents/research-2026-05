@@ -4,13 +4,13 @@ Same horse-race specification as the recognition-mediation analysis, but the dep
 
 ## C1 descriptive: per-dimension self-preference gap
 
-| dimension            |   mean(self) |   mean(other) |   gap |
-|:---------------------|-------------:|--------------:|------:|
-| correctness          |        9.056 |         8.104 | 0.952 |
-| completeness         |        9.167 |         8.004 | 1.163 |
-| clarity              |        9.156 |         8.611 | 0.544 |
-| creativity           |        7.567 |         6.763 | 0.804 |
-| constraint_adherence |        9.544 |         8.222 | 1.322 |
+| dimension            |   mean(self) |   mean(other) |    gap |
+|:---------------------|-------------:|--------------:|-------:|
+| correctness          |        8.433 |         8.481 | -0.047 |
+| completeness         |        8.458 |         8.339 |  0.119 |
+| clarity              |        8.683 |         8.817 | -0.133 |
+| creativity           |        7.033 |         7.169 | -0.136 |
+| constraint_adherence |        8.725 |         8.508 |  0.217 |
 
 ## Condition C1 — per-dimension regressions
 
@@ -18,21 +18,21 @@ Same horse-race specification as the recognition-mediation analysis, but the dep
 
 | dimension | β(author_is_self) | SE | 95% CI | p-stars |
 |---|---:|---:|---:|:---:|
-| correctness | +0.178 | 0.110 | [-0.038, +0.394] |  |
-| completeness | +0.367 | 0.108 | [+0.155, +0.578] | *** |
-| clarity | +0.383 | 0.064 | [+0.258, +0.509] | *** |
-| creativity | +0.606 | 0.092 | [+0.425, +0.786] | *** |
-| constraint_adherence | +0.556 | 0.127 | [+0.307, +0.804] | *** |
+| correctness | -0.047 | 0.177 | [-0.393, +0.299] |  |
+| completeness | +0.119 | 0.169 | [-0.211, +0.450] |  |
+| clarity | -0.133 | 0.116 | [-0.361, +0.094] |  |
+| creativity | -0.136 | 0.160 | [-0.450, +0.178] |  |
+| constraint_adherence | +0.217 | 0.189 | [-0.154, +0.587] |  |
 
 ### C1 horse race: dim ~ author_is_self + predicted_self + FE
 
 | dimension | β(author_is_self) | SE | β(predicted_self) | SE |
 |---|---:|---:|---:|---:|
-| correctness | -0.340 | 0.180 | +0.981*** | 0.254 |
-| completeness | -0.130 | 0.170 | +0.940*** | 0.228 |
-| clarity | +0.347*** | 0.080 | +0.070 | 0.085 |
-| creativity | +0.587*** | 0.098 | +0.035 | 0.115 |
-| constraint_adherence | -0.073 | 0.183 | +1.191*** | 0.239 |
+| correctness | -0.277 | 0.204 | +0.590** | 0.205 |
+| completeness | -0.123 | 0.193 | +0.623*** | 0.187 |
+| clarity | -0.217 | 0.137 | +0.214 | 0.119 |
+| creativity | -0.255 | 0.177 | +0.306 | 0.167 |
+| constraint_adherence | -0.084 | 0.214 | +0.773*** | 0.208 |
 
 ## Condition C2 — per-dimension regressions
 
@@ -40,21 +40,21 @@ Same horse-race specification as the recognition-mediation analysis, but the dep
 
 | dimension | β(author_is_self) | SE | 95% CI | p-stars |
 |---|---:|---:|---:|:---:|
-| correctness | +0.122 | 0.137 | [-0.146, +0.391] |  |
-| completeness | +0.244 | 0.130 | [-0.010, +0.499] |  |
-| clarity | +0.000 | 0.097 | [-0.191, +0.191] |  |
-| creativity | +0.394 | 0.109 | [+0.181, +0.608] | *** |
-| constraint_adherence | +0.156 | 0.161 | [-0.159, +0.470] |  |
+| correctness | -0.061 | 0.185 | [-0.424, +0.302] |  |
+| completeness | +0.031 | 0.176 | [-0.313, +0.375] |  |
+| clarity | -0.419 | 0.125 | [-0.665, -0.174] | *** |
+| creativity | -0.244 | 0.163 | [-0.564, +0.075] |  |
+| constraint_adherence | -0.081 | 0.195 | [-0.464, +0.302] |  |
 
 ### C2 horse race: dim ~ author_is_self + predicted_self + FE
 
 | dimension | β(author_is_self) | SE | β(predicted_self) | SE |
 |---|---:|---:|---:|---:|
-| correctness | -0.365 | 0.201 | +0.923** | 0.294 |
-| completeness | -0.277 | 0.197 | +0.988*** | 0.283 |
-| clarity | -0.025 | 0.101 | +0.048 | 0.136 |
-| creativity | +0.316** | 0.121 | +0.149 | 0.163 |
-| constraint_adherence | -0.385 | 0.221 | +1.025*** | 0.300 |
+| correctness | -0.286 | 0.211 | +0.577* | 0.224 |
+| completeness | -0.233 | 0.204 | +0.679** | 0.214 |
+| clarity | -0.498*** | 0.142 | +0.201 | 0.136 |
+| creativity | -0.390* | 0.183 | +0.373* | 0.180 |
+| constraint_adherence | -0.339 | 0.225 | +0.664** | 0.233 |
 
 ## Condition C3 — per-dimension regressions
 
@@ -62,21 +62,21 @@ Same horse-race specification as the recognition-mediation analysis, but the dep
 
 | dimension | β(author_is_self) | SE | 95% CI | p-stars |
 |---|---:|---:|---:|:---:|
-| correctness | +0.161 | 0.109 | [-0.053, +0.375] |  |
-| completeness | +0.372 | 0.110 | [+0.156, +0.589] | *** |
-| clarity | +0.083 | 0.064 | [-0.043, +0.210] |  |
-| creativity | +0.594 | 0.087 | [+0.425, +0.764] | *** |
-| constraint_adherence | +0.367 | 0.127 | [+0.118, +0.616] | ** |
+| correctness | -0.058 | 0.177 | [-0.406, +0.289] |  |
+| completeness | +0.119 | 0.169 | [-0.212, +0.451] |  |
+| clarity | -0.342 | 0.113 | [-0.563, -0.120] | ** |
+| creativity | -0.117 | 0.157 | [-0.424, +0.190] |  |
+| constraint_adherence | +0.078 | 0.188 | [-0.291, +0.447] |  |
 
 ### C3 horse race: dim ~ author_is_self + predicted_self + FE
 
 | dimension | β(author_is_self) | SE | β(predicted_self) | SE |
 |---|---:|---:|---:|---:|
-| correctness | -0.365* | 0.180 | +0.996*** | 0.256 |
-| completeness | -0.178 | 0.172 | +1.043*** | 0.230 |
-| clarity | +0.049 | 0.082 | +0.064 | 0.089 |
-| creativity | +0.492*** | 0.099 | +0.194 | 0.122 |
-| constraint_adherence | -0.274 | 0.187 | +1.214*** | 0.249 |
+| correctness | -0.289 | 0.204 | +0.592** | 0.205 |
+| completeness | -0.143 | 0.193 | +0.676*** | 0.187 |
+| clarity | -0.410** | 0.135 | +0.175 | 0.118 |
+| creativity | -0.265 | 0.174 | +0.382* | 0.165 |
+| constraint_adherence | -0.221 | 0.214 | +0.767*** | 0.210 |
 
 ## Interpretation
 
