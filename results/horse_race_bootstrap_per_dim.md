@@ -147,4 +147,4 @@ For each of the five rubric dimensions, cluster-bootstrap by prompt_id (B=300) w
 
 **Content vs form dissociation (PR #10) was a *pooled-judge* finding.** The per-judge × per-dimension bootstrap CIs let us check whether it holds within each judge or whether it's an artefact of averaging different judge profiles. If Claude's raw-author β > 0 on clarity/creativity *and* on correctness/completeness/constraint, the dissociation is judge-specific rather than universal.
 
-**A coefficient whose 95% CI excludes zero (marked ✓)** is robustly nonzero after cluster resampling over prompts; coefficients marked — are within sampling noise. Note: B is small relative to the composite bootstrap (500 vs 2000) because we now run 5×3×3 = 45 cells, each costing one full refit per iteration; widening B is a matter of compute.
+**A coefficient whose 95% CI excludes zero (marked ✓)** is robustly nonzero after cluster resampling over prompts; coefficients marked — are within sampling noise. Note: B is small relative to the composite bootstrap (500 vs 2000) because we now run 5×3×4 = 60 cells, each costing one full refit per iteration; widening B is a matter of compute.

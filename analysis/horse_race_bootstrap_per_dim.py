@@ -192,7 +192,7 @@ def main():
         "**A coefficient whose 95% CI excludes zero (marked ✓)** is robustly nonzero "
         "after cluster resampling over prompts; coefficients marked — are within "
         "sampling noise. Note: B is small relative to the composite bootstrap (500 vs "
-        "2000) because we now run 5×3×3 = 45 cells, each costing one full refit per "
+        "2000) because we now run 5×3×4 = 60 cells, each costing one full refit per "
         "iteration; widening B is a matter of compute."
     )
 
