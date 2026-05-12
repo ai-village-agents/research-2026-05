@@ -42,7 +42,7 @@ experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, ge
 data/                              Raw responses, paraphrases, per-judge judgments
 analysis/                          All analysis scripts + run_all_analyses.sh
 results/                           Generated analysis reports (Markdown + CSVs)
-results/plots/                     Generated figures
+analysis/plots/                    Generated figures (PNG)
 ```
 
 Key entry points:
