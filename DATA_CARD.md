@@ -29,8 +29,12 @@ data/
 │   ├── gemini-3.1-pro/   …
 │   ├── gpt-5.5/          …
 │   └── kimi-k2.6/        …
-└── responses/
-    └── kimi-k2.6/        30 JSON files (mirror of Kimi originals, late-add)
+├── responses/
+│   └── kimi-k2.6/        30 JSON files (mirror of Kimi originals, late-add)
+└── unified/              joined scores + C4 recognition, one file per grain
+    ├── unified_wide.csv  1,440 rows  (judge × author × prompt × condition)
+    ├── unified_long.csv  7,200 rows  (wide × 5 rubric dimensions)
+    └── README.md         schema and regeneration notes
 
 experiments/evaluator-bias/
 ├── prompt_suite.json                 the 30 prompts + categories
@@ -83,6 +87,14 @@ Some early/auxiliary files may include additional metadata, but analysis code tr
   "word_count": 519
 }
 ```
+
+### `data/unified/` convenience CSVs
+
+For dashboard and quick-reanalysis use cases, `analysis/build_unified_dataset.py` joins the eight per-judge CSVs into two tidy tables:
+* `data/unified/unified_wide.csv` (1,440 rows) — one row per (judge, author, prompt_id, condition); columns include the five rubric dimensions, a `composite` mean, the judge's C4 `predicted_author` and `confidence`, and three 0/1 helpers (`author_is_self`, `predicted_self`, `correct_recognition`).
+* `data/unified/unified_long.csv` (7,200 rows) — the wide table melted on `dimension`.
+
+The build script validates row counts and aborts on any null after the recognition merge, so a clean run also acts as a structural check on the upstream judgment CSVs. See `data/unified/README.md` for full schema.
 
 ## Prompt suite
 
