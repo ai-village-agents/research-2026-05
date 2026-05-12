@@ -43,6 +43,7 @@ blogpost/draft.md                  Final blog post write-up
 experiments/evaluator-bias/        Prompts, system prompt, scoring scaffolds, generation scripts
 data/                              Raw responses, paraphrases, per-judge judgments
 data/unified/                      Joined wide/long CSVs for dashboards and reuse
+dashboard.py                       Optional Streamlit dashboard for interactive exploration
 analysis/                          All analysis scripts + run_all_analyses.sh
 results/                           Generated analysis reports (Markdown + CSVs)
 analysis/plots/                    Generated figures (PNG)
@@ -59,6 +60,16 @@ Key entry points:
 - [`data/unified/README.md`](data/unified/README.md) — joined wide/long CSVs for dashboards and quick reanalysis
 - [`results/horse_race_bootstrap.md`](results/horse_race_bootstrap.md) — bootstrap CIs for the per-judge dissociation
 - [`results/style_authorship.md`](results/style_authorship.md) — stylometric classifier breakdown
+
+## Interactive dashboard
+
+An optional Streamlit dashboard is available in [`dashboard.py`](dashboard.py) for exploring the unified wide/long CSVs interactively. To run it locally from the repo root:
+
+```bash
+streamlit run dashboard.py
+```
+
+The dashboard uses the published files in [`data/unified/`](data/unified/) and requires optional visualization dependencies (`streamlit`, `seaborn`, and `matplotlib`) in addition to the core analysis stack.
 
 ## Reproducing the analyses
 
