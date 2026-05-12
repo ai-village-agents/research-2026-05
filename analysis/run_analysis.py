@@ -618,17 +618,28 @@ def test_h3_h4(scores: pd.DataFrame, final: bool = False) -> None:
         emit("")
         return
 
+    min_baseline = 0.05
+    h3_baseline = h3.get("c1_beta", float("nan")) if h3 else float("nan")
+    attenuation_evaluable = bool(np.isfinite(h3_baseline) and h3_baseline > min_baseline)
+
     if h3:
         emit("### H3: C1 vs C2")
         emit(f"  C1 author_is_self coefficient = {h3.get('c1_beta'):.4f}")
         emit(f"  C2 author_is_self marginal effect = {h3.get('c2_marginal'):.4f}")
         emit(f"  Interaction (delta from C1) = {h3.get('c2_inter'):.4f}")
         atten = h3.get("c2_attenuation", float("nan"))
-        emit(f"  C2 attenuation = {atten:.1%}")
-        if final:
-            emit(f"**H3 verdict:** {'SUPPORTED' if atten >= 0.30 else 'NOT SUPPORTED'} (threshold: >= 30%).")
+        if attenuation_evaluable:
+            emit(f"  C2 attenuation = {atten:.1%}")
+            if final:
+                emit(f"**H3 verdict:** {'SUPPORTED' if atten >= 0.30 else 'NOT SUPPORTED'} (threshold: >= 30%).")
+            else:
+                emit(verdict_line("H3", bool(atten >= 0.30), final) + " (threshold: >= 30%).")
         else:
-            emit(verdict_line("H3", bool(atten >= 0.30), final) + " (threshold: >= 30%).")
+            emit(f"  C2 attenuation is not interpretable because the C1 baseline is not a positive substantive self-preference effect (minimum for attenuation reporting: {min_baseline:.2f}).")
+            if final:
+                emit("**H3 verdict:** NOT SUPPORTED / NOT INTERPRETABLE (no positive pooled C1 self-preference to attenuate).")
+            else:
+                emit("**H3 interim status:** not interpretable until a positive pooled C1 baseline is present.")
         emit("")
     else:
         emit("_No C2 rows yet; H3 not evaluable._")
@@ -639,16 +650,23 @@ def test_h3_h4(scores: pd.DataFrame, final: bool = False) -> None:
         emit(f"  C1 author_is_self coefficient = {h4.get('c1_beta'):.4f}")
         emit(f"  C3 author_is_self marginal effect = {h4.get('c3_marginal'):.4f}")
         atten3 = h4.get("c3_attenuation", float("nan"))
-        emit(f"  C3 attenuation = {atten3:.1%}")
-        if h3:
-            atten2 = h3.get("c2_attenuation", float("nan"))
-            emit(f"  (For comparison, C2 attenuation = {atten2:.1%})")
-            if final:
-                emit(f"**H4 verdict:** {'SUPPORTED' if atten3 < atten2 else 'NOT SUPPORTED'} (C3 weaker than C2 attenuation).")
+        if attenuation_evaluable:
+            emit(f"  C3 attenuation = {atten3:.1%}")
+            if h3:
+                atten2 = h3.get("c2_attenuation", float("nan"))
+                emit(f"  (For comparison, C2 attenuation = {atten2:.1%})")
+                if final:
+                    emit(f"**H4 verdict:** {'SUPPORTED' if atten3 < atten2 else 'NOT SUPPORTED'} (C3 weaker than C2 attenuation).")
+                else:
+                    emit(verdict_line("H4", bool(atten3 < atten2), final) + " (C3 weaker than C2 attenuation).")
             else:
-                emit(verdict_line("H4", bool(atten3 < atten2), final) + " (C3 weaker than C2 attenuation).")
+                emit("_C2 attenuation unavailable; H4 verdict deferred._")
         else:
-            emit("_C2 attenuation unavailable; H4 verdict deferred._")
+            emit(f"  C3 attenuation is not interpretable because the C1 baseline is not a positive substantive self-preference effect (minimum for attenuation reporting: {min_baseline:.2f}).")
+            if final:
+                emit("**H4 verdict:** NOT SUPPORTED / NOT INTERPRETABLE (H4 depends on interpretable attenuation from a positive C1 baseline).")
+            else:
+                emit("**H4 interim status:** not interpretable until a positive pooled C1 baseline is present.")
         emit("")
     else:
         emit("_No C3 rows yet; H4 not evaluable._")
