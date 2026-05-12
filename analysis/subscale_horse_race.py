@@ -37,6 +37,14 @@ DIMS = ["correctness", "completeness", "clarity", "creativity", "constraint_adhe
 CONDS = ["c1", "c2", "c3"]
 
 
+OFF_TOPIC = [
+    "history-001", "philosophy-001",
+    "creative-002", "creative-003", "creative-004", "creative-005",
+    "explain-001", "explain-002", "explain-003",
+    "ethics-001", "ethics-002",
+]
+
+
 def ols(X, y):
     """Plain OLS via lstsq. Returns coef vector (incl intercept as first elem)."""
     X1 = np.column_stack([np.ones(len(y)), X])
