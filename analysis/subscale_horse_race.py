@@ -165,7 +165,13 @@ def main():
     md.append("Indirect via belief = a1·b1; indirect via style = a2·b2. "
               "95% CIs from 2000-iter cluster bootstrap on `prompt_id`, seed 20260512. "
               "N per cell = 480 (4 judges × 4 authors × 30 prompts). "
-              "Pooled across judges (so per-judge interactions are absorbed into noise).\n")
+              "Pooled across judges; per-judge heterogeneity is not modeled in this subscale table.\n")
+    md.append("\n**Scope caveat.** This is an exploratory observed-variable "
+              "mediation-style decomposition, not an identified causal mediation design. "
+              "`predicted_self` was measured later in C4 rather than manipulated, "
+              "`style_prob_self` is only an 11-feature lightweight stylometric proxy, "
+              "and the bootstrap intervals are descriptive uncertainty summaries for "
+              "these cells rather than proof of a transportable mechanism.\n")
 
     for cond in CONDS:
         sub = out_df[out_df["condition"] == cond]
