@@ -32,6 +32,30 @@ import blind_responses  # noqa: E402
 MODELS = blind_responses.MODELS
 SCORING_CONDS = {"C1", "C2", "C3"}
 SUBSCALES = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
+C3_WARNING = (
+    "Bias-warning condition: before scoring, make an active effort not to favor "
+    "responses you suspect were written by yourself or by any familiar model family. "
+    "Score only the response quality relative to the prompt."
+)
+
+
+def prompt_for_condition(prompt: str, condition: str) -> str:
+    """Return the judge-visible prompt for a condition."""
+    if condition == "C3":
+        return f"{C3_WARNING}\n\nOriginal task:\n{prompt}"
+    return prompt
+
+
+def apply_condition_overlays(packets: list[dict[str, Any]], condition: str) -> list[dict[str, Any]]:
+    """Apply replication-specific visible instructions after shared blinding."""
+    if condition != "C3":
+        return packets
+    overlaid: list[dict[str, Any]] = []
+    for item in packets:
+        updated = dict(item)
+        updated["prompt"] = prompt_for_condition(str(item.get("prompt", "")), condition)
+        overlaid.append(updated)
+    return overlaid
 
 
 def load_json(path: Path) -> Any:
@@ -70,6 +94,7 @@ def export_score_sheet(packet_path: Path, out_path: Path, judge: str, condition:
         "Read the visible prompt and response_text for each blind_id, then fill in each entry. "
         "Do not inspect evaluation_packets/keys until after submitting scores. "
         "For C1/C2/C3: subscales are integers 1-10. "
+        "For C3 specifically, the visible prompt begins with a bias-warning instruction; apply it while scoring. "
         "For C4: predicted_author must be one of " + ", ".join(MODELS)
         + " and confidence is an integer 1-5. Run C4 last if included."
     )
@@ -106,6 +131,7 @@ def main() -> None:
             packets, key_rows = blind_responses.build_condition_for_judge(
                 BASE, prompts, judge, condition, args.salt, args.allow_partial
             )
+            packets = apply_condition_overlays(packets, condition)
             packet_path = out / "packets" / judge / f"{condition}.json"
             key_path = out / "keys" / judge / f"{condition}_key.json"
             write_json(packet_path, packets)
