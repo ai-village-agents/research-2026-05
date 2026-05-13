@@ -1,362 +1,407 @@
-[
-  {
-    "blind_id": "6def06af8364",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "893b52ec0c8e",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "e6b311403e14",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "8dd19d2fb6a7",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "2cf0378ccbcd",
-    "displayed_label": "gpt-5.5",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "cda5257dfe97",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 8,
-    "completeness": 7,
-    "clarity": 8,
-    "creativity": 8,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "cc4657911c7d",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "e35163c17e68",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "9d02dab5a1d4",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 10,
-    "completeness": 8,
-    "clarity": 9,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "2de21113a48b",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 9,
-    "completeness": 8,
-    "clarity": 9,
-    "creativity": 8,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "548705c95c92",
-    "displayed_label": "gpt-5.5",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "2d354b6bfb1b",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 8,
-    "completeness": 9,
-    "clarity": 8,
-    "creativity": 8,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "5bdaca7975fe",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 8,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "c87bccf2173b",
-    "displayed_label": "gpt-5.5",
-    "correctness": 7,
-    "completeness": 9,
-    "clarity": 9,
-    "creativity": 6,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "55b345c070b7",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "08a8b8a0f268",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "cada8a39266f",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 9,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "25170c8efa66",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 9,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "c16822aee498",
-    "displayed_label": "gpt-5.5",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 9,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "f6ddb649026b",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 8,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "d5825df07b9d",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 8,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "70787478cbad",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "650060a68220",
-    "displayed_label": "gpt-5.5",
-    "correctness": 8,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "01e7c4604980",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 8,
-    "completeness": 8,
-    "clarity": 8,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "3bdf1507ed42",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 8,
-    "clarity": 8,
-    "creativity": 7,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "9d1468536267",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "66afe50ebf77",
-    "displayed_label": "gpt-5.5",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "6cf03483b7f7",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 9,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "2ce9dcded916",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 8,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "8d6495f61e20",
-    "displayed_label": "gpt-5.5",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "a94677bf3175",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "e1f8fc131de3",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 9,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "c0283e312c81",
-    "displayed_label": "gpt-5.5",
-    "correctness": 8,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 7,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "8a14bde55945",
-    "displayed_label": "gpt-5.5",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 7,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "9ae7d6436a7d",
-    "displayed_label": "kimi-k2.6",
-    "correctness": 9,
-    "completeness": 8,
-    "clarity": 10,
-    "creativity": 9,
-    "constraint_adherence": 9
-  },
-  {
-    "blind_id": "03be68f7d345",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "a7e8ea5ddd9b",
-    "displayed_label": "gpt-5.5",
-    "correctness": 9,
-    "completeness": 10,
-    "clarity": 9,
-    "creativity": 10,
-    "constraint_adherence": 8
-  },
-  {
-    "blind_id": "4da35606fa3f",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 10,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "51ab79ca0534",
-    "displayed_label": "gemini-3.1-pro",
-    "correctness": 10,
-    "completeness": 10,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 10
-  },
-  {
-    "blind_id": "518e30a97b2f",
-    "displayed_label": "claude-opus-4.7",
-    "correctness": 10,
-    "completeness": 9,
-    "clarity": 10,
-    "creativity": 8,
-    "constraint_adherence": 9
-  }
-]
+{
+  "judge": "gemini-3.1-pro",
+  "condition": "label_swap",
+  "session": "session_1",
+  "entries": [
+    {
+      "blind_id": "6def06af8364",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-logic-001"
+    },
+    {
+      "blind_id": "893b52ec0c8e",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-code-001"
+    },
+    {
+      "blind_id": "e6b311403e14",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-code-001"
+    },
+    {
+      "blind_id": "8dd19d2fb6a7",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-philosophy-001"
+    },
+    {
+      "blind_id": "2cf0378ccbcd",
+      "displayed_label": "gpt-5.5",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-explain-001"
+    },
+    {
+      "blind_id": "cda5257dfe97",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 8,
+      "completeness": 7,
+      "clarity": 8,
+      "creativity": 8,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-logic-001"
+    },
+    {
+      "blind_id": "cc4657911c7d",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-design-001"
+    },
+    {
+      "blind_id": "e35163c17e68",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-philosophy-001"
+    },
+    {
+      "blind_id": "9d02dab5a1d4",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 10,
+      "completeness": 8,
+      "clarity": 9,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-explain-001"
+    },
+    {
+      "blind_id": "2de21113a48b",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 9,
+      "completeness": 8,
+      "clarity": 9,
+      "creativity": 8,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-math-001"
+    },
+    {
+      "blind_id": "548705c95c92",
+      "displayed_label": "gpt-5.5",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-science-001"
+    },
+    {
+      "blind_id": "2d354b6bfb1b",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 8,
+      "completeness": 9,
+      "clarity": 8,
+      "creativity": 8,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-explain-001"
+    },
+    {
+      "blind_id": "5bdaca7975fe",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 8,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-ethics-001"
+    },
+    {
+      "blind_id": "c87bccf2173b",
+      "displayed_label": "gpt-5.5",
+      "correctness": 7,
+      "completeness": 9,
+      "clarity": 9,
+      "creativity": 6,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-creative-001"
+    },
+    {
+      "blind_id": "55b345c070b7",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-logic-001"
+    },
+    {
+      "blind_id": "08a8b8a0f268",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-design-001"
+    },
+    {
+      "blind_id": "cada8a39266f",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 9,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-science-001"
+    },
+    {
+      "blind_id": "25170c8efa66",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 9,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-history-001"
+    },
+    {
+      "blind_id": "c16822aee498",
+      "displayed_label": "gpt-5.5",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 9,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-explain-001"
+    },
+    {
+      "blind_id": "f6ddb649026b",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 8,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-ethics-001"
+    },
+    {
+      "blind_id": "d5825df07b9d",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 8,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-ethics-001"
+    },
+    {
+      "blind_id": "70787478cbad",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-math-001"
+    },
+    {
+      "blind_id": "650060a68220",
+      "displayed_label": "gpt-5.5",
+      "correctness": 8,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-history-001"
+    },
+    {
+      "blind_id": "01e7c4604980",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 8,
+      "completeness": 8,
+      "clarity": 8,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-history-001"
+    },
+    {
+      "blind_id": "3bdf1507ed42",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 8,
+      "clarity": 8,
+      "creativity": 7,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-math-001"
+    },
+    {
+      "blind_id": "9d1468536267",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-science-001"
+    },
+    {
+      "blind_id": "66afe50ebf77",
+      "displayed_label": "gpt-5.5",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-math-001"
+    },
+    {
+      "blind_id": "6cf03483b7f7",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 9,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-creative-001"
+    },
+    {
+      "blind_id": "2ce9dcded916",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 8,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-history-001"
+    },
+    {
+      "blind_id": "8d6495f61e20",
+      "displayed_label": "gpt-5.5",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-logic-001"
+    },
+    {
+      "blind_id": "a94677bf3175",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-code-001"
+    },
+    {
+      "blind_id": "e1f8fc131de3",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 9,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-ethics-001"
+    },
+    {
+      "blind_id": "c0283e312c81",
+      "displayed_label": "gpt-5.5",
+      "correctness": 8,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 7,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-creative-001"
+    },
+    {
+      "blind_id": "8a14bde55945",
+      "displayed_label": "gpt-5.5",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 7,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-philosophy-001"
+    },
+    {
+      "blind_id": "9ae7d6436a7d",
+      "displayed_label": "kimi-k2.6",
+      "correctness": 9,
+      "completeness": 8,
+      "clarity": 10,
+      "creativity": 9,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-design-001"
+    },
+    {
+      "blind_id": "03be68f7d345",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-science-001"
+    },
+    {
+      "blind_id": "a7e8ea5ddd9b",
+      "displayed_label": "gpt-5.5",
+      "correctness": 9,
+      "completeness": 10,
+      "clarity": 9,
+      "creativity": 10,
+      "constraint_adherence": 8,
+      "prompt_id": "repl-creative-001"
+    },
+    {
+      "blind_id": "4da35606fa3f",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 10,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-design-001"
+    },
+    {
+      "blind_id": "51ab79ca0534",
+      "displayed_label": "gemini-3.1-pro",
+      "correctness": 10,
+      "completeness": 10,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 10,
+      "prompt_id": "repl-code-001"
+    },
+    {
+      "blind_id": "518e30a97b2f",
+      "displayed_label": "claude-opus-4.7",
+      "correctness": 10,
+      "completeness": 9,
+      "clarity": 10,
+      "creativity": 8,
+      "constraint_adherence": 9,
+      "prompt_id": "repl-philosophy-001"
+    }
+  ]
+}
