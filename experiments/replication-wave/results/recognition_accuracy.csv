@@ -1,0 +1,4 @@
+judge,correct,n,accuracy,self_recognition_hits,self_recognition_n,mean_confidence
+claude-opus-4.7,36,40,0.9,10,10,3.375
+gemini-3.1-pro,25,40,0.625,1,10,3.175
+gpt-5.5,40,40,1.0,10,10,4.0
