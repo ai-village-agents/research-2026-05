@@ -6,21 +6,21 @@ Reproduces from `results/long_scores.csv` (condition `c1`, 120 rows pooled acros
 
 | dim | self mean | other mean | gap |
 |---|---:|---:|---:|
-| correctness | 9.200 | 7.600 | +1.600 |
-| completeness | 9.267 | 7.500 | +1.767 |
-| clarity | 9.333 | 8.433 | +0.900 |
-| creativity | 7.833 | 6.711 | +1.122 |
-| constraint_adherence | 9.533 | 7.611 | +1.922 |
+| correctness | 8.375 | 7.917 | +0.458 |
+| completeness | 8.450 | 7.742 | +0.708 |
+| clarity | 8.650 | 8.500 | +0.150 |
+| creativity | 7.300 | 6.967 | +0.333 |
+| constraint_adherence | 8.275 | 8.033 | +0.242 |
 
 ## Prompt-paired gap (n=30 judge×prompt cells with both self and ≥1 other)
 
 | dim | mean | sd | prompt-clustered 95% CI (B=500) |
 |---|---:|---:|:---|
-| correctness | +1.600 | 1.334 | [+1.067, +2.056] |
-| completeness | +1.767 | 1.383 | [+1.372, +2.278] |
-| clarity | +0.900 | 0.565 | [+0.689, +1.106] |
-| creativity | +1.122 | 1.557 | [+0.922, +1.389] |
-| constraint_adherence | +1.922 | 1.327 | [+1.467, +2.322] |
+| correctness | +0.458 | 2.484 | [+0.233, +0.692] |
+| completeness | +0.708 | 2.314 | [+0.550, +0.900] |
+| clarity | +0.150 | 1.518 | [−0.025, +0.317] |
+| creativity | +0.333 | 2.056 | [+0.158, +0.492] |
+| constraint_adherence | +0.242 | 3.335 | [−0.033, +0.525] |
 
 ## Per-judge × per-dim gap
 

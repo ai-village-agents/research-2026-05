@@ -4,24 +4,19 @@ Descriptive analysis generated from replication-local score CSVs.
 
 ## Scoring coverage
 
-Rows: 360 / expected complete 480
+Rows: 480 / expected complete 480
 Conditions: c1, c2, c3
-Judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
+Judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 Authors: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 Unique prompts: 10
-
-
-## C2 stimulus provenance audit
-
-After the interim 3-judge C2 scores were collected, Kimi K2.6 replaced the 10 Kimi-as-paraphraser source files with validated versions. The current C2 score sheets for Claude, Gemini, and GPT-5.5 exactly match 90 / 120 current source texts, but mismatch 30 / 120 rows: 10 per reporting judge, all and only rows whose current paraphraser is Kimi K2.6. Therefore the C2 rows below should be read as scores on the packet text actually present in the committed score sheets: the v1 stand-in corpus frozen at `experiments/replication-wave/data/c2_paraphrases_v1_frozen/`, not the current v2 files under `paraphrased_responses/kimi-k2.6/`. See `c2_stimulus_sheet_audit.csv` for hashes and word counts. A final current-corpus C2 analysis requires regenerating C2 packets against v2 and rejudging.
 
 ## Condition summary
 
 | condition   |   mean_composite |   sd_composite |   n |   self_mean |   other_mean |   self_minus_other |
 |:------------|-----------------:|---------------:|----:|------------:|-------------:|-------------------:|
-| c1          |            7.937 |          1.977 | 120 |       9.033 |        7.571 |              1.462 |
-| c2          |            7.455 |          2.204 | 120 |       8.407 |        7.138 |              1.269 |
-| c3          |            7.938 |          1.957 | 120 |       9.107 |        7.549 |              1.558 |
+| c1          |            7.926 |          1.896 | 160 |       8.21  |        7.832 |              0.378 |
+| c2          |            7.4   |          2.142 | 160 |       7.73  |        7.29  |              0.44  |
+| c3          |            7.929 |          1.88  | 160 |       8.265 |        7.817 |              0.448 |
 
 ## Self-preference gaps by judge
 
@@ -30,25 +25,28 @@ After the interim 3-judge C2 scores were collected, Kimi K2.6 replaced the 10 Ki
 | c1          | claude-opus-4.7 |        9.78 |        7.347 |                 2.433 |       10 |        30 |
 | c1          | gemini-3.1-pro  |        8.38 |        7.753 |                 0.627 |       10 |        30 |
 | c1          | gpt-5.5         |        8.94 |        7.613 |                 1.327 |       10 |        30 |
+| c1          | kimi-k2.6       |        5.74 |        8.613 |                -2.873 |       10 |        30 |
 | c2          | claude-opus-4.7 |        8.82 |        7.333 |                 1.487 |       10 |        30 |
 | c2          | gemini-3.1-pro  |        8.44 |        7.033 |                 1.407 |       10 |        30 |
 | c2          | gpt-5.5         |        7.96 |        7.047 |                 0.913 |       10 |        30 |
+| c2          | kimi-k2.6       |        5.7  |        7.747 |                -2.047 |       10 |        30 |
 | c3          | claude-opus-4.7 |        9.78 |        7.347 |                 2.433 |       10 |        30 |
 | c3          | gemini-3.1-pro  |        8.6  |        7.687 |                 0.913 |       10 |        30 |
 | c3          | gpt-5.5         |        8.94 |        7.613 |                 1.327 |       10 |        30 |
+| c3          | kimi-k2.6       |        5.74 |        8.62  |                -2.88  |       10 |        30 |
 
 ## Prompt-paired self gaps
 
 | condition   |   mean_prompt_paired_self_gap |    sd |   n_judge_prompt_pairs |    se |   t_stat_descriptive |
 |:------------|------------------------------:|------:|-----------------------:|------:|---------------------:|
-| c1          |                         1.462 | 1.053 |                     30 | 0.192 |                7.603 |
-| c2          |                         1.269 | 2.258 |                     30 | 0.412 |                3.078 |
-| c3          |                         1.558 | 0.909 |                     30 | 0.166 |                9.383 |
+| c1          |                         0.378 | 2.239 |                     40 | 0.354 |                1.069 |
+| c2          |                         0.44  | 2.596 |                     40 | 0.41  |                1.072 |
+| c3          |                         0.448 | 2.231 |                     40 | 0.353 |                1.271 |
 
 ## Recognition coverage
 
-Rows: 120 / expected complete 160
-Judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
+Rows: 160 / expected complete 160
+Judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 True authors: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 Predicted authors: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 Unique prompts: 10
@@ -60,6 +58,7 @@ Unique prompts: 10
 | claude-opus-4.7 |        36 |  40 |      0.9   |                      10 |                   10 |             3.375 |
 | gemini-3.1-pro  |        25 |  40 |      0.625 |                       1 |                   10 |             3.175 |
 | gpt-5.5         |        40 |  40 |      1     |                      10 |                   10 |             4     |
+| kimi-k2.6       |        12 |  40 |      0.3   |                       0 |                   10 |             3.4   |
 
 ## Recognition confusion matrix
 
@@ -77,3 +76,7 @@ Unique prompts: 10
 | gpt-5.5         | gemini-3.1-pro  |                 0 |               10 |         0 |           0 |
 | gpt-5.5         | gpt-5.5         |                 0 |                0 |        10 |           0 |
 | gpt-5.5         | kimi-k2.6       |                 0 |                0 |         0 |          10 |
+| kimi-k2.6       | claude-opus-4.7 |                 6 |                0 |         1 |           3 |
+| kimi-k2.6       | gemini-3.1-pro  |                 5 |                2 |         3 |           0 |
+| kimi-k2.6       | gpt-5.5         |                 4 |                1 |         4 |           1 |
+| kimi-k2.6       | kimi-k2.6       |                 1 |                5 |         4 |           0 |
