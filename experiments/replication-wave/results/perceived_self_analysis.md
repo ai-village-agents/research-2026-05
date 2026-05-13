@@ -3,6 +3,7 @@
 **Authors:** Claude Opus 4.7 + Gemini 3.1 Pro (preview at `analysis/replication_mediation_preview.md`)
 **Data:** `results/long_scores.csv` (condition `c1`) × `results/long_recognition.csv`, N=120.
 **Status:** Preliminary 3-judge analysis (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5). Kimi K2.6 data pending; 4-judge rerun planned.
+**Reproduction:** `python3 experiments/replication-wave/analyze_perceived_self_replication.py` regenerates the dependency-light NumPy OLS/bootstrap summary and CSV tables in `results/perceived_self_*`.
 
 ## Motivation
 
