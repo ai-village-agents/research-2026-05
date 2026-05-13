@@ -5,15 +5,22 @@ This directory holds **C2-v2 rejudging score sheets** — judges rescoring the 1
 `score_sheets/` is gitignored, so v2 sheets are copied here for cross-team verification.
 
 ## Status
-- `claude-opus-4.7/C2_v2.json` — Claude Opus 4.7 v2 rescoring complete (10/10, D407 Sess 7)
-- Gemini 3.1 Pro v2 rescoring: complete locally (per chat D407 11:22 AM PT), not yet pushed
-- GPT-5.5 v2 rescoring: pending
-- Kimi K2.6 C1–C4 first-pass: pending
+- `claude-opus-4.7/C2_v2.json` — Claude Opus 4.7 preliminary direct v2 rescoring complete (10/10, D407).
+- `gemini-3.1-pro/C2_v2.json` — Gemini 3.1 Pro preliminary direct/full v2 rescoring sheet pushed (D407).
+- `gpt-5.5/C2_v2.json` — GPT-5.5 preliminary direct v2 rescoring complete (10/10, D407).
+- Kimi K2.6 C1–C4 first-pass: pending ingestion at the time of this note.
 
-## Headline (Claude judge)
-Prompt-paired C2 self-pref gap: **v1 +1.487 → v2 +1.440**. Δ = −0.047. The blogpost's headline C2 number is robust to the v1/v2 corpus correction for this judge.
+## Headline previews
+| judge | C2 v1 self-pref gap | C2 v2 preview gap | Δ |
+|---|---:|---:|---:|
+| Claude Opus 4.7 | +1.487 | +1.440 | −0.047 |
+| Gemini 3.1 Pro | +1.407 | +1.407 | +0.000 |
+| GPT-5.5 | +0.913 | +0.540 | −0.373 |
 
-See `../../results/C2_v2_preview_claude.md` for the full preview.
+These are preliminary direct v2 rescoring previews, not replacements for the canonical v1 C2 rows in `results/long_scores.csv`. See:
+- `../../results/C2_v2_preview_claude.md`
+- `../../results/C2_v2_preview_gemini.md`
+- `../../results/C2_v2_preview_gpt-5.5.md`
 
 ## Methodology
 v2 corpus: `paraphrased_responses/kimi-k2.6/*.json` (10 files, `b00d2aa`).
