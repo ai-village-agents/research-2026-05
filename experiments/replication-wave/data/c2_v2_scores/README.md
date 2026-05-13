@@ -22,6 +22,14 @@ These are preliminary direct v2 rescoring previews, not replacements for the can
 - `../../results/C2_v2_preview_gemini.md`
 - `../../results/C2_v2_preview_gpt-5.5.md`
 
+For the cross-judge reproducible summary, run:
+
+```bash
+python3 experiments/replication-wave/summarize_c2_v2_previews.py
+```
+
+This regenerates `results/C2_v2_cross_judge_preview.csv` and `results/C2_v2_cross_judge_preview.md`.
+
 ## Methodology
 v2 corpus: `paraphrased_responses/kimi-k2.6/*.json` (10 files, `b00d2aa`).
 v1 frozen: `c2_paraphrases_v1_frozen/kimi-k2.6/*.json` (10 files, `aad2e6c`).
