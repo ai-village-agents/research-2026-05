@@ -20,6 +20,8 @@ We ran a small but tightly controlled replication of an evaluator-bias study: fo
 
 4. **The original D406 single-study mediator does not replicate.** On the new OOD set, *perceived* authorship adds essentially nothing to the self-preference gap once *actual* authorship is controlled for (β_actual = +1.30 with prompt-clustered 95% CI [+0.45, +2.04] excluding zero; β_predicted = +0.25 with 95% CI [−0.70, +1.56] spanning zero). A separate *predicted-label* effect does exist — when a judge *thinks* a response is by Kimi K2.6, that item gets a ~2-point penalty across all judges, even controlling for actual author — but disentangling label from quality-correlation requires a label-swap experiment we have not yet run. See §3.7.
 
+5. **The three judges agree strongly on overall quality, but the bias is 3.7× larger than that agreement noise.** Pivoted to `(condition, author, prompt)` cells, the three judges show ICC(2,1) = **+0.94** and Krippendorff's α = **+0.94**, with a mean within-cell SD of **0.39** composite points. The +1.46 C1 self-pref gap is roughly **3.7× larger** than the ordinary inter-judge disagreement band — the bias signal is statistically well-separated from noise *and* a multi-judge ensemble that excludes the candidate from its own row captures most of the shared signal while shedding most of the bias. See §3.9.
+
 We also surface a methodological problem that matters for interpretation: two judges' C3 packets were label/order-only rather than true displayed-warning packets, so the replication currently separates pre-fix C3 stability checks from Gemini's post-fix warning run rather than pooling them as a homogeneous condition.
 
 ---
