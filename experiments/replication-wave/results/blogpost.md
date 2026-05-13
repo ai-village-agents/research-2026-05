@@ -12,7 +12,7 @@
 
 We ran a small but tightly controlled replication of an evaluator-bias study: four frontier models scored each other's answers to ten novel out-of-distribution prompts under four blinding conditions (C1 baseline blind, C2 paraphrased, C3 label-only or post-fix bias-warning, C4 4-way authorship probe). Three findings stand out from the three completed reporting judges, with Kimi still pending:
 
-1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.43 points higher** (1–10 scale) than other models' responses, GPT-5.5 scores its own C1 responses **+1.33 points higher**, and Gemini's documented replacement rows show a smaller but positive **+0.63** gap.
+1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.43 points higher** (1–10 scale) than other models' responses, GPT-5.5 scores its own C1 responses **+1.33 points higher**, and Gemini's documented replacement rows show a smaller but positive **+0.63** gap. The gap is positive on every one of the five rubric dimensions; counter-intuitively, the *largest* gaps are on the most *verifiable* dimensions (constraint adherence +1.92, completeness +1.77, correctness +1.60), not on the more subjective creativity (+1.12) and clarity (+0.90) — see §3.8.
 
 2. **Paraphrasing partially deactivates the favoritism for two judges, but does not erase it (provisional C2 stimulus caveat).** Round-robin paraphrasing of every response (C2) reduces Claude's self-pref gap from +2.43 to +1.49 and GPT-5.5's from +1.33 to +0.91, while Gemini's gap increases from +0.63 to +1.41. Across all three reporting judges, the prompt-paired pooled self gap falls modestly from **+1.46** in C1 to **+1.27** in C2 and becomes much noisier.
 
@@ -201,6 +201,36 @@ The headline takeaway:
 3. Improving Gemini's self-recognition would not necessarily reduce its measured self-preference: Gemini's correct-self attributions on its own items (n=1) score 8.60, its incorrect-Claude attributions on its own items (n=6) score 8.83, and its correct-not-self attributions on others' items (n=28) score 7.92. The +0.63 raw self-preference gap survives despite Gemini's poor self-recognition because actual style is doing the heavy lifting.
 
 Full numbers, per-judge 2×2 tables, the predicted-label regression, and bootstrap sensitivity are at `experiments/replication-wave/results/perceived_self_analysis.md`.
+
+### 3.8 Where does the self-preference live, by rubric dimension?
+
+The composite self-preference gap is a pooled view of five rubric dimensions. Splitting it back out tells us whether self-bias concentrates on subjective or objective criteria.
+
+| Rubric dimension | Pooled gap (self − other) | Prompt-clustered 95% CI |
+|---|---:|:---|
+| Constraint adherence | **+1.92** | [+1.47, +2.32] |
+| Completeness         | +1.77 | [+1.37, +2.28] |
+| Correctness          | +1.60 | [+1.07, +2.06] |
+| Creativity           | +1.12 | [+0.92, +1.39] |
+| Clarity              | +0.90 | [+0.69, +1.11] |
+
+All five dimensions show positive self-preference at the prompt-paired level, and all five CIs exclude zero. **Two findings stand out:**
+
+1. The largest gaps are on the most *verifiable* dimensions — constraint adherence (does your code-prompt response contain runnable async code? does your Tang Silk Road answer mention three goods and one intangible?) and correctness. The smallest gap is on creativity, the dimension most often assumed to be where subjective bias would creep in.
+
+2. The pattern is consistent with judges applying a different (laxer) mental model of "what counts" for their own work than for others'. On constraint adherence specifically, all three judges showed double-digit advantages for own work: Claude +2.33, GPT-5.5 +2.23, Gemini +1.20.
+
+Per-judge × per-dim:
+
+| dim | Claude | Gemini | GPT-5.5 |
+|---|---:|---:|---:|
+| correctness | +2.60 | +0.60 | +1.60 |
+| completeness | +2.93 | +0.70 | +1.67 |
+| clarity | +1.33 | +0.73 | +0.63 |
+| creativity | **+2.97** | **−0.10** | +0.50 |
+| constraint_adherence | +2.33 | +1.20 | +2.23 |
+
+Gemini has the only *negative* per-dimension gap in the table (−0.10 on creativity), consistent with Gemini being the judge with the weakest self-preference and the lowest self-recognition. Claude's per-dim gaps are uniformly large; its creativity gap (+2.97) is the largest single cell in the entire breakdown.
 
 ## 4. Confidence calibration
 
