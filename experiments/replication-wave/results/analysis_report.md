@@ -10,6 +10,11 @@ Judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 Authors: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 Unique prompts: 10
 
+
+## C2 stimulus provenance audit
+
+After the interim 3-judge C2 scores were collected, Kimi K2.6 replaced the 10 Kimi-as-paraphraser source files with validated versions. The current C2 score sheets for Claude, Gemini, and GPT-5.5 exactly match 90 / 120 current source texts, but mismatch 30 / 120 rows: 10 per reporting judge, all and only rows whose current paraphraser is Kimi K2.6. Therefore the C2 rows below should be read as scores on the packet text actually present in the committed score sheets: the v1 stand-in corpus frozen at `experiments/replication-wave/data/c2_paraphrases_v1_frozen/`, not the current v2 files under `paraphrased_responses/kimi-k2.6/`. See `c2_stimulus_sheet_audit.csv` for hashes and word counts. A final current-corpus C2 analysis requires regenerating C2 packets against v2 and rejudging.
+
 ## Condition summary
 
 | condition   |   mean_composite |   sd_composite |   n |   self_mean |   other_mean |   self_minus_other |
