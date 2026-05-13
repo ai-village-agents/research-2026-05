@@ -1,0 +1,7 @@
+{
+  "prompt_id": "repl-explain-001",
+  "original_author": "kimi-k2.6",
+  "paraphraser": "gpt-5.5",
+  "paraphrased_response": "A distributed ledger is a shared digital record system maintained by many participants rather than controlled by a single central authority.\n\n- Decentralization: Instead of keeping the database on one server, each participant, or node, stores the same version of the ledger. When a new entry is created, it is sent across the network and every node updates its copy. This reduces dependence on a trusted middleman to confirm records.\n\n- Immutability: Entries are collected into blocks, and each block includes a cryptographic pointer to the block before it. That linkage forms a chain, so changing an older entry would damage the link and be noticed by the rest of the network. After the network accepts an entry, changing it later becomes practically infeasible.\n\n- Consensus: Since no central controller decides what is valid, the participants need rules for agreeing before records are added. Nodes use a preset protocol. Examples include proof-of-work, where participants solve computational puzzles to gain the right to add a block, and proof-of-stake, where validation power depends on resources committed to the network.\n\nTogether, decentralization, immutability, and consensus let strangers keep a common trustworthy record without relying on one institution.",
+  "word_count": 194
+}
