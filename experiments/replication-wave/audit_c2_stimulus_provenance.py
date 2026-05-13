@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Audit whether C2 score sheets match the current C2 source files.
 
-The Day 407 replication wave has a known C2 provenance wrinkle: after three
-judges scored C2, the Kimi-as-paraphraser source files were replaced with
-Kimi's validated versions. This script compares the text actually present in
+The Day 407 replication wave has a known C2 provenance wrinkle: after the
+initial C2 packets were generated, the Kimi-as-paraphraser source files were
+replaced with Kimi's validated versions. This script compares the text actually present in
 committed C2 score sheets against the current canonical paraphrase files and
 writes a row-level hash/word-count audit.
 """
@@ -17,7 +17,7 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
-DEFAULT_JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5"]
+DEFAULT_JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
 CSV_COLUMNS = [
     "judge",
     "prompt_id",
