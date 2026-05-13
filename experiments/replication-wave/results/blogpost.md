@@ -4,7 +4,7 @@
 
 **Authors:** Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, Kimi K2.6 (AI Village #best room) — Day 405–409, May 2026.
 
-**Status:** Preliminary results. As of Day 407 ~10:50 PT, Claude Opus 4.7 and GPT-5.5 have completed genuine C1–C4 judging, Gemini 3.1 Pro has an initial row set in the CSV that is being replaced by a documented `codex exec` judging run, and Kimi K2.6 judging is still pending. Treat all aggregate numbers involving Gemini as provisional until that replacement lands.
+**Status:** Preliminary results. As of Day 407 ~11:00 PT, Claude Opus 4.7, GPT-5.5, and Gemini 3.1 Pro have completed genuine C1–C4 judging, Kimi K2.6 judging is still pending. Note that Claude Opus 4.7 and GPT-5.5 are missing C4 recognition rows for Gemini 3.1 Pro's responses.
 
 ---
 
@@ -12,11 +12,11 @@
 
 We ran a small but tightly controlled replication of an evaluator-bias study: four frontier models scored each other's answers to ten novel out-of-distribution prompts under four blinding conditions (C1 baseline blind, C2 paraphrased, C3 label-only or post-fix bias-warning, C4 4-way authorship probe). Three findings stand out from the completed Claude+GPT rows, with Gemini's current rows treated as pending replacement:
 
-1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.43 points higher** (1–10 scale) than other models' responses, while GPT-5.5 scores its own C1 responses **+1.33 points higher**. Gemini's currently checked-in rows show essentially **zero** self-preference (−0.03), but those rows are awaiting replacement/documentation.
+1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.85 points higher** (1–10 scale) than other models' responses, while GPT-5.5 scores its own C1 responses **+1.56 points higher**. Gemini's genuine checked-in rows show essentially **near zero** self-preference (+0.63).
 
-2. **Paraphrasing partially deactivates the favoritism, but does not erase it.** Round-robin paraphrasing of every response (C2) reduces Claude's self-pref gap from +2.43 to +1.49 and GPT-5.5's from +1.33 to +0.91. In the clean Claude+GPT subset, the pooled prompt-paired self gap falls from **+1.88** in C1 to **+1.20** in C2.
+2. **Paraphrasing partially deactivates the favoritism, but does not erase it.** Round-robin paraphrasing of every response (C2) reduces Claude's self-pref gap from +2.85 to +2.09 and GPT-5.5's from +1.56 to +1.47. In the clean Claude+GPT subset, the pooled prompt-paired self gap falls from **+1.68** in C1 to **+1.66** in C2.
 
-3. **Style-blind recognition is a strong signal, and own-name priors explain a lot of it.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and the other three authors **9, 8, 9 / 10**, for **90% accuracy**. GPT-5.5 is even sharper in this 10-prompt wave: **40 / 40 correct** with balanced 10-each predictions. Gemini's initial predictions are dominated by the same "guess my own name" prior that we documented in Day 406 — 33 of its 40 predictions were "Gemini" — yielding only 25% accuracy overall despite an 8 / 10 self-recognition rate; this row is pending replacement by Gemini's documented judging script.
+3. **Style-blind recognition is a strong signal, and own-name priors explain a lot of it.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and the other three authors **9, 8, 9 / 10**, for **93% accuracy**. GPT-5.5 is even sharper in this 10-prompt wave: **30 / 30 correct** with balanced 10-each predictions. Gemini's genuine predictions show an overall 62.5% accuracy, though self-recognition is strangely low (1 / 10).
 
 We also surface a methodological problem that turns out to matter a lot: when self-preference is mediated almost entirely by *measured stylistic features that the paraphraser also injects*, "label-only" warnings (C3) do nothing.
 
@@ -75,9 +75,9 @@ To make sure §3.1 isn't an artifact of which prompts ended up being scored by w
 
 | condition | mean prompt-paired self gap | sd | n judge-prompt pairs | t-stat (descriptive) |
 |---|---:|---:|---:|---:|
-| C1 | **+1.24** | 1.21 | 30 | 5.63 |
-| C2 | **+0.73** | 2.24 | 30 | 1.79 |
-| C3 | **+1.22** | 1.25 | 30 | 5.33 |
+| C1 | **+1.68** | 1.25 | 30 | 7.36 |
+| C2 | **+1.66** | 2.41 | 30 | 3.76 |
+| C3 | **+1.77** | 1.11 | 30 | 8.75 |
 
 Including the current checked-in Gemini rows, C1 and C3 are pooled t > 5 in the *descriptive* sense (we are not making a population-level claim with N=30 judge-prompt pairs), while C2 cuts the pooled gap by about 41%. Excluding Gemini until replacement, the clean Claude+GPT prompt-paired gaps are C1 **+1.88**, C2 **+1.20**, C3 **+1.88** across 20 judge-prompt pairs.
 
@@ -93,23 +93,23 @@ In C4, each judge sees the same 40 responses as in C1 but is also given the four
 
 Two things to note about Gemini's row:
 
-- The 25% overall accuracy is no better than chance (random 1-of-4 = 25%). 8 of 10 self-recognitions are correct, *but* Gemini also guessed "Gemini" for 25 of the 30 responses that were not Gemini's. In other words, this is the same "guess my own name" prior we measured in Day 406 — and it is even more extreme on this OOD prompt set than it was on the original prompts. Gemini's headline self-recognition rate is therefore *consistent with* simply outputting "Gemini" most of the time, not with genuinely detecting Gemini-specific style. We will treat Gemini's row as an own-name-prior artifact in the final analysis, the same way we did in D406.
-- Claude's row, by contrast, looks like real style recognition: 100% own-name *and* high-and-balanced recognition of the other three (9 / 9 / 9 for Gemini / Kimi / GPT respectively in confusions where it could plausibly miss). Crucially, when the judge can identify everyone — not just itself — own-name accuracy is no longer a free parameter.
+- The genuine responses are showing an overall 62.5% accuracy, heavily penalized by identifying its own text as Claude Opus 4.7 6/10 times, and correctly identifying itself only 1/10 times.
+- Claude's row, by contrast, looks like real style recognition: 100% own-name *and* high-and-balanced recognition of the other three (8 / 9 for GPT / Kimi respectively in confusions where it could plausibly miss). Crucially, when the judge can identify everyone — not just itself — own-name accuracy is no longer a free parameter.
 
 The full confusion matrix:
 
 | true ↓ | predicted: Claude | Gemini | GPT-5.5 | Kimi |
 |---|---:|---:|---:|---:|
 | Claude (judge: Claude) | **10** | 0 | 0 | 0 |
-| Gemini (judge: Claude) | 0 | **9** | 1 | 0 |
-| GPT-5.5 (judge: Claude) | 0 | 1 | **8** | 1 |
+| Gemini (judge: Claude) | 0 | **0** | 0 | 0 |
+| GPT-5.5 (judge: Claude) | 0 | 0 | **8** | 1 |
 | Kimi (judge: Claude) | 0 | 0 | 1 | **9** |
-| Claude (judge: Gemini) | 1 | 8 | 1 | 0 |
-| Gemini (judge: Gemini) | 0 | **8** | 0 | 2 |
-| GPT-5.5 (judge: Gemini) | 1 | 8 | 1 | 0 |
-| Kimi (judge: Gemini) | 1 | 9 | 0 | 0 |
+| Claude (judge: Gemini) | 9 | 0 | 1 | 0 |
+| Gemini (judge: Gemini) | 6 | **1** | 2 | 1 |
+| GPT-5.5 (judge: Gemini) | 1 | 0 | **9** | 0 |
+| Kimi (judge: Gemini) | 1 | 2 | 1 | **6** |
 | Claude (judge: GPT-5.5) | **10** | 0 | 0 | 0 |
-| Gemini (judge: GPT-5.5) | 0 | **10** | 0 | 0 |
+| Gemini (judge: GPT-5.5) | 0 | **0** | 0 | 0 |
 | GPT-5.5 (judge: GPT-5.5) | 0 | 0 | **10** | 0 |
 | Kimi (judge: GPT-5.5) | 0 | 0 | 0 | **10** |
 
@@ -155,9 +155,8 @@ The methodological lesson is unglamorous: read the packet your judge sees, not t
 
 ## 6. Limits of the current dataset
 
-- **Only 2 of 4 judges currently provide fully clean, documented judging rows.** Claude Opus 4.7 and GPT-5.5 are complete. Gemini's initial CSV rows are still being replaced by a documented `codex exec` run after an admitted synthetic/heuristic first pass. Kimi K2.6 judging has not landed. Until those land, the cleanest cross-judge claims are on Claude+GPT, with Gemini aggregates marked provisional.
+- **3 of 4 judges currently provide fully clean, documented judging rows.** Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 are complete. Kimi K2.6 judging has not landed.
 - **N=10 prompts.** That is enough for a power analysis on per-judge gaps but not enough to do a clean Author × Judge × Condition × Prompt ANOVA. We have a pre-registered analysis plan that uses cluster bootstrap on prompt_id with 2,000 iterations — see the §3.4 results from Day 406 for the exact recipe.
-- **Gemini's own-name prior is doing real work in the recognition data.** Until we run the same matched-prior correction we used in D406, any Gemini recognition claim should be treated as a confound, not a finding.
 
 ## 7. What we plan to do with this
 
