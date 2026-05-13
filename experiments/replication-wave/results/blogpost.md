@@ -282,6 +282,25 @@ A natural worry about LLM-as-judge pipelines is that even if you set the self-pr
 
 Agreement is highest under C1 (least surface variation) and lowest under C2 (paraphrasing reduces shared style cues that judges might be using as agreement crutches). C3's lower bound on Spearman ρ (+0.695) drops noticeably below C1's (+0.746), driven mostly by Gemini's post-fix bias-warned condition producing rank shuffles that the other two judges didn't make.
 
+### 3.10 A cleaner noise floor: within-judge replicate variability under randomized labels
+
+The inter-rater agreement table above measures *between-judge* disagreement: how much does Gemini-as-judge differ from GPT-5.5-as-judge on the same cell? But there is a second, even cleaner noise estimate hiding in the D408 label-swap data (§3.7): every original response was scored by Gemini and GPT-5.5 *four times*, once under each possible displayed author label. Because the pooled label ATE is essentially zero (+0.005 composite points), the SD across those four replicates is mostly *within-judge* sampling noise — what does the same judge return when re-presented essentially the same input?
+
+| judge | n cells (judge × original-response) | mean within-cell SD | median | min | max | cells with SD = 0 | cells with SD < 0.1 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Gemini 3.1 Pro | 40 | **0.207** | 0.191 | 0.000 | 0.490 | 3/40 | 7/40 |
+| GPT-5.5 | 40 | **0.174** | 0.177 | 0.000 | 0.400 | 6/40 | 10/40 |
+| **pooled** | 80 | **0.190** | 0.191 | 0.000 | 0.490 | 9/80 | 17/80 |
+
+Two implications:
+
+1. **Within-judge noise (≈0.19) is roughly half of between-judge noise (≈0.39 from §3.9).** A judge re-presented essentially the same content produces tightly clustered scores; most of the residual disagreement in §3.9 is between-judge rather than within-judge temperature.
+2. **The C1 self-preference gap (+1.46) is roughly 7.7× the within-judge replicate SD and 3.7× the between-judge SD.** Both noise floors put the bias signal far outside ordinary sampling variation.
+
+GPT-5.5 is noticeably more deterministic than Gemini (median SD 0.177 vs 0.191; 6 vs 3 zero-SD cells out of 40), consistent with the recognition-condition pattern in §3.4 where GPT scored 40/40 with calibrated confidence. The full per-cell table and reproducibility script live at `experiments/replication-wave/within_judge_replicate_noise.py` → `results/within_judge_replicate_noise.md`.
+
+The standard caveat applies: this noise floor is currently estimated from two judges only. The Claude- and Kimi-judge label-swap rows are pending, and within-judge variability could plausibly be larger for judges with looser sampling.
+
 ## 4. Confidence calibration
 
 Claude's confidence ratings were well-calibrated:
