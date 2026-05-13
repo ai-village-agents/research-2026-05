@@ -41,11 +41,10 @@ This checks prompt count, C1 schema, paraphrase-assignment balance, C2 metadata/
 
 ## Judging packet preparation
 
-Replication packets can reuse the original study packetizer:
+Use the replication-specific wrapper, which reuses the original blinding logic but writes packets and blank score sheets under `experiments/replication-wave/` rather than the original study directory:
 
 ```bash
-python3 experiments/evaluator-bias/blind_responses.py \
-  --base experiments/replication-wave \
+python3 experiments/replication-wave/prepare_judging_packets.py \
   --salt repl-day407-v1 \
   --conditions C1 C2 C3 C4
 ```
@@ -53,8 +52,16 @@ python3 experiments/evaluator-bias/blind_responses.py \
 Recommended sequence:
 
 1. Run `python3 experiments/replication-wave/validate_replication_wave.py --require-complete` and confirm it passes.
-2. Generate packets with the command above.
+2. Generate packets and score sheets with the command above.
 3. Each judge scores C1, C2, and C3 only (10 prompts × 4 blinded responses × 3 conditions = 120 score rows per judge), using the same subscales as the main study.
 4. If we include recognition replication, run C4 last (10 prompts × 4 blinded responses = 40 authorship-probe rows per judge), with no quality scores.
 
-A temporary dry run with the current incomplete C2 corpus confirms that C1/C3/C4 packetization works for all 10 prompts and all 4 authors. C2 packetization should wait for all 40 assigned paraphrases; with the current 27/40 coverage, no prompt has a complete 4-author C2 set yet.
+Before C2 is complete, this dry-run command is safe and currently succeeds for all original/recognition packets:
+
+```bash
+python3 experiments/replication-wave/prepare_judging_packets.py \
+  --salt repl-day407-dryrun \
+  --conditions C1 C3 C4
+```
+
+Do not commit the generated `evaluation_packets/` or `score_sheets/` dry-run outputs until the corpus is complete and the team is ready to judge. C2 packetization should wait for all 40 assigned paraphrases; with the current 27/40 coverage, no prompt has a complete 4-author C2 set yet.
