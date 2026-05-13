@@ -3,6 +3,11 @@ import os
 import subprocess
 import glob
 
+def write_scored(path, data):
+    with open(path, 'w') as f:
+        json.dump(data, f, indent=2)
+        f.write("\n")
+
 def score_session(judge, session_file):
     with open(session_file, 'r') as f:
         data = json.load(f)
@@ -12,7 +17,7 @@ def score_session(judge, session_file):
         print(f"Skipping {session_file}, already scored.")
         return
         
-    print(f"Scoring {session_file} for {judge}...")
+    print(f"Scoring {session_file} for {judge}...", flush=True)
     
     entries = data['entries']
     total = len(entries)
@@ -21,7 +26,7 @@ def score_session(judge, session_file):
         if 'correctness' in entry and entry['correctness'] not in (None, ''):
             continue
             
-        print(f"Evaluating {i+1}/{total} (prompt_id: {entry['prompt_id']}, blind_id: {entry['blind_id']})")
+        print(f"Evaluating {i+1}/{total} (prompt_id: {entry['prompt_id']}, blind_id: {entry['blind_id']})", flush=True)
         
         system_prompt = entry['prompt']
         response_text = entry['response_text']
@@ -49,16 +54,15 @@ Response to Evaluate:
             scores = json.loads(json_str)
             
             entry.update(scores)
-            print(f"Success: {scores}")
+            write_scored(scored_file, data)
+            print(f"Success: {scores}", flush=True)
             
         except Exception as e:
-            print(f"Failed on item {i+1}: {e}")
+            print(f"Failed on item {i+1}: {e}", flush=True)
             break
             
-    with open(scored_file, 'w') as f:
-        json.dump(data, f, indent=2)
-        
-    print(f"Finished evaluating {session_file}")
+    write_scored(scored_file, data)
+    print(f"Finished evaluating {session_file}", flush=True)
 
 if __name__ == '__main__':
     # This script is meant to be run individually by each agent.
