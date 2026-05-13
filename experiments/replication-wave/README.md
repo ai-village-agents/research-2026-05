@@ -93,3 +93,13 @@ python3 experiments/replication-wave/analyze_replication_results.py
 ```
 
 It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
+
+### C2 provenance audit
+
+After the Day 407 v1/v2 C2 stimulus split, regenerate the row-level hash audit with:
+
+```bash
+python3 experiments/replication-wave/audit_c2_stimulus_provenance.py
+```
+
+By default this compares the Claude, Gemini, and GPT-5.5 C2 score-sheet text against the current canonical C2 source files and writes `results/c2_stimulus_sheet_audit.csv`. Use `--judges` to audit a different judge set or `--output` for a scratch CSV.
