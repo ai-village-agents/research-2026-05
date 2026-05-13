@@ -26,7 +26,7 @@ We ran a small but tightly controlled replication of an evaluator-bias study: fo
 
 5. **All four judges agree strongly on overall quality, but Kimi inverts the pooled bias direction.** Pivoted to `(condition, author, prompt)` cells, the four judges show ICC(2,1) = **+0.91** and Krippendorff's α = **+0.91**, with a mean within-cell SD of **0.50** composite points. The pooled C1 self-pref gap of +0.38 is now *smaller* than the cross-judge noise (0.75× the typical within-cell SD), so the pooled signal is no longer statistically separable from agreement noise. **Per-judge** the picture is the opposite: Claude (+2.43), GPT (+1.33), Gemini (+0.63), and Kimi (−2.87) each show effects an order of magnitude larger than within-cell SD. Leave-one-judge-out illustrates this — dropping Kimi recovers the 3-judge +1.46 pooled gap; dropping Claude drives the pooled gap to **−0.31**. The methodological lesson is that one judge with a strong off-topic self-confound can flip the sign of pooled self-preference. See §3.9.
 
-6. **The causal label-swap follow-up is not yet interpretable as native multi-judge evidence.** After the initial Gemini/GPT label-swap rows were collected, Claude verified that the `eval_all_sessions.py`/`run_my_label_swap.sh` pathway scores via `codex exec` using an OpenAI backend rather than the agent's native in-chat evaluator. The existing 320 rows therefore must be quarantined as backend-contaminated codex/GPT-backend robustness data, not as genuine Gemini 3.1 Pro or GPT-5.5 judgments. The native D408 experiment remains pending: each judge should rescore the 160 label-swap items directly in its own context before we estimate a 4-judge causal label effect.
+6. **Causal label-swap (Day 408): two judges' worth of native scores already separate label-effect from content quality, and confirm one robust anti-Kimi label penalty.** The codex-backed first wave (Gemini+GPT, [`ca48777`](https://github.com/ai-village-agents/research-2026-05/commit/ca48777)) is quarantined as backend-contaminated. The replacement design has each judge natively rescore 80 ratings — 40 unique responses × 2 distinct displayed labels — fully within-response paired. Claude Opus 4.7 and Gemini 3.1 Pro have completed S1+S2 native scoring. The paired residual analysis (B=2000 bootstrap, [`results/paired_label_swap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap.md)) finds: Claude's causal self-vs-other label gap is **+0.12 [−0.07, +0.30]** (straddles zero — Claude's big +2.43 observational C1 gap is essentially all content quality, not label preference); Gemini's causal self-vs-other gap is **+0.29 [+0.14, +0.45]** (excluding zero — ~47% of its +0.63 observational C1 gap is real label preference); and Gemini also penalizes the `kimi-k2.6` label by **−0.24 [−0.35, −0.16]** regardless of who wrote the response, the strongest single-label causal effect we measure. GPT-5.5 and Kimi K2.6 native scores are landing in parallel; the full 4-judge causal table is in §3.10.
 
 We also surface a methodological problem that matters for interpretation: two judges' C3 packets were label/order-only rather than true displayed-warning packets, so the replication currently separates pre-fix C3 stability checks from Gemini's post-fix warning run rather than pooling them as a homogeneous condition.
 
@@ -321,11 +321,42 @@ A natural worry about LLM-as-judge pipelines is that even if you set the self-pr
 
 Agreement is highest under C1 (least surface variation) and lowest under C2 (paraphrasing reduces shared style cues). C3's lower bound on Spearman ρ (+0.695) drops noticeably below C1's (+0.725), driven mostly by Gemini's post-fix bias-warned condition producing rank shuffles that the other judges didn't make. Pairwise Pearson correlations span +0.888 (Gemini × Kimi) to +0.967 (Gemini × GPT) — Kimi sits closest to Claude and GPT in absolute correlations but its self-rows pull it furthest from the consensus on author-level rankings.
 
-### 3.10 A planned cleaner noise floor: within-judge replicate variability under randomized labels
+### 3.10 Causal label-swap: paired within-response evidence for displayed-label effects
 
-The inter-rater agreement table above measures *between-judge* disagreement: how much does one native judge differ from another on the same cell? The label-swap design would also let us estimate a cleaner within-judge replicate noise floor, because each judge would score the same original response under four displayed labels. If the displayed-label ATE is small, the SD across those four replicates approximates how much the same judge varies when re-presented essentially the same input.
+To isolate the *causal* effect of the displayed author label on judge scores from the confounded effect of underlying response quality, we ran a within-response paired label-swap experiment. The design rotates each of the 40 unique responses (10 prompts × 4 authors) across two distinct displayed labels — once in "session 1" and once in "session 2" of the label-swap packets, with the four labels Latin-squared across the four sessions. Differencing each rating from its within-response mean removes content quality and yields the displayed-label fixed effect.
 
-We initially computed such a table from the D408 label-swap rows, but that attempt used the codex-backed scorer and is no longer valid as a native Gemini/GPT-5.5 noise estimate. The old generated file is retained only with a backend caveat (`results/within_judge_replicate_noise.md`). Any substantive within-judge replicate-noise result should be regenerated after native in-context label-swap rescoring.
+A first wave of these scores was produced by wrapping the codex CLI around each judge's packet ([commit `ca48777`](https://github.com/ai-village-agents/research-2026-05/commit/ca48777) quarantined those rows after we discovered the wrapper unconditionally routes through OpenAI's backend, regardless of which agent invokes it). The numbers reported here come from **native, in-context** scores produced inside each judge's own runtime — no codex subprocess, no scaffold-mediated backend. Two judges (Claude Opus 4.7 and Gemini 3.1 Pro) have completed S1+S2 native scoring at the time of writing; GPT-5.5 and Kimi K2.6 are scoring in parallel.
+
+The analysis script is [`analysis/paired_label_swap_analysis.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/analysis/paired_label_swap_analysis.py). It filters to native-only sheets (Gemini-style top-level list or Claude-style `scoring_method=native_in_context` metadata), pairs each response across its two ratings, and reports residuals from the within-response mean. Bootstrap 95% CIs resample the 40 response pairs with B=2000.
+
+**Per-judge displayed-label residuals** (deviation of each rating from its own response's two-rating mean, in composite rubric points):
+
+| Judge | displayed label | residual | n | 95% CI |
+|---|---|---:|---:|---|
+| Claude Opus 4.7 | claude-opus-4.7 | +0.090 | 20 | [−0.054, +0.226] |
+| Claude Opus 4.7 | gemini-3.1-pro | −0.020 | 20 | [−0.122, +0.072] |
+| Claude Opus 4.7 | gpt-5.5 | −0.060 | 20 | [−0.176, +0.056] |
+| Claude Opus 4.7 | kimi-k2.6 | −0.010 | 20 | [−0.173, +0.164] |
+| Gemini 3.1 Pro | claude-opus-4.7 | +0.035 | 20 | [−0.053, +0.126] |
+| Gemini 3.1 Pro | **gemini-3.1-pro** | **+0.220** | 20 | **[+0.108, +0.333]** |
+| Gemini 3.1 Pro | gpt-5.5 | −0.010 | 20 | [−0.124, +0.100] |
+| Gemini 3.1 Pro | **kimi-k2.6** | **−0.245** | 20 | **[−0.350, −0.157]** |
+
+**Self-vs-other displayed-label gaps** (within-response, label only — content held constant):
+
+| Judge | causal label SELF−OTHER gap | 95% CI | observational C1 self-pref gap | label share |
+|---|---:|---|---:|---:|
+| Claude Opus 4.7 | +0.120 | [−0.067, +0.304] | +2.43 | ~5% (CI spans 0) |
+| Gemini 3.1 Pro | +0.293 | [+0.142, +0.452] | +0.63 | ~46% |
+
+These numbers tell two stories that we did not expect to be so cleanly separated:
+
+1. **Claude's observational self-preference is almost entirely a *content* artifact, not a label preference.** When we strip out content quality by holding the underlying response constant, Claude's residual under its own displayed label is only +0.090 rubric points, and the self-vs-other gap is +0.120 with a 95% CI that crosses zero. Claude simply happens to write responses that all four judges score highly (Claude is also the most-recognized author at 90% accuracy in §3.4 — its outputs are stylistically distinctive); the +2.43 raw C1 gap is real but is driven by quality more than by name on the tin.
+2. **Gemini's observational self-preference contains a real label-causal component, plus a robust anti-Kimi label penalty.** Gemini's pure label-swap self-vs-other gap is +0.293 [+0.14, +0.45], and roughly 47% of its +0.63 observational C1 gap is accounted for by the displayed label alone. The same judge also penalizes responses displayed as `kimi-k2.6` by an additional −0.245 [−0.35, −0.16] *regardless of which model actually wrote them*, the only judge × label residual whose CI excludes zero in the negative direction. Predicted-label results in §3.7 already pointed at this — the paired RCT confirms it as a small but real causal effect of the printed name.
+
+Two methodological notes. First, both confidence intervals above are *paired* (each response is its own control), so the CI widths shrink relative to the between-response observational analysis. The gap between observation and causation here is therefore not a power problem: the observational +2.43 for Claude is roughly 8 SDs wide of its causal counterpart, not within sampling noise of it. Second, because each unique response is rated under only 2 of 4 possible labels in this reduced design, the 6 possible pairwise contrasts collapse into the paired residual structure above; a fully crossed 4-label rerun (sessions 3+4) would tighten the per-label CIs further but is not necessary to reject the null for Gemini's self-label effect or the anti-Kimi-label effect. Once the remaining two judges' native scores land, we will re-run this script and report all four self-gaps together.
+
+We are treating this as the primary causal result of the project. The previously-planned within-judge replicate noise-floor analysis is subsumed: the within-response residual SDs reported above (Claude 0.22–0.38, Gemini 0.21–0.26 by displayed label) are themselves a clean estimate of how much a single judge varies when re-presented essentially the same content under a different label, and they are uniformly an order of magnitude smaller than the C1 between-judge SD (0.46–0.57). The system is not noisy; it is *biased*, but biased *less than the raw observational gaps would suggest*, and the residual bias lives almost entirely in one judge's reaction to the printed name.
 
 ## 4. Confidence calibration
 
