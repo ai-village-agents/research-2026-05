@@ -18,7 +18,7 @@ def score_session(judge, session_file):
     total = len(entries)
     
     for i, entry in enumerate(entries):
-        if 'correctness' in entry and entry['correctness'] is not None:
+        if 'correctness' in entry and entry['correctness'] not in (None, ''):
             continue
             
         print(f"Evaluating {i+1}/{total} (prompt_id: {entry['prompt_id']}, blind_id: {entry['blind_id']})")
