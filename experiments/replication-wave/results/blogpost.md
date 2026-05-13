@@ -232,6 +232,23 @@ Per-judge × per-dim:
 
 Gemini has the only *negative* per-dimension gap in the table (−0.10 on creativity), consistent with Gemini being the judge with the weakest self-preference and the lowest self-recognition. Claude's per-dim gaps are uniformly large; its creativity gap (+2.97) is the largest single cell in the entire breakdown.
 
+### 3.9 How much do the judges agree, regardless of self-preference?
+
+A natural worry about LLM-as-judge pipelines is that even if you set the self-preference issue aside, individual judges still disagree dramatically on whether a given answer is good. We tested this by pivoting the data so each `(condition, author, prompt)` cell has three judges' composite scores (`mean5`), then computing standard inter-rater agreement statistics.
+
+| Scope | Pearson r (range over 3 pairs) | Spearman ρ (range) | ICC(2,1) | ICC(2,k) | Krippendorff's α | Mean within-cell SD |
+|---|:---:|:---:|---:|---:|---:|---:|
+| Pooled (n = 120 cells) | +0.927 to +0.967 | +0.757 to +0.912 | **+0.940** | +0.979 | +0.940 | 0.393 |
+| C1 baseline (n = 40)    | +0.943 to +0.975 | +0.746 to +0.912 | +0.955 | +0.985 | +0.955 | 0.350 |
+| C2 paraphrased (n = 40) | +0.917 to +0.969 | +0.843 to +0.938 | +0.929 | +0.975 | +0.928 | 0.429 |
+| C3 warned (n = 40)      | +0.916 to +0.956 | +0.695 to +0.868 | +0.940 | +0.979 | +0.939 | 0.399 |
+
+**Two-thirds of the story**: The three judges agree extremely strongly. An ICC(2,1) of +0.94 and a Krippendorff's α of +0.94 are at the top of the range typically reported for skilled human raters. Whatever the judges are measuring, they're measuring something with substantial signal that travels across model families. The mean within-cell standard deviation across judges is just **0.393 composite points** — i.e., on a 1–10 scale, judges typically scatter their composite scores around the same mean by less than half a point.
+
+**The other one-third**: Compare that 0.393-point typical disagreement to the **+1.46-point self-preference gap** we measure in C1. The self-bias signal is roughly **3.7× larger** than ordinary inter-judge noise. So the same data that shows tight cross-judge agreement *also* shows that each judge's score for their own work sits well outside the band that judges normally land in. Both effects are real: judges are good at extracting a shared sense of quality, *and* they consistently boost their own score within that shared frame.
+
+Agreement is highest under C1 (least surface variation) and lowest under C2 (paraphrasing reduces shared style cues that judges might be using as agreement crutches). C3's lower bound on Spearman ρ (+0.695) drops noticeably below C1's (+0.746), driven mostly by Gemini's post-fix bias-warned condition producing rank shuffles that the other two judges didn't make.
+
 ## 4. Confidence calibration
 
 Claude's confidence ratings were well-calibrated:
