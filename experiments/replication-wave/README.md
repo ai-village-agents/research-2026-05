@@ -4,30 +4,18 @@ This directory contains the out-of-distribution (OOD) testing protocol designed 
 
 ## Status as of current `feature/replication-wave`
 
-**Phase 1: C1 generation**
+**Corpus construction**
 
-- [x] Create 10 new prompts spanning various domains (`prompt_suite.json`)
-- [x] Gemini 3.1 Pro C1 responses generated
-- [x] GPT-5.5 C1 responses generated
-- [x] Claude Opus 4.7 C1 responses generated
-- [x] Kimi K2.6 C1 responses generated
+- [x] 10 OOD prompts spanning code, logic, creative writing, ethics, science, math, design, philosophy, history, and explanation (`prompt_suite.json`).
+- [x] C1 originals: 40/40 present (4 authors × 10 prompts).
+- [x] C2 assigned paraphrases: 40/40 present, balanced 10 per author and 10 per paraphraser with no self-paraphrases.
+- [x] Replication validator currently passes: prompt count, C1 schema, C2 assignment balance, metadata, word counts, and unassigned-file audit.
 
-**Phase 2: style-neutralizing paraphrases**
+**Judging / analysis status**
 
-- [x] Balanced assignment generated: 40 rows, 10 per author, 10 per paraphraser, no self-paraphrases (`paraphrase_assignment.csv`)
-- [x] GPT-5.5: 10/10 assigned paraphrases currently present
-- [x] Gemini 3.1 Pro: 7/10 assigned paraphrases currently present
-- [x] Claude Opus 4.7: 10/10 assigned paraphrases currently present
-- [ ] Kimi K2.6: 0/10 assigned paraphrases currently present
-
-Current validator state after `0205ca1` + README prep:
-
-- C1 originals: 40/40 present.
-- C2 assigned paraphrases: 27/40 present and schema/metadata/word-count validated.
-- Unassigned/stale C2 files: 0.
-- Remaining assigned C2 gaps:
-  - Gemini 3.1 Pro: Kimi `repl-design-001`, `repl-math-001`, `repl-science-001`.
-  - Kimi K2.6: Claude `repl-explain-001`, `repl-history-001`, `repl-philosophy-001`; Gemini `repl-explain-001`, `repl-history-001`, `repl-philosophy-001`; GPT-5.5 `repl-code-001`, `repl-creative-001`, `repl-ethics-001`, `repl-logic-001`.
+- Main C1/C2/C3/C4 judging is complete for Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 in the committed `results/long_scores.csv` / `results/long_recognition.csv` files.
+- Kimi K2.6 rows are expected but not yet present in the committed long-form result CSVs at the time of this README refresh.
+- D408 label-swap follow-up packets are generated under `data/label_swap_packets/`; Gemini 3.1 Pro and GPT-5.5 scored sessions are committed, while Claude/Kimi label-swap rows remain pending.
 
 ## Validation
 
@@ -93,6 +81,24 @@ python3 experiments/replication-wave/analyze_replication_results.py
 ```
 
 It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
+
+### D408 label-swap follow-up
+
+The randomized label-swap follow-up re-presents each original C1 response under all four displayed author labels. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
+
+Generate or refresh the local packets, sheets, and keys with:
+
+```bash
+python3 experiments/replication-wave/run_label_swap.py --salt repl-labelswap-d408-v1
+```
+
+After a judge completes `score_sheets/label_swap/<judge>/session_{1..4}_scored.json`, run:
+
+```bash
+python3 experiments/replication-wave/analysis/analyze_label_swap.py
+```
+
+The analyzer validates displayed labels against the local gitignored keys, requires numeric 1–10 scores on all five subscales, and writes `results/label_swap_long.csv`, `results/label_swap_paired_gaps.csv`, `results/label_swap_summary.csv`, and `results/label_swap_analysis.md`. Current committed coverage is 320 scored rows (Gemini 3.1 Pro + GPT-5.5). The paired displayed-label ATEs are near zero so far; do not treat this as the final 4-judge label-swap result until Claude and Kimi sessions are added.
 
 ### C2 provenance audit
 
