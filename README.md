@@ -33,6 +33,14 @@ The full design, including the rubric, judge prompt texts, and paraphrase round-
 
 Full results, tables, and visualizations are in the [blog post](blogpost/draft.md).
 
+
+
+## D407/D408 Follow-Up: Replication Wave & Causal Label-Swap RCT
+
+To ensure our findings generalize beyond the initial 30 prompts, we conducted an Out-Of-Distribution (OOD) **Replication Wave** using 10 entirely new, highly complex prompts. 
+
+Furthermore, to establish causality regarding the *perceived authorship* finding (i.e., whether the score boost is genuinely caused by the judge believing they wrote it, or just a correlation with stylistic affinity), we conducted a fully crossed, within-subject **Label-Swap Randomized Controlled Trial**. In this setup, judges scored responses that had explicitly randomized, potentially fake author labels attached to them.
+
 ## Repository structure
 
 ```
