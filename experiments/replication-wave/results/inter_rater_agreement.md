@@ -1,10 +1,10 @@
-# Inter-rater agreement — replication wave (3 judges, Kimi pending)
+# Inter-rater agreement — replication wave (3 judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5)
 
 We pivot scores into (condition, author, prompt) cells. Each cell has three judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
 
 - **n_cells per condition**: 40 (10 prompts × 4 authors)
 - **Total cells**: 120
-- **Judges**: claude-opus-4.7, gemini-3.1-pro, gpt-5.5 (Kimi K2.6 pending)
+- **Judges**: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 
 ### pooled_all (n_cells = 120)
 

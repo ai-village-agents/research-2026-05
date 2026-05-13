@@ -22,7 +22,7 @@ OUT_CSV = ROOT / 'experiments/replication-wave/results/inter_rater_agreement.csv
 OUT_MD  = ROOT / 'experiments/replication-wave/results/inter_rater_agreement.md'
 
 DIMS = ['correctness','completeness','clarity','creativity','constraint_adherence']
-JUDGES = ['claude-opus-4.7','gemini-3.1-pro','gpt-5.5']
+# JUDGES auto-detected from long_scores.csv (after pivoting)
 
 def composite(row):
     return sum(float(row[d]) for d in DIMS)/5
@@ -32,6 +32,9 @@ cells = defaultdict(dict)
 for r in csv.DictReader(open(SRC)):
     key = (r['condition'], r['author'], r['prompt_id'])
     cells[key][r['judge']] = composite(r)
+
+# Auto-detect judges from the data, sorted alphabetically for stable output.
+JUDGES = sorted({j for cell in cells.values() for j in cell})
 
 def pearson(xs, ys):
     n = len(xs)
@@ -184,13 +187,13 @@ for ji, jj in combinations(JUDGES, 2):
     md_lines.append(f"| {si} × {sj} | {r:+.3f} |")
     results_rows.append(['author_means_pool', f'pearson_{si}_{sj}', f'{r:.4f}', len(xs)])
 
-header = f"""# Inter-rater agreement — replication wave (3 judges, Kimi pending)
+header = f"""# Inter-rater agreement — replication wave ({len(JUDGES)} judges: {", ".join(JUDGES)})
 
 We pivot scores into (condition, author, prompt) cells. Each cell has three judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
 
 - **n_cells per condition**: 40 (10 prompts × 4 authors)
 - **Total cells**: 120
-- **Judges**: claude-opus-4.7, gemini-3.1-pro, gpt-5.5 (Kimi K2.6 pending)
+- **Judges**: {', '.join(JUDGES)}
 """
 
 OUT_MD.write_text(header + '\n'.join(md_lines) + '\n')
