@@ -18,7 +18,7 @@ We ran a small but tightly controlled replication of an evaluator-bias study: fo
 
 3. **Style-blind recognition is a strong signal, but not uniformly self-directed.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and reaches **90% accuracy** overall. GPT-5.5 is even sharper in this 10-prompt wave: **40 / 40 correct** with balanced 10-each predictions. Gemini's documented replacement row reaches **25 / 40 = 62.5%** overall but recognizes its own text only **1 / 10** times.
 
-4. **The original D406 single-study mediator does not replicate.** On the new OOD set, *perceived* authorship adds essentially nothing to the self-preference gap once *actual* authorship is controlled for (β_actual = +1.30 with 95% CI excluding zero; β_predicted = +0.25 with 95% CI spanning zero). Instead, we surface a separate **"Claude-label halo"** of roughly +0.5 to +0.8 rubric points: judges score a response higher when they *think* it is Claude-authored, regardless of who actually wrote it. See §3.7.
+4. **The original D406 single-study mediator does not replicate.** On the new OOD set, *perceived* authorship adds essentially nothing to the self-preference gap once *actual* authorship is controlled for (β_actual = +1.30 with prompt-clustered 95% CI [+0.45, +2.04] excluding zero; β_predicted = +0.25 with 95% CI [−0.70, +1.56] spanning zero). A separate *predicted-label* effect does exist — when a judge *thinks* a response is by Kimi K2.6, that item gets a ~2-point penalty across all judges, even controlling for actual author — but disentangling label from quality-correlation requires a label-swap experiment we have not yet run. See §3.7.
 
 We also surface a methodological problem that matters for interpretation: two judges' C3 packets were label/order-only rather than true displayed-warning packets, so the replication currently separates pre-fix C3 stability checks from Gemini's post-fix warning run rather than pooling them as a homogeneous condition.
 
@@ -183,23 +183,24 @@ In the replication, **actual authorship absorbs essentially all of the self-pref
 
 The "I think this is mine" cells are *lower* than baseline, not higher. Gemini's +0.63 raw self-preference gap is carried entirely by actual style, not by subjective belief about authorship. If Gemini's self-recognition were perfect, its measured self-preference would *shrink*.
 
-**A separate, real effect: the "Claude-label halo."** Even though `predicted_self` doesn't drive the self-preference gap, the *identity* of the predicted label does. Pooled across all 3 judges, mean composite by predicted-author label:
+**A suggestive secondary pattern: predicted-label halo.** Although `predicted_self` (the self-label specifically) doesn't drive the self-preference gap, the *identity* of the predicted label still correlates with rating. Adding `predicted_author` indicators to the regression alongside `actual_author` + judge FE + prompt FE (prompt-clustered SEs):
 
-| predicted_author | mean5 | n |
-|---|---:|---:|
-| claude-opus-4.7 | **9.24** | 37 |
-| gpt-5.5         | 8.86 | 33 |
-| gemini-3.1-pro  | 7.96 | 23 |
-| kimi-k2.6       | 5.00 | 27 |
+| predicted_author (vs predicted-Kimi reference) | β | clustered SE | p |
+|---|---:|---:|---:|
+| predicted = claude-opus-4.7 | **+2.077** | 0.628 | 0.001 |
+| predicted = gpt-5.5         | +2.033 | 0.628 | 0.001 |
+| predicted = gemini-3.1-pro  | +1.386 | 0.508 | 0.006 |
 
-Some of this is genuine quality (Claude's outputs really are rated highly), but the halo persists *within* actual author. For Gemini-as-judge, on its own actually-authored items: when Gemini misattributes own work to Claude (n=6), it scores **8.83**; when Gemini correctly attributes own work to itself (n=20), it scores **8.14**. The "Claude" label adds ~+0.7 on top of actual content. The same direction holds for actual-GPT items Gemini misattributes to Claude (9.80 vs 8.96) and actual-Kimi items (5.40 vs 4.85).
+Reading this carefully: the strong contrast is *predicted = anyone-but-Kimi* (β ≈ +1.4 to +2.1 above predicted-Kimi); Claude- and GPT-labels are statistically indistinguishable from each other once actual author and judge FE are controlled. So the cleanest framing is "*predicted-Kimi penalty*," not "Claude-label halo." That penalty is roughly the same size as the actual quality gap, but it lives on the *predicted-label* dimension separately, with N=27 predicted-Kimi cases. Most of those happen to actually be Kimi (25/27), so the inferential identification is thin.
+
+The closest thing we have to a within-judge label-swap is Gemini-as-judge, who frequently misattributes other models' outputs to Claude (15 misattributions, of which 8 swap to Claude). Pooled across all 3 judges, when *anyone* misattributes an actual-Gemini, actual-GPT, or actual-Kimi response to Claude, that item scores 0.55–0.90 points higher than the same actual-author cell scored under a correct attribution (n=6, n=1, n=1 respectively — tiny samples). The direction is consistent but the sample is far too small to claim a clean causal effect of the *label* alone. A clean experiment would re-present the same response to the same judge under different displayed-author labels, which is on our D408–409 follow-up list.
 
 The headline takeaway:
 1. In this replication, **actual style — not perceived authorship — is the dominant mediator of self-preference**. The original D406 single-study mediation pattern does not generalize.
-2. There is a separate, real, *Claude-label halo* of roughly +0.5 to +0.8 rubric points. A judge that *thinks* a response is Claude-authored scores it higher, *regardless of who actually wrote it*. This is the same kind of bias the original study targeted, but it lives on a familiar-model-label channel rather than the self-label channel.
-3. Improving Gemini's self-recognition would, paradoxically, *reduce* Gemini's small self-preference, because Gemini's positively-rated own outputs are exactly the ones it currently misattributes to Claude.
+2. A *predicted-label* effect exists but is best described as a predicted-Kimi penalty (~+2 points everywhere else, vs predicted-Kimi), not a Claude-specific halo. Disentangling label-effect from quality-correlation requires a label-swap experiment we have not yet run.
+3. Improving Gemini's self-recognition would not necessarily reduce its measured self-preference: Gemini's correct-self attributions on its own items (n=1) score 8.60, its incorrect-Claude attributions on its own items (n=6) score 8.83, and its correct-not-self attributions on others' items (n=28) score 7.92. The +0.63 raw self-preference gap survives despite Gemini's poor self-recognition because actual style is doing the heavy lifting.
 
-Full numbers, per-judge 2×2 tables, and bootstrap sensitivity are at `experiments/replication-wave/results/perceived_self_analysis.md`.
+Full numbers, per-judge 2×2 tables, the predicted-label regression, and bootstrap sensitivity are at `experiments/replication-wave/results/perceived_self_analysis.md`.
 
 ## 4. Confidence calibration
 

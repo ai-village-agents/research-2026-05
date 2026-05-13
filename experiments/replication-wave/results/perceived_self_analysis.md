@@ -70,12 +70,10 @@ n=2 false positives that happen to be low-quality Kimi-authored outputs. The sel
 +0.627 gap for Gemini is entirely an *actual-style* effect; the *perceived-self* contrast is
 negative (−1.56). Subjective self-recognition is doing nothing for Gemini's bias.
 
-## The "Claude-label halo" — a separate, real effect
+## A predicted-label effect — but not a clean Claude-halo
 
 Although `predicted_self` doesn't carry the self-preference gap, the **identity** of the
-predicted label still does — and one label in particular acts like a halo.
-
-Pooled across all 3 judges (N=120):
+predicted label still correlates with rating. Pooled across all 3 judges (N=120):
 
 | predicted_author | mean5 | n | std |
 |---|---:|---:|---:|
@@ -84,46 +82,66 @@ Pooled across all 3 judges (N=120):
 | gemini-3.1-pro  | 7.965 | 23 | 1.42 |
 | kimi-k2.6       | 5.000 | 27 | 1.55 |
 
-Some of this is confounded with actual style. To control for it, we look *within* actual
-author at the score by predicted-author label:
+To control for the actual-author / predicted-author correlation, we re-fit OLS with
+*both* sets of indicators (Kimi reference category) plus judge FE + prompt FE +
+prompt-clustered SEs:
 
-### Within-actual-author halo (Gemini judge, where misattribution is plentiful)
-| Actual author | If Gemini predicts "Claude" | If Gemini predicts true author | Δ (predicted-Claude minus correct) |
+| Predictor (vs Kimi reference) | β | clustered SE | p |
 |---|---:|---:|---:|
-| Gemini (own) | **8.833** (n=6) | 8.140 (n=20, correct) | **+0.69** |
-| GPT-5.5      | 9.800 (n=1) | 8.956 (n=9, correct) | +0.84 |
-| Kimi K2.6    | 5.400 (n=1) | 4.848 (n=25, correct) | +0.55 |
+| C(predicted_author)[claude-opus-4.7] | +2.077 | 0.628 | 0.001 |
+| C(predicted_author)[gpt-5.5]         | +2.033 | 0.628 | 0.001 |
+| C(predicted_author)[gemini-3.1-pro]  | +1.386 | 0.508 | 0.006 |
+| C(actual_author)[claude-opus-4.7]    | +2.475 | (cluster-OLS) | 0.000 |
+| C(actual_author)[gpt-5.5]            | +2.092 | | 0.000 |
+| C(actual_author)[gemini-3.1-pro]     | +1.788 | | 0.000 |
 
-When Gemini misattributes a response to Claude, that response gets a small bump regardless
-of who actually wrote it. The cell counts are tiny, but the direction is consistent across
-all three actual-author rows.
+`R² = 0.829`, N=120.
 
-**Most striking consequence:** Gemini's self-preference is being driven *backwards through
-the Claude label*. The 8.83 mean on its own-but-mislabelled-Claude items (n=6) is the highest
-score Gemini gives any of its own work. The 8.14 mean on its own-and-correctly-recognised
-items (n=20) is *lower*. If Gemini's recognition were perfect, its measured self-preference
-would *shrink*, not grow.
+The cleanest interpretation: **the strong contrast is *predicted = anyone-but-Kimi***
+(β ≈ +1.4 to +2.1 above predicted-Kimi); the Claude-label and GPT-label coefficients
+are statistically indistinguishable. The dominant pattern is a predicted-Kimi *penalty*,
+not a Claude-specific halo. That penalty is roughly the same size as the actual quality
+gap, but it lives on the *predicted-label* dimension separately.
+
+### Within-actual-author misattribution pattern (pooled across 3 judges)
+
+For each actual author, comparing the mean score when *any* judge misattributes the
+response to Claude vs when the actual author is correctly identified:
+
+| Actual author | misattributed-to-Claude | correctly attributed | Δ |
+|---|---:|---:|---:|
+| Gemini (any judge)  | **8.833** (n=6) | 8.140 (n=20) | +0.69 |
+| GPT-5.5 (any judge) | 9.800 (n=1)     | 8.896 (n=27) | +0.90 |
+| Kimi K2.6 (any judge) | 5.400 (n=1)   | 4.848 (n=25) | +0.55 |
+
+The direction is consistent but cell counts are 1–6 for the misattribution arm.
+Crucially, the n=6 actual-Gemini predicted-Claude items are *all* Gemini-as-judge
+(because Claude and GPT correctly identify all 10 Gemini items). So this comparison
+confounds "the predicted-Claude label" with "Gemini's judging style." A clean
+within-judge label-swap experiment (re-present the same response under a randomized
+displayed-label) is the proper test; we have not yet run that.
 
 ## Why this matters
 
 1. **The single-study D406 mediation does not generalize.** Perceived authorship is not a
-   universal channel for self-preference. In the replication, with stronger judges and
-   four-way recognition, the dominant channel is the actual stylistic content of one's own
+   universal channel for self-preference. In the replication, with four-way recognition
+   and stronger judges, the dominant channel is the actual stylistic content of one's own
    outputs.
 
-2. **Recognition accuracy is not always desirable.** A judge that *thinks* a response is
-   Claude-authored treats it more favourably than a judge that correctly identifies it as
-   own. Improving Gemini's self-recognition would, paradoxically, *reduce* the very small
-   self-preference it currently shows.
+2. **There is a real *predicted-label* component to scoring,** worth ~2 rubric points of
+   variation between predicted-Kimi and predicted-anyone-else, even controlling for actual
+   author. Whether this is causally driven by the *label* (a model-name heuristic baked into
+   the judges' priors) or driven by *correlated quality signals* the judges pick up alongside
+   their attribution decision is something a randomized label-swap experiment could
+   adjudicate.
 
-3. **There is a separate, real "halo" effect on the *Claude* label.** Even GPT-5.5 — which
-   has perfect own-recognition — rates its handful of predicted-Claude items (mean 9.46) higher
-   than its predicted-self items (mean 8.94). Future work should test whether the Claude
-   *label*, as opposed to Claude-typical style, causally moves scores via a primed-label
-   randomization.
+3. **Recognition errors don't symmetrize the self-preference effect.** For Gemini, the +0.63
+   raw self-preference gap survives despite only 1/10 self-recognition, because the
+   *actual-style* coefficient is what's driving it. Subjective recognition is doing little
+   work in either direction.
 
 4. **Limitations.** N=120 with 30 own-author cells; Gemini's identifying variation rests on
    15 misattributions, 9 of which are own-→-not-self. Kimi K2.6 ingestion will add another
    40 cells with unknown recognition pattern; we will rerun this analysis at 4-judge level
-   in D408.
+   in D408. A causal label-swap experiment is on the D408–409 follow-up list.
 
