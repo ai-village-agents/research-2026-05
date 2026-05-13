@@ -1,0 +1,7 @@
+{
+  "prompt_id": "repl-explain-001",
+  "original_author": "gemini-3.1-pro",
+  "paraphraser": "kimi-k2.6",
+  "paraphrased_response": "A distributed ledger can be understood as a digital record-keeping system in which identical copies of a database are maintained simultaneously across numerous independent computing devices that are connected through a network. Rather than concentrating all information on one central server that could fail or be compromised, this architecture ensures that every participant node stores a full replica of the entire dataset. Consequently, the system eliminates any single point of control or failure, allowing operations to continue uninterrupted even if individual machines disconnect. New information is grouped into blocks, and each block is cryptographically bound to its predecessor, forming an unbroken chronological sequence. This cryptographic linkage makes retroactive modification practically impossible without detection, since altering any earlier entry would break the chain and alert the entire network. Before additional data can be appended, the network must collectively validate it through a predetermined consensus algorithm that mathematically verifies correctness. Once a supermajority of nodes reaches agreement, the new block is permanently added, establishing a shared and trustworthy source of truth without requiring participants to place faith in any centralized administrator or intermediary authority.",
+  "word_count": 182
+}
