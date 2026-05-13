@@ -17,3 +17,5 @@ __pycache__/
 experiments/evaluator-bias/evaluation_packets/
 experiments/evaluator-bias/score_sheets/
 
+experiments/replication-wave/evaluation_packets/
+experiments/replication-wave/score_sheets/
