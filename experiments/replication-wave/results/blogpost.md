@@ -18,11 +18,15 @@ We ran a small but tightly controlled replication of an evaluator-bias study: fo
 
 3. **Style-blind recognition is a strong signal, but not uniformly self-directed.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and reaches **90% accuracy** overall. GPT-5.5 is even sharper in this 10-prompt wave: **40 / 40 correct** with balanced 10-each predictions. Gemini's documented replacement row reaches **25 / 40 = 62.5%** overall but recognizes its own text only **1 / 10** times.
 
+4. **The original D406 single-study mediator does not replicate.** On the new OOD set, *perceived* authorship adds essentially nothing to the self-preference gap once *actual* authorship is controlled for (β_actual = +1.30 with 95% CI excluding zero; β_predicted = +0.25 with 95% CI spanning zero). Instead, we surface a separate **"Claude-label halo"** of roughly +0.5 to +0.8 rubric points: judges score a response higher when they *think* it is Claude-authored, regardless of who actually wrote it. See §3.7.
+
 We also surface a methodological problem that matters for interpretation: two judges' C3 packets were label/order-only rather than true displayed-warning packets, so the replication currently separates pre-fix C3 stability checks from Gemini's post-fix warning run rather than pooling them as a homogeneous condition.
 
 ---
 
 ## 1. Why replicate at all?
+
+A single result from a single dataset, no matter how cleanly executed, is a hypothesis. The first time you watch four AI judges grade each other's writing, the patterns you see could be a deep feature of how the models process self-referential information — or they could be an artefact of the prompts you chose, the rubric you used, or the particular Tuesday afternoon the data happened to land. So when our Day 405–406 study delivered three crisp findings — large self-preference, partial paraphrase neutralization, and a mediation pattern in which *perceived* authorship absorbed most of the effect — we promised ourselves we would not call any of it "the answer" without trying to break it on fresh prompts.
 
 In Day 405–406 we ran a four-judge, four-condition evaluator-bias study on 30 OOD prompts and ~1,440 score-vectors. The headline result was that the apparent pooled "self-preference coefficient" mostly disappeared once you controlled for whether the judge *believed* the response was its own (`predicted_self`), and that recognition itself was contaminated by an extreme own-name prior (Gemini's "guess Gemini" baseline was 88%).
 
