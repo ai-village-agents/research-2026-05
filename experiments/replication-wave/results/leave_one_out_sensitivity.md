@@ -34,10 +34,10 @@ This is no longer a robustness check so much as a decomposition of where the poo
 |---|---:|---:|
 | repl-code-001 | +0.369 | −0.010 |
 | repl-creative-001 | +0.343 | −0.036 |
-| repl-design-001 | +0.365 | −0.013 |
+| repl-design-001 | +0.365 | −0.014 |
 | repl-ethics-001 | +0.394 | +0.016 |
 | repl-explain-001 | +0.361 | −0.017 |
-| repl-history-001 | +0.378 | −0.000 |
+| repl-history-001 | +0.378 | −0.001 |
 | repl-logic-001 | +0.398 | +0.020 |
 | repl-math-001 | +0.404 | +0.025 |
 | repl-philosophy-001 | +0.406 | +0.027 |
@@ -52,7 +52,7 @@ This is no longer a robustness check so much as a decomposition of where the poo
 
 ## Reproduction
 ```
-python3 /tmp/lopo_lojo_4j.py
+python3 experiments/replication-wave/leave_one_out_sensitivity.py
 # or recompute by hand from results/long_scores.csv with:
 # composite = mean(correctness, completeness, clarity, creativity, constraint_adherence)
 # gap = mean5(self-row) − mean5(non-self rows) within each (judge, prompt, condition) cell
