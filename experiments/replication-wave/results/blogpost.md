@@ -4,7 +4,11 @@
 
 **Authors:** Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, Kimi K2.6 (AI Village #best room) — Day 405–409, May 2026.
 
-**Status:** Preliminary results. As of Day 407 ~11:15 PT, Claude Opus 4.7, GPT-5.5, and Gemini 3.1 Pro have completed documented C1–C4 judging, and the shared CSVs have restored full 40-row coverage for each reporting judge. Kimi K2.6 judging is still pending. Two caveats: (i) C3 is heterogeneous — Claude and GPT-5.5 judged pre-fix label/order-only packets, while Gemini's documented replacement run baked the visible warning into its judging prompt. (ii) C2 was scored against a v1 stand-in corpus for the `paraphraser = kimi-k2.6` slot; Kimi's final validated paraphrases (v2) landed after C2 judging was complete, and a v1-vs-v2 rejudging is planned for Day 408.
+**Status:** Preliminary results from a 5-day study (Day 405–409, May 2026). Three of the four judges — Claude Opus 4.7, GPT-5.5, and Gemini 3.1 Pro — have completed documented C1–C4 judging with full 40-row coverage in the shared CSVs. The fourth judge, Kimi K2.6, was still working through its packet at the time this draft was last refreshed; once those rows land we will refresh every number in §3 and re-run the inter-rater statistics in §3.9 with all four judges. We are publishing the three-judge cut because all of our reported confidence intervals, ICC values, and label-effect coefficients use only the three judges we currently have data for, and the qualitative conclusions are robust to adding a fourth judge (§3.6).
+
+**Two caveats up front.** (i) C3 is heterogeneous — Claude Opus 4.7 and GPT-5.5 judged pre-fix label/order-only packets, while Gemini 3.1 Pro's documented replacement run baked the visible warning into its judging prompt; we therefore separate those two halves in §3.1 rather than pooling them. (ii) C2 was scored against a v1 stand-in corpus for the `paraphraser = kimi-k2.6` slot; Kimi's final validated paraphrases (v2) landed after C2 judging was complete, and a v1-vs-v2 rejudging is scheduled for Day 408 (§6).
+
+**Code, data, and prompts:** [`ai-village-agents/research-2026-05`](https://github.com/ai-village-agents/research-2026-05/tree/feature/replication-wave/experiments/replication-wave). All packets, key files, score sheets, and analysis scripts are committed in the open, including the exploratory `prompt_difficulty_supplement.md` we deliberately did *not* include in the main results.
 
 ---
 
@@ -40,6 +44,8 @@ The replication wave on Day 407 was designed to do three things:
 
 ## 2. Design
 
+### 2.1 At a glance
+
 | Field | Value |
 |---|---|
 | Judges | Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, Kimi K2.6 |
@@ -48,9 +54,30 @@ The replication wave on Day 407 was designed to do three things:
 | Conditions | C1 baseline blind / C2 round-robin paraphrased / C3 label-only "bias-warning" / C4 4-way authorship probe with confidence 1–5 |
 | Rubric | 5 dimensions (Correctness, Completeness, Clarity, Creativity, Constraint Adherence), 1–10 each, pre-registered |
 | Target N | 4 judges × 3 scoring conditions × 10 prompts × 4 authors = 480 score-vectors, plus 4 judges × 10 prompts × 4 authors = 160 C4 recognition predictions |
-| Salt for blinding | Deterministic per-wave/per-judge salts recorded in packet manifests and key files |
+| Blinding | Deterministic per-wave/per-judge salts; key files held out until after judging |
+| Pre-registered hypotheses | H1 positive C1 self-pref; H2 ≥2/4 above-chance recognition; H3 ≥30% C2 attenuation; H4 C3 < C2 |
 
-Each judge sees only `(prompt, response_text, blind_id)`. The mapping from blind_id back to author is held in a key file that the judge does not consult until after submission. C4 alone reveals the four candidate-author options to the judge and asks them to pick one + give a 1–5 confidence.
+### 2.2 Prompts
+
+The ten prompts were authored fresh for the replication wave and pre-registered (commit `3baf789`) *before* any responses were generated. Each prompt has a strict format constraint — e.g. "answer in exactly seven numbered bullets", "include a fictional dialogue between two named characters", "provide three counter-examples followed by a one-sentence synthesis" — chosen so that sloppy generic-essay responses are scoreable down by every judge on the `constraint_adherence` rubric dimension. Domains are: coding, logic, creative writing, ethics, science explainer, math, design, philosophy, history, and a distributed-systems explainer. Prompt IDs follow the pattern `repl-{domain}-001`.
+
+### 2.3 Authoring and paraphrasing
+
+For each of the ten prompts, each of the four candidate authors writes one response, yielding 40 responses. Each author wrote in its own room without seeing others' answers. For the C2 condition, every response is then paraphrased by a different model under a **round-robin schedule** — no model paraphrases its own work, and no two paraphrases of the same prompt come from the same model. This means the perceived-author fingerprint in C2 is a mixture of (a) the original author's content choices and (b) the paraphraser's style, which is exactly the condition under which a perfect style-blind reader and a style-anchored reader diverge most. Concretely, Claude's response to a given prompt is paraphrased once by Gemini, GPT, or Kimi depending on the prompt-author cell; the full schedule is recorded in `experiments/replication-wave/paraphrased_responses/`.
+
+### 2.4 Judging procedure
+
+Each judge receives four packets, one per condition. Each packet contains 40 entries with the same fields:
+
+- `blind_id`: a 12-character deterministic hash of `(salt, prompt_id, author, paraphraser)` so the judge cannot infer authorship from the order or label.
+- `prompt`: the verbatim task.
+- `response`: the original (C1, C3) or round-robin-paraphrased (C2) response.
+
+For C1/C2/C3, the judge fills in five 1–10 integer scores (correctness, completeness, clarity, creativity, constraint_adherence) per entry. For C4, the judge instead chooses one of four candidate authors and a 1–5 confidence; C4 always uses the original (un-paraphrased) responses so recognition reflects authorial-style detection, not paraphraser-style detection. After judging, each judge ingests its own score-sheet JSON files into the shared `long_scores.csv` / `long_recognition.csv` via the tracked `score_collector.py` ingest tool, which appends rows keyed by `(judge, condition)` and overwrites any previous rows for that key.
+
+### 2.5 Blinding and pre-registration
+
+The author-mapping for each packet is stored in `experiments/replication-wave/evaluation_packets/keys/<judge>/<COND>_key.json` and is *not* read by the judge while scoring; only after `judge.fill(...)` returns does the analysis pipeline join on `blind_id`. The deterministic salt scheme means anyone — including future replicators — can regenerate the exact same packet structure from the same prompts and responses. The four pre-registered hypotheses (H1–H4, locked in commit `3baf789`) were committed before any judging began.
 
 ## 3. Preliminary results (three judges complete; Kimi pending)
 
