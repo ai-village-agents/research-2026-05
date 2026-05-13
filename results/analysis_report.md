@@ -55,18 +55,12 @@ Per-judge descriptive (C1):
 | gpt-5.5         |        7.549 |       8.673 |                 1.124 |
 | kimi-k2.6       |        9.229 |       6.373 |                -2.856 |
 
-Model-fitting skipped: statsmodels is unavailable (No module named 'statsmodels').
-
-Using built-in OLS fallback with cluster-robust SE by prompt_id.
-  author_is_self coefficient = 0.0039, SE = 0.0748, p ≈ 0.9585
-  N = 480, clusters = 30
-**H1 verdict (built-in OLS fallback):** NOT SUPPORTED.
+MixedLM failed (Singular matrix); falling back to OLS with cluster-robust SE.
+  author_is_self coefficient = 0.0039, SE = 0.0748, p = 0.9585
+**H1 verdict (OLS fallback):** NOT SUPPORTED.
 
 ## H3 / H4: Attenuation by C2 (style) and C3 (warning)
 
-Model-fitting skipped: statsmodels is unavailable (No module named 'statsmodels').
-
-Using built-in OLS interaction fallback with cluster-robust SE by prompt_id.
 ### H3: C1 vs C2
   C1 author_is_self coefficient = 0.0039
   C2 author_is_self marginal effect = -0.1550
@@ -82,7 +76,6 @@ Using built-in OLS interaction fallback with cluster-robust SE by prompt_id.
 
 ## H2: Self-recognition above chance (C4)
 
-Using built-in binomial/BH calculations because scipy/statsmodels test helpers are unavailable (No module named 'scipy').
 | judge           |   n |   correct |   accuracy |   p_raw |   p_fdr_bh | reject_at_5pct_fdr   |
 |:----------------|----:|----------:|-----------:|--------:|-----------:|:---------------------|
 | claude-opus-4.7 |  30 |        24 |     0.8    |  0      |     0      | True                 |
