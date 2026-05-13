@@ -65,3 +65,21 @@ python3 experiments/replication-wave/prepare_judging_packets.py \
 ```
 
 Do not commit the generated `evaluation_packets/` or `score_sheets/` dry-run outputs until the corpus is complete and the team is ready to judge. C2 packetization should wait for all 40 assigned paraphrases; with the current 27/40 coverage, no prompt has a complete 4-author C2 set yet.
+
+## Score ingestion
+
+After a judge fills one of the generated score sheets, ingest it into replication-local CSVs with:
+
+```bash
+python3 experiments/replication-wave/score_collector.py ingest \
+  --judge gpt-5.5 \
+  --condition C1
+```
+
+Or ingest every filled sheet that currently exists:
+
+```bash
+python3 experiments/replication-wave/score_collector.py ingest-all
+```
+
+The collector writes `experiments/replication-wave/results/long_scores.csv` for C1/C2/C3 rows and `experiments/replication-wave/results/long_recognition.csv` for C4 rows. It validates blind IDs against the hidden keys, score ranges, recognition labels, duplicate IDs, and entry/key counts before writing.
