@@ -12,11 +12,11 @@
 
 We ran a small but tightly controlled replication of an evaluator-bias study: four frontier models scored each other's answers to ten novel out-of-distribution prompts under four blinding conditions (C1 baseline blind, C2 paraphrased, C3 label-only or post-fix bias-warning, C4 4-way authorship probe). Three findings stand out from the completed Claude+GPT rows, with Gemini's current rows treated as pending replacement:
 
-1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.85 points higher** (1–10 scale) than other models' responses, while GPT-5.5 scores its own C1 responses **+1.56 points higher**. Gemini's genuine checked-in rows show essentially **near zero** self-preference (+0.63).
+1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.43 points higher** (1–10 scale) than other models' responses, while GPT-5.5 scores its own C1 responses **+1.56 points higher**. Gemini's genuine checked-in rows show essentially **near zero** self-preference (+0.63).
 
-2. **Paraphrasing partially deactivates the favoritism, but does not erase it.** Round-robin paraphrasing of every response (C2) reduces Claude's self-pref gap from +2.85 to +2.09 and GPT-5.5's from +1.56 to +1.47. In the clean Claude+GPT subset, the pooled prompt-paired self gap falls from **+1.68** in C1 to **+1.66** in C2.
+2. **Paraphrasing partially deactivates the favoritism, but does not erase it.** Round-robin paraphrasing of every response (C2) reduces Claude's self-pref gap from +2.43 to +1.49 and GPT-5.5's from +1.56 to +1.47. In the clean Claude+GPT subset, the pooled prompt-paired self gap falls from **+1.68** in C1 to **+1.66** in C2.
 
-3. **Style-blind recognition is a strong signal, and own-name priors explain a lot of it.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and the other three authors **9, 8, 9 / 10**, for **93% accuracy**. GPT-5.5 is even sharper in this 10-prompt wave: **30 / 30 correct** with balanced 10-each predictions. Gemini's genuine predictions show an overall 62.5% accuracy, though self-recognition is strangely low (1 / 10).
+3. **Style-blind recognition is a strong signal, and own-name priors explain a lot of it.** When asked to attribute paragraphs to one of four authors, Claude correctly identifies its own writing **10 / 10 times** and the other three authors **9, 8, 9 / 10**, for **90% accuracy**. GPT-5.5 is even sharper in this 10-prompt wave: **40 / 40 correct** with balanced 10-each predictions. Gemini's genuine predictions show an overall 62.5% accuracy, though self-recognition is strangely low (1 / 10).
 
 We also surface a methodological problem that turns out to matter a lot: when self-preference is mediated almost entirely by *measured stylistic features that the paraphraser also injects*, "label-only" warnings (C3) do nothing.
 
@@ -75,9 +75,9 @@ To make sure §3.1 isn't an artifact of which prompts ended up being scored by w
 
 | condition | mean prompt-paired self gap | sd | n judge-prompt pairs | t-stat (descriptive) |
 |---|---:|---:|---:|---:|
-| C1 | **+1.68** | 1.25 | 30 | 7.36 |
-| C2 | **+1.66** | 2.41 | 30 | 3.76 |
-| C3 | **+1.77** | 1.11 | 30 | 8.75 |
+| C1 | **+1.51** | 1.15 | 30 | 7.21 |
+| C2 | **+1.46** | 2.11 | 30 | 3.79 |
+| C3 | **+1.64** | 1.14 | 30 | 7.84 |
 
 Including the current checked-in Gemini rows, C1 and C3 are pooled t > 5 in the *descriptive* sense (we are not making a population-level claim with N=30 judge-prompt pairs), while C2 cuts the pooled gap by about 41%. Excluding Gemini until replacement, the clean Claude+GPT prompt-paired gaps are C1 **+1.88**, C2 **+1.20**, C3 **+1.88** across 20 judge-prompt pairs.
 
