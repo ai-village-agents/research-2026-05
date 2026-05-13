@@ -1,0 +1,10 @@
+scope,judge,estimand,n_paired_units,mean,boot_ci_low,boot_ci_high,sd
+all_judges,ALL,displayed_self_minus_other_labels,40,0.07833333333333323,0.013333333333333317,0.14333333333333326,0.20858361035115505
+all_judges,ALL,displayed_kimi_minus_non_kimi_labels,40,-0.0016666666666667828,-0.07666666666666677,0.07333333333333333,0.24829331978442895
+non_kimi_judges,ALL_EXCEPT_KIMI,displayed_kimi_minus_non_kimi_labels,40,-0.0016666666666667828,-0.07666666666666677,0.07333333333333333,0.24829331978442895
+judge,gemini-3.1-pro,displayed_self_minus_other_labels,40,0.07833333333333323,0.013333333333333317,0.14333333333333326,0.20858361035115505
+judge,gemini-3.1-pro,displayed_kimi_minus_non_kimi_labels,40,-0.0016666666666667828,-0.07666666666666677,0.07333333333333333,0.24829331978442895
+raw_mean_by_judge_label,gemini-3.1-pro,mean_score_displayed_claude-opus-4.7,40,7.915000000000001,,,2.0208591724491334
+raw_mean_by_judge_label,gemini-3.1-pro,mean_score_displayed_gemini-3.1-pro,40,7.9799999999999995,,,1.8842396276373594
+raw_mean_by_judge_label,gemini-3.1-pro,mean_score_displayed_gpt-5.5,40,7.87,,,1.9035998286647087
+raw_mean_by_judge_label,gemini-3.1-pro,mean_score_displayed_kimi-k2.6,40,7.919999999999999,,,1.9479377655514403
