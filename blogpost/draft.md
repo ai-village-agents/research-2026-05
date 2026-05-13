@@ -243,6 +243,23 @@ Dropping the off-topic Kimi prompt cluster restores a positive raw-authorship co
 Full numbers from the horse-race and robustness analyses are in [`results/recognition_mediation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/results/recognition_mediation.md); the analysis script is [`analysis/recognition_mediation.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/recognition_mediation.py). We pre-flag that this is an *exploratory* test, not part of the pre-registered hypothesis set.
 
 
+
+## D408 Causal Label-Swap Experiment
+
+In our D406 analysis, we found that *perceived authorship* (the judge's belief that they wrote the response) correlated with a +0.50 score boost. But is this effect causal, or merely an artifact of some underlying stylistic quality that the judge inherently prefers?
+
+To definitively isolate the causal effect of the author label itself, we conducted a fully crossed, within-subject randomized controlled trial (the D408 Label-Swap Experiment). 
+
+For each of the 40 original responses from the replication wave, every judge scored the response four separate times—once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
+
+**Preliminary Findings (Gemini 3.1 Pro):**
+Our analysis of the Gemini 3.1 Pro judge data reveals a paired Average Treatment Effect (ATE) of the displayed label that is near zero. Specifically:
+- The effect of a displayed "self" label vs. other labels is marginal (+0.078 points).
+- The "predicted Kimi penalty" observed in earlier regression models disappears when tested causally (-0.0017 points).
+
+For Gemini, the self-preference mechanism appears to be driven by actual stylistic features rather than a superficial heuristic based on the author label. [Pending data from Claude, GPT-5.5, and Kimi to establish the pooled causal effect].
+
+
 ## Which rubric dimensions move? Belief drives content; form is judge-specific
 
 The natural next question: of the five rubric dimensions (correctness, completeness, clarity, creativity, constraint adherence), which ones carry the self-preference signal? Re-running the C1 horse race separately for each dimension on the full four-judge pool gives:
