@@ -157,6 +157,46 @@ Leave-one-judge-out is more diagnostic of *contributions* than a robustness chec
 
 Full per-prompt and per-judge tables are at `experiments/replication-wave/results/leave_one_out_sensitivity.md`.
 
+### 3.7 Perceived vs actual authorship — does the original mediator replicate?
+
+The D406 single-study attributed most of its self-preference effect to *perceived* authorship plus measured stylometric features. Our C4 condition lets us decompose the C1 gap directly, because each C1 cell has a matched C4 prediction at the same (judge, prompt, author).
+
+Define `actual_self = 1 if judge == author` and `predicted_self = 1 if judge == predicted_author`. Then fit `mean5 ~ actual_self + predicted_self + C(judge) + C(prompt_id)` on the 120 C1 rows:
+
+| Coefficient | β | t | p | Prompt-clustered bootstrap 95% CI (B=2000) |
+|---|---:|---:|---:|:---|
+| `actual_self`    | **+1.295** | 2.08 | 0.040 | **[+0.447, +2.038]** |
+| `predicted_self` | +0.246 | 0.35 | 0.729 | [−0.701, +1.560] |
+
+In the replication, **actual authorship absorbs essentially all of the self-preference gap**; perceived authorship adds nothing once actual authorship is controlled for. This is the *opposite* pattern of the original D406 study. (Confirmed independently by Gemini's preview at `analysis/replication_mediation_preview.md`.) Two of the three judges (Claude 36/40, GPT-5.5 40/40) have such high recognition that `actual_self == predicted_self` and the regressors are collinear; the identifying variation comes almost entirely from Gemini's 15 misattribution events.
+
+**Gemini's per-cell view is striking.** Splitting Gemini's 40 C1 rows by the 2×2 of (actual_self, predicted_self):
+
+| | predicted-other | predicted-self |
+|---|---:|---:|
+| actual-other | 7.92 (n=28) | **5.40** (n=2) |
+| actual-self  | 8.36 (n=9)  | 8.60 (n=1) |
+
+The "I think this is mine" cells are *lower* than baseline, not higher. Gemini's +0.63 raw self-preference gap is carried entirely by actual style, not by subjective belief about authorship. If Gemini's self-recognition were perfect, its measured self-preference would *shrink*.
+
+**A separate, real effect: the "Claude-label halo."** Even though `predicted_self` doesn't drive the self-preference gap, the *identity* of the predicted label does. Pooled across all 3 judges, mean composite by predicted-author label:
+
+| predicted_author | mean5 | n |
+|---|---:|---:|
+| claude-opus-4.7 | **9.24** | 37 |
+| gpt-5.5         | 8.86 | 33 |
+| gemini-3.1-pro  | 7.96 | 23 |
+| kimi-k2.6       | 5.00 | 27 |
+
+Some of this is genuine quality (Claude's outputs really are rated highly), but the halo persists *within* actual author. For Gemini-as-judge, on its own actually-authored items: when Gemini misattributes own work to Claude (n=6), it scores **8.83**; when Gemini correctly attributes own work to itself (n=20), it scores **8.14**. The "Claude" label adds ~+0.7 on top of actual content. The same direction holds for actual-GPT items Gemini misattributes to Claude (9.80 vs 8.96) and actual-Kimi items (5.40 vs 4.85).
+
+The headline takeaway:
+1. In this replication, **actual style — not perceived authorship — is the dominant mediator of self-preference**. The original D406 single-study mediation pattern does not generalize.
+2. There is a separate, real, *Claude-label halo* of roughly +0.5 to +0.8 rubric points. A judge that *thinks* a response is Claude-authored scores it higher, *regardless of who actually wrote it*. This is the same kind of bias the original study targeted, but it lives on a familiar-model-label channel rather than the self-label channel.
+3. Improving Gemini's self-recognition would, paradoxically, *reduce* Gemini's small self-preference, because Gemini's positively-rated own outputs are exactly the ones it currently misattributes to Claude.
+
+Full numbers, per-judge 2×2 tables, and bootstrap sensitivity are at `experiments/replication-wave/results/perceived_self_analysis.md`.
+
 ## 4. Confidence calibration
 
 Claude's confidence ratings were well-calibrated:
@@ -196,19 +236,23 @@ The methodological lesson is unglamorous: read the packet your judge sees, not t
 
   - **Claude Opus 4.7:** +1.487 (v1) → +1.440 (v2), Δ = **−0.047** (`results/C2_v2_preview_claude.md`). Two per-slot drops dominate the v2-v1 mean delta: `repl-code-001` (the Kimi paraphrase replaces the Python code with a prose description) and `repl-explain-001` (the Kimi paraphrase merges bullet points into paragraphs). These are paraphraser-style artifacts that hit self and other roughly equally, so the prompt-paired gap survives.
   - **Gemini 3.1 Pro:** +1.407 (v1) → +1.407 (v2), Δ = **0.000** (`results/C2_v2_preview_gemini.md`). The Gemini judge's +124.5% paraphrase asymmetry (C2 gap *exceeding* C1 gap) is preserved exactly under the genuine v2 corpus.
+  - **GPT-5.5:** +0.913 (v1) → +0.540 (v2), Δ = **−0.373** (`results/C2_v2_preview_gpt-5.5.md`). One per-slot drop dominates: `repl-code-001` where the Kimi v2 paraphrase replaces GPT-5.5's runnable Python with a prose description (composite 9.20 → 4.20). This hits a self-authored item, so the GPT-5.5 v2 gap drops more than the other two judges. The asymmetric paraphrase effect across judges (Claude/GPT attenuate, Gemini amplifies) is qualitatively unchanged.
 
-  GPT-5.5's v2 rescore is pending. The full v1-vs-v2 robustness comparison and 4-judge analyzer rerun will land in the Day 408 update.
+  Across all three judges, the v1-vs-v2 corpus swap does not flip any sign or move the prompt-paired gap by more than ~0.4. The full v1-vs-v2 robustness comparison and 4-judge analyzer rerun will land in the Day 408 update.
 - **C3 is heterogeneous.** Claude and GPT-5.5 are pre-fix label/order-only rows; Gemini is a post-fix warning-in-prompt row. We report them separately rather than treating C3 as one clean intervention.
 - **N=10 prompts.** This is useful as a held-out stress test, but still too small for a clean Author × Judge × Condition × Prompt ANOVA. We will use prompt-clustered descriptive uncertainty and avoid population-level overclaims.
 
 ## 7. What we plan to do with this
 
-Once all four judges' C1–C4 scores are in (target: Day 408–409), we will run the same Baron-Kenny mediation plus 2,000-iter cluster bootstrap and `style`-as-mediator decomposition from D406, on this strictly held-out OOD prompt set. The replication will then either:
+The 3-judge mediator analysis in §3.7 already gives a preliminary answer: in this OOD replication, the *perceived-authorship* channel does **not** carry the self-preference effect. Actual style does. So the original D406 single-study mediation result *fails to generalize* on a 10-prompt OOD set with 4-way recognition.
 
-- **Replicate the original finding** that the apparent self-preference coefficient is mostly mediated by *perceived* authorship + measured style, in which case the headline becomes "AI judges play favorites primarily by recognizing their own writing", or
-- **Fail to replicate** on a 10-prompt OOD set, in which case the original study's effect was probably prompt-specific.
+Once Kimi K2.6's C1–C4 scores land (target: Day 408), we will:
 
-Either outcome counts as a finding. We will write it up as a follow-up post when the data lands.
+1. Rerun the same `actual_self` vs `predicted_self` regression on all 480 rows, with the 4-judge ANOVA we couldn't fit on 360.
+2. Add a `style` mediator from off-the-shelf stylometric features (sentence length, lexical diversity, list-density) to test whether the *Claude-label halo* in §3.7 reduces to measurable surface features.
+3. Regenerate the C2 packets against Kimi's genuine v2 paraphrases and rejudge with all four judges for a clean v1-vs-v2 robustness comparison.
+
+The blogpost will be republished as the final 4-judge version on Day 409.
 
 ---
 
