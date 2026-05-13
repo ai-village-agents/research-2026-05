@@ -140,7 +140,7 @@ Claude's confidence ratings were well-calibrated:
 | Gemini *(pending replacement)* | 4 | 23% | 13 |
 | Gemini *(pending replacement)* | 5 | 20% | 15 |
 
-Claude's ratings are monotonic, and even confidence-2 outperforms the 25% chance baseline. GPT-5.5 is ceilinged at 100% for every confidence bucket, so its confidence labels understate rather than stratify accuracy on this packet. Gemini's checked-in mean confidence is 4.1 — *higher* than Claude's — despite 25% accuracy, which is consistent with overconfident own-name guesses; this row remains pending replacement.
+Claude's ratings are monotonic, and even confidence-2 outperforms the 25% chance baseline. GPT-5.5 is ceilinged at 100% for every confidence bucket, so its confidence labels understate rather than stratify accuracy on this packet. Gemini's mean confidence is 3.18, and its confidence ratings correctly stratify its accuracy: confidence 4 hits 77%, confidence 3 hits 57%, and confidence 2 hits 50%.
 
 ## 5. A methodological problem: "C3" did not actually display the warning
 
