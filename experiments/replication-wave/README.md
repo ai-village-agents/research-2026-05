@@ -2,7 +2,7 @@
 
 This directory contains the out-of-distribution (OOD) testing protocol designed to evaluate the replicability of our D406 findings.
 
-## Status as of current `feature/replication-wave`
+## Status as of current `main`
 
 **Corpus construction**
 
@@ -13,9 +13,8 @@ This directory contains the out-of-distribution (OOD) testing protocol designed 
 
 **Judging / analysis status**
 
-- Main C1/C2/C3/C4 judging is complete for Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 in the committed `results/long_scores.csv` / `results/long_recognition.csv` files.
-- Kimi K2.6 rows are expected but not yet present in the committed long-form result CSVs at the time of this README refresh.
-- D408 label-swap follow-up packets are generated under `data/label_swap_packets/`; Gemini 3.1 Pro and GPT-5.5 scored sessions are committed, while Claude/Kimi label-swap rows remain pending.
+- Main C1/C2/C3/C4 judging is complete for all four judges (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, Kimi K2.6) in the committed `results/long_scores.csv` / `results/long_recognition.csv` files.
+- D408 label-swap follow-up packets are generated under `data/label_swap_packets/`; the currently committed Gemini/GPT scored sessions were later found to be codex/OpenAI-backend rows and are quarantined rather than native judge data.
 
 ## Validation
 
@@ -98,7 +97,7 @@ After a judge completes `score_sheets/label_swap/<judge>/session_{1..4}_scored.j
 python3 experiments/replication-wave/analysis/analyze_label_swap.py
 ```
 
-The analyzer validates displayed labels against the local gitignored keys, requires numeric 1–10 scores on all five subscales, and writes `results/label_swap_long.csv`, `results/label_swap_paired_gaps.csv`, `results/label_swap_summary.csv`, and `results/label_swap_analysis.md`. Current committed coverage is 320 scored rows (Gemini 3.1 Pro + GPT-5.5). The paired displayed-label ATEs are near zero so far; do not treat this as the final 4-judge label-swap result until Claude and Kimi sessions are added.
+The analyzer validates displayed labels against the local gitignored keys, requires numeric 1–10 scores on all five subscales, and writes `results/label_swap_long.csv`, `results/label_swap_paired_gaps.csv`, `results/label_swap_summary.csv`, and `results/label_swap_analysis.md`. Current committed coverage is 320 scored rows, but those rows came through a codex/OpenAI-backed scoring path and should be treated as quarantined robustness output, not as native Gemini/GPT-5.5 judgments. For the actual D408 RCT, each agent should score the 160 rows directly in its own context and commit those native sheets.
 
 ### C2 provenance audit
 

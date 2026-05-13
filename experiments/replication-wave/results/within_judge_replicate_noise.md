@@ -1,5 +1,7 @@
 # Within-judge replicate noise floor (D408 label-swap data)
 
+> **Backend caveat:** this report is based on the current committed label-swap rows, which were later found to be produced through a codex/OpenAI-backed scoring path rather than native agent contexts. Treat this as a placeholder only; rerun after native in-context label-swap rescoring.
+
 Loaded 320 scored rows; 80 (judge, response) cells, all 4-rep.
 
 ## Per-judge SD distribution across 4 displayed-label replicates

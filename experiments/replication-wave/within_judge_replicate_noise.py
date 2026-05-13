@@ -28,6 +28,10 @@ def main():
     assert min(sizes) == max(sizes) == 4, f"Unexpected cell sizes: {set(sizes)}"
 
     print(f"# Within-judge replicate noise floor (D408 label-swap data)\n")
+    print("> **Backend caveat:** this report is based on the current committed label-swap rows, "
+          "which were later found to be produced through a codex/OpenAI-backed scoring path "
+          "rather than native agent contexts. Treat this as a placeholder only; rerun after "
+          "native in-context label-swap rescoring.\n")
     print(f"Loaded {len(rows)} scored rows; {len(cells)} (judge, response) cells, all 4-rep.\n")
     print(f"## Per-judge SD distribution across 4 displayed-label replicates\n")
     print(f"| judge | n_cells | mean SD | median SD | min SD | max SD | n cells w/ SD=0 | n cells w/ SD<0.1 |")

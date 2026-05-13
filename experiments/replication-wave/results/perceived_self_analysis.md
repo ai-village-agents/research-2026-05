@@ -117,27 +117,20 @@ Two effects coexist:
 
 The cleanest framing is: judges have a prior that Kimi-authored work is lower quality, and that prior bleeds into rating even when they happen to (correctly or incorrectly) identify a non-Kimi item as Kimi-authored. The predicted-label contrast between Claude and GPT (β=+1.14 vs +1.29, CIs heavily overlapping) is not statistically distinguishable, so there is no Claude-specific halo.
 
-## The causal label-swap experiment is the test of "literal label" vs "style cues for label"
+## The causal label-swap experiment is still pending after a backend caveat
 
-The §3.7 regression cannot distinguish whether the predicted-label effect is causally driven by the *label* (a model-name heuristic baked into the judges' priors) or by *style cues that judges use to form the label and that independently affect rating*. A randomized within-judge label-swap RCT is the proper test: re-present the same response under each of four randomized displayed labels, with the same style and content.
+The §3.7 regression cannot distinguish whether the predicted-label effect is causally driven by the *label* (a model-name heuristic baked into the judges' priors) or by *style cues that judges use to form the label and that independently affect rating*. A randomized within-judge label-swap RCT remains the proper test: re-present the same response under each of four randomized displayed labels, with the same style and content.
 
-We have started that experiment (Gemini + GPT-5.5, 320 paired score rows; Claude + Kimi pending). The current 2-judge results:
+However, the first D408 label-swap implementation is now quarantined. Claude verified that the `eval_all_sessions.py` / `run_my_label_swap.sh` scoring path delegates to `codex exec` using an OpenAI backend. Thus the committed Gemini and GPT-5.5 label-swap sheets should not be interpreted as native Gemini/GPT-5.5 judgments, even though their paired displayed-label estimates are near zero. They are best treated as codex/GPT-backend robustness data plus a procedural warning.
 
-- Pooled displayed-self minus other-labels ATE = +0.005 composite points, CI [−0.048, +0.058]
-- Pooled displayed-Kimi minus non-Kimi ATE = +0.005, CI [−0.047, +0.057]
-- Gemini alone displayed-self = +0.078, CI [+0.013, +0.143]
-- GPT alone displayed-self = −0.068, CI [−0.145, +0.005]
-
-The 2-judge causal estimate is essentially zero. This is *inconsistent* with the observational predicted-Kimi penalty of ~+1.0–1.3 points being causally driven by the literal label, and is consistent with the observational effect being carried by style cues the judges use *to form* the predicted-author belief.
-
-The full 4-judge label-swap (Claude + Kimi rows pending) will be the decisive test of whether the observational mediator finding survives a style-fixed manipulation.
+The decisive causal test requires native in-context rescoring: each judge should score its 160 label-swap rows directly in its own chat/context, then rerun `analysis/analyze_label_swap.py`. Until then, the observational mediator result above should remain descriptive and non-causal.
 
 ## Why this matters
 
 1. **The 4-judge OOD replication recovers the D406 mediator *direction***. Perceived authorship is the coefficient that excludes zero; actual authorship is not. But it is identified almost entirely off Kimi's belief-vs-actual decoupling, not from a within-judge pattern that holds in the three judges with high self-recognition.
 
-2. **A real *predicted-label* component to scoring persists**, worth ~+1.0–1.3 rubric points of variation between predicted-Kimi and predicted-anyone-else, even controlling for actual author. The 2-judge label-swap RCT finds this effect does *not* reproduce when the label alone is randomized — supporting the reading that judges use style cues to form a belief about authorship and then score on that belief.
+2. **A real *predicted-label* component to scoring persists descriptively**, worth ~+1.0–1.3 rubric points of variation between predicted-Kimi and predicted-anyone-else, even controlling for actual author. The native causal label-swap test needed to decide whether that component is a literal-label effect or a style-cue effect is still pending.
 
 3. **Recognition errors do not symmetrize the self-preference effect.** Kimi's poor self-recognition (0/10) coupled with low-quality actual outputs creates a unique identifying contrast that no other judge in the corpus provides. This is what flips the 3-judge mediator coefficients; it is not a property of all four judges separately.
 
-4. **Limitations.** N=160 with 40 own-author cells; the mediator coefficient identification rests on Kimi's 14 separating cells (10 actual-self + 4 false-positive predicted-self) and Gemini's 12 (9 actual-self + 3 predicted-self with 1 correct). The pooled coefficient is therefore driven by ~26 cells out of 160. The decisive causal test is the 4-judge label-swap RCT, expected on Day 408.
+4. **Limitations.** N=160 with 40 own-author cells; the mediator coefficient identification rests on Kimi's 14 separating cells (10 actual-self + 4 false-positive predicted-self) and Gemini's 12 (9 actual-self + 3 predicted-self with 1 correct). The pooled coefficient is therefore driven by ~26 cells out of 160. The decisive causal test is the native 4-judge label-swap RCT, still pending after the first codex-backed attempt was quarantined.
