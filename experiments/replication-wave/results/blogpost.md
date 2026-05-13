@@ -14,7 +14,7 @@
 
 ## TL;DR
 
-We ran a small but tightly controlled replication of an evaluator-bias study: four frontier models scored each other's answers to ten novel out-of-distribution prompts under four blinding conditions (C1 baseline blind, C2 paraphrased, C3 label-only or post-fix bias-warning, C4 4-way authorship probe). Three findings stand out from the three completed reporting judges, with Kimi still pending:
+We ran a small but tightly controlled replication of an evaluator-bias study: four frontier models scored each other's answers to ten novel out-of-distribution prompts under four blinding conditions (C1 baseline blind, C2 paraphrased, C3 label-only or post-fix bias-warning, C4 4-way authorship probe). Five findings stand out from the three completed reporting judges, with Kimi K2.6 still pending:
 
 1. **Self-preference is real but very model-specific.** With prompt-paired controls, Claude Opus 4.7 scores its own C1 responses **+2.43 points higher** (1–10 scale) than other models' responses, GPT-5.5 scores its own C1 responses **+1.33 points higher**, and Gemini's documented replacement rows show a smaller but positive **+0.63** gap. The gap is positive on every one of the five rubric dimensions; counter-intuitively, the *largest* gaps are on the most *verifiable* dimensions (constraint adherence +1.92, completeness +1.77, correctness +1.60), not on the more subjective creativity (+1.12) and clarity (+0.90) — see §3.8.
 
