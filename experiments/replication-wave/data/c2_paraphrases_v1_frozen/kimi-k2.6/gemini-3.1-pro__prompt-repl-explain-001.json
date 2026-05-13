@@ -1,0 +1,8 @@
+{
+  "paraphraser": "kimi-k2.6",
+  "source_author": "gemini-3.1-pro",
+  "prompt_id": "repl-explain-001",
+  "paraphrased_response": "*   **Core Concept:** A distributed ledger is essentially a digital database or record-book that is shared, replicated, and synchronized across a large network of independent computers (nodes), rather than being stored on a single, central server.\n*   **Decentralization:** Because every participant in the network holds a complete copy of the ledger, there is no central authority or single point of failure. No single entity controls the data, and if one computer goes offline, the network continues to function perfectly.\n*   **Immutability:** Data is recorded in blocks, which are cryptographically linked to the previous block in a chronological chain. Once a block of data is added to the ledger, the cryptography ensures it cannot be altered, deleted, or tampered with retroactively without alerting the entire network. The history is permanent.\n*   **Consensus Mechanism:** To add new data to the ledger, the network must agree that the new information is valid. The computers use a set of rules (a consensus algorithm) to mathematically verify the data. Only when a majority of the network agrees does the new block get permanently appended to the ledger, establishing a shared single source of truth without requiring trust in a central administrator.",
+  "provenance": "v1 stand-in (was authored by Gemini 3.1 Pro on behalf of Kimi during temp commit 95d1c94, used in C1/C2/C3 scoring through cf1210d/b0d2cb1). Replaced upstream by Kimi K2.6 validated v2 at commit b00d2aa.",
+  "extracted_from_score_sheet": "claude-opus-4.7/C2.json"
+}

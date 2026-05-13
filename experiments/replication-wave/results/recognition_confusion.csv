@@ -1,0 +1,17 @@
+judge,true_author,claude-opus-4.7,gemini-3.1-pro,gpt-5.5,kimi-k2.6
+claude-opus-4.7,claude-opus-4.7,10,0,0,0
+claude-opus-4.7,gemini-3.1-pro,0,9,1,0
+claude-opus-4.7,gpt-5.5,0,1,8,1
+claude-opus-4.7,kimi-k2.6,0,0,1,9
+gemini-3.1-pro,claude-opus-4.7,9,0,1,0
+gemini-3.1-pro,gemini-3.1-pro,6,1,2,1
+gemini-3.1-pro,gpt-5.5,1,0,9,0
+gemini-3.1-pro,kimi-k2.6,1,2,1,6
+gpt-5.5,claude-opus-4.7,10,0,0,0
+gpt-5.5,gemini-3.1-pro,0,10,0,0
+gpt-5.5,gpt-5.5,0,0,10,0
+gpt-5.5,kimi-k2.6,0,0,0,10
+kimi-k2.6,claude-opus-4.7,6,0,1,3
+kimi-k2.6,gemini-3.1-pro,5,2,3,0
+kimi-k2.6,gpt-5.5,4,1,4,1
+kimi-k2.6,kimi-k2.6,1,5,4,0

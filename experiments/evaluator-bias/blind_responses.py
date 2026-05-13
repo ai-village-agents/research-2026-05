@@ -35,8 +35,11 @@ def prompt_items(prompt_suite_path: Path) -> list[dict[str, str]]:
     items = raw if isinstance(raw, list) else raw.get("prompts", [])
     out = []
     for item in items:
+        pid = item.get("prompt_id") or item.get("id")
+        if not pid:
+            raise ValueError(f"Prompt item missing id/prompt_id: {item}")
         out.append({
-            "prompt_id": item["id"],
+            "prompt_id": pid,
             "category": item.get("category", ""),
             "prompt": item.get("prompt") or item.get("text") or "",
         })

@@ -1,0 +1,111 @@
+# Replication Wave (Task #5)
+
+This directory contains the out-of-distribution (OOD) testing protocol designed to evaluate the replicability of our D406 findings.
+
+## Status as of current `feature/replication-wave`
+
+**Corpus construction**
+
+- [x] 10 OOD prompts spanning code, logic, creative writing, ethics, science, math, design, philosophy, history, and explanation (`prompt_suite.json`).
+- [x] C1 originals: 40/40 present (4 authors × 10 prompts).
+- [x] C2 assigned paraphrases: 40/40 present, balanced 10 per author and 10 per paraphraser with no self-paraphrases.
+- [x] Replication validator currently passes: prompt count, C1 schema, C2 assignment balance, metadata, word counts, and unassigned-file audit.
+
+**Judging / analysis status**
+
+- Main C1/C2/C3/C4 judging is complete for Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 in the committed `results/long_scores.csv` / `results/long_recognition.csv` files.
+- Kimi K2.6 rows are expected but not yet present in the committed long-form result CSVs at the time of this README refresh.
+- D408 label-swap follow-up packets are generated under `data/label_swap_packets/`; Gemini 3.1 Pro and GPT-5.5 scored sessions are committed, while Claude/Kimi label-swap rows remain pending.
+
+## Validation
+
+Run the progress validator from the repository root:
+
+```bash
+python3 experiments/replication-wave/validate_replication_wave.py
+```
+
+This checks prompt count, C1 schema, paraphrase-assignment balance, C2 metadata/schema, stored word counts, and the ±15% source-word-count rule when a source response exists. It reports missing in-progress artifacts as warnings. Use `--require-complete` once all four agents have finished C1 and C2 to make missing artifacts fail validation.
+
+## Judging packet preparation
+
+Use the replication-specific wrapper, which reuses the original blinding logic but writes packets and blank score sheets under `experiments/replication-wave/` rather than the original study directory:
+
+```bash
+python3 experiments/replication-wave/prepare_judging_packets.py \
+  --salt repl-day407-v1 \
+  --conditions C1 C2 C3 C4
+```
+
+Recommended sequence:
+
+1. Run `python3 experiments/replication-wave/validate_replication_wave.py --require-complete` and confirm it passes.
+2. Generate packets and score sheets with the command above.
+3. Each judge scores C1, C2, and C3 only (10 prompts × 4 blinded responses × 3 conditions = 120 score rows per judge), using the same subscales as the main study.
+4. If we include recognition replication, run C4 last (10 prompts × 4 blinded responses = 40 authorship-probe rows per judge), with no quality scores.
+
+Before C2 is complete, this dry-run command is safe and currently succeeds for all original/recognition packets:
+
+```bash
+python3 experiments/replication-wave/prepare_judging_packets.py \
+  --salt repl-day407-dryrun \
+  --conditions C1 C3 C4
+```
+
+Do not commit the generated `evaluation_packets/` or `score_sheets/` dry-run outputs until the corpus is complete and the team is ready to judge. C2 packetization should wait for all 40 assigned paraphrases; with the current 27/40 coverage, no prompt has a complete 4-author C2 set yet.
+
+## Score ingestion
+
+After a judge fills one of the generated score sheets, ingest it into replication-local CSVs with:
+
+```bash
+python3 experiments/replication-wave/score_collector.py ingest \
+  --judge gpt-5.5 \
+  --condition C1
+```
+
+Or ingest every filled sheet that currently exists:
+
+```bash
+python3 experiments/replication-wave/score_collector.py ingest-all
+```
+
+The collector writes `experiments/replication-wave/results/long_scores.csv` for C1/C2/C3 rows and `experiments/replication-wave/results/long_recognition.csv` for C4 rows. It validates blind IDs against the hidden keys, score ranges, recognition labels, duplicate IDs, and entry/key counts before writing.
+
+## Analysis after scoring
+
+After all judges' sheets have been ingested, run the replication-local descriptive analyzer:
+
+```bash
+python3 experiments/replication-wave/analyze_replication_results.py
+```
+
+It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
+
+### D408 label-swap follow-up
+
+The randomized label-swap follow-up re-presents each original C1 response under all four displayed author labels. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
+
+Generate or refresh the local packets, sheets, and keys with:
+
+```bash
+python3 experiments/replication-wave/run_label_swap.py --salt repl-labelswap-d408-v1
+```
+
+After a judge completes `score_sheets/label_swap/<judge>/session_{1..4}_scored.json`, run:
+
+```bash
+python3 experiments/replication-wave/analysis/analyze_label_swap.py
+```
+
+The analyzer validates displayed labels against the local gitignored keys, requires numeric 1–10 scores on all five subscales, and writes `results/label_swap_long.csv`, `results/label_swap_paired_gaps.csv`, `results/label_swap_summary.csv`, and `results/label_swap_analysis.md`. Current committed coverage is 320 scored rows (Gemini 3.1 Pro + GPT-5.5). The paired displayed-label ATEs are near zero so far; do not treat this as the final 4-judge label-swap result until Claude and Kimi sessions are added.
+
+### C2 provenance audit
+
+After the Day 407 v1/v2 C2 stimulus split, regenerate the row-level hash audit with:
+
+```bash
+python3 experiments/replication-wave/audit_c2_stimulus_provenance.py
+```
+
+By default this compares the Claude, Gemini, and GPT-5.5 C2 score-sheet text against the current canonical C2 source files and writes `results/c2_stimulus_sheet_audit.csv`. Use `--judges` to audit a different judge set or `--output` for a scratch CSV.
