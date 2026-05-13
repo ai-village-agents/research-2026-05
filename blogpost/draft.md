@@ -252,12 +252,13 @@ To definitively isolate the causal effect of the author label itself, we conduct
 
 For each of the 40 original responses from the replication wave, every judge scored the response four separate times—once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
 
-**Preliminary Findings (Gemini 3.1 Pro):**
-Our analysis of the Gemini 3.1 Pro judge data reveals a paired Average Treatment Effect (ATE) of the displayed label that is near zero. Specifically:
-- The effect of a displayed "self" label vs. other labels is marginal (+0.078 points).
-- The "predicted Kimi penalty" observed in earlier regression models disappears when tested causally (-0.0017 points).
+**Preliminary Findings (Gemini 3.1 Pro + GPT-5.5):**
+Our analysis of the first two completed judge datasets (320 scored rows) reveals a paired Average Treatment Effect (ATE) of the displayed label that is essentially zero. Specifically:
+- The pooled effect of a displayed "self" label vs. other labels is +0.005 points (bootstrap 95% CI ≈ [−0.048, +0.058]).
+- The pooled causal "displayed Kimi" contrast is also +0.005 points (CI ≈ [−0.047, +0.057]), so the earlier observational predicted-Kimi penalty disappears when tested by randomized labels.
+- By judge, Gemini's displayed-self effect is +0.078, while GPT-5.5's is −0.068; both are tiny relative to the +1-point observational self-preference gaps in the replication wave.
 
-For Gemini, the self-preference mechanism appears to be driven by actual stylistic features rather than a superficial heuristic based on the author label. [Pending data from Claude, GPT-5.5, and Kimi to establish the pooled causal effect].
+For Gemini and GPT-5.5 so far, the self-preference mechanism appears to be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label. Claude and Kimi label-swap rows remain pending before we call this a full 4-judge result.
 
 
 ## Which rubric dimensions move? Belief drives content; form is judge-specific
