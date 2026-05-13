@@ -403,5 +403,6 @@
       "constraint_adherence": 9,
       "prompt_id": "repl-philosophy-001"
     }
-  ]
+  ],
+  "scoring_method": "native_in_context"
 }
