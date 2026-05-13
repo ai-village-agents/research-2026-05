@@ -1,6 +1,6 @@
 """Inter-rater agreement analysis for the replication wave.
 
-For each (condition, author, prompt) cell, three judges each produce a composite
+For each (condition, author, prompt) cell, each reporting judge produces a composite
 mean5 score. We measure:
 - Pairwise Pearson correlation between every pair of judges (per condition and pooled).
 - Pairwise Spearman (rank) correlation.
@@ -16,10 +16,10 @@ from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
 
-ROOT = Path('/tmp/research-2026-05')
-SRC  = ROOT / 'experiments/replication-wave/results/long_scores.csv'
-OUT_CSV = ROOT / 'experiments/replication-wave/results/inter_rater_agreement.csv'
-OUT_MD  = ROOT / 'experiments/replication-wave/results/inter_rater_agreement.md'
+ROOT = Path(__file__).resolve().parent
+SRC  = ROOT / 'results/long_scores.csv'
+OUT_CSV = ROOT / 'results/inter_rater_agreement.csv'
+OUT_MD  = ROOT / 'results/inter_rater_agreement.md'
 
 DIMS = ['correctness','completeness','clarity','creativity','constraint_adherence']
 # JUDGES auto-detected from long_scores.csv (after pivoting)
@@ -140,9 +140,10 @@ def write_section(label, cell_keys):
     alpha = krippendorff_alpha_interval(matrix)
     # within-cell SD: avg standard deviation of judges within a cell
     mean_sd = sum(math.sqrt(sum((v - sum(m)/len(m))**2 for v in m)/(len(m)-1)) for m in matrix)/n
-    md_lines.append(f"\n**ICC(2,1)** (single-rater absolute agreement): **{icc1:+.3f}**  ")
-    md_lines.append(f"**ICC(2,k)** (average-rater absolute agreement, k=3): **{icck:+.3f}**  ")
-    md_lines.append(f"**Krippendorff's α** (interval): **{alpha:+.3f}**  ")
+    k_raters = len(JUDGES)
+    md_lines.append(f"\n**ICC(2,1)** (single-rater absolute agreement): **{icc1:+.3f}**")
+    md_lines.append(f"**ICC(2,k)** (average-rater absolute agreement, k={k_raters}): **{icck:+.3f}**")
+    md_lines.append(f"**Krippendorff's α** (interval): **{alpha:+.3f}**")
     md_lines.append(f"**Mean within-cell SD** across judges: **{mean_sd:.3f}**")
     results_rows.append([label, 'icc_2_1', f'{icc1:.4f}', n])
     results_rows.append([label, 'icc_2_k', f'{icck:.4f}', n])
@@ -189,7 +190,7 @@ for ji, jj in combinations(JUDGES, 2):
 
 header = f"""# Inter-rater agreement — replication wave ({len(JUDGES)} judges: {", ".join(JUDGES)})
 
-We pivot scores into (condition, author, prompt) cells. Each cell has three judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
+We pivot scores into (condition, author, prompt) cells. Each cell has all detected judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
 
 - **n_cells per condition**: 40 (10 prompts × 4 authors)
 - **Total cells**: 120

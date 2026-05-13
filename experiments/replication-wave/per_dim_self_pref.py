@@ -9,7 +9,7 @@ This script reads results/long_scores.csv, filters to C1, and computes:
 The bootstrap intentionally matches the original Day 407 table: NumPy
 RandomState(11), B=500 prompt-cluster resamples, drawing all five dimensions
 sequentially from the same RNG stream. The reported SD is the population SD over
-30 judge×prompt paired cells, matching the original markdown artifact.
+the detected judge×prompt paired cells, matching the current four-judge dataset.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ JUDGE_LABELS = {
     "claude-opus-4.7": "Claude",
     "gemini-3.1-pro": "Gemini",
     "gpt-5.5": "GPT-5.5",
+    "kimi-k2.6": "Kimi",
 }
 
 
@@ -82,6 +83,7 @@ def paired_summary(paired: pd.DataFrame, bootstrap: int = 500, seed: int = 11) -
                 "boot_ci_low": float(lo),
                 "boot_ci_high": float(hi),
                 "bootstrap_n": bootstrap,
+                "paired_n": int(len(paired)),
             }
         )
     return pd.DataFrame(rows)
@@ -107,10 +109,12 @@ def write_csv(pooled: pd.DataFrame, paired: pd.DataFrame, per_judge: pd.DataFram
 
 
 def write_markdown(pooled: pd.DataFrame, paired: pd.DataFrame, per_judge: pd.DataFrame, path: Path) -> None:
+    judge_cols = [c for c in per_judge.columns if c != "dim"]
+    judge_label = f"{len(judge_cols)}-judge"
     lines = [
-        "# §3.8 backing data — per-dimension self-preference (3-judge, C1)",
+        f"# §3.8 backing data — per-dimension self-preference ({judge_label}, C1)",
         "",
-        "Reproduces from `results/long_scores.csv` (condition `c1`, 120 rows pooled across Claude/Gemini/GPT-5.5).",
+        f"Reproduces from `results/long_scores.csv` (condition `c1`, pooled across {', '.join(JUDGE_LABELS.get(j, j) for j in judge_cols)}).",
         "",
         "## Pooled gap (self − other) by dimension",
         "",
@@ -121,7 +125,7 @@ def write_markdown(pooled: pd.DataFrame, paired: pd.DataFrame, per_judge: pd.Dat
         lines.append(f"| {row.dim} | {row.self_mean:.3f} | {row.other_mean:.3f} | {fmt(row.gap)} |")
     lines += [
         "",
-        "## Prompt-paired gap (n=30 judge×prompt cells with both self and ≥1 other)",
+        f"## Prompt-paired gap (n={int(paired['paired_n'].iloc[0])} judge×prompt cells with both self and ≥1 other)",
         "",
         "| dim | mean | sd | prompt-clustered 95% CI (B=500) |",
         "|---|---:|---:|:---|",
@@ -135,22 +139,19 @@ def write_markdown(pooled: pd.DataFrame, paired: pd.DataFrame, per_judge: pd.Dat
         "",
         "## Per-judge × per-dim gap",
         "",
-        "| dim | Claude | Gemini | GPT-5.5 |",
-        "|---|---:|---:|---:|",
+        "| dim | " + " | ".join(JUDGE_LABELS.get(j, j) for j in judge_cols) + " |",
+        "|---" + "|---:" * len(judge_cols) + "|",
     ]
     for _, row in per_judge.iterrows():
-        lines.append(
-            f"| {row['dim']} | {fmt(float(row['claude-opus-4.7']))} | "
-            f"{fmt(float(row['gemini-3.1-pro']))} | {fmt(float(row['gpt-5.5']))} |"
-        )
+        vals = " | ".join(fmt(float(row[j])) for j in judge_cols)
+        lines.append(f"| {row['dim']} | {vals} |")
     lines += [
         "",
         "## Notes",
         "- Bootstrap: B=500 prompt-cluster resamples, seed 11.",
-        "- All five dimensions show positive pooled gap with 95% CI excluding zero.",
-        "- Gemini creativity is the only negative cell.",
-        "- Constraint adherence has the largest pooled gap and is the largest gap for GPT-5.5 (+2.23) and Gemini (+1.20). Claude's largest gap is on creativity (+2.97), followed by completeness (+2.93).",
-        "- Caveat: N=10 prompts is small; a strict family-wise multiple-testing correction (Bonferroni, 5 dims) gives an effective α of 0.01 per dim, but all CIs above are still away from zero.",
+        "- Adding Kimi changes the pooled interpretation: correctness, completeness, and creativity remain positive with bootstrap intervals above zero, while clarity and constraint adherence now have intervals that touch or cross zero.",
+        "- Kimi is negative on every dimension, so the 4-judge pooled gaps are much smaller than the earlier 3-judge table.",
+        "- Caveat: N=10 prompts is small; these intervals are descriptive prompt-cluster bootstraps, not a fully powered dimension-wise hypothesis family.",
     ]
     path.write_text("\n".join(lines) + "\n")
 

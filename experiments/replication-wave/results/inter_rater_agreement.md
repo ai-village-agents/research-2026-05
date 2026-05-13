@@ -1,6 +1,6 @@
 # Inter-rater agreement — replication wave (4 judges: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6)
 
-We pivot scores into (condition, author, prompt) cells. Each cell has three judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
+We pivot scores into (condition, author, prompt) cells. Each cell has all detected judges' composite scores (mean of 5 rubric dims). Metrics quantify agreement on absolute level (ICC, mean within-cell SD), on relative ordering (Spearman), and on linear relationship (Pearson).
 
 - **n_cells per condition**: 40 (10 prompts × 4 authors)
 - **Total cells**: 120
@@ -17,9 +17,9 @@ We pivot scores into (condition, author, prompt) cells. Each cell has three judg
 | gemini × kimi | +0.888 | +0.760 |
 | gpt × kimi | +0.895 | +0.811 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.914**  
-**ICC(2,k)** (average-rater absolute agreement, k=3): **+0.977**  
-**Krippendorff's α** (interval): **+0.913**  
+**ICC(2,1)** (single-rater absolute agreement): **+0.914**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.977**
+**Krippendorff's α** (interval): **+0.913**
 **Mean within-cell SD** across judges: **0.503**
 
 ### c1 (n_cells = 40)
@@ -33,9 +33,9 @@ We pivot scores into (condition, author, prompt) cells. Each cell has three judg
 | gemini × kimi | +0.891 | +0.725 |
 | gpt × kimi | +0.908 | +0.820 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.925**  
-**ICC(2,k)** (average-rater absolute agreement, k=3): **+0.980**  
-**Krippendorff's α** (interval): **+0.924**  
+**ICC(2,1)** (single-rater absolute agreement): **+0.925**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.980**
+**Krippendorff's α** (interval): **+0.924**
 **Mean within-cell SD** across judges: **0.461**
 
 ### c2 (n_cells = 40)
@@ -49,9 +49,9 @@ We pivot scores into (condition, author, prompt) cells. Each cell has three judg
 | gemini × kimi | +0.879 | +0.830 |
 | gpt × kimi | +0.870 | +0.798 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.901**  
-**ICC(2,k)** (average-rater absolute agreement, k=3): **+0.973**  
-**Krippendorff's α** (interval): **+0.899**  
+**ICC(2,1)** (single-rater absolute agreement): **+0.901**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.973**
+**Krippendorff's α** (interval): **+0.899**
 **Mean within-cell SD** across judges: **0.571**
 
 ### c3 (n_cells = 40)
@@ -65,9 +65,9 @@ We pivot scores into (condition, author, prompt) cells. Each cell has three judg
 | gemini × kimi | +0.894 | +0.722 |
 | gpt × kimi | +0.909 | +0.820 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.918**  
-**ICC(2,k)** (average-rater absolute agreement, k=3): **+0.978**  
-**Krippendorff's α** (interval): **+0.917**  
+**ICC(2,1)** (single-rater absolute agreement): **+0.918**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.978**
+**Krippendorff's α** (interval): **+0.917**
 **Mean within-cell SD** across judges: **0.477**
 
 ## Author-level agreement
