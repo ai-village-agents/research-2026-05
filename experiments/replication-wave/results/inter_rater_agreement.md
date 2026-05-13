@@ -10,17 +10,17 @@ We pivot scores into (condition, author, prompt) cells. Each cell has all detect
 
 | pair | Pearson r | Spearman ρ |
 |---|---:|---:|
-| claude × gemini | +0.927 | +0.757 |
-| claude × gpt | +0.930 | +0.842 |
-| claude × kimi | +0.899 | +0.880 |
-| gemini × gpt | +0.967 | +0.912 |
-| gemini × kimi | +0.888 | +0.760 |
-| gpt × kimi | +0.895 | +0.811 |
+| claude × gemini | +0.952 | +0.824 |
+| claude × gpt | +0.961 | +0.896 |
+| claude × kimi | +0.940 | +0.912 |
+| gemini × gpt | +0.975 | +0.915 |
+| gemini × kimi | +0.934 | +0.842 |
+| gpt × kimi | +0.937 | +0.880 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.914**
-**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.977**
-**Krippendorff's α** (interval): **+0.913**
-**Mean within-cell SD** across judges: **0.503**
+**ICC(2,1)** (single-rater absolute agreement): **+0.948**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.986**
+**Krippendorff's α** (interval): **+0.948**
+**Mean within-cell SD** across judges: **0.388**
 
 ### c1 (n_cells = 40)
 
@@ -42,17 +42,17 @@ We pivot scores into (condition, author, prompt) cells. Each cell has all detect
 
 | pair | Pearson r | Spearman ρ |
 |---|---:|---:|
-| claude × gemini | +0.932 | +0.843 |
-| claude × gpt | +0.917 | +0.849 |
-| claude × kimi | +0.901 | +0.919 |
-| gemini × gpt | +0.969 | +0.938 |
-| gemini × kimi | +0.879 | +0.830 |
-| gpt × kimi | +0.870 | +0.798 |
+| claude × gemini | +0.987 | +0.959 |
+| claude × gpt | +0.981 | +0.947 |
+| claude × kimi | +0.991 | +0.967 |
+| gemini × gpt | +0.989 | +0.954 |
+| gemini × kimi | +0.990 | +0.975 |
+| gpt × kimi | +0.981 | +0.951 |
 
-**ICC(2,1)** (single-rater absolute agreement): **+0.901**
-**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.973**
-**Krippendorff's α** (interval): **+0.899**
-**Mean within-cell SD** across judges: **0.571**
+**ICC(2,1)** (single-rater absolute agreement): **+0.986**
+**ICC(2,k)** (average-rater absolute agreement, k=4): **+0.997**
+**Krippendorff's α** (interval): **+0.986**
+**Mean within-cell SD** across judges: **0.227**
 
 ### c3 (n_cells = 40)
 
@@ -80,10 +80,10 @@ Do judges rank the four authors similarly on average?  We compute each judge's m
 | c1 | gemini | 9.04 | 9.06 | 8.38 | 5.16 |
 | c1 | gpt | 8.94 | 9.46 | 8.08 | 5.30 |
 | c1 | kimi | 8.20 | 9.46 | 8.18 | 5.74 |
-| c2 | claude | 7.86 | 8.82 | 8.54 | 5.60 |
-| c2 | gemini | 8.08 | 7.68 | 8.44 | 5.34 |
-| c2 | gpt | 7.96 | 7.70 | 8.16 | 5.28 |
-| c2 | kimi | 7.20 | 8.04 | 8.00 | 5.70 |
+| c2 | claude | 7.78 | 7.42 | 8.28 | 5.60 |
+| c2 | gemini | 7.88 | 7.42 | 8.36 | 5.56 |
+| c2 | gpt | 7.84 | 7.40 | 8.30 | 5.62 |
+| c2 | kimi | 7.64 | 7.38 | 8.28 | 5.40 |
 | c3 | claude | 8.78 | 9.78 | 8.18 | 5.08 |
 | c3 | gemini | 8.94 | 8.92 | 8.60 | 5.20 |
 | c3 | gpt | 8.94 | 9.46 | 8.08 | 5.30 |
@@ -93,9 +93,9 @@ Do judges rank the four authors similarly on average?  We compute each judge's m
 
 | pair | Pearson r |
 |---|---:|
-| claude × gemini | +0.955 |
-| claude × gpt | +0.975 |
-| claude × kimi | +0.975 |
+| claude × gemini | +0.974 |
+| claude × gpt | +0.996 |
+| claude × kimi | +0.983 |
 | gemini × gpt | +0.983 |
-| gemini × kimi | +0.932 |
-| gpt × kimi | +0.963 |
+| gemini × kimi | +0.950 |
+| gpt × kimi | +0.973 |
