@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "salt": "repl-labelswap-d408-v1",
+  "models": [
+    "claude-opus-4.7",
+    "gemini-3.1-pro",
+    "gpt-5.5",
+    "kimi-k2.6"
+  ],
+  "sessions": [
+    "session_1",
+    "session_2",
+    "session_3",
+    "session_4"
+  ],
+  "total_expected_entries": 640,
+  "judges": {
+    "claude-opus-4.7": {
+      "session_1": {
+        "packet_path": "data/label_swap_packets/claude-opus-4.7/session_1.json",
+        "key_path": "data/label_swap_keys/claude-opus-4.7/session_1_key.json",
+        "score_sheet_path": "score_sheets/label_swap/claude-opus-4.7/session_1.json",
+        "entries": 40
+      },
+      "session_2": {
+        "packet_path": "data/label_swap_packets/claude-opus-4.7/session_2.json",
+        "key_path": "data/label_swap_keys/claude-opus-4.7/session_2_key.json",
+        "score_sheet_path": "score_sheets/label_swap/claude-opus-4.7/session_2.json",
+        "entries": 40
+      },
+      "session_3": {
+        "packet_path": "data/label_swap_packets/claude-opus-4.7/session_3.json",
+        "key_path": "data/label_swap_keys/claude-opus-4.7/session_3_key.json",
+        "score_sheet_path": "score_sheets/label_swap/claude-opus-4.7/session_3.json",
+        "entries": 40
+      },
+      "session_4": {
+        "packet_path": "data/label_swap_packets/claude-opus-4.7/session_4.json",
+        "key_path": "data/label_swap_keys/claude-opus-4.7/session_4_key.json",
+        "score_sheet_path": "score_sheets/label_swap/claude-opus-4.7/session_4.json",
+        "entries": 40
+      }
+    },
+    "gemini-3.1-pro": {
+      "session_1": {
+        "packet_path": "data/label_swap_packets/gemini-3.1-pro/session_1.json",
+        "key_path": "data/label_swap_keys/gemini-3.1-pro/session_1_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gemini-3.1-pro/session_1.json",
+        "entries": 40
+      },
+      "session_2": {
+        "packet_path": "data/label_swap_packets/gemini-3.1-pro/session_2.json",
+        "key_path": "data/label_swap_keys/gemini-3.1-pro/session_2_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gemini-3.1-pro/session_2.json",
+        "entries": 40
+      },
+      "session_3": {
+        "packet_path": "data/label_swap_packets/gemini-3.1-pro/session_3.json",
+        "key_path": "data/label_swap_keys/gemini-3.1-pro/session_3_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gemini-3.1-pro/session_3.json",
+        "entries": 40
+      },
+      "session_4": {
+        "packet_path": "data/label_swap_packets/gemini-3.1-pro/session_4.json",
+        "key_path": "data/label_swap_keys/gemini-3.1-pro/session_4_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gemini-3.1-pro/session_4.json",
+        "entries": 40
+      }
+    },
+    "gpt-5.5": {
+      "session_1": {
+        "packet_path": "data/label_swap_packets/gpt-5.5/session_1.json",
+        "key_path": "data/label_swap_keys/gpt-5.5/session_1_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gpt-5.5/session_1.json",
+        "entries": 40
+      },
+      "session_2": {
+        "packet_path": "data/label_swap_packets/gpt-5.5/session_2.json",
+        "key_path": "data/label_swap_keys/gpt-5.5/session_2_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gpt-5.5/session_2.json",
+        "entries": 40
+      },
+      "session_3": {
+        "packet_path": "data/label_swap_packets/gpt-5.5/session_3.json",
+        "key_path": "data/label_swap_keys/gpt-5.5/session_3_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gpt-5.5/session_3.json",
+        "entries": 40
+      },
+      "session_4": {
+        "packet_path": "data/label_swap_packets/gpt-5.5/session_4.json",
+        "key_path": "data/label_swap_keys/gpt-5.5/session_4_key.json",
+        "score_sheet_path": "score_sheets/label_swap/gpt-5.5/session_4.json",
+        "entries": 40
+      }
+    },
+    "kimi-k2.6": {
+      "session_1": {
+        "packet_path": "data/label_swap_packets/kimi-k2.6/session_1.json",
+        "key_path": "data/label_swap_keys/kimi-k2.6/session_1_key.json",
+        "score_sheet_path": "score_sheets/label_swap/kimi-k2.6/session_1.json",
+        "entries": 40
+      },
+      "session_2": {
+        "packet_path": "data/label_swap_packets/kimi-k2.6/session_2.json",
+        "key_path": "data/label_swap_keys/kimi-k2.6/session_2_key.json",
+        "score_sheet_path": "score_sheets/label_swap/kimi-k2.6/session_2.json",
+        "entries": 40
+      },
+      "session_3": {
+        "packet_path": "data/label_swap_packets/kimi-k2.6/session_3.json",
+        "key_path": "data/label_swap_keys/kimi-k2.6/session_3_key.json",
+        "score_sheet_path": "score_sheets/label_swap/kimi-k2.6/session_3.json",
+        "entries": 40
+      },
+      "session_4": {
+        "packet_path": "data/label_swap_packets/kimi-k2.6/session_4.json",
+        "key_path": "data/label_swap_keys/kimi-k2.6/session_4_key.json",
+        "score_sheet_path": "score_sheets/label_swap/kimi-k2.6/session_4.json",
+        "entries": 40
+      }
+    }
+  }
+}

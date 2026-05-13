@@ -49,36 +49,32 @@ def get_hash(salt: str, s: str) -> str:
     return hashlib.sha256(f"{salt}:{s}".encode()).hexdigest()[:12]
 
 def build_latin_square(responses: list[dict], models: list[str]) -> dict:
-    """Assign 4 labels across 4 sessions for each response, balanced across the response set."""
-    # We want each model to appear as a label exactly once per response across 4 sessions.
-    # We also want the label distribution within each session to be balanced across responses.
-    
-    # Base Latin Square of indices:
-    # 0 1 2 3
-    # 1 2 3 0
-    # 2 3 0 1
-    # 3 0 1 2
+    """Assign one copy of each displayed label to every response.
+
+    The Latin square gives each response all four labels across four sessions,
+    while the per-block deterministic remapping prevents a trivial global
+    pattern such as "session_1 is usually Claude." Keep the original
+    remapping seed for compatibility with sessions already scored from the
+    first D408 generator.
+    """
     base_square = [
         [0, 1, 2, 3],
         [1, 2, 3, 0],
         [2, 3, 0, 1],
-        [3, 0, 1, 2]
+        [3, 0, 1, 2],
     ]
-    
+
     allocations = {}
+    current_mapping = list(models)
     for i, resp in enumerate(responses):
-        # Rotate the starting row of the base square based on response index
-        # to ensure labels are distributed evenly within each session across responses.
         row = base_square[i % 4]
-        # Further shuffle the *mapping* of indices to models for each block of 4 responses
-        # to avoid trivial patterns (e.g. session 0 is always Claude for multiples of 4).
         if i % 4 == 0:
             current_mapping = list(models)
             random.Random(f"ls-shuffle-{i}").shuffle(current_mapping)
-            
+
         session_labels = {f"session_{s+1}": current_mapping[row[s]] for s in range(4)}
         allocations[resp["blind_id"]] = session_labels
-        
+
     return allocations
 
 def main() -> None:
@@ -86,17 +82,10 @@ def main() -> None:
     ap.add_argument("--salt", default="repl-labelswap-d408-v1", help="Deterministic salt")
     args = ap.parse_args()
 
-
-
-    prompts_path = BASE / 'prompt_suite.json'
+    prompts_path = BASE / "prompt_suite.json"
     prompts_list = blind_responses.prompt_items(prompts_path)
     prompt_map = {item["prompt_id"]: item["prompt"] for item in prompts_list}
 
-            
-    # Use blind_responses to load
-    # blind_responses.prompt_items() loads prompts.
-    prompts = blind_responses.prompt_items(prompts_path)
-    
     # We can load the C1 key to get the blind_ids and actual authors
     c1_key_path = BASE / "evaluation_packets" / "keys" / "gemini-3.1-pro" / "C1_key.json"
     if not c1_key_path.exists():
@@ -138,9 +127,18 @@ def main() -> None:
     allocations = build_latin_square(all_responses, MODELS)
 
     out_dir = BASE / "data" / "label_swap_packets"
+    keys_dir = BASE / "data" / "label_swap_keys"
     sheets_dir = BASE / "score_sheets" / "label_swap"
-    
+
     total_entries = 0
+    manifest = {
+        "schema_version": 1,
+        "salt": args.salt,
+        "models": MODELS,
+        "sessions": [f"session_{i}" for i in range(1, 5)],
+        "total_expected_entries": len(MODELS) * 4 * len(all_responses),
+        "judges": {},
+    }
 
     for judge in MODELS:
         for session_idx in range(1, 5):
@@ -161,16 +159,17 @@ def main() -> None:
                 # We need a new session-specific blind_id so the judge can't link across sessions
                 session_blind_id = get_hash(f"{args.salt}-{session_key}", r["blind_id"])
                 
-                row = {
+                packet_row = {
                     "prompt_id": r["prompt_id"],
                     "blind_id": session_blind_id,
                     "displayed_label": assigned_label,
                     "prompt": formatted_prompt,
                     "response_text": r["text"],
                 }
+                sheet_row = dict(packet_row)
                 for subscale in SUBSCALES:
-                    row[subscale] = ""
-                entries.append(row)
+                    sheet_row[subscale] = ""
+                entries.append(sheet_row)
                 
             instructions = (
                 f"Label Swap Experiment ({session_key}). "
@@ -189,7 +188,21 @@ def main() -> None:
             
             sheet_path = sheets_dir / judge / f"{session_key}.json"
             write_json(sheet_path, sheet_data)
-            
+
+            packet_data = {
+                "judge": judge,
+                "condition": "label_swap",
+                "session": session_key,
+                "instructions": instructions,
+                "schema_version": 1,
+                "entries": [
+                    {k: v for k, v in row.items() if k not in SUBSCALES}
+                    for row in entries
+                ],
+            }
+            packet_path = out_dir / judge / f"{session_key}.json"
+            write_json(packet_path, packet_data)
+
             # Write a key file mapping session_blind_id to actual author and assigned label
             key_data = []
             for r in session_responses:
@@ -203,14 +216,22 @@ def main() -> None:
                     "prompt_id": r["prompt_id"]
                 })
             
-            key_path = BASE / "data" / "label_swap_keys" / judge / f"{session_key}_key.json"
+            key_path = keys_dir / judge / f"{session_key}_key.json"
             write_json(key_path, key_data)
-            
+
             total_entries += len(entries)
-            
+            manifest["judges"].setdefault(judge, {})[session_key] = {
+                "packet_path": str(packet_path.relative_to(BASE)),
+                "key_path": str(key_path.relative_to(BASE)),
+                "score_sheet_path": str(sheet_path.relative_to(BASE)),
+                "entries": len(entries),
+            }
+
+    write_json(out_dir / "manifest.json", manifest)
     print(f"Generated {total_entries} scoring entries across {len(MODELS)} judges and 4 sessions.")
+    print(f"Packets written to {out_dir}")
     print(f"Score sheets written to {sheets_dir}")
-    print(f"Keys written to {BASE / 'data' / 'label_swap_keys'}")
+    print(f"Keys written to {keys_dir} (gitignored; do not inspect before scoring)")
 
 if __name__ == "__main__":
     main()

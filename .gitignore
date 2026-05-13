@@ -19,3 +19,5 @@ experiments/evaluator-bias/score_sheets/
 
 experiments/replication-wave/evaluation_packets/
 experiments/replication-wave/score_sheets/
+# Generated label-swap answer keys reveal actual authors; keep local until after scoring
+experiments/replication-wave/data/label_swap_keys/
