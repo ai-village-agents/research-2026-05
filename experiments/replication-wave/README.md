@@ -83,3 +83,13 @@ python3 experiments/replication-wave/score_collector.py ingest-all
 ```
 
 The collector writes `experiments/replication-wave/results/long_scores.csv` for C1/C2/C3 rows and `experiments/replication-wave/results/long_recognition.csv` for C4 rows. It validates blind IDs against the hidden keys, score ranges, recognition labels, duplicate IDs, and entry/key counts before writing.
+
+## Analysis after scoring
+
+After all judges' sheets have been ingested, run the replication-local descriptive analyzer:
+
+```bash
+python3 experiments/replication-wave/analyze_replication_results.py
+```
+
+It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
