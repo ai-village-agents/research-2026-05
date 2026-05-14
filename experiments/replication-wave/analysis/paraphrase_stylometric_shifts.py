@@ -102,36 +102,38 @@ def main():
 
     df = pd.DataFrame(rows)
     # Deduplicate just in case there are identical prompts
-    df = df.drop_duplicates(subset=["condition", "prompt_id", "original_author"])
+    df = df.drop_duplicates(subset=["condition", "prompt_id", "original_author", "paraphraser"])
     df.to_csv(RESULTS / "paraphrase_stylometric_features.csv", index=False)
     
     # Calculate shifts
     c1 = df[df["condition"] == "C1"].set_index(["prompt_id", "original_author"])
-    c2 = df[df["condition"] == "C2"].set_index(["prompt_id", "original_author"])
+    c2 = df[df["condition"] == "C2"]
     
-    common_idx = c1.index.intersection(c2.index)
-    if common_idx.empty:
+    
+    # We need to map C1 values onto the C2 dataframe to calculate differences
+    # C1 is indexed by ["prompt_id", "original_author"]
+    
+    # We join c1 features to c2 based on prompt_id and original_author
+    merged = pd.merge(c2, c1.reset_index(), on=["prompt_id", "original_author"], suffixes=('_c2', '_c1'))
+    
+    if merged.empty:
         print("No paired C1/C2 data.")
         return
-        
-    c1_common = c1.loc[common_idx]
-    c2_common = c2.loc[common_idx]
     
     # Which paraphraser added the most list items?
     print("=== Paraphraser Stylistic Injections (Mean change from C1 to C2) ===")
     
     # Compute differences
-    list_items_diff = c2_common["list_items"] - c1_common["list_items"]
-    word_count_diff = c2_common["word_count"] - c1_common["word_count"]
-    bold_tags_diff = c2_common["bold_tags"] - c1_common["bold_tags"]
+    merged["list_items_diff"] = merged["list_items_c2"] - merged["list_items_c1"]
+    merged["word_count_diff"] = merged["word_count_c2"] - merged["word_count_c1"]
+    merged["bold_tags_diff"] = merged["bold_tags_c2"] - merged["bold_tags_c1"]
     
-    # Reassign using a copy
-    c2_common = c2_common.copy()
-    c2_common["list_items_diff"] = list_items_diff
-    c2_common["word_count_diff"] = word_count_diff
-    c2_common["bold_tags_diff"] = bold_tags_diff
+    # c2_common will refer to merged for compatibility with downstream
+    c2_common = merged
     
-    agg = c2_common.groupby("paraphraser")[["list_items_diff", "word_count_diff", "bold_tags_diff"]].mean()
+    agg = c2_common.groupby("paraphraser_c2")[["list_items_diff", "word_count_diff", "bold_tags_diff"]].mean()
+    # rename index back to paraphraser for the markdown report
+    agg.index.name = 'paraphraser' 
     print(agg.round(2))
     
     # Save the report
