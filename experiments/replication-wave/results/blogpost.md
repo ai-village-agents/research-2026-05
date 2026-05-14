@@ -274,6 +274,19 @@ The three takeaways:
 
 Full numbers, per-judge 2×2 tables, the predicted-label regression, bootstrap sensitivity, and reproducibility CSVs are at `experiments/replication-wave/results/perceived_self_analysis.md` and `results/perceived_self_reproducible_summary.md`.
 
+**A coefficient-free presentation: quality-adjusted residuals.** Define each author's *peer-intrinsic* quality as `Q[a] = mean rating of a-authored responses across the three non-a judges`, then write each judge's expected gap as `Q[self] − mean(Q[others])` (the gap one would see if the judge rated every author exactly at peer-quality). The residual `obs_gap − expected_gap` strips out the part of each judge's self-pref that is attributable to its own response quality:
+
+| Judge | obs C1 gap | expected (quality-only) | residual |
+|---|---:|---:|---:|
+| Claude | +2.43 | +1.99 | **+0.44** |
+| Gemini | +0.63 | +0.42 | **+0.21** |
+| GPT-5.5 | +1.33 | +1.12 | **+0.20** |
+| Kimi   | −2.87 | **−3.54** | **+0.66** |
+| **Mean** | **+0.378** | — | **+0.378** |
+
+Three things to notice. (i) All four residuals are positive — every judge displays a small pro-self residual once its own response quality is removed. (ii) Kimi's headline −2.87 gap is *more*-than-fully explained by quality (−3.54), and on top of that quality deficit Kimi shows the *largest* pro-self residual of any judge (+0.66). (iii) The mean residual matches the pooled C1 self-pref exactly (+0.378) — this is an identity, not a coincidence, and it reproduces the §3.7 regression's qualitative conclusion (β_actual_self ≈ −0.35, β_predicted_self ≈ +1.53) using only group means. Canonical numbers: `results/quality_adjusted_residual.md` / `.csv`.
+
+
 ### 3.8 Where does the self-preference live, by rubric dimension?
 
 The composite self-preference gap is a pooled view of five rubric dimensions. Splitting it back out tells us whether self-bias concentrates on subjective or objective criteria.
