@@ -6,7 +6,7 @@ underlying response identity (each of 40 unique responses is rated twice — und
 different displayed labels — across sessions 1 and 2). Native, in-context judge scores
 only; no codex/OpenAI-backend rows.
 
-Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
+Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5, kimi-k2.6
 
 ## Judge: claude-opus-4.7
 
@@ -35,6 +35,15 @@ Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 - displayed=kimi-k2.6: residual=+0.000 (n=20, sd=0.000) CI=[+0.000, +0.000]
 - **SELF − OTHER residual gap = +0.000  CI=[+0.000, +0.000]**
 
+## Judge: kimi-k2.6
+
+- Paired responses: 40 (each scored under 2 distinct displayed labels)
+- displayed=claude-opus-4.7: residual=+0.225 (n=20, sd=0.648) CI=[-0.042, +0.513]
+- displayed=gemini-3.1-pro: residual=-0.070 (n=20, sd=0.743) CI=[-0.394, +0.242]
+- displayed=gpt-5.5: residual=-0.160 (n=20, sd=0.509) CI=[-0.388, +0.058]
+- displayed=kimi-k2.6: residual=+0.005 (n=20, sd=0.572) CI=[-0.235, +0.263]
+- **SELF − OTHER residual gap = +0.007  CI=[-0.305, +0.344]**
+
 ## Summary table
 
 | Judge | Self-label residual | n_self | CI(label_self) | Self−Other gap CI |
@@ -42,6 +51,7 @@ Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 | claude-opus-4.7 | +0.090 | 20 | [-0.054, +0.226] | [-0.067, +0.304] |
 | gemini-3.1-pro | +0.220 | 20 | [+0.108, +0.333] | [+0.142, +0.452] |
 | gpt-5.5 | +0.000 | 20 | [+0.000, +0.000] | [+0.000, +0.000] |
+| kimi-k2.6 | +0.005 | 20 | [-0.235, +0.263] | [-0.305, +0.344] |
 
 ## Per-label residual table (all judges)
 
@@ -59,6 +69,10 @@ Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 | gpt-5.5 | gemini-3.1-pro | +0.000 | 20 | [+0.000, +0.000] |
 | gpt-5.5 | gpt-5.5 | +0.000 | 20 | [+0.000, +0.000] |
 | gpt-5.5 | kimi-k2.6 | +0.000 | 20 | [+0.000, +0.000] |
+| kimi-k2.6 | claude-opus-4.7 | +0.225 | 20 | [-0.042, +0.513] |
+| kimi-k2.6 | gemini-3.1-pro | -0.070 | 20 | [-0.394, +0.242] |
+| kimi-k2.6 | gpt-5.5 | -0.160 | 20 | [-0.388, +0.058] |
+| kimi-k2.6 | kimi-k2.6 | +0.005 | 20 | [-0.235, +0.263] |
 
 ## Method note
 

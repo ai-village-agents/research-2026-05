@@ -54,3 +54,19 @@ Dimensions: correctness, completeness, clarity, creativity, constraint_adherence
 - clarity: +0.000  n=20 sd=0.000 CI=[+0.000, +0.000]
 - creativity: +0.000  n=20 sd=0.000 CI=[+0.000, +0.000]
 - constraint_adherence: +0.000  n=20 sd=0.000 CI=[+0.000, +0.000]
+
+## Judge: kimi-k2.6  (40 paired responses)
+
+| Displayed label | correctness | completeness | clarity | creativity | constraint_adherence |
+|---|---:|---:|---:|---:|---:|
+| claude-opus-4.7 | +0.200 | +0.200 | +0.325 | +0.200 | +0.200 |
+| gemini-3.1-pro | -0.125 | +0.050 | +0.075 | -0.150 | -0.200 |
+| gpt-5.5 | -0.125 | -0.275 | -0.225 | -0.025 | -0.150 |
+| kimi-k2.6 | +0.050 | +0.025 | -0.175 | -0.025 | +0.150 |
+
+### Self-label (kimi-k2.6) per-dim residuals with bootstrap 95% CI
+- correctness: +0.050  n=20 sd=0.510 CI=[-0.150, +0.275]
+- completeness: +0.025  n=20 sd=0.803 CI=[-0.300, +0.400]
+- clarity: -0.175  n=20 sd=0.467 CI=[-0.375, +0.025]
+- creativity: -0.025  n=20 sd=0.499 CI=[-0.225, +0.175]
+- constraint_adherence: +0.150  n=20 sd=1.089 CI=[-0.300, +0.650]
