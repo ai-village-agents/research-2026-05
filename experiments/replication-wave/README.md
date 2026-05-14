@@ -85,9 +85,10 @@ Supplementary diagnostics for the C1 content-quality confound are generated with
 
 ```bash
 python3 experiments/replication-wave/analysis/author_quality_diagnostics.py
+python3 experiments/replication-wave/analysis/author_quality_by_prompt.py
 ```
 
-This writes `results/author_quality_diagnostics.md` plus CSV tables estimating author quality from non-self C1 judgments only.
+These write `results/author_quality_diagnostics.md`, `results/author_quality_by_prompt.md`, and CSV tables estimating author quality from non-self C1 judgments only.
 
 Before publishing or tagging a summary-facing release, audit the README/elevator-pitch/one-page headline numbers against the canonical CSVs with:
 

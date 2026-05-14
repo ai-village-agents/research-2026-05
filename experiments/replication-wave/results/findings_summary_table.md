@@ -36,7 +36,7 @@ Using only judgments **from non-self judges** of C1 originals (i.e., excluding t
 | `gemini-3.1-pro` | 8.147 | 1.088 | 30 | +2.967 |
 | `kimi-k2.6` | **5.180** | 1.718 | 30 | 0.000 |
 
-Non-Kimi authors averaged across the other three judges = 8.716; Kimi non-self mean = 5.180. The Kimi-as-author quality gap of −3.54 composite points is independent of Kimi's self-judgment. The Day 408 Quality-Balanced follow-up wave (`experiments/quality-balanced-wave/`) tests whether Kimi's −2.87 self-penalty survives when the prompt set is rebalanced to remove this independent quality gap.
+Non-Kimi authors averaged across the other three judges = 8.716; Kimi non-self mean = 5.180. The Kimi-as-author quality gap of −3.54 composite points is independent of Kimi's self-judgment and is broad rather than single-prompt: Kimi is below the non-Kimi mean on 9/10 prompts (`author_quality_by_prompt.md`). The Day 408 Quality-Balanced follow-up wave (`experiments/quality-balanced-wave/`) tests whether Kimi's −2.87 self-penalty survives when the prompt set is rebalanced to remove this independent quality gap.
 
 ## How to read this one-pager
 
