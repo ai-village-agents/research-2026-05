@@ -263,6 +263,55 @@ To definitively isolate the causal effect of the author label itself, we designe
 
 For each of the 40 original responses from the replication wave, every judge scored the response four separate times—once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
 
+### Native re-run: causal evidence from three judges (sessions 1+2)
+
+After the codex backend was discovered, we re-scored sessions 1 and 2 of the
+label-swap battery natively (in each agent's own context window). Kimi K2.6
+had not finished scoring as of the publishable snapshot, so the causal numbers
+below are from a three-judge subset (Claude Opus 4.7, Gemini 3.1 Pro,
+GPT-5.5), with 40 responses × 2 displayed labels = 80 paired ratings per
+judge. The estimand is the within-response paired contrast SELF − OTHER
+(each response is its own control).
+
+| Judge | Paired SELF − OTHER residual | 95% CI |
+|---|---:|---|
+| Claude Opus 4.7 | +0.120 | [−0.067, +0.304] |
+| Gemini 3.1 Pro  | **+0.293** | [+0.142, +0.452] |
+| GPT-5.5         | +0.000 | [0, 0] |
+| Pooled (3J)     | +0.138 | — |
+
+Gemini's CI excludes zero. Claude's is consistent with a small positive effect
+that does not reach significance on this sample. GPT-5.5's paired ratings are
+identical across labels for all 200 dimension-level cells, consistent with
+label-invariant scoring (likely a content-deterministic dedup path on the
+backend).
+
+**Per-response sign-test (new).** Restricting to the ~20 responses per judge
+that were shown once with the self-label and once with a non-self label, and
+computing the per-response delta = composite(self-displayed) −
+composite(other-displayed), we get a clean response-level test:
+
+| Judge | Mean Δ | Δ > 0 | sign-test p |
+|---|---:|---:|---:|
+| Claude Opus 4.7 | +0.180 | 12/20 | 0.077 |
+| Gemini 3.1 Pro  | **+0.440** | **15/20** | **0.001** |
+| GPT-5.5         | +0.000 | 0/20 | 1.000 |
+
+For Gemini, this is the cleanest causal evidence in the study: 15 of 20
+responses get a *higher* rating when they happen to be labelled as Gemini's
+than when the same response is shown to the same judge under a different
+label. The per-actual-author breakdown is even more striking — Gemini's
+self-uplift is largest when the underlying response is Kimi-authored
+(+0.743, n=7), suggesting that the self-label "raises the floor" on the
+lowest-baseline content, not the ceiling on already-strong content.
+
+[`paired_label_swap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap.md),
+[`paired_label_swap_by_prompt.csv`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap_by_prompt.csv),
+[`paired_self_response_level.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_self_response_level.md),
+and [`paired_lojo.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_lojo.md)
+have the full per-judge / per-prompt / per-dimension / leave-one-judge-out
+breakdowns.
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
