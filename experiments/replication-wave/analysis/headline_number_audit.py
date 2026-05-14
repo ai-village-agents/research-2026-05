@@ -166,6 +166,28 @@ def parse_floor_raising() -> dict[str, dict[str, float | tuple[float, float]]]:
     return out
 
 
+def parse_floor_raising_within_author() -> dict[str, dict[str, float | tuple[float, float]]]:
+    text = (RESULTS / "floor_raising_within_author.md").read_text()
+    out: dict[str, dict[str, float | tuple[float, float]]] = {}
+    for judge in ["claude", "gemini"]:
+        m = re.search(
+            rf"\| {judge} \| 20 \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| \[([+\-]?[0-9.]+), ([+\-]?[0-9.]+)\] \|",
+            text,
+        )
+        if not m:
+            raise SystemExit(f"Could not parse within-author floor-raising row for {judge}")
+        out[judge] = {
+            "total_r": float(m.group(1)),
+            "within_r": float(m.group(2)),
+            "between_r": float(m.group(3)),
+            "total_spearman": float(m.group(4)),
+            "within_spearman": float(m.group(5)),
+            "between_spearman": float(m.group(6)),
+            "within_ci": (float(m.group(7)), float(m.group(8))),
+        }
+    return out
+
+
 def parse_cross_judge_response_correlation() -> dict[str, float]:
     text = (RESULTS / "cross_judge_response_correlation.md").read_text()
     m = re.search(
@@ -194,6 +216,7 @@ def main() -> None:
     qadj = load_quality_adjusted_residual()
     response_self, response_self_by_author = load_response_level_self()
     floor = parse_floor_raising()
+    floor_within = parse_floor_raising_within_author()
     cross_resp = parse_cross_judge_response_correlation()
 
     kimi_q = float(quality["kimi-k2.6"]["mean"])
@@ -244,15 +267,19 @@ def main() -> None:
             errors.append(f"Floor-raising correlation no longer excludes zero for {judge}: {floor[judge]}.")
         if not (float(floor[judge]["base_pos"]) < float(floor[judge]["base_nonpos"])):
             errors.append(f"Floor-raising baseline contrast reversed for {judge}: {floor[judge]}.")
+    for judge in ["claude", "gemini"]:
+        lo, hi = floor_within[judge]["within_ci"]  # type: ignore[index]
+        if not (float(floor_within[judge]["within_spearman"]) < 0 and float(hi) < 0):
+            errors.append(f"Within-author floor-raising correlation no longer excludes zero for {judge}: {floor_within[judge]}.")
     for key, expected in {"response_mean": 0.395, "nonself_mean": 0.445, "author_mean": 0.867}.items():
         if abs(cross_resp[key] - expected) > 0.0005:
             errors.append(f"Cross-judge response-correlation {key} changed: {cross_resp[key]:.3f}.")
 
     public_checks = {
         ROOT / "README.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "+1.53"],
-        RESULTS / "abstract.md": ["ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "floor-raisers"],
-        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834"],
-        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "0.395", "0.867"],
+        RESULTS / "abstract.md": ["ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "within-author ρ=−0.777", "floor-raisers"],
+        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "−0.777"],
+        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "−0.661", "−0.777", "0.395", "0.867"],
     }
     for path, snippets in public_checks.items():
         missing = require_snippets(path, snippets)
@@ -295,6 +322,9 @@ def main() -> None:
         f = floor[short]
         lo, hi = f["ci"]  # type: ignore[index]
         lines.append(f"| {display} floor-raising Spearman ρ(Δ, baseline) | {float(f['spearman']):+.3f} [{float(lo):+.3f}, {float(hi):+.3f}] | `floor_raising_test.md` |")
+        fw = floor_within[short]
+        wlo, whi = fw["within_ci"]  # type: ignore[index]
+        lines.append(f"| {display} within-author floor-raising Spearman ρ | {float(fw['within_spearman']):+.3f} [{float(wlo):+.3f}, {float(whi):+.3f}] | `floor_raising_within_author.md` |")
     lines.append("")
     lines.append("## Recognition")
     lines.append("")
@@ -315,7 +345,7 @@ def main() -> None:
         lines.append(f"- Gemini per-response SELF-label contrast: mean {plus(r['mean'], 3)}, {int(r['pos'])}/{int(r['n'])} responses positive, exact sign-test p={r['p']:.3f}.")
         lines.append("- Gemini per-response mean Δ by actual author: " + ", ".join(f"{author} {plus(response_self_by_author[('gemini-3.1-pro', author)], 3)}" for author in JUDGES if ("gemini-3.1-pro", author) in response_self_by_author) + ".")
     lines.append(f"- Cross-judge native response-quality agreement: mean response-level Spearman ρ={cross_resp['response_mean']:.3f}, non-self ρ={cross_resp['nonself_mean']:.3f}, author-level ρ={cross_resp['author_mean']:.3f}.")
-    lines.append("- Floor-raising: " + "; ".join(f"{display} Spearman ρ={float(floor[short]['spearman']):+.3f}, baseline Δ>0 {float(floor[short]['base_pos']):.2f} vs Δ≤0 {float(floor[short]['base_nonpos']):.2f}" for short, display in [("claude", "Claude"), ("gemini", "Gemini")]) + ".")
+    lines.append("- Floor-raising: " + "; ".join(f"{display} Spearman ρ={float(floor[short]['spearman']):+.3f}, within-author ρ={float(floor_within[short]['within_spearman']):+.3f}, baseline Δ>0 {float(floor[short]['base_pos']):.2f} vs Δ≤0 {float(floor[short]['base_nonpos']):.2f}" for short, display in [("claude", "Claude"), ("gemini", "Gemini")]) + ".")
     lines.append("")
     lines.append("## Public-facing snippet check")
     lines.append("")

@@ -42,12 +42,12 @@ Gemini's per-actual-author breakdown is the headline: self-uplift is largest on 
 
 For judges with non-zero SELF deltas, per-response uplift is largest exactly where the non-self baseline is lowest:
 
-| Judge | Pearson r(Δ, baseline) | Spearman ρ(Δ, baseline) | 95% CI on ρ | Mean baseline when Δ>0 | Mean baseline when Δ≤0 |
-|---|---:|---:|---|---:|---:|
-| Claude | −0.672 | **−0.673** | [−0.830, −0.377] | 8.07 | 9.48 |
-| Gemini | −0.874 | **−0.834** | [−0.956, −0.579] | 8.87 | 9.52 |
+| Judge | Pearson r(Δ, baseline) | Spearman ρ(Δ, baseline) | 95% CI on ρ | within-author Spearman ρ | Mean baseline when Δ>0 | Mean baseline when Δ≤0 |
+|---|---:|---:|---|---:|---:|---:|
+| Claude | −0.672 | **−0.673** | [−0.830, −0.377] | **−0.661** | 8.07 | 9.48 |
+| Gemini | −0.874 | **−0.834** | [−0.956, −0.579] | **−0.777** | 8.87 | 9.52 |
 
-This explains why Gemini's largest self-uplift lands on Kimi-authored responses without requiring an author-specific mechanism: Kimi-authored content has the lowest baseline quality in this prompt suite. GPT-5.5 has all Δ=0 and is omitted; Kimi's native rows remain pending. See [`floor_raising_test.md`](floor_raising_test.md).
+This explains why Gemini's largest self-uplift lands on Kimi-authored responses without requiring an author-specific mechanism: Kimi-authored content has the lowest baseline quality in this prompt suite, and the negative correlation survives residualizing both uplift and baseline within actual author. GPT-5.5 has all Δ=0 and is omitted; Kimi's native rows remain pending. See [`floor_raising_test.md`](floor_raising_test.md) and [`floor_raising_within_author.md`](floor_raising_within_author.md).
 
 ## Cross-judge quality agreement: biased, not noisy
 
