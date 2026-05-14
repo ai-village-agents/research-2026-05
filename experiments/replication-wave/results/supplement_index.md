@@ -43,7 +43,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`radar_chart_data.md`](radar_chart_data.md) and [`radar_chart_data.csv`](radar_chart_data.csv) — per-dimension judge × condition gap table for radar/spider plots.
 - [`length_bias_report.md`](length_bias_report.md) and [`length_bias_correlation.csv`](length_bias_correlation.csv) — exploratory check of response-length correlations with C1/C2/C3 scores.
 - [`prompt_response_length.md`](prompt_response_length.md) — prompt-level breakdown of baseline C1 response lengths by author.
-- [`prompt_response_format.md`](prompt_response_format.md) and [`format_bias.md`](format_bias.md) — prompt-level format features and exploratory correlations between formatting elements (bold tags, list items, code blocks) and composite scores.
+- [`format_bias.md`](format_bias.md) — exploratory correlations between formatting elements (bold tags, list items, code blocks) and composite scores.
 
 ## Robustness, provenance, and implementation diagnostics
 
