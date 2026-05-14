@@ -4,6 +4,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Primary narrative outputs
 
+- [`abstract.md`](abstract.md) — concise research abstract for final-release readers.
 - [`blogpost.md`](blogpost.md) — full accessible write-up of the replication and native paired label-swap follow-up.
 - [`elevator_pitch.md`](elevator_pitch.md) — short version of the headline findings.
 - [`findings_summary_table.md`](findings_summary_table.md) — one-page table contrasting observational gaps, causal label-swap gaps, paraphrase gaps, recognition, author quality, and quality-adjusted residuals.
