@@ -11,6 +11,7 @@ likely to go stale are present in the public-facing prose.
 from __future__ import annotations
 
 import csv
+import math
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -110,6 +111,41 @@ def dimension_values(judge: str, displayed_label: str) -> list[float]:
     return [float(r["residual_mean"]) for r in rows]
 
 
+def binom_sign_p(pos: int, neg: int) -> float:
+    """Exact two-sided sign test, dropping ties."""
+    n = pos + neg
+    if n == 0:
+        return 1.0
+    k = min(pos, neg)
+    return min(1.0, 2 * sum(math.comb(n, i) for i in range(k + 1)) / (2**n))
+
+
+def load_response_level_self() -> tuple[dict[str, dict[str, float]], dict[tuple[str, str], float]]:
+    rows = read_csv(RESULTS / "paired_self_response_level.csv")
+    by_judge: dict[str, list[float]] = {}
+    by_author: dict[tuple[str, str], list[float]] = {}
+    for r in rows:
+        delta = float(r["delta"])
+        by_judge.setdefault(r["judge"], []).append(delta)
+        by_author.setdefault((r["judge"], r["actual_author"]), []).append(delta)
+
+    summary: dict[str, dict[str, float]] = {}
+    for judge, vals in by_judge.items():
+        pos = sum(v > 0 for v in vals)
+        neg = sum(v < 0 for v in vals)
+        summary[judge] = {
+            "n": float(len(vals)),
+            "mean": sum(vals) / len(vals),
+            "pos": float(pos),
+            "neg": float(neg),
+            "ties": float(len(vals) - pos - neg),
+            "p": binom_sign_p(pos, neg),
+        }
+
+    author_means = {key: sum(vals) / len(vals) for key, vals in by_author.items()}
+    return summary, author_means
+
+
 def require_snippets(path: Path, snippets: list[str]) -> list[str]:
     text = path.read_text()
     missing = [s for s in snippets if s not in text]
@@ -124,6 +160,7 @@ def main() -> None:
     paired = parse_paired_md()
     perceived = load_perceived()
     qadj = load_quality_adjusted_residual()
+    response_self, response_self_by_author = load_response_level_self()
 
     kimi_q = float(quality["kimi-k2.6"]["mean"])
     non_kimi_q = sum(float(quality[j]["mean"]) for j in JUDGES if j != "kimi-k2.6") / 3
@@ -144,6 +181,22 @@ def main() -> None:
     if (gem_self_pos, gem_self_nonzero) != (9, 10):
         errors.append(f"Gemini self-label prompt sign count changed: {gem_self_pos}/{gem_self_nonzero} positive.")
 
+    gem_response = response_self.get("gemini-3.1-pro")
+    if not gem_response:
+        errors.append("Missing Gemini per-response SELF contrast rows.")
+    else:
+        if (int(gem_response["n"]), int(gem_response["pos"])) != (20, 15):
+            errors.append(f"Gemini per-response SELF sign count changed: {int(gem_response['pos'])}/{int(gem_response['n'])} positive.")
+        if abs(gem_response["mean"] - 0.440) > 0.0005:
+            errors.append(f"Gemini per-response SELF mean changed: {gem_response['mean']:+.3f}.")
+        if round(gem_response["p"], 3) != 0.001:
+            errors.append(f"Gemini per-response sign-test p changed: {gem_response['p']:.3f}.")
+    gem_author_means = {author: response_self_by_author.get(("gemini-3.1-pro", author)) for author in JUDGES}
+    if any(v is None for v in gem_author_means.values()):
+        errors.append("Missing Gemini per-response per-actual-author means.")
+    elif not (gem_author_means["kimi-k2.6"] > gem_author_means["claude-opus-4.7"] > gem_author_means["gemini-3.1-pro"] > gem_author_means["gpt-5.5"]):
+        errors.append(f"Gemini per-response author ordering changed: {gem_author_means}.")
+
     qadj_residuals = [qadj[j]["residual"] for j in JUDGES]
     qadj_obs = [qadj[j]["obs_gap"] for j in JUDGES]
     mean_resid = sum(qadj_residuals) / len(qadj_residuals)
@@ -153,8 +206,8 @@ def main() -> None:
 
     public_checks = {
         ROOT / "README.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "+1.53"],
-        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "+1.53"],
-        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "β_predicted_self = **+1.53**"],
+        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53"],
+        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**"],
     }
     for path, snippets in public_checks.items():
         missing = require_snippets(path, snippets)
@@ -178,6 +231,9 @@ def main() -> None:
     for judge in [j for j in JUDGES if j in paired]:
         pj = paired[judge]
         lines.append(f"| {judge} paired SELF−OTHER label gap | {plus(pj.self_gap)} [{plus(pj.self_ci_lo)}, {plus(pj.self_ci_hi)}] | `paired_label_swap.md` |")
+    for judge in [j for j in JUDGES if j in response_self]:
+        r = response_self[judge]
+        lines.append(f"| {judge} per-response SELF-label contrast | {plus(r['mean'], 3)}; {int(r['pos'])}/{int(r['n'])} positive; p={r['p']:.3f} | `paired_self_response_level.csv` |")
     lines.append(f"| Gemini displayed-`kimi-k2.6` label residual | {plus(paired['gemini-3.1-pro'].kimi_label_residual or 0)} [{plus(paired['gemini-3.1-pro'].kimi_ci_lo or 0)}, {plus(paired['gemini-3.1-pro'].kimi_ci_hi or 0)}] | `paired_label_swap.md` |")
     lines.append(f"| Kimi non-self C1 author quality | {plain(kimi_q, 3)} | `author_quality_nonself_c1.csv` |")
     lines.append(f"| Non-Kimi non-self C1 author quality | {plain(non_kimi_q, 3)} | `author_quality_nonself_c1.csv` |")
@@ -202,6 +258,10 @@ def main() -> None:
     lines.append(f"- Gemini self-label per-dimension residuals: {', '.join(plus(v, 3) for v in gem_self_dims)} (all positive).")
     lines.append(f"- Gemini anti-Kimi prompt signs: {gem_kimi_neg}/{gem_kimi_nonzero} nonzero prompts negative.")
     lines.append(f"- Gemini self-label prompt signs: {gem_self_pos}/{gem_self_nonzero} nonzero prompts positive.")
+    if "gemini-3.1-pro" in response_self:
+        r = response_self["gemini-3.1-pro"]
+        lines.append(f"- Gemini per-response SELF-label contrast: mean {plus(r['mean'], 3)}, {int(r['pos'])}/{int(r['n'])} responses positive, exact sign-test p={r['p']:.3f}.")
+        lines.append("- Gemini per-response mean Δ by actual author: " + ", ".join(f"{author} {plus(response_self_by_author[('gemini-3.1-pro', author)], 3)}" for author in JUDGES if ("gemini-3.1-pro", author) in response_self_by_author) + ".")
     lines.append("")
     lines.append("## Public-facing snippet check")
     lines.append("")
