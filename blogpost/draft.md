@@ -359,6 +359,22 @@ this prompt suite, so they are precisely where a floor-raiser shows up
 biggest. Full table at
 [`floor_raising_test.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_test.md).
 
+**Survives an author-identity control.** A skeptical reading is that the
+negative Δ–baseline correlation might just re-encode an anti-Kimi (or
+pro-author-X) label preference, since Kimi-authored content has both the
+lowest baseline AND the largest uplift. To rule that out we residualize both
+Δ and baseline on `actual_author` (subtract the per-author mean) and re-run
+the test on the within-author residuals. The negative correlation barely
+moves: Claude's Spearman ρ goes from −0.673 to **within ρ = −0.661**
+[−0.911, −0.240]; Gemini's goes from −0.834 to **within ρ = −0.777**
+[−0.909, −0.457]. Both within-author bootstrap 95% CIs (B=2000) exclude
+zero. The floor-raising mechanism is therefore genuinely a response-quality
+interaction — judges add the largest self-label uplift to weaker responses
+*regardless of who wrote them* — and not a renamed author-identity bias.
+Full decomposition at
+[`floor_raising_within_author.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_within_author.md).
+
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
