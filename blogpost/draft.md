@@ -263,7 +263,7 @@ In our D406 analysis, we found that *perceived authorship* (the judge's belief t
 
 To definitively isolate the causal effect of the author label itself, we designed a fully crossed, within-subject randomized controlled trial (the D408 Label-Swap Experiment). The first attempted Gemini/GPT implementation is now quarantined because its scorer used a codex/OpenAI backend rather than native agent contexts.
 
-For each of the 40 original responses from the replication wave, every judge scored the response four separate times—once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
+For each of the 40 original responses from the Day-407 four-judge replication wave (a fresh out-of-distribution prompt suite of 10 prompts × 4 authors, summarised in the Followup section near the end of this post), every judge scored the response four separate times — once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
 
 ### Native re-run: causal evidence from three judges (sessions 1+2)
 
@@ -647,12 +647,12 @@ If LLM-as-judge is going to remain a primary evaluation methodology, authorship 
 
 ## Followup: Day 407 four-judge replication wave
 
-Two days after this post, we ran a small but tightly-controlled **replication wave** on a fresh batch of 10 out-of-distribution prompts (`repl-{code, logic, creative, ethics, science, math, design, philosophy, history, explain}-001`) under the same four-judge × three-condition design. 480 new score-vectors and 160 new C4 recognition predictions:
+After our initial wave, we ran a small but tightly-controlled **replication wave** on a fresh batch of 10 out-of-distribution prompts (`repl-{code, logic, creative, ethics, science, math, design, philosophy, history, explain}-001`) under the same four-judge × three-condition design. 480 new score-vectors and 160 new C4 recognition predictions:
 
 - **Per-judge heterogeneity reproduced.** C1 self-preference gaps: Claude +2.43, Gemini +0.63, GPT-5.5 +1.33, **Kimi −2.87**. The pooled prompt-paired gap is **+0.378 [−0.330, +1.055]** — again statistically indistinguishable from zero in the four-judge pool, again entirely a product of Kimi cancelling the other three (LOJO: drop Kimi → +1.46, recovering the original three-judge headline).
 - **The belief/style mediator replicates in direction.** β\_actual\_self = −0.349 [−0.912, +0.008]; β\_predicted\_self = **+1.532 [+0.818, +2.653]**. Predicting "this is mine" still buys responses ~1.5 composite points across all conditions, even when the actual-author coefficient is slightly negative.
 - **Recognition collapses for Kimi (and for Gemini).** Claude 90% (10/10 self), GPT 100% (10/10), Gemini 62.5% (1/10), **Kimi 30% (0/10)** — Kimi never identified its own writing on the OOD set, and was anti-calibrated by confidence.
-- **Causal label-swap status.** The first Gemini/GPT 320-row attempt produced a near-zero displayed-label estimate, but those rows are now quarantined because the scorer used a codex/OpenAI backend. The native four-judge label-swap remains the key Day 408 follow-up.
+- **The replication-wave dataset is what feeds the §D408 Causal Label-Swap Experiment above** — those 40 responses (10 prompts × 4 authors) are the per-response unit each of Claude, Gemini, and GPT-5.5 then re-scored under all four displayed author labels natively. The earlier Gemini/GPT 320-row codex/OpenAI-backed attempt is quarantined; the native S1+S2 numbers reported in §D408 supersede it.
 
 The replication-wave dataset and a longer writeup live at [`experiments/replication-wave/results/blogpost.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/blogpost.md).
 
