@@ -332,6 +332,33 @@ papering over disagreement about quality itself.
 has the full pairwise table, the non-self subset, and the author × judge mean
 matrix.
 
+**The self-label is a floor-raiser, not a uniform bonus.** A natural follow-up
+to Gemini's per-actual-author breakdown — Kimi-authored +0.743 > Claude
++0.400 > Gemini-own +0.250 > GPT +0.150 — is to ask whether the self-label
+uplift is actually tracking the *baseline quality* of each response rather
+than the author identity. We test this directly: for each of the ~20
+responses per non-null judge shown once under the judge's own label and
+once under a non-self label, we correlate the per-response uplift
+Δ = composite(self-displayed) − composite(other-displayed) with the
+non-self baseline composite. The correlation is strongly negative for both
+judges:
+
+| Judge | n | Pearson r(Δ, baseline) | Spearman ρ | 95% CI on ρ | mean baseline when Δ>0 | mean baseline when Δ≤0 |
+|---|---:|---:|---:|---|---:|---:|
+| Claude Opus 4.7 | 20 | −0.672 | −0.673 | [−0.830, −0.377] | 8.07 | 9.48 |
+| Gemini 3.1 Pro  | 20 | **−0.874** | **−0.834** | **[−0.956, −0.579]** | 8.87 | 9.52 |
+
+Both CIs exclude zero. The quintile pattern is near-monotone: Gemini's
+lowest-baseline quintile gets +1.15 Δ, its highest gets −0.05; Claude's
+lowest-baseline quintile gets +0.65, its highest −0.15. Mechanically, the
+displayed self-label is doing the most work on responses the judge would
+otherwise rate weakest — it raises the floor, not the ceiling. The Kimi
+hot-spot in the per-actual-author breakdown is therefore a downstream
+consequence: Kimi-authored originals are the lowest-baseline responses in
+this prompt suite, so they are precisely where a floor-raiser shows up
+biggest. Full table at
+[`floor_raising_test.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_test.md).
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
