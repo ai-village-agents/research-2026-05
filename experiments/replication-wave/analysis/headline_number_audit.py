@@ -146,6 +146,38 @@ def load_response_level_self() -> tuple[dict[str, dict[str, float]], dict[tuple[
     return summary, author_means
 
 
+def parse_floor_raising() -> dict[str, dict[str, float | tuple[float, float]]]:
+    text = (RESULTS / "floor_raising_test.md").read_text()
+    out: dict[str, dict[str, float | tuple[float, float]]] = {}
+    for judge in ["claude", "gemini"]:
+        m = re.search(
+            rf"\| {judge} \| 20 \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| \[([+\-]?[0-9.]+), ([+\-]?[0-9.]+)\] \| ([0-9.]+) \(n=\d+\) \| ([0-9.]+) \(n=\d+\) \|",
+            text,
+        )
+        if not m:
+            raise SystemExit(f"Could not parse floor-raising row for {judge}")
+        out[judge] = {
+            "pearson": float(m.group(1)),
+            "spearman": float(m.group(2)),
+            "ci": (float(m.group(3)), float(m.group(4))),
+            "base_pos": float(m.group(5)),
+            "base_nonpos": float(m.group(6)),
+        }
+    return out
+
+
+def parse_cross_judge_response_correlation() -> dict[str, float]:
+    text = (RESULTS / "cross_judge_response_correlation.md").read_text()
+    m = re.search(
+        r"mean pairwise Spearman ρ = ([0-9]+(?:\.[0-9]+)?).*?non-self displayed labels only gives ρ = ([0-9]+(?:\.[0-9]+)?).*?author level .*? mean Spearman is ([0-9]+(?:\.[0-9]+)?)",
+        text,
+        re.S,
+    )
+    if not m:
+        raise SystemExit("Could not parse cross-judge response-correlation headline values")
+    return {"response_mean": float(m.group(1)), "nonself_mean": float(m.group(2)), "author_mean": float(m.group(3))}
+
+
 def require_snippets(path: Path, snippets: list[str]) -> list[str]:
     text = path.read_text()
     missing = [s for s in snippets if s not in text]
@@ -161,6 +193,8 @@ def main() -> None:
     perceived = load_perceived()
     qadj = load_quality_adjusted_residual()
     response_self, response_self_by_author = load_response_level_self()
+    floor = parse_floor_raising()
+    cross_resp = parse_cross_judge_response_correlation()
 
     kimi_q = float(quality["kimi-k2.6"]["mean"])
     non_kimi_q = sum(float(quality[j]["mean"]) for j in JUDGES if j != "kimi-k2.6") / 3
@@ -204,10 +238,21 @@ def main() -> None:
     if abs(mean_resid - mean_obs_qadj) > 0.01:
         errors.append(f"Quality-adjusted residual decomposition identity broken: mean_resid={mean_resid:+.4f} vs mean_obs={mean_obs_qadj:+.4f}")
 
+    for judge in ["claude", "gemini"]:
+        lo, hi = floor[judge]["ci"]  # type: ignore[index]
+        if not (float(floor[judge]["spearman"]) < 0 and float(hi) < 0):
+            errors.append(f"Floor-raising correlation no longer excludes zero for {judge}: {floor[judge]}.")
+        if not (float(floor[judge]["base_pos"]) < float(floor[judge]["base_nonpos"])):
+            errors.append(f"Floor-raising baseline contrast reversed for {judge}: {floor[judge]}.")
+    for key, expected in {"response_mean": 0.395, "nonself_mean": 0.445, "author_mean": 0.867}.items():
+        if abs(cross_resp[key] - expected) > 0.0005:
+            errors.append(f"Cross-judge response-correlation {key} changed: {cross_resp[key]:.3f}.")
+
     public_checks = {
         ROOT / "README.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "+1.53"],
-        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53"],
-        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**"],
+        RESULTS / "abstract.md": ["ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "floor-raisers"],
+        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834"],
+        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "0.395", "0.867"],
     }
     for path, snippets in public_checks.items():
         missing = require_snippets(path, snippets)
@@ -243,6 +288,13 @@ def main() -> None:
         r = qadj[judge]
         lines.append(f"| {judge} quality-adjusted C1 residual | {plus(r['residual'], 3)} | `quality_adjusted_residual.csv` |")
     lines.append(f"| Mean quality-adjusted residual (=pooled C1 self-pref) | {plus(mean_resid, 3)} | `quality_adjusted_residual.csv` |")
+    lines.append(f"| Native label-swap response-quality mean Spearman ρ | {cross_resp['response_mean']:.3f} | `cross_judge_response_correlation.md` |")
+    lines.append(f"| Native label-swap non-self response-quality mean Spearman ρ | {cross_resp['nonself_mean']:.3f} | `cross_judge_response_correlation.md` |")
+    lines.append(f"| Native label-swap author-level mean Spearman ρ | {cross_resp['author_mean']:.3f} | `cross_judge_response_correlation.md` |")
+    for short, display in [("claude", "Claude"), ("gemini", "Gemini")]:
+        f = floor[short]
+        lo, hi = f["ci"]  # type: ignore[index]
+        lines.append(f"| {display} floor-raising Spearman ρ(Δ, baseline) | {float(f['spearman']):+.3f} [{float(lo):+.3f}, {float(hi):+.3f}] | `floor_raising_test.md` |")
     lines.append("")
     lines.append("## Recognition")
     lines.append("")
@@ -262,6 +314,8 @@ def main() -> None:
         r = response_self["gemini-3.1-pro"]
         lines.append(f"- Gemini per-response SELF-label contrast: mean {plus(r['mean'], 3)}, {int(r['pos'])}/{int(r['n'])} responses positive, exact sign-test p={r['p']:.3f}.")
         lines.append("- Gemini per-response mean Δ by actual author: " + ", ".join(f"{author} {plus(response_self_by_author[('gemini-3.1-pro', author)], 3)}" for author in JUDGES if ("gemini-3.1-pro", author) in response_self_by_author) + ".")
+    lines.append(f"- Cross-judge native response-quality agreement: mean response-level Spearman ρ={cross_resp['response_mean']:.3f}, non-self ρ={cross_resp['nonself_mean']:.3f}, author-level ρ={cross_resp['author_mean']:.3f}.")
+    lines.append("- Floor-raising: " + "; ".join(f"{display} Spearman ρ={float(floor[short]['spearman']):+.3f}, baseline Δ>0 {float(floor[short]['base_pos']):.2f} vs Δ≤0 {float(floor[short]['base_nonpos']):.2f}" for short, display in [("claude", "Claude"), ("gemini", "Gemini")]) + ".")
     lines.append("")
     lines.append("## Public-facing snippet check")
     lines.append("")

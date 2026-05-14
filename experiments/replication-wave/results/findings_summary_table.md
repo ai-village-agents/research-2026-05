@@ -38,6 +38,29 @@ Restricting to responses shown once with the judge's self-label and once with a 
 
 Gemini's per-actual-author breakdown is the headline: self-uplift is largest on **Kimi-authored** responses (+0.743, n=7) vs Claude-authored (+0.400, n=5), GPT-authored (+0.150, n=4), or Gemini's own (+0.250, n=4). The bias raises the floor on low-baseline content rather than the ceiling on already-strong content. Full breakdown in [`paired_self_response_level.md`](paired_self_response_level.md).
 
+## Mechanism: the self-label raises floors, not ceilings
+
+For judges with non-zero SELF deltas, per-response uplift is largest exactly where the non-self baseline is lowest:
+
+| Judge | Pearson r(Δ, baseline) | Spearman ρ(Δ, baseline) | 95% CI on ρ | Mean baseline when Δ>0 | Mean baseline when Δ≤0 |
+|---|---:|---:|---|---:|---:|
+| Claude | −0.672 | **−0.673** | [−0.830, −0.377] | 8.07 | 9.48 |
+| Gemini | −0.874 | **−0.834** | [−0.956, −0.579] | 8.87 | 9.52 |
+
+This explains why Gemini's largest self-uplift lands on Kimi-authored responses without requiring an author-specific mechanism: Kimi-authored content has the lowest baseline quality in this prompt suite. GPT-5.5 has all Δ=0 and is omitted; Kimi's native rows remain pending. See [`floor_raising_test.md`](floor_raising_test.md).
+
+## Cross-judge quality agreement: biased, not noisy
+
+The native label-swap rows also show that judges retain a shared quality signal after averaging over displayed labels:
+
+| Diagnostic | Value |
+|---|---:|
+| Mean response-level pairwise Spearman ρ | **0.395** |
+| Mean response-level Spearman ρ on non-self displayed labels | **0.445** |
+| Mean author-level Spearman ρ | **0.867** |
+
+So the label effects are best read as additive biases on top of a partly shared response-quality ranking, not as arbitrary disagreement about which responses are good. See [`cross_judge_response_correlation.md`](cross_judge_response_correlation.md).
+
 ## Non-self author-quality diagnostic (C1 originals only)
 
 Using only judgments **from non-self judges** of C1 originals (i.e., excluding the self-judging rows whose bias is under study), the underlying response quality differs sharply by author:
