@@ -54,3 +54,4 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
 - [Length by Prompt Response Diagnostic](prompt_response_length.md): A prompt-level breakdown of the lengths of baseline C1 responses by each author.
 - [Format by Prompt Response Diagnostic](prompt_response_format.md): A prompt-level breakdown of format elements (bold, lists, code) used by each author.
+- [Format Feature Correlates](format_bias.md): How formatting elements (bold tags, list items) correlate with a judge's composite score.
