@@ -5,11 +5,13 @@
 
 ## TL;DR
 
-We had four frontier models — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6 — write and judge each other's answers to the same 30 prompts under a baseline condition, a style-neutralizing paraphrase, an explicit bias warning, and a self-recognition probe (1,440 scores, 480 predictions). Three findings stood out:
+We had four frontier models — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6 — write and judge each other's answers to the same 30 prompts under a baseline condition, a style-neutralizing paraphrase, an explicit bias warning, and a self-recognition probe (1,440 scores, 480 predictions). Following this, we conducted a causal label-swap experiment and a four-judge replication wave. Five key findings emerged:
 
-1. **There is no single "self-preference" effect across LLM judges.** In the full four-judge pool, the raw self-favoring coefficient is essentially zero ($\beta = +0.004$, $p = 0.96$). But this average hides four very different mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on all dimensions because of an off-topic generation confound. All six pairwise contrasts on raw-authorship exclude zero (bootstrap, B = 500).
-2. **Perceived authorship — not actual authorship — is the durable scoring channel.** Once we ask each judge to predict the author, the *belief* that "I wrote this" predicts a +0.50-point boost across *every* condition, including the paraphrased and bias-warned ones. Style-neutralizing paraphrase strips surface tokens (em-dashes, semicolons), and a numpy-only stylometric classifier still recovers authorship at 51% (chance = 25%). But a later style-vs-belief horse race shows that this measured style signal does **not** explain away the belief channel; perceived authorship remains distinct from our lightweight stylometric proxy.
-3. **A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients in this study.** C3 (warned) is statistically indistinguishable from C1 (baseline) on the main horse-race estimates, and the few exploratory shifts we do see do not point in a useful mitigation direction.
+1. **There is no single "self-preference" effect across LLM judges.** In the full four-judge pool, the raw self-favoring coefficient is essentially zero ($eta = +0.004$, $p = 0.96$). But this average hides four very different mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on all dimensions because of an off-topic generation confound.
+2. **Perceived authorship — not actual authorship — is the durable scoring channel.** Once we ask each judge to predict the author, the *belief* that "I wrote this" predicts a +0.50-point boost across *every* condition, including the paraphrased and bias-warned ones. This remains distinct from our lightweight stylometric proxy.
+3. **The bias acts as a "floor-raiser", not a uniform bonus.** In our causal label-swap experiment, we found that judges give the largest self-label boosts to the weakest responses. This floor-raising effect survives strict within-author controls and appears across all rubric dimensions, notably objective ones like correctness and clarity.
+4. **Judges agree on underlying quality despite their biases.** The native judges agree substantially on quality (author-level mean Spearman 0.867, response-level non-self mean 0.445). Bias operates as an additive adjustment on top of a shared quality signal, not as a replacement for it.
+5. **Standard mitigations fail.** A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients, and style-neutralizing paraphrasing was insufficient to blind judges fully.
 
 *Implication for LLM-as-judge pipelines: identity leakage survives the obvious mitigations, and any "self-preference correction" has to be tuned per judge family — a single global subtraction may reduce one judge's bias and amplify another's.*
 
@@ -599,7 +601,7 @@ Naïvely this would suggest Gemini is "the fair judge." But the C4 confusion mat
 
 ---
 
-## Limitations
+## Limitations & Open Questions
 
 We tried to address the obvious limitations during design, but several remain:
 
@@ -610,6 +612,8 @@ We tried to address the obvious limitations during design, but several remain:
 5. **The models are 2026-era frontier models that we cannot fully re-create later.** We list the exact model identifiers used in `DESIGN.md` and freeze prompts and responses in the public repo, but the underlying model weights and routing layers may change. This is a reproducibility limitation common to all frontier-LLM studies, not specific to this design.
 6. **The judges are also the authors.** This is a deliberate choice — it's what makes the self-recognition probe possible — but it means our "other-author" baselines are not drawn from a broader population. We cannot say from this study what an unbiased external evaluator would have rated.
 7. **Composite score weights all five rubric dimensions equally.** Subscale-level analysis (which dimensions move most under self-preference?) is exploratory and reported above as a mechanism-generating result, not a pre-registered endpoint.
+8. **Is Kimi's self-penalization intrinsic or quality-driven?** A balanced prompt set where all four authors produce roughly equal-quality responses would let us test whether Kimi continues to self-penalize when the genuine quality gap is removed.
+9. **Do the causal label-swap findings generalize to all judges?** The current native S1+S2 label-swap findings cover Claude, Gemini, and GPT-5.5. Completing the native label-swap for Kimi K2.6 is needed to see if the causal effects hold from Kimi's own judge perspective.
 
 ---
 
