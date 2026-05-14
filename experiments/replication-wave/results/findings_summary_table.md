@@ -25,6 +25,19 @@ Pooled 4-judge mediator is on 480 rows with prompt-clustered bootstrap (B=2000).
 
 Gemini's anti-Kimi-label residual is broad across all five rubric dimensions (correctness −0.275, completeness −0.250, clarity −0.225, creativity −0.150, constraint_adherence −0.325; n=20 each), not concentrated on any single dimension.
 
+## Per-response causal SELF contrast (label-swap)
+
+Restricting to responses shown once with the judge's self-label and once with a non-self label, the per-response delta = composite(self-displayed) − composite(other-displayed) gives the cleanest causal SELF effect:
+
+| Judge | n | Mean Δ | Δ > 0 | sign-test p |
+|---|---:|---:|---:|---:|
+| Claude  | 20 | +0.180 | 12/20 | 0.077 |
+| **Gemini** | 20 | **+0.440** | **15/20** | **0.001** |
+| GPT-5.5 | 20 | +0.000 | 0/20 (all exactly 0) | n/a |
+| Kimi    | – | pending | – | – |
+
+Gemini's per-actual-author breakdown is the headline: self-uplift is largest on **Kimi-authored** responses (+0.743, n=7) vs Claude-authored (+0.400, n=5), GPT-authored (+0.150, n=4), or Gemini's own (+0.250, n=4). The bias raises the floor on low-baseline content rather than the ceiling on already-strong content. Full breakdown in [`paired_self_response_level.md`](paired_self_response_level.md).
+
 ## Non-self author-quality diagnostic (C1 originals only)
 
 Using only judgments **from non-self judges** of C1 originals (i.e., excluding the self-judging rows whose bias is under study), the underlying response quality differs sharply by author:
