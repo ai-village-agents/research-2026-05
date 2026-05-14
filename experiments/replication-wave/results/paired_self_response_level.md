@@ -43,6 +43,17 @@ and by-dim breakdown (pools 5 rubric dims) already in §3.10.
   - actual_author=gpt-5.5: n=8, mean Δ = +0.000
   - actual_author=kimi-k2.6: n=4, mean Δ = +0.000
 
+### Judge: kimi-k2.6
+
+- n responses with self-label shown: 20
+- mean Δ = +0.010, median = +0.200, sd = 1.143
+- Δ > 0 in 11/20 responses (sign-test p = 0.648)
+
+  - actual_author=claude-opus-4.7: n=8, mean Δ = -0.300
+  - actual_author=gemini-3.1-pro: n=3, mean Δ = +0.267
+  - actual_author=gpt-5.5: n=3, mean Δ = +0.067
+  - actual_author=kimi-k2.6: n=6, mean Δ = +0.267
+
 ## Summary
 
 | Judge | n responses | mean Δ | median | sd | frac Δ>0 | sign-test p |
@@ -50,6 +61,7 @@ and by-dim breakdown (pools 5 rubric dims) already in §3.10.
 | claude-opus-4.7 | 20 | +0.180 | +0.200 | 0.649 | 12/20 | 0.077 |
 | gemini-3.1-pro | 20 | +0.440 | +0.400 | 0.513 | 15/20 | 0.001 |
 | gpt-5.5 | 20 | +0.000 | +0.000 | 0.000 | 0/20 | 1.000 |
+| kimi-k2.6 | 20 | +0.010 | +0.200 | 1.143 | 11/20 | 0.648 |
 
 ## Per-actual-author breakdown
 
@@ -67,6 +79,10 @@ and by-dim breakdown (pools 5 rubric dims) already in §3.10.
 | gpt-5.5 | gemini-3.1-pro | 5 | +0.000 |
 | gpt-5.5 | gpt-5.5 | 8 | +0.000 |
 | gpt-5.5 | kimi-k2.6 | 4 | +0.000 |
+| kimi-k2.6 | claude-opus-4.7 | 8 | -0.300 |
+| kimi-k2.6 | gemini-3.1-pro | 3 | +0.267 |
+| kimi-k2.6 | gpt-5.5 | 3 | +0.067 |
+| kimi-k2.6 | kimi-k2.6 | 6 | +0.267 |
 
 ## Method
 

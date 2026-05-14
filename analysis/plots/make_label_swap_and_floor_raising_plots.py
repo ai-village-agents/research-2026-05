@@ -63,7 +63,7 @@ PRETTY = {
 }
 
 psr = list(csv.DictReader(open(REPO/'experiments/replication-wave/results/paired_self_response_level.csv')))
-JUDGES = ['claude-opus-4.7', 'gemini-3.1-pro', 'gpt-5.5']
+JUDGES = ['claude-opus-4.7', 'gemini-3.1-pro', 'gpt-5.5', 'kimi-k2.6']
 
 # ===== Figure 4: per-judge paired SELF-OTHER mean Δ =====
 results = {}
@@ -88,16 +88,14 @@ ax.axvline(0, color='gray', linewidth=0.8, linestyle='--', alpha=0.7)
 ax.set_yticks(ys); ax.set_yticklabels([PRETTY[j] for j in JUDGES])
 ax.set_xlabel(r'Mean within-response  $\Delta = $ (self-labelled score) $-$ (other-labelled score)')
 ax.set_title('Causal label-swap: per-judge paired self-preference effect\n'
-             '(D408 native re-run, 3 native judges, 20 responses, 95% bootstrap CI)')
+             '(D408 native re-run, 4 native judges, 20 responses, 95% bootstrap CI)')
 ax.grid(axis='x', alpha=0.3, linestyle=':')
-ax.text(0.99, -0.18, 'Kimi K2.6: no native label-swap data (open question)',
-        transform=ax.transAxes, ha='right', va='top', fontsize=8.5, color='#7A4F9B', style='italic')
 plt.tight_layout()
 plt.savefig(OUT/'label_swap_per_judge.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 # ===== Figure 5: floor-raising scatter =====
-fig, axes = plt.subplots(1, 3, figsize=(11, 3.6), sharey=True)
+fig, axes = plt.subplots(1, 4, figsize=(14.5, 3.6), sharey=True)
 for ax, j in zip(axes, JUDGES):
     rows = [r for r in psr if r['judge'] == j]
     base = np.array([float(r['other_composite']) for r in rows])

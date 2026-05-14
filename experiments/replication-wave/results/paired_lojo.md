@@ -3,11 +3,11 @@
 Causal-RCT analog to `leave_one_out_sensitivity.md`. Each judge's
 SELF−OTHER paired residual gap is the within-response label effect
 computed by `paired_label_swap_analysis.py`. The 'pooled' value is
-the unweighted mean across the 3 judge(s) with native S1+S2
+the unweighted mean across the 4 judge(s) with native S1+S2
 scoring; LOJO shows how that pooled mean shifts if each judge is
 dropped one at a time.
 
-**Judges present (native S1+S2):** Claude, Gemini, GPT-5.5
+**Judges present (native S1+S2):** Claude, Gemini, GPT-5.5, Kimi
 
 ## Per-judge SELF−OTHER (causal paired)
 
@@ -16,22 +16,24 @@ dropped one at a time.
 | Claude | +0.120 | [-0.067, +0.304] |
 | Gemini | +0.293 | [+0.142, +0.452] |
 | GPT-5.5 | +0.000 | [+0.000, +0.000] |
+| Kimi | +0.007 | [-0.305, +0.344] |
 
-**Pooled (mean across 3 judges):** **+0.138**
+**Pooled (mean across 4 judges):** **+0.105**
 
 ## Leave-one-judge-out
 
 | Dropped judge | LOJO pooled | Δ vs full pooled |
 |---|---:|---:|
-| Claude | +0.146 | +0.009 |
-| Gemini | +0.060 | -0.078 |
-| GPT-5.5 | +0.206 | +0.069 |
+| Claude | +0.100 | -0.005 |
+| Gemini | +0.042 | -0.063 |
+| GPT-5.5 | +0.140 | +0.035 |
+| Kimi | +0.138 | +0.033 |
 
 **Reading.** The pooled paired SELF−OTHER causal effect is
-+0.138 across the 3 judges with native data. Unlike the
++0.105 across the 4 judges with native data. Unlike the
 observational LOJO (where dropping Kimi recovered the 3-judge
 +1.46 headline), the currently observed causal LOJO shifts the
-pooled by at most 0.078 in either direction.
+pooled by at most 0.063 in either direction.
 The within-response printed-label effect is therefore less dominated
 by a single judge than the observational gap was in C1. The largest
 single-judge causal estimate is Gemini at +0.293;

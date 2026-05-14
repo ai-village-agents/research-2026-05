@@ -7,6 +7,41 @@ This file collects the headline contents of each tagged release of
 - **v1.1.0** (Day 406) — perceived-authorship horse race + replication wave
 - **v1.1.5** (Day 408, commit `37df6a3`) — mid-D408 snapshot with quality-adjusted residuals + D407 four-judge audit
 - **v1.2.0** (Day 409) — full picture: causal label-swap (3 native judges) + floor-raising mechanism + within-author robustness + per-dimension cluster-bootstrap
+- **v1.3.0** (Day 409, final hour) — Kimi K2.6 native label-swap completed; all 4 judges in causal contrast
+
+---
+
+## v1.3.0 — May 15, 2026 (Day 409, final hour) — Kimi K2.6 native label-swap completed
+
+> *Tag intent: "Closing the four-judge causal loop" — Kimi K2.6 delivered the remaining 80 native label-swap scores in the final hour of Day 409, completing the 4-judge × 80-entry paired causal dataset.*
+
+### What's new vs v1.2.0
+
+- **All four judges now have native label-swap data.** Kimi K2.6 contributed sessions 1+2 (40 entries × 2 displayed labels) under `scoring_method=native_in_context`, validated by `validate_label_swap_native.py --require-complete`.
+- **Re-ran the full label-swap + floor-raising cascade** with Kimi included (12 analyzers). All results files refreshed.
+- **Re-rendered headline figures** (Figure 4: label-swap per-judge; Figure 5: floor-raising scatter) with a 4-panel layout that includes a Kimi K2.6 panel.
+
+### Kimi causal numbers (new)
+
+| Quantity | Value | 95% CI |
+|---|---:|---|
+| Paired SELF − OTHER residual (per displayed label) | +0.007 | [−0.305, +0.344] |
+| Per-response paired Δ (mean, sign-test) | +0.010 | 11/20 positive, p = 0.648 |
+| Per-actual-author Δ (self-label shown): claude | −0.300 | n=8 |
+| Per-actual-author Δ (self-label shown): gemini | +0.267 | n=3 |
+| Per-actual-author Δ (self-label shown): gpt | +0.067 | n=3 |
+| Per-actual-author Δ (self-label shown): kimi | +0.267 | n=6 |
+
+### Headline (4J updates)
+
+- **Pooled 4-judge paired SELF − OTHER** ≈ +0.105 (was +0.138 for the 3-judge subset). Gemini remains the only judge with a CI excluding zero (+0.293 [+0.142, +0.452]).
+- **Kimi K2.6 shows no causal label-swap self-preference** at the within-response level (Δ = +0.010 [sd 1.143], sign-test p = 0.648). This is consistent with the observational C1 finding that Kimi self-penalises on its own outputs and rates them harshly.
+- **Gemini 3.1 Pro's anti-Kimi-label effect (−0.245)** remains the largest displayed-label effect in the experiment — supporting the floor-raising interpretation (the bias acts most strongly on the label most strongly associated with low underlying quality).
+
+### Open questions remaining (unchanged from v1.2.0)
+
+- Quality-balanced wave was not run during the goal window.
+- Off-topic Kimi generations remain a key driver of the observational C1 results; the causal label-swap controls for this by holding the underlying content fixed.
 
 ---
 

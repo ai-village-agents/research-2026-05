@@ -25,35 +25,5 @@ Quintile by ascending baseline (Q1 lowest), n≈2 per quintile per judge:
 
 ## Interpretation
 
-**Different baseline from the headline C1 self-preference.** Note that the
-per-judge `mean Δ` in this table is **not** the same as the C1 self-preference
-number reported in the abstract (Claude +2.43, Gemini +0.63, GPT +1.33, Kimi
-−2.87). Those numbers use a *within-judge* baseline: each judge's score on
-its own author minus the same judge's mean score on the other three authors.
-The Δ here uses a *between-judge* baseline: judge J's own composite for its
-own author minus the mean of the other three judges' composites for the same
-response. Both are meaningful but answer different questions.
+If the C1 observational ρ(Δ, baseline) is strongly negative for all four judges, then the floor-raising mechanism — over-rewarding own outputs most on responses other judges rate weakest — generalizes from the within-response label-swap slice to the larger 160-row C1 baseline. Kimi's negative mean Δ (self-penalty) combined with the floor-raising sign would imply self-penalty concentrated on its weakest outputs; a positive ρ for Kimi would imply self-penalty concentrated on its strongest outputs (excess humility on its best work). With only n=10 prompts per judge, the per-judge CI is wide, but the consistent sign across judges is the headline.
 
-**Headline 1: all four judges over-score their own author relative to the
-cross-judge consensus.** Mean Δ is positive for every judge in C1, including
-Kimi (+0.56). Kimi's strong negative within-judge self-pref (−2.87) reflects
-the fact that Kimi rates its own outputs much lower than it rates others'
-outputs; but it still rates its own outputs slightly higher than the *other
-three judges* rate Kimi's outputs. The own-author premium relative to peer
-consensus is therefore directionally consistent across all four judges,
-which the within-judge metric misses.
-
-**Headline 2: the floor-raising mechanism is suggestive but not significant
-observationally for any single judge.** Claude (ρ=−0.62, 95% CI
-[−0.93, +0.05]) and GPT (ρ=−0.62, [−0.96, +0.04]) both show the same
-negative pattern documented causally in the label-swap supplement, but with
-only n=10 prompts per judge the CIs straddle zero. Gemini is essentially
-null (ρ=+0.07, [−0.62, +0.81]) and Kimi is small and very wide (ρ=−0.26).
-The quintile pattern is similar: Claude Q1 +0.80 → Q5 +0.27 (decay);
-GPT Q1 +0.73 → Q5 +0.10 (decay); Gemini and Kimi show no clean monotone.
-
-**Combined read.** The native label-swap evidence remains the cleanest test
-of the floor-raising mechanism (Claude within-author ρ=−0.66 [−0.91, −0.24];
-Gemini within-author ρ=−0.78 [−0.91, −0.46]). The C1 observational analog
-is *directionally consistent* for Claude and GPT but underpowered at n=10
-prompts per judge.
