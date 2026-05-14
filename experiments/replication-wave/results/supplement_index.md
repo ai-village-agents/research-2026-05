@@ -39,6 +39,8 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`prompt_category_bias.md`](prompt_category_bias.md) and [`prompt_category_bias.csv`](prompt_category_bias.csv) — C1 self-preference gaps by prompt category, using the standard 1–10 composite scale.
 - [`radar_chart_data.md`](radar_chart_data.md) and [`radar_chart_data.csv`](radar_chart_data.csv) — per-dimension judge × condition gap table for radar/spider plots.
 - [`length_bias_report.md`](length_bias_report.md) and [`length_bias_correlation.csv`](length_bias_correlation.csv) — exploratory check of response-length correlations with C1/C2/C3 scores.
+- [`prompt_response_length.md`](prompt_response_length.md) — prompt-level breakdown of baseline C1 response lengths by author.
+- [`prompt_response_format.md`](prompt_response_format.md) and [`format_bias.md`](format_bias.md) — prompt-level format features and exploratory correlations between formatting elements (bold tags, list items, code blocks) and composite scores.
 
 ## Robustness, provenance, and implementation diagnostics
 
@@ -47,12 +49,10 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`c3_warning_failure_analysis.md`](c3_warning_failure_analysis.md) — C1→C3 delta diagnostic with caveat about heterogeneous C3 delivery.
 - [`paraphrase_shifts_report.md`](paraphrase_shifts_report.md) — stylometric changes introduced by C2 paraphrasers.
 - [`packet_order_diagnostic.md`](packet_order_diagnostic.md) plus `packet_order_*.csv` — packet-position/fatigue smoke test using public score-sheet order and exact response-text author matching, with item/judge adjusted residuals.
+- [`scale_normalized_self_gap.md`](scale_normalized_self_gap.md) and [`scale_normalized_self_gap.csv`](scale_normalized_self_gap.csv) — recomputes self-preference gaps after within-judge/condition z-score and percentile normalization to check whether heterogeneity is a score-scale artifact.
 - [`c2_stimulus_sheet_audit.csv`](c2_stimulus_sheet_audit.csv) and related C2-v2 preview reports — provenance checks for the Kimi-paraphraser v1→v2 refresh.
 
 ## Pending follow-up
 
 - Kimi K2.6 native label-swap S1+S2 rows are still pending. When they land, rerun the paired label-swap analyzers, `paired_label_swap_lojo.py`, and the headline audit, then update the primary narrative outputs.
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
-- [Length by Prompt Response Diagnostic](prompt_response_length.md): A prompt-level breakdown of the lengths of baseline C1 responses by each author.
-- [Format by Prompt Response Diagnostic](prompt_response_format.md): A prompt-level breakdown of format elements (bold, lists, code) used by each author.
-- [Format Feature Correlates](format_bias.md): How formatting elements (bold tags, list items) correlate with a judge's composite score.
