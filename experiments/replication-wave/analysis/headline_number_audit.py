@@ -86,6 +86,11 @@ def parse_paired_md() -> dict[str, PairedJudge]:
     return out
 
 
+def load_quality_adjusted_residual() -> dict[str, dict[str, float]]:
+    rows = read_csv(RESULTS / "quality_adjusted_residual.csv")
+    return {r["judge"]: {k: float(v) for k, v in r.items() if k != "judge"} for r in rows}
+
+
 def load_perceived() -> dict[str, tuple[float, float, float]]:
     rows = read_csv(RESULTS / "perceived_self_main_coefficients.csv")
     return {r["term"]: (float(r["beta"]), float(r["boot_ci_low"]), float(r["boot_ci_high"])) for r in rows}
@@ -118,6 +123,7 @@ def main() -> None:
     quality = load_author_quality()
     paired = parse_paired_md()
     perceived = load_perceived()
+    qadj = load_quality_adjusted_residual()
 
     kimi_q = float(quality["kimi-k2.6"]["mean"])
     non_kimi_q = sum(float(quality[j]["mean"]) for j in JUDGES if j != "kimi-k2.6") / 3
@@ -137,6 +143,13 @@ def main() -> None:
         errors.append(f"Gemini anti-Kimi prompt sign count changed: {gem_kimi_neg}/{gem_kimi_nonzero} negative.")
     if (gem_self_pos, gem_self_nonzero) != (9, 10):
         errors.append(f"Gemini self-label prompt sign count changed: {gem_self_pos}/{gem_self_nonzero} positive.")
+
+    qadj_residuals = [qadj[j]["residual"] for j in JUDGES]
+    qadj_obs = [qadj[j]["obs_gap"] for j in JUDGES]
+    mean_resid = sum(qadj_residuals) / len(qadj_residuals)
+    mean_obs_qadj = sum(qadj_obs) / len(qadj_obs)
+    if abs(mean_resid - mean_obs_qadj) > 0.01:
+        errors.append(f"Quality-adjusted residual decomposition identity broken: mean_resid={mean_resid:+.4f} vs mean_obs={mean_obs_qadj:+.4f}")
 
     public_checks = {
         ROOT / "README.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "+1.53"],
@@ -170,6 +183,10 @@ def main() -> None:
     lines.append(f"| Non-Kimi non-self C1 author quality | {plain(non_kimi_q, 3)} | `author_quality_nonself_c1.csv` |")
     lines.append(f"| β_predicted_self | {plus(pred_beta)} [{plus(pred_lo)}, {plus(pred_hi)}] | `perceived_self_main_coefficients.csv` |")
     lines.append(f"| β_actual_self | {plus(actual_beta)} [{plus(actual_lo)}, {plus(actual_hi)}] | `perceived_self_main_coefficients.csv` |")
+    for judge in JUDGES:
+        r = qadj[judge]
+        lines.append(f"| {judge} quality-adjusted C1 residual | {plus(r['residual'], 3)} | `quality_adjusted_residual.csv` |")
+    lines.append(f"| Mean quality-adjusted residual (=pooled C1 self-pref) | {plus(mean_resid, 3)} | `quality_adjusted_residual.csv` |")
     lines.append("")
     lines.append("## Recognition")
     lines.append("")
