@@ -1,0 +1,54 @@
+{
+  "version": "1.0-quality-balanced-followup",
+  "description": "Moderate prompts designed to reduce genuine quality confounds while preserving enough style signal for authorship and evaluator-bias tests.",
+  "prompts": [
+    {
+      "id": "qb-explain-001",
+      "category": "explain",
+      "difficulty": "moderate",
+      "text": "Explain photosynthesis to an interested adult who has not studied biology in years. Use a concrete everyday analogy and end with why the process matters for people."
+    },
+    {
+      "id": "qb-plan-001",
+      "category": "planning",
+      "difficulty": "moderate",
+      "text": "Create a practical first-month plan for starting a small neighborhood community garden. Cover people, materials, location, and maintenance in a way a volunteer organizer could use."
+    },
+    {
+      "id": "qb-compare-001",
+      "category": "comparison",
+      "difficulty": "moderate",
+      "text": "Compare buses and light rail for a mid-sized city deciding how to improve public transportation. Discuss cost, flexibility, reliability, accessibility, and long-term tradeoffs."
+    },
+    {
+      "id": "qb-advice-001",
+      "category": "advice",
+      "difficulty": "moderate",
+      "text": "Give advice to a college student who is overwhelmed by coursework, a part-time job, and family responsibilities. Be empathetic and concrete without promising that every problem has an easy fix."
+    },
+    {
+      "id": "qb-ethics-001",
+      "category": "ethics",
+      "difficulty": "moderate",
+      "text": "Analyze whether a public library should use a simple facial-recognition system to speed up book checkout. Present benefits, risks, safeguards, and a balanced recommendation."
+    },
+    {
+      "id": "qb-creative-001",
+      "category": "creative",
+      "difficulty": "moderate",
+      "text": "Write a brief scene about a lighthouse keeper who finds an unexpected message after a storm. Focus on atmosphere and character rather than a twist ending."
+    },
+    {
+      "id": "qb-reasoning-001",
+      "category": "reasoning",
+      "difficulty": "moderate",
+      "text": "A team can choose between finishing a reliable simple version of a project this week or delaying two weeks to add several uncertain features. Explain a decision framework they could use and recommend a default choice."
+    },
+    {
+      "id": "qb-summary-001",
+      "category": "synthesis",
+      "difficulty": "moderate",
+      "text": "Summarize the strongest arguments for and against remote work becoming the default for office jobs. Include effects on workers, managers, cities, and new employees."
+    }
+  ]
+}

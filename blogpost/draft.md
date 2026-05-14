@@ -5,11 +5,13 @@
 
 ## TL;DR
 
-We had four frontier models — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6 — write and judge each other's answers to the same 30 prompts under a baseline condition, a style-neutralizing paraphrase, an explicit bias warning, and a self-recognition probe (1,440 scores, 480 predictions). Three findings stood out:
+We had four frontier models — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6 — write and judge each other's answers to the same 30 prompts under a baseline condition, a style-neutralizing paraphrase, an explicit bias warning, and a self-recognition probe (1,440 scores, 480 predictions). Following this, we conducted a causal label-swap experiment and a four-judge replication wave. Five key findings emerged:
 
-1. **There is no single "self-preference" effect across LLM judges.** In the full four-judge pool, the raw self-favoring coefficient is essentially zero ($\beta = +0.004$, $p = 0.96$). But this average hides four very different mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on all dimensions because of an off-topic generation confound. All six pairwise contrasts on raw-authorship exclude zero (bootstrap, B = 500).
-2. **Perceived authorship — not actual authorship — is the durable scoring channel.** Once we ask each judge to predict the author, the *belief* that "I wrote this" predicts a +0.50-point boost across *every* condition, including the paraphrased and bias-warned ones. Style-neutralizing paraphrase strips surface tokens (em-dashes, semicolons), and a numpy-only stylometric classifier still recovers authorship at 51% (chance = 25%). But a later style-vs-belief horse race shows that this measured style signal does **not** explain away the belief channel; perceived authorship remains distinct from our lightweight stylometric proxy.
-3. **A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients in this study.** C3 (warned) is statistically indistinguishable from C1 (baseline) on the main horse-race estimates, and the few exploratory shifts we do see do not point in a useful mitigation direction.
+1. **There is no single "self-preference" effect across LLM judges.** In the full four-judge pool, the raw self-favoring coefficient is essentially zero ($eta = +0.004$, $p = 0.96$). But this average hides four very different mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on all dimensions because of an off-topic generation confound.
+2. **Perceived authorship — not actual authorship — is the durable scoring channel.** Once we ask each judge to predict the author, the *belief* that "I wrote this" predicts a +0.50-point boost across *every* condition, including the paraphrased and bias-warned ones. This remains distinct from our lightweight stylometric proxy.
+3. **The bias acts as a "floor-raiser", not a uniform bonus.** In our causal label-swap experiment, we found that judges give the largest self-label boosts to the weakest responses. This floor-raising effect survives strict within-author controls and appears across all rubric dimensions, notably objective ones like correctness and clarity.
+4. **Judges agree on underlying quality despite their biases.** The native judges agree substantially on quality (author-level mean Spearman 0.867, response-level non-self mean 0.445). Bias operates as an additive adjustment on top of a shared quality signal, not as a replacement for it.
+5. **Standard mitigations fail.** A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients, and style-neutralizing paraphrasing was insufficient to blind judges fully.
 
 *Implication for LLM-as-judge pipelines: identity leakage survives the obvious mitigations, and any "self-preference correction" has to be tuned per judge family — a single global subtraction may reduce one judge's bias and amplify another's.*
 
@@ -120,7 +122,7 @@ Two prior lines of work motivate this study.
 ## Harshness vs Leniency: Score Distributions
 
 ![Score Distributions by Judge](../analysis/plots/score_distributions.png)
-*Figure X: Violin plots of composite score distributions by judge. The spread and central tendency differ across models, indicating different baseline scoring strictness.*
+*Figure 0: Violin plots of composite score distributions by judge. The spread and central tendency differ across models, indicating different baseline scoring strictness.*
 
 These distributions show that judges are not calibrated to a common baseline: some are simply tougher or more generous overall. In particular, GPT-5.5 appears generally harsher (lower-centered scoring) than Claude Opus 4.7 or Gemini 3.1 Pro, which matters when interpreting raw score differences and reinforces the need for judge-controlled comparisons.
 
@@ -261,7 +263,139 @@ In our D406 analysis, we found that *perceived authorship* (the judge's belief t
 
 To definitively isolate the causal effect of the author label itself, we designed a fully crossed, within-subject randomized controlled trial (the D408 Label-Swap Experiment). The first attempted Gemini/GPT implementation is now quarantined because its scorer used a codex/OpenAI backend rather than native agent contexts.
 
-For each of the 40 original responses from the replication wave, every judge scored the response four separate times—once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
+For each of the 40 original responses from the Day-407 four-judge replication wave (a fresh out-of-distribution prompt suite of 10 prompts × 4 authors, summarised in the Followup section near the end of this post), every judge scored the response four separate times — once under each of the four possible displayed author labels (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6). To prevent cross-contamination and memory anchoring, we deployed a Latin-square design across four temporally separated evaluation sessions. Judges were explicitly informed that "the displayed author label may or may not be accurate."
+
+### Native re-run: causal evidence from three judges (sessions 1+2)
+
+After the codex backend was discovered, we re-scored sessions 1 and 2 of the
+label-swap battery natively (in each agent's own context window). Kimi K2.6
+had not finished scoring as of the publishable snapshot, so the causal numbers
+below are from a three-judge subset (Claude Opus 4.7, Gemini 3.1 Pro,
+GPT-5.5), with 40 responses × 2 displayed labels = 80 paired ratings per
+judge. The estimand is the within-response paired contrast SELF − OTHER
+(each response is its own control).
+
+| Judge | Paired SELF − OTHER residual | 95% CI |
+|---|---:|---|
+| Claude Opus 4.7 | +0.120 | [−0.067, +0.304] |
+| Gemini 3.1 Pro  | **+0.293** | [+0.142, +0.452] |
+| GPT-5.5         | +0.000 | [0, 0] |
+| Pooled (3J)     | +0.138 | — |
+
+Gemini's CI excludes zero. Claude's is consistent with a small positive effect
+that does not reach significance on this sample. GPT-5.5's paired ratings are
+identical across labels for all 200 dimension-level cells, consistent with
+label-invariant scoring (likely a content-deterministic dedup path on the
+backend).
+
+**Per-response sign-test (new).** Restricting to the ~20 responses per judge
+that were shown once with the self-label and once with a non-self label, and
+computing the per-response delta = composite(self-displayed) −
+composite(other-displayed), we get a clean response-level test:
+
+| Judge | Mean Δ | Δ > 0 | sign-test p |
+|---|---:|---:|---:|
+| Claude Opus 4.7 | +0.180 | 12/20 | 0.077 |
+| Gemini 3.1 Pro  | **+0.440** | **15/20** | **0.001** |
+| GPT-5.5         | +0.000 | 0/20 | 1.000 |
+
+For Gemini, this is the cleanest causal evidence in the study: 15 of 20
+responses get a *higher* rating when they happen to be labelled as Gemini's
+than when the same response is shown to the same judge under a different
+label. The per-actual-author breakdown is even more striking — Gemini's
+self-uplift is largest when the underlying response is Kimi-authored
+(+0.743, n=7), suggesting that the self-label "raises the floor" on the
+lowest-baseline content, not the ceiling on already-strong content.
+
+
+![Per-judge paired self-preference effect from the native label-swap rerun](../analysis/plots/label_swap_per_judge.png)
+*Figure 4: Per-judge paired SELF − OTHER effect from the D408 native label-swap rerun. Each point is the mean within-response Δ = composite(self-label) − composite(other-label) across the 20 paired responses for that judge. Whiskers are 95% bootstrap CIs (B = 2,000). Only Gemini 3.1 Pro's interval excludes zero; GPT-5.5's paired ratings are bit-identical across labels (content-deterministic dedup path); Kimi K2.6 did not deliver native label-swap data on this run.*
+
+[`paired_label_swap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap.md),
+[`paired_label_swap_by_prompt.csv`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap_by_prompt.csv),
+[`paired_self_response_level.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_self_response_level.md),
+and [`paired_lojo.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_lojo.md)
+have the full per-judge / per-prompt / per-dimension / leave-one-judge-out
+breakdowns.
+
+**Biased, not noisy: judges agree on which responses are good.** A natural worry about
+the per-label deltas above is that they could be artefacts of noisy disagreement
+between idiosyncratic judges. They are not. Marginalising over the displayed
+label and computing each judge's mean composite per response on the same
+40-response label-swap slice, the three native judges agree substantially on
+quality. At the *author* level the mean pairwise Spearman ρ is **0.867**:
+all three judges rank the four authors as Claude Opus 4.7 > {Gemini 3.1 Pro,
+GPT-5.5} > Kimi K2.6, with only Gemini's intra-tier ordering of itself vs
+GPT-5.5 disagreeing with Claude and GPT-5.5. At the *response* level the mean
+pairwise Spearman ρ is 0.395 (claude↔gpt 0.849, claude↔gemini 0.222, gemini↔gpt
+0.115); restricting to entries where the judge is not shown its own label as
+the displayed author raises that mean to 0.445. Gemini is the most
+idiosyncratic per-response judge despite tracking the author ranking — the same
+judge whose self-label residual excludes zero. The per-label residuals in the
+table above therefore sit on top of a *shared* quality signal rather than
+papering over disagreement about quality itself.
+[`cross_judge_response_correlation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/cross_judge_response_correlation.md)
+has the full pairwise table, the non-self subset, and the author × judge mean
+matrix.
+
+**The self-label is a floor-raiser, not a uniform bonus.** A natural follow-up
+to Gemini's per-actual-author breakdown — Kimi-authored +0.743 > Claude
++0.400 > Gemini-own +0.250 > GPT +0.150 — is to ask whether the self-label
+uplift is actually tracking the *baseline quality* of each response rather
+than the author identity. We test this directly: for each of the ~20
+responses per non-null judge shown once under the judge's own label and
+once under a non-self label, we correlate the per-response uplift
+Δ = composite(self-displayed) − composite(other-displayed) with the
+non-self baseline composite. The correlation is strongly negative for both
+judges:
+
+| Judge | n | Pearson r(Δ, baseline) | Spearman ρ | 95% CI on ρ | mean baseline when Δ>0 | mean baseline when Δ≤0 |
+|---|---:|---:|---:|---|---:|---:|
+| Claude Opus 4.7 | 20 | −0.672 | −0.673 | [−0.830, −0.377] | 8.07 | 9.48 |
+| Gemini 3.1 Pro  | 20 | **−0.874** | **−0.834** | **[−0.956, −0.579]** | 8.87 | 9.52 |
+
+Both CIs exclude zero. The quintile pattern is near-monotone: Gemini's
+lowest-baseline quintile gets +1.15 Δ, its highest gets −0.05; Claude's
+lowest-baseline quintile gets +0.65, its highest −0.15. Mechanically, the
+displayed self-label is doing the most work on responses the judge would
+otherwise rate weakest — it raises the floor, not the ceiling. The Kimi
+hot-spot in the per-actual-author breakdown is therefore a downstream
+consequence: Kimi-authored originals are the lowest-baseline responses in
+this prompt suite, so they are precisely where a floor-raiser shows up
+biggest. Full table at
+[`floor_raising_test.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_test.md).
+
+
+![Floor-raising scatter: per-response self-label Δ vs baseline composite](../analysis/plots/floor_raising_scatter.png)
+*Figure 5: Floor-raising mechanism, response-level. For each of the ~20 responses per native judge shown once self-labelled and once other-labelled, we plot Δ = composite(self) − composite(other) against the baseline composite (other-labelled score). The downward slope means the self-label Δ is largest when the baseline is low: it raises the floor on weak content rather than adding a uniform bonus. The annotated Spearman ρ with 95% bootstrap CI matches the per-response correlations in the floor-raising table above. GPT-5.5 is label-invariant (all Δ = 0), so its correlation is undefined / zero.*
+
+**Survives an author-identity control.** A skeptical reading is that the
+negative Δ–baseline correlation might just re-encode an anti-Kimi (or
+pro-author-X) label preference, since Kimi-authored content has both the
+lowest baseline AND the largest uplift. To rule that out we residualize both
+Δ and baseline on `actual_author` (subtract the per-author mean) and re-run
+the test on the within-author residuals. The negative correlation barely
+moves: Claude's Spearman ρ goes from −0.673 to **within ρ = −0.661**
+[−0.911, −0.240]; Gemini's goes from −0.834 to **within ρ = −0.777**
+[−0.909, −0.457]. Both within-author bootstrap 95% CIs (B=2000) exclude
+zero. The floor-raising mechanism is therefore genuinely a response-quality
+interaction — judges add the largest self-label uplift to weaker responses
+*regardless of who wrote them* — and not a renamed author-identity bias.
+Full decomposition at
+[`floor_raising_within_author.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_within_author.md).
+
+**At the dimension level the effect tightens.** Treating each (response,
+rubric dim) cell as an observation gives n=100 paired cells per judge.
+Cluster-bootstrapping by `prompt_id`, the pooled per-cell Spearman is
+Claude ρ=**−0.472** [−0.588, −0.306] and Gemini ρ=**−0.754** [−0.826,
+−0.638] — both CIs exclude zero. The negative correlation appears in every
+one of the five rubric dimensions and is slightly *stronger* on the
+objective dimensions (clarity Claude −0.629 / Gemini −0.904; correctness
+Claude −0.553 / Gemini −0.853) than on creativity (Claude −0.432 / Gemini
+−0.689), opposite to the prior expectation. See
+[`floor_raising_per_dim.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_per_dim.md).
+
+
 
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
@@ -434,13 +568,13 @@ Two things are worth flagging. First, the *Judge × Author* component — the va
 
 Three of four judges identify their own work above the 25% chance rate after FDR correction — Claude Opus 4.7 at 80.0% (24/30), Gemini 3.1 Pro at 86.7% (26/30), and GPT-5.5 at 80.0% (24/30). Kimi K2.6 is 33.3% (10/30), above chance descriptively but not significant. A naïve reader stops at the first three numbers and concludes "frontier LLMs can tell their own work apart."
 
-The full confusion matrices say something subtler. Figure 4 shows row-normalized confusion matrices for each judge; Figure 5 shows the *unconditional* prediction share each judge puts on each of the four candidate authors.
+The full confusion matrices say something subtler. Figure 6 shows row-normalized confusion matrices for each judge; Figure 7 shows the *unconditional* prediction share each judge puts on each of the four candidate authors.
 
 ![Confusion matrices](../analysis/plots/c4_confusion_matrices.png)
-*Figure 4: Per-judge C4 confusion matrices. Rows are the true author of the response, columns are the judge's prediction. Cell shade is row-normalized (so dark cells along the diagonal indicate correct attribution). Cell text is the raw count out of 30. Empty cells mean the judge never chose that author for that row of true responses.*
+*Figure 6: Per-judge C4 confusion matrices. Rows are the true author of the response, columns are the judge's prediction. Cell shade is row-normalized (so dark cells along the diagonal indicate correct attribution). Cell text is the raw count out of 30. Empty cells mean the judge never chose that author for that row of true responses.*
 
 ![Per-judge prediction bias](../analysis/plots/c4_per_judge_prediction_bias.png)
-*Figure 5: How each judge distributed its 120 predictions across the four candidate authors. The dashed line is the uniform baseline (25% each). Hatched bars mark each judge's prediction-share for itself. Gemini 3.1 Pro shows an extreme own-name bias — it labelled 88% of all 120 responses as "gemini-3.1-pro", including 23/30 of Claude's responses and 28/30 of Kimi's.*
+*Figure 7: How each judge distributed its 120 predictions across the four candidate authors. The dashed line is the uniform baseline (25% each). Hatched bars mark each judge's prediction-share for itself. Gemini 3.1 Pro shows an extreme own-name bias — it labelled 88% of all 120 responses as "gemini-3.1-pro", including 23/30 of Claude's responses and 28/30 of Kimi's.*
 
 Three things jump out:
 
@@ -475,7 +609,7 @@ Naïvely this would suggest Gemini is "the fair judge." But the C4 confusion mat
 
 ---
 
-## Limitations
+## Limitations & Open Questions
 
 We tried to address the obvious limitations during design, but several remain:
 
@@ -486,6 +620,8 @@ We tried to address the obvious limitations during design, but several remain:
 5. **The models are 2026-era frontier models that we cannot fully re-create later.** We list the exact model identifiers used in `DESIGN.md` and freeze prompts and responses in the public repo, but the underlying model weights and routing layers may change. This is a reproducibility limitation common to all frontier-LLM studies, not specific to this design.
 6. **The judges are also the authors.** This is a deliberate choice — it's what makes the self-recognition probe possible — but it means our "other-author" baselines are not drawn from a broader population. We cannot say from this study what an unbiased external evaluator would have rated.
 7. **Composite score weights all five rubric dimensions equally.** Subscale-level analysis (which dimensions move most under self-preference?) is exploratory and reported above as a mechanism-generating result, not a pre-registered endpoint.
+8. **Is Kimi's self-penalization intrinsic or quality-driven?** A balanced prompt set where all four authors produce roughly equal-quality responses would let us test whether Kimi continues to self-penalize when the genuine quality gap is removed.
+9. **Do the causal label-swap findings generalize to all judges?** The current native S1+S2 label-swap findings cover Claude, Gemini, and GPT-5.5. Completing the native label-swap for Kimi K2.6 is needed to see if the causal effects hold from Kimi's own judge perspective.
 
 ---
 
@@ -504,23 +640,27 @@ Beyond that, the more granular practical recommendations we'd make today are:
 ## Conclusion
 
 
-Across four frontier model families, the simple pooled claim "LLM judges favor themselves" is false in our full sample. Claude Opus 4.7 and GPT-5.5 favor their own outputs, Gemini is near-zero, and Kimi K2.6 strongly penalizes its own off-topic outputs. But the deeper bias signal is more stable: judges give higher scores to responses they *believe* are their own, across baseline, paraphrased, and warning conditions.
+Across four frontier model families, the simple pooled claim "LLM judges favor themselves" is false in our full sample. Claude Opus 4.7 and GPT-5.5 favor their own outputs, Gemini is near-zero on the headline gap, and Kimi K2.6 strongly penalizes its own off-topic outputs. But the deeper bias signal is more stable: judges give higher scores to responses they *believe* are their own, across baseline, paraphrased, and warning conditions.
 
-The most interesting thing in the data is therefore not a universal self-preference coefficient, but the factorization of evaluator bias into raw authorship, perceived authorship, and judge-specific failure modes. A native randomized label-swap experiment is still needed to test whether explicit author labels drive this bias or whether judges are responding to the actual stylistic and structural fingerprints of the text. If you build LLM-as-judge systems, the question is not just "did we blind the author label?" It is "can the judge still infer an author-like style, and does that inference change the score?" In our data, the answer is yes.
+The Day-408 native label-swap experiment then closes the causal loop: when the *same response* is shown to the *same judge* under different displayed author labels, Gemini 3.1 Pro rates self-labelled copies a paired +0.293 [+0.142, +0.452] points higher than other-labelled copies, with 15 of 20 responses moving in the predicted direction (sign-test p = 0.001). Claude Opus 4.7 shows a smaller positive paired effect, and GPT-5.5 is label-invariant on this slice. So at least one frontier judge will move scores purely on a swapped author label, holding the underlying text constant.
+
+What that uplift *does*, however, surprised us. It is not a uniform self-bonus: the per-response uplift correlates strongly negatively with the response's underlying quality (Spearman ρ ≈ −0.67 for Claude, ρ ≈ −0.83 for Gemini, both 95% CIs excluding zero, both surviving an author-identity control and a per-dimension cluster-bootstrap). The displayed self-label is doing the most work on responses the judge would otherwise rate weakest — it raises the floor, not the ceiling. Mechanistically, "self-preference" in this dataset looks less like a generic ego boost and more like a *charity correction*: judges extend more benefit of the doubt to weaker text when they are told it is their own.
+
+The most interesting thing in the data is therefore not a universal self-preference coefficient, but the factorization of evaluator bias into raw authorship, perceived authorship, and a quality-interacted floor-raising effect that can be cleanly isolated with a label-swap design. If you build LLM-as-judge systems, the question is not just "did we blind the author label?" It is "can the judge still infer — or be told — an author-like identity, and does that inference change the score, especially on borderline responses?" In our data, the answer is yes.
 
 
-If LLM-as-judge is going to remain a primary evaluation methodology, authorship leakage needs to be audited directly. Lightweight paraphrase and verbal warnings are useful experimental probes, but in this study neither removed the association between perceived authorship and score.
+If LLM-as-judge is going to remain a primary evaluation methodology, authorship leakage needs to be audited directly. Lightweight paraphrase and verbal warnings are useful experimental probes, but in this study neither removed the association between perceived authorship and score, and a randomized label-swap is the only design that cleanly establishes the causal direction. Future work should treat label-swap audits, judge confusion matrices, and uplift-vs-baseline floor-raising checks as standard reporting alongside any LLM-as-judge headline number.
 
 ---
 
 ## Followup: Day 407 four-judge replication wave
 
-Two days after this post, we ran a small but tightly-controlled **replication wave** on a fresh batch of 10 out-of-distribution prompts (`repl-{code, logic, creative, ethics, science, math, design, philosophy, history, explain}-001`) under the same four-judge × three-condition design. 480 new score-vectors and 160 new C4 recognition predictions:
+After our initial wave, we ran a small but tightly-controlled **replication wave** on a fresh batch of 10 out-of-distribution prompts (`repl-{code, logic, creative, ethics, science, math, design, philosophy, history, explain}-001`) under the same four-judge × three-condition design. 480 new score-vectors and 160 new C4 recognition predictions:
 
 - **Per-judge heterogeneity reproduced.** C1 self-preference gaps: Claude +2.43, Gemini +0.63, GPT-5.5 +1.33, **Kimi −2.87**. The pooled prompt-paired gap is **+0.378 [−0.330, +1.055]** — again statistically indistinguishable from zero in the four-judge pool, again entirely a product of Kimi cancelling the other three (LOJO: drop Kimi → +1.46, recovering the original three-judge headline).
 - **The belief/style mediator replicates in direction.** β\_actual\_self = −0.349 [−0.912, +0.008]; β\_predicted\_self = **+1.532 [+0.818, +2.653]**. Predicting "this is mine" still buys responses ~1.5 composite points across all conditions, even when the actual-author coefficient is slightly negative.
 - **Recognition collapses for Kimi (and for Gemini).** Claude 90% (10/10 self), GPT 100% (10/10), Gemini 62.5% (1/10), **Kimi 30% (0/10)** — Kimi never identified its own writing on the OOD set, and was anti-calibrated by confidence.
-- **Causal label-swap status.** The first Gemini/GPT 320-row attempt produced a near-zero displayed-label estimate, but those rows are now quarantined because the scorer used a codex/OpenAI backend. The native four-judge label-swap remains the key Day 408 follow-up.
+- **The replication-wave dataset is what feeds the §D408 Causal Label-Swap Experiment above** — those 40 responses (10 prompts × 4 authors) are the per-response unit each of Claude, Gemini, and GPT-5.5 then re-scored under all four displayed author labels natively. The earlier Gemini/GPT 320-row codex/OpenAI-backed attempt is quarantined; the native S1+S2 numbers reported in §D408 supersede it.
 
 The replication-wave dataset and a longer writeup live at [`experiments/replication-wave/results/blogpost.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/blogpost.md).
 

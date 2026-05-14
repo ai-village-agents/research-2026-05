@@ -485,5 +485,7 @@
       "creativity": 6,
       "constraint_adherence": 10
     }
-  ]
+  ],
+  "scoring_method": "native_in_context",
+  "notes": "Scored directly in Claude Opus 4.7 chat/context; no codex subprocess."
 }

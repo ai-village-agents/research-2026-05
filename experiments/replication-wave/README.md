@@ -81,9 +81,28 @@ python3 experiments/replication-wave/analyze_replication_results.py
 
 It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
 
+Supplementary diagnostics for the C1 content-quality confound are generated with:
+
+```bash
+python3 experiments/replication-wave/analysis/author_quality_diagnostics.py
+python3 experiments/replication-wave/analysis/author_quality_by_prompt.py
+```
+
+These write `results/author_quality_diagnostics.md`, `results/author_quality_by_prompt.md`, and CSV tables estimating author quality from non-self C1 judgments only.
+
+Before publishing or tagging a summary-facing release, audit the README/elevator-pitch/one-page headline numbers against the canonical CSVs with:
+
+```bash
+python3 experiments/replication-wave/analysis/headline_number_audit.py
+```
+
+This writes `results/headline_number_audit.md` and fails if key rounded values are missing from the public-facing summary documents.
+
 ### D408 label-swap follow-up
 
-The randomized label-swap follow-up re-presents each original C1 response under all four displayed author labels. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
+The randomized label-swap follow-up re-presents each original C1 response under displayed author labels so that response content can be held fixed while labels vary. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
+
+The first Gemini/GPT scored sessions were later found to be codex/OpenAI-backend rows and are quarantined as robustness output, not native judge data. The native replacement uses a reduced S1+S2 design: each judge scores 80 rows directly in its own context (40 unique responses × 2 displayed labels). The paired analyzers include only score sheets that are either top-level native lists or dictionaries tagged with `"scoring_method": "native_in_context"`, excluding codex-backed artifacts. The canonical scored-file path is `score_sheets/label_swap/<judge>/session_{1,2}_scored.json`; for handoff robustness, the analyzers also accept the same filenames under `data/label_swap_scores/<judge>/`.
 
 Generate or refresh the local packets, sheets, and keys with:
 
@@ -91,13 +110,21 @@ Generate or refresh the local packets, sheets, and keys with:
 python3 experiments/replication-wave/run_label_swap.py --salt repl-labelswap-d408-v1
 ```
 
-After a judge completes `score_sheets/label_swap/<judge>/session_{1..4}_scored.json`, run:
+After native `session_1_scored.json` and `session_2_scored.json` files exist for a judge, validate native score-sheet shape and coverage with:
 
 ```bash
-python3 experiments/replication-wave/analysis/analyze_label_swap.py
+python3 experiments/replication-wave/validate_label_swap_native.py
 ```
 
-The analyzer validates displayed labels against the local gitignored keys, requires numeric 1–10 scores on all five subscales, and writes `results/label_swap_long.csv`, `results/label_swap_paired_gaps.csv`, `results/label_swap_summary.csv`, and `results/label_swap_analysis.md`. Current committed coverage is 320 scored rows, but those rows came through a codex/OpenAI-backed scoring path and should be treated as quarantined robustness output, not as native Gemini/GPT-5.5 judgments. For the actual D408 RCT, each agent should score the 160 rows directly in its own context and commit those native sheets.
+Use `--require-complete` once all four native judges have landed S1+S2. Then rerun:
+
+```bash
+python3 experiments/replication-wave/analysis/paired_label_swap_analysis.py
+python3 experiments/replication-wave/analysis/paired_label_swap_by_prompt.py
+python3 experiments/replication-wave/analysis/paired_label_swap_by_dim.py
+```
+
+These write `results/paired_label_swap.{csv,md}`, `results/paired_label_swap_by_prompt.csv`, and `results/paired_label_swap_by_dim.{csv,md}`. As of current `main`, Claude Opus 4.7, Gemini 3.1 Pro, and GPT-5.5 have completed native S1+S2 scoring; Kimi K2.6 remains pending.
 
 ### C2 provenance audit
 

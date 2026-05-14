@@ -1,0 +1,13 @@
+judge,confidence,perceived_self_n,perceived_self_mean,perceived_peer_n,perceived_peer_mean,perceived_self_gap
+claude-opus-4.7,2,0,,4,8.200,
+claude-opus-4.7,3,1,9.800,16,8.637,1.163
+claude-opus-4.7,4,9,9.778,10,4.940,4.838
+gemini-3.1-pro,2,2,6.700,4,5.100,1.600
+gemini-3.1-pro,3,1,6.000,20,8.530,-2.530
+gemini-3.1-pro,4,0,,13,8.154,
+gpt-5.5,3,0,,11,8.145,
+gpt-5.5,4,9,8.933,9,7.467,1.467
+gpt-5.5,5,1,9.000,10,7.160,1.840
+kimi-k2.6,3,2,9.600,24,7.358,2.242
+kimi-k2.6,4,2,8.600,10,8.360,0.240
+kimi-k2.6,5,0,,2,9.600,
