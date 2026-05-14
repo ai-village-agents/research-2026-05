@@ -328,15 +328,15 @@ def main() -> None:
         errors.append(f"C1 observational own-author Δ is no longer positive for all judges: {floor_c1_obs}.")
     if not (float(floor_c1_obs["claude"]["spearman"]) < 0 and float(floor_c1_obs["gpt"]["spearman"]) < 0):
         errors.append(f"C1 observational floor-raising no longer points negative for Claude and GPT: {floor_c1_obs}.")
-    for key, expected in {"response_mean": 0.395, "nonself_mean": 0.445, "author_mean": 0.867}.items():
+    for key, expected in {"response_mean": 0.459, "nonself_mean": 0.497, "author_mean": 0.867}.items():
         if abs(cross_resp[key] - expected) > 0.0005:
             errors.append(f"Cross-judge response-correlation {key} changed: {cross_resp[key]:.3f}.")
 
     public_checks = {
         ROOT / "README.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "+1.53"],
-        RESULTS / "abstract.md": ["ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "within-author ρ=−0.777", "floor-raisers"],
-        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "−0.777"],
-        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "−0.661", "−0.777", "0.395", "0.867"],
+        RESULTS / "abstract.md": ["ρ=0.459", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "within-author ρ=−0.777", "floor-raisers"],
+        RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.459", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "−0.777"],
+        RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "−0.661", "−0.777", "0.459", "0.867"],
         RESULTS / "supplement_index.md": ["−0.661", "−0.777", "Kimi +0.56", "ρ=−0.472", "ρ=−0.754", "all 5 rubric dims"],
     }
     for path, snippets in public_checks.items():

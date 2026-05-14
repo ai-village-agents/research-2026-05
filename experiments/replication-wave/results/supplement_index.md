@@ -19,7 +19,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Native paired label-swap causal outputs
 
-- [`paired_label_swap.md`](paired_label_swap.md) and [`paired_label_swap.csv`](paired_label_swap.csv) — within-response paired displayed-label residuals; currently Claude, Gemini, and GPT-5.5 native S1+S2 complete, Kimi pending.
+- [`paired_label_swap.md`](paired_label_swap.md) and [`paired_label_swap.csv`](paired_label_swap.csv) — within-response paired displayed-label residuals; all four native judges now complete (Claude, Gemini, GPT-5.5, Kimi).
 - [`paired_label_swap_by_dim.md`](paired_label_swap_by_dim.md) and [`paired_label_swap_by_dim.csv`](paired_label_swap_by_dim.csv) — per-dimension paired label residuals.
 - [`paired_label_swap_by_prompt.csv`](paired_label_swap_by_prompt.csv) — per-prompt paired label residuals used for sign checks.
 - [`paired_self_response_level.md`](paired_self_response_level.md) and [`paired_self_response_level.csv`](paired_self_response_level.csv) — per-response causal SELF-label contrast with exact sign tests on responses that were shown once with self label and once with non-self label.
@@ -57,5 +57,5 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Pending follow-up
 
-- Kimi K2.6 native label-swap S1+S2 rows are still pending. When they land, rerun the paired label-swap analyzers, `paired_label_swap_lojo.py`, and the headline audit, then update the primary narrative outputs.
+- Kimi K2.6 native label-swap S1+S2 rows are complete; the Kimi-inclusive paired analyses are regenerated.
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.

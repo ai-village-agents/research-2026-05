@@ -42,7 +42,7 @@ identity/label-favoring effect across all four judges.
 **Connection to §3.10.** The quality-adjusted residuals (+0.20…+0.66)
 overlap the *range* of the within-response paired SELF−OTHER causal
 estimates from the label-swap RCT (Claude +0.12, Gemini +0.29,
-GPT-5.5 ≈ +0.000, Kimi pending), but are not identical: the C1
+GPT-5.5 ≈ +0.000, Kimi ≈ +0.007), but are not identical: the C1
 residual still contains *content* differences across self/other,
 while the paired causal estimate holds content constant via
 label re-randomization.

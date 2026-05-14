@@ -7,8 +7,8 @@ This page consolidates the four main per-judge coefficients from the D407–408 
 | **Claude Opus 4.7** | +2.43 | +0.12 [−0.07, +0.30] | +0.20 | 36/40 (90%) / 10/10 | n/a (collinear within judge) |
 | **Gemini 3.1 Pro** | +0.63 | **+0.29 [+0.14, +0.45]** ✱ | +1.41 | 25/40 (62.5%) / 1/10 | n/a (collinear within judge) |
 | **GPT-5.5** | +1.33 | +0.00 [+0.00, +0.00] † | +0.73 | 40/40 (100%) / 10/10 | n/a (collinear within judge) |
-| **Kimi K2.6** | **−2.87** ✱ | pending | −2.37 | 12/40 (30%) / 0/10 | drives belief-vs-actual decoupling (see below) |
-| **Pooled 4-judge** | +0.38 [−0.33, +1.06] | +0.14 (3-judge mean of native cells) | −0.01 [−0.82, +0.79] | 28.25/40 (70.6%) / 21/40 (52.5%) | β_predicted_self = **+1.53** [+0.82, +2.65], β_actual_self = −0.35 [−0.91, +0.01] |
+| **Kimi K2.6** | **−2.87** ✱ | **+0.01** [−0.30,+0.34] | −2.37 | 12/40 (30%) / 0/10 | observational self-penalty but near-zero printed self-label effect |
+| **Pooled 4-judge** | +0.38 [−0.33, +1.06] | +0.105 (4-judge mean of native cells) | −0.01 [−0.82, +0.79] | 28.25/40 (70.6%) / 21/40 (52.5%) | β_predicted_self = **+1.53** [+0.82, +2.65], β_actual_self = −0.35 [−0.91, +0.01] |
 
 ✱ = CI excludes zero.
 † = paired residuals exactly 0 across all 200 dim-values; consistent with either label-invariance or content-deterministic de-dup (§3.10 caveat).
@@ -21,7 +21,7 @@ Pooled 4-judge mediator is on 480 rows with prompt-clustered bootstrap (B=2000).
 | Claude | −0.010 | 20 | [−0.173, +0.164] | mixed |
 | **Gemini** | **−0.245** | 20 | **[−0.350, −0.157]** ✱ | 7/7 nonzero prompts negative (two-sided p = 0.016) |
 | GPT-5.5 | +0.000 | 20 | [+0.000, +0.000] | n/a |
-| Kimi | pending | – | – | – |
+| Kimi | **+0.005** | 20 | [−0.235, +0.263] | no clear displayed-Kimi preference/penalty |
 
 Gemini's anti-Kimi-label residual is broad across all five rubric dimensions (correctness −0.275, completeness −0.250, clarity −0.225, creativity −0.150, constraint_adherence −0.325; n=20 each), not concentrated on any single dimension.
 
@@ -34,7 +34,7 @@ Restricting to responses shown once with the judge's self-label and once with a 
 | Claude  | 20 | +0.180 | 12/20 | 0.077 |
 | **Gemini** | 20 | **+0.440** | **15/20** | **0.001** |
 | GPT-5.5 | 20 | +0.000 | 0/20 (all exactly 0) | n/a |
-| Kimi    | – | pending | – | – |
+| Kimi    | 20 | **+0.010** | 11/20 | p=0.648 |
 
 Gemini's per-actual-author breakdown is the headline: self-uplift is largest on **Kimi-authored** responses (+0.743, n=7) vs Claude-authored (+0.400, n=5), GPT-authored (+0.150, n=4), or Gemini's own (+0.250, n=4). The bias raises the floor on low-baseline content rather than the ceiling on already-strong content. Full breakdown in [`paired_self_response_level.md`](paired_self_response_level.md).
 
@@ -47,7 +47,7 @@ For judges with non-zero SELF deltas, per-response uplift is largest exactly whe
 | Claude | −0.672 | **−0.673** | [−0.830, −0.377] | **−0.661** | 8.07 | 9.48 |
 | Gemini | −0.874 | **−0.834** | [−0.956, −0.579] | **−0.777** | 8.87 | 9.52 |
 
-This explains why Gemini's largest self-uplift lands on Kimi-authored responses without requiring an author-specific mechanism: Kimi-authored content has the lowest baseline quality in this prompt suite, and the negative correlation survives residualizing both uplift and baseline within actual author. GPT-5.5 has all Δ=0 and is omitted; Kimi's native rows remain pending. See [`floor_raising_test.md`](floor_raising_test.md) and [`floor_raising_within_author.md`](floor_raising_within_author.md).
+This explains why Gemini's largest self-uplift lands on Kimi-authored responses without requiring an author-specific mechanism: Kimi-authored content has the lowest baseline quality in this prompt suite, and the negative correlation survives residualizing both uplift and baseline within actual author. GPT-5.5 has all Δ=0; Kimi is now complete and shows a near-zero mean displayed-self effect but a negative uplift-vs-baseline slope, so its floor-raising pattern is exploratory rather than a strong mean self-label boost. See [`floor_raising_test.md`](floor_raising_test.md) and [`floor_raising_within_author.md`](floor_raising_within_author.md).
 
 ## Cross-judge quality agreement: biased, not noisy
 
@@ -55,8 +55,8 @@ The native label-swap rows also show that judges retain a shared quality signal 
 
 | Diagnostic | Value |
 |---|---:|
-| Mean response-level pairwise Spearman ρ | **0.395** |
-| Mean response-level Spearman ρ on non-self displayed labels | **0.445** |
+| Mean response-level pairwise Spearman ρ | **0.459** |
+| Mean response-level Spearman ρ on non-self displayed labels | **0.497** |
 | Mean author-level Spearman ρ | **0.867** |
 
 So the label effects are best read as additive biases on top of a partly shared response-quality ranking, not as arbitrary disagreement about which responses are good. See [`cross_judge_response_correlation.md`](cross_judge_response_correlation.md).

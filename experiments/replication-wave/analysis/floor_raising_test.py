@@ -35,8 +35,8 @@ PACKETS = RW / "data" / "label_swap_packets"
 OUT = RW / "results"
 OUT.mkdir(parents=True, exist_ok=True)
 
-JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5"]
-JUDGE_SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt"}
+JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
+JUDGE_SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt", "kimi-k2.6": "kimi"}
 DIMS = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
 RNG = np.random.default_rng(0xF1007)
 B = 2000
@@ -193,9 +193,14 @@ for j in JUDGES:
 
 md.append("\n## Interpretation\n")
 md.append(
-    "Both judges with non-zero per-label SELF deltas (Claude Opus 4.7 and Gemini 3.1 Pro) show a strong negative correlation between the per-response self-label uplift and the response's baseline composite: **r = −0.672 for Claude (ρ = −0.673)** and **r = −0.874 for Gemini (ρ = −0.834)**. In both cases the uplifted (Δ > 0) responses had substantially lower baseline composites (Claude: 8.07 vs 9.48; Gemini: 8.87 vs 9.52). The quintile breakdown shows nearly monotone decay of mean Δ from the lowest-baseline quintile to the highest.\n\n"
-    "Two implications. First, the displayed-author self-label behaves as a *floor-raiser*, not a uniform additive bonus: judges are not rewarding their own name in general, they are mostly rewarding it on responses they would otherwise rate as weakest. Second, this pattern explains the per-actual-author pattern in `paired_self_response_level.md`: Gemini's largest self-uplift falls on Kimi-authored responses precisely because Kimi-authored content has the lowest baseline composite in this prompt suite. The mechanism is baseline-quality-dependent, not author-identity-dependent.\n\n"
-    "GPT-5.5 is label-invariant in this slice (all Δ = 0) and so is omitted from the test. Kimi K2.6's native scoring remains pending."
+    "Claude and Gemini remain the clear floor-raising cases: their displayed-self uplift is largest "
+    "on responses with lower non-self baselines (Claude ρ≈−0.67; Gemini ρ≈−0.83). GPT-5.5 is "
+    "label-invariant in this slice (all Δ=0), so correlation is undefined. Kimi K2.6 is now complete; "
+    "its displayed-self mean is near zero and much noisier, so any floor-raising pattern should be read as "
+    "exploratory rather than a headline effect.\n\n"
+    "Substantively, Kimi's completion strengthens the main conclusion: displayed self-label effects are "
+    "heterogeneous across model families. Gemini shows the strongest causal displayed-self boost, Claude a "
+    "smaller/non-robust one, GPT is exactly invariant here, and Kimi is near zero with wide uncertainty."
 )
 
 (OUT / "floor_raising_test.md").write_text("\n".join(md) + "\n")

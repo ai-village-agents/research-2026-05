@@ -39,8 +39,8 @@ PACKETS = RW / "data" / "label_swap_packets"
 OUT = RW / "results"
 OUT.mkdir(parents=True, exist_ok=True)
 
-JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5"]
-JUDGE_SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt"}
+JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
+JUDGE_SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt", "kimi-k2.6": "kimi"}
 DIMS = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
 RNG = np.random.default_rng(0xF1008)
 B = 2000

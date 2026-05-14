@@ -10,7 +10,7 @@ We had four frontier models — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Ki
 1. **There is no single "self-preference" effect across LLM judges.** In the full four-judge pool, the raw self-favoring coefficient is essentially zero ($eta = +0.004$, $p = 0.96$). But this average hides four very different mechanisms: Claude self-favors on form via raw style match, GPT-5.5 self-favors on content via belief, Gemini is approximately null, and Kimi *self-penalizes* on all dimensions because of an off-topic generation confound.
 2. **Perceived authorship — not actual authorship — is the durable scoring channel.** Once we ask each judge to predict the author, the *belief* that "I wrote this" predicts a +0.50-point boost across *every* condition, including the paraphrased and bias-warned ones. This remains distinct from our lightweight stylometric proxy.
 3. **The bias acts as a "floor-raiser", not a uniform bonus.** In our causal label-swap experiment, we found that judges give the largest self-label boosts to the weakest responses. This floor-raising effect survives strict within-author controls and appears across all rubric dimensions, notably objective ones like correctness and clarity.
-4. **Judges agree on underlying quality despite their biases.** The native judges agree substantially on quality (author-level mean Spearman 0.867, response-level non-self mean 0.445). Bias operates as an additive adjustment on top of a shared quality signal, not as a replacement for it.
+4. **Judges agree on underlying quality despite their biases.** The native judges agree substantially on quality (author-level mean Spearman 0.867, response-level non-self mean 0.497). Bias operates as an additive adjustment on top of a shared quality signal, not as a replacement for it.
 5. **Standard mitigations fail.** A one-line bias warning did not meaningfully change the self- or perceived-authorship coefficients, and style-neutralizing paraphrasing was insufficient to blind judges fully.
 
 *Implication for LLM-as-judge pipelines: identity leakage survives the obvious mitigations, and any "self-preference correction" has to be tuned per judge family — a single global subtraction may reduce one judge's bias and amplify another's.*
@@ -324,18 +324,16 @@ the per-label deltas above is that they could be artefacts of noisy disagreement
 between idiosyncratic judges. They are not. Marginalising over the displayed
 label and computing each judge's mean composite per response on the same
 40-response label-swap slice, the four native judges agree substantially on
-quality. At the *author* level the mean pairwise Spearman ρ across the three
-non-Kimi judges is **0.867**: all rank the four authors as Claude Opus 4.7 >
-{Gemini 3.1 Pro, GPT-5.5} > Kimi K2.6, with only Gemini's intra-tier ordering
-of itself vs GPT-5.5 disagreeing with Claude and GPT-5.5. (Kimi's author-level
-ranking is similar but it self-penalises on its own outputs.) At the *response* level the mean
-pairwise Spearman ρ is 0.395 (claude↔gpt 0.849, claude↔gemini 0.222, gemini↔gpt
-0.115); restricting to entries where the judge is not shown its own label as
-the displayed author raises that mean to 0.445. Gemini is the most
-idiosyncratic per-response judge despite tracking the author ranking — the same
-judge whose self-label residual excludes zero. The per-label residuals in the
-table above therefore sit on top of a *shared* quality signal rather than
-papering over disagreement about quality itself.
+quality. At the *author* level the mean pairwise Spearman ρ is **0.867**:
+all four judges rank Claude Opus 4.7 first and Kimi K2.6 last, with the middle
+ordering varying between Gemini and GPT-5.5. At the *response* level the mean
+pairwise Spearman ρ is **0.459** across the six judge pairs; restricting to
+entries where the judge is not shown its own label as the displayed author
+raises that mean to **0.497**. Gemini remains the most idiosyncratic
+per-response judge despite tracking the author ranking — the same judge whose
+self-label residual excludes zero. The per-label residuals in the table above
+therefore sit on top of a *shared* quality signal rather than papering over
+disagreement about quality itself.
 [`cross_judge_response_correlation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/cross_judge_response_correlation.md)
 has the full pairwise table, the non-self subset, and the author × judge mean
 matrix.

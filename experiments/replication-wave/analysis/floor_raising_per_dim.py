@@ -33,8 +33,8 @@ RESP = RW / "responses"
 PACKETS = RW / "data" / "label_swap_packets"
 OUT = RW / "results"
 
-JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5"]
-SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt"}
+JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
+SHORT = {"claude-opus-4.7": "claude", "gemini-3.1-pro": "gemini", "gpt-5.5": "gpt", "kimi-k2.6": "kimi"}
 DIMS = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
 RNG = np.random.default_rng(0xF1010)
 B = 2000
@@ -199,7 +199,13 @@ for j in JUDGES:
 
 md.append("\n## Interpretation\n")
 md.append(
-    "Two questions: (a) is the floor-raising pattern stronger at the per-cell level (n≈100 per judge with cluster bootstrap by prompt) than at the composite level? (b) is it concentrated in subjective dimensions (creativity, completeness) vs objective ones (correctness, constraint)? Read the pooled row of the first table for the headline, then per-dimension breakdown for the dimensional structure. GPT-5.5 is label-invariant in this slice (all Δ=0); only Claude and Gemini contribute non-trivial signal."
+    "At the per-cell level (five rubric dimensions × 20 paired responses per judge), Claude and Gemini "
+    "again show the clean floor-raising signature: self-label uplift is negatively related to baseline "
+    "quality across all rubric dimensions. GPT-5.5 remains label-invariant. Kimi K2.6 is included now, "
+    "but its average displayed-self effect is near zero and dimension-specific estimates are noisy/wide; "
+    "do not treat Kimi as a fourth strong floor-raising replicate.\n\n"
+    "The strongest statement remains model-family heterogeneity rather than universality: the floor-raising "
+    "mechanism is clear for Claude/Gemini, absent for GPT, and inconclusive/near-zero for Kimi."
 )
 (OUT / "floor_raising_per_dim.md").write_text("\n".join(md) + "\n")
 print("Wrote", csv_p)

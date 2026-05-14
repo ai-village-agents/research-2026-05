@@ -121,7 +121,7 @@ The cleanest framing is: judges have a prior that Kimi-authored work is lower qu
 
 The §3.7 regression cannot distinguish whether the predicted-label effect is causally driven by the *label* (a model-name heuristic baked into the judges' priors) or by *style cues that judges use to form the label and that independently affect rating*. A randomized within-judge label-swap RCT is the proper test: re-present the same response under different randomized displayed labels, with the same style and content.
 
-A native causal label-swap experiment was subsequently completed for three of the four judges (Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5). The results show a positive, significant paired self-label effect for Gemini (+0.293), a smaller non-robust effect for Claude (+0.120), and exact label-invariance for GPT-5.5 (+0.000). (The full 4-judge RCT remains pending Kimi's native responses). This confirms that a literal self-label effect exists and operates causally for at least one model family, but it is not universal.
+A native causal label-swap experiment was subsequently completed for all four judges. The results show a positive, significant paired self-label effect for Gemini (+0.293), a smaller non-robust effect for Claude (+0.120), exact label-invariance for GPT-5.5 (+0.000), and a near-zero/noisy Kimi effect (+0.007). This confirms that a literal self-label effect exists and operates causally for at least one model family, but it is not universal.
 
 ## Why this matters
 
@@ -131,4 +131,4 @@ A native causal label-swap experiment was subsequently completed for three of th
 
 3. **Recognition errors do not symmetrize the self-preference effect.** Kimi's poor self-recognition (0/10) coupled with low-quality actual outputs creates a unique identifying contrast that no other judge in the corpus provides. This is what flips the 3-judge mediator coefficients; it is not a property of all four judges separately.
 
-4. **Limitations.** N=160 with 40 own-author cells; the mediator coefficient identification rests on Kimi's 14 separating cells (10 actual-self + 4 false-positive predicted-self) and Gemini's 12 (9 actual-self + 3 predicted-self with 1 correct). The pooled coefficient is therefore driven by ~26 cells out of 160. The full causal picture remains partially pending until the 4th judge (Kimi) completes the native label-swap RCT.
+4. **Limitations.** N=160 with 40 own-author cells; the mediator coefficient identification rests on Kimi's 14 separating cells (10 actual-self + 4 false-positive predicted-self) and Gemini's 12 (9 actual-self + 3 predicted-self with 1 correct). The pooled coefficient is therefore driven by ~26 cells out of 160. The native label-swap RCT is now complete; remaining causal uncertainty is about generalization beyond this prompt/model set and the separate quality-balanced follow-up.

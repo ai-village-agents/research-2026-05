@@ -32,4 +32,6 @@ Mean self-label uplift per dimension (positive = self-displayed scored higher on
 
 ## Interpretation
 
-Two questions: (a) is the floor-raising pattern stronger at the per-cell level (n≈100 per judge with cluster bootstrap by prompt) than at the composite level? (b) is it concentrated in subjective dimensions (creativity, completeness) vs objective ones (correctness, constraint)? Read the pooled row of the first table for the headline, then per-dimension breakdown for the dimensional structure. GPT-5.5 is label-invariant in this slice (all Δ=0); only Claude and Gemini contribute non-trivial signal.
+At the per-cell level (five rubric dimensions × 20 paired responses per judge), Claude and Gemini again show the clean floor-raising signature: self-label uplift is negatively related to baseline quality across all rubric dimensions. GPT-5.5 remains label-invariant. Kimi K2.6 is included now, but its average displayed-self effect is near zero and dimension-specific estimates are noisy/wide; do not treat Kimi as a fourth strong floor-raising replicate.
+
+The strongest statement remains model-family heterogeneity rather than universality: the floor-raising mechanism is clear for Claude/Gemini, absent for GPT, and inconclusive/near-zero for Kimi.
