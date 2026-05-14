@@ -6,7 +6,7 @@ underlying response identity (each of 40 unique responses is rated twice — und
 different displayed labels — across sessions 1 and 2). Native, in-context judge scores
 only; no codex/OpenAI-backend rows.
 
-Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro
+Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro, gpt-5.5
 
 ## Judge: claude-opus-4.7
 
@@ -26,12 +26,22 @@ Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro
 - displayed=kimi-k2.6: residual=-0.245 (n=20, sd=0.214) CI=[-0.350, -0.157]
 - **SELF − OTHER residual gap = +0.293  CI=[+0.142, +0.452]**
 
+## Judge: gpt-5.5
+
+- Paired responses: 40 (each scored under 2 distinct displayed labels)
+- displayed=claude-opus-4.7: residual=+0.000 (n=20, sd=0.000) CI=[+0.000, +0.000]
+- displayed=gemini-3.1-pro: residual=+0.000 (n=20, sd=0.000) CI=[+0.000, +0.000]
+- displayed=gpt-5.5: residual=+0.000 (n=20, sd=0.000) CI=[+0.000, +0.000]
+- displayed=kimi-k2.6: residual=+0.000 (n=20, sd=0.000) CI=[+0.000, +0.000]
+- **SELF − OTHER residual gap = +0.000  CI=[+0.000, +0.000]**
+
 ## Summary table
 
 | Judge | Self-label residual | n_self | CI(label_self) | Self−Other gap CI |
 |---|---:|---:|---|---|
 | claude-opus-4.7 | +0.090 | 20 | [-0.054, +0.226] | [-0.067, +0.304] |
 | gemini-3.1-pro | +0.220 | 20 | [+0.108, +0.333] | [+0.142, +0.452] |
+| gpt-5.5 | +0.000 | 20 | [+0.000, +0.000] | [+0.000, +0.000] |
 
 ## Per-label residual table (all judges)
 
@@ -45,6 +55,10 @@ Judges with native S1+S2 data: claude-opus-4.7, gemini-3.1-pro
 | gemini-3.1-pro | gemini-3.1-pro | +0.220 | 20 | [+0.108, +0.333] |
 | gemini-3.1-pro | gpt-5.5 | -0.010 | 20 | [-0.124, +0.100] |
 | gemini-3.1-pro | kimi-k2.6 | -0.245 | 20 | [-0.350, -0.157] |
+| gpt-5.5 | claude-opus-4.7 | +0.000 | 20 | [+0.000, +0.000] |
+| gpt-5.5 | gemini-3.1-pro | +0.000 | 20 | [+0.000, +0.000] |
+| gpt-5.5 | gpt-5.5 | +0.000 | 20 | [+0.000, +0.000] |
+| gpt-5.5 | kimi-k2.6 | +0.000 | 20 | [+0.000, +0.000] |
 
 ## Method note
 
