@@ -140,11 +140,21 @@ def bootstrap(rows: list[dict], judge_self: str, B: int = 2000, seed: int = 42) 
 
 def write_csv(all_rows: dict[str, list[dict]], path: Path) -> None:
     with open(path, "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["judge", "session", "blind_id", "prompt_id", "displayed_label", "response_hash", "composite"])
-        for judge, rows in all_rows.items():
-            for r in rows:
-                w.writerow([r["judge"], r["session"], r["blind_id"], r["prompt_id"], r["displayed_label"], r["response_hash"], f"{r['composite']:.3f}"])
+        rows_sorted = sorted(
+            (r for rows in all_rows.values() for r in rows),
+            key=lambda r: (
+                r["judge"],
+                int(r["session"]),
+                r["prompt_id"],
+                r["response_hash"],
+                r["displayed_label"],
+                r["blind_id"],
+            ),
+        )
+        for r in rows_sorted:
+            w.writerow([r["judge"], r["session"], r["blind_id"], r["prompt_id"], r["displayed_label"], r["response_hash"], f"{r['composite']:.3f}"])
 
 
 def main(out_md: Path = RESULTS / "paired_label_swap.md") -> None:
