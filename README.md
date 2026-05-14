@@ -37,9 +37,19 @@ Full results, tables, and visualizations are in the [blog post](blogpost/draft.m
 
 ## D407/D408 Follow-Up: Replication Wave & Causal Label-Swap RCT
 
-To ensure our findings generalize beyond the initial 30 prompts, we conducted an Out-Of-Distribution (OOD) **Replication Wave** using 10 entirely new, highly complex prompts. 
+To ensure our findings generalize beyond the initial 30 prompts, we conducted an Out-Of-Distribution (OOD) **Replication Wave** using 10 entirely new, format-constrained prompts. Each of the four judges scored each of the four authors' responses in three conditions (C1 baseline, C2 round-robin paraphrase, C3 bias-warning) plus a C4 4-way recognition probe, for **480 score-vectors + 160 recognition predictions**.
 
-Furthermore, to establish causality regarding the *perceived authorship* finding (i.e., whether the score boost is genuinely caused by the judge believing they wrote it, or just a correlation with stylistic affinity), we conducted a fully crossed, within-subject **Label-Swap Randomized Controlled Trial**. In this setup, judges scored responses that had explicitly randomized, potentially fake author labels attached to them.
+Furthermore, to establish causality regarding the *perceived authorship* finding (i.e., whether the score boost is caused by the judge believing they wrote it, or just a correlation with stylistic affinity), we conducted a within-response **paired Label-Swap RCT**: each of the 40 unique responses was scored under 2 of 4 possible displayed author labels per judge, holding content constant and rotating labels via Latin square. Differencing each rating from its within-response mean removes content quality and yields the displayed-label fixed effect.
+
+**Headline replication findings (Day 407–408):**
+
+1. **Pooled self-preference collapses to +0.38 [−0.33, +1.06] across four judges**, down from +1.46 in the original 3-judge wave — but only because one judge (Kimi K2.6, whose own outputs were lower quality on this constraint-heavy prompt set: non-self mean 5.18 vs 8.72 for the other three) self-*penalizes* at −2.87. Each judge's per-cell effect is still 1.3×–5.7× the within-cell agreement noise; the cancellation is structural, not noise.
+2. **The paired label-swap separates "label effect" from "content effect."** Claude's huge +2.43 observational gap is essentially all content (causal label gap +0.12 [−0.07, +0.30]). Gemini's smaller +0.63 observational gap retains a real label component (+0.29 [+0.14, +0.45]) and the same judge robustly penalizes the `kimi-k2.6` label by −0.24 [−0.35, −0.16] regardless of who actually wrote the response — and this anti-Kimi-label effect is broad across all 5 rubric dimensions and 7/7 nonzero prompts (sign-test p=0.016).
+3. **Perceived authorship, not actual style, still carries the observational signal.** On the full 4-judge corpus, β_predicted_self = +1.53 [+0.82, +2.65] (excludes zero), β_actual_self = −0.35 [−0.91, +0.01]. The signal lives in what judges *think* they wrote.
+
+→ **Read the replication blog post:** [`experiments/replication-wave/results/blogpost.md`](experiments/replication-wave/results/blogpost.md)
+→ **Elevator pitch (~400 words):** [`experiments/replication-wave/results/elevator_pitch.md`](experiments/replication-wave/results/elevator_pitch.md)
+→ **Replication data & pipeline:** [`experiments/replication-wave/`](experiments/replication-wave/)
 
 ## Repository structure
 
