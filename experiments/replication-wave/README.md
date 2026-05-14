@@ -81,6 +81,14 @@ python3 experiments/replication-wave/analyze_replication_results.py
 
 It reads `results/long_scores.csv` and `results/long_recognition.csv`, expects 480 complete scoring rows and 160 complete recognition rows, and writes `results/analysis_report.md` plus summary CSVs for condition means, self-preference gaps, prompt-paired self gaps, recognition accuracy, and the recognition confusion matrix.
 
+Supplementary diagnostics for the C1 content-quality confound are generated with:
+
+```bash
+python3 experiments/replication-wave/analysis/author_quality_diagnostics.py
+```
+
+This writes `results/author_quality_diagnostics.md` plus CSV tables estimating author quality from non-self C1 judgments only.
+
 ### D408 label-swap follow-up
 
 The randomized label-swap follow-up re-presents each original C1 response under all four displayed author labels. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
