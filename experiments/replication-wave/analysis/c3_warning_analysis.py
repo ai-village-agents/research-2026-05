@@ -93,11 +93,28 @@ def main():
             f.write(f"| `{judge}` | {row['correctness']:.3f} | {row['completeness']:.3f} | {row['clarity']:.3f} | {row['creativity']:.3f} | {row['constraint_adherence']:.3f} |\n")
             
         f.write("\n## Summary of Findings\n")
-        f.write("- **Claude:** The warning actually *increased* Claude's self-preference slightly.\n")
-        f.write("- **Gemini:** The warning slightly increased Gemini's self-preference.\n")
-        f.write("- **GPT:** The warning slightly increased GPT's self-preference.\n")
-        f.write("- **Kimi:** The warning made Kimi's self-penalization even more severe (gap became more negative).\n")
-        f.write("- Overall, simply telling a model to be objective and warning it about bias is entirely ineffective and sometimes backfires (reactance effect).\n")
+        display_names = {
+            "claude-opus-4.7": "Claude",
+            "gemini-3.1-pro": "Gemini",
+            "gpt-5.5": "GPT-5.5",
+            "kimi-k2.6": "Kimi",
+        }
+        for judge in gap_df.index:
+            row = gap_df.loc[judge]
+            delta = row["Delta (C3 - C1)"]
+            name = display_names.get(judge, judge)
+            if abs(delta) < 0.005:
+                effect = "was unchanged"
+            elif delta > 0:
+                effect = f"increased by {delta:+.3f}"
+            else:
+                effect = f"decreased by {delta:+.3f}"
+            f.write(
+                f"- **{name}:** Self-preference gap {effect} "
+                f"(C1 {row['C1']:+.3f}; C3 {row['C3']:+.3f}).\n"
+            )
+        f.write("- Overall, C3 did not reduce the pooled self-preference pattern: two judges were unchanged, Gemini increased, and Kimi's negative gap was essentially unchanged.\n")
+        f.write("- Important caveat: C3 delivery was heterogeneous (Claude/GPT used pre-fix label/order-only rows without a visible warning, while Gemini/Kimi saw the visible warning), so this diagnostic should be read as a delivery-failure/robustness check rather than a clean warning intervention.\n")
         
     print(f"\nWrote {report_path}")
 

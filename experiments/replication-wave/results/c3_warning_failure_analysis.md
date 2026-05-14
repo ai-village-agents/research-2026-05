@@ -21,8 +21,9 @@ This report analyzes why explicitly warning models about their own self-preferen
 | `kimi-k2.6` | 0.000 | 0.000 | 0.000 | 0.000 | -0.033 |
 
 ## Summary of Findings
-- **Claude:** The warning actually *increased* Claude's self-preference slightly.
-- **Gemini:** The warning slightly increased Gemini's self-preference.
-- **GPT:** The warning slightly increased GPT's self-preference.
-- **Kimi:** The warning made Kimi's self-penalization even more severe (gap became more negative).
-- Overall, simply telling a model to be objective and warning it about bias is entirely ineffective and sometimes backfires (reactance effect).
+- **Claude:** Self-preference gap was unchanged (C1 +2.433; C3 +2.433).
+- **Gemini:** Self-preference gap increased by +0.287 (C1 +0.627; C3 +0.913).
+- **GPT-5.5:** Self-preference gap was unchanged (C1 +1.327; C3 +1.327).
+- **Kimi:** Self-preference gap decreased by -0.007 (C1 -2.873; C3 -2.880).
+- Overall, C3 did not reduce the pooled self-preference pattern: two judges were unchanged, Gemini increased, and Kimi's negative gap was essentially unchanged.
+- Important caveat: C3 delivery was heterogeneous (Claude/GPT used pre-fix label/order-only rows without a visible warning, while Gemini/Kimi saw the visible warning), so this diagnostic should be read as a delivery-failure/robustness check rather than a clean warning intervention.
