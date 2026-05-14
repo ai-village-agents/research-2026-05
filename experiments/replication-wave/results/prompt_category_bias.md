@@ -1,63 +1,77 @@
-# Self-Preference Gap by Prompt Category
+# Self-preference gap by prompt category
 
-Does the nature of the prompt influence the severity of self-preference bias?
+This diagnostic asks whether the nature of the prompt influences the severity
+of C1 self-preference. Scores are on the standard 1–10 composite scale.
+Because each category corresponds to one replication prompt, pooled rows have
+4 self and 12 peer ratings; per-judge rows have 1 self and 3 peer ratings and
+should be read as descriptive rather than inferential.
 
-## Pooled 4-Judge Gap by Category
+## Pooled 4-judge gap by category
 
-| Category | Mean Score (Self) | Mean Score (Peer) | Pooled Gap |
-|---|---|---|---|
-| coding | 35.50 | 33.17 | +2.33 |
-| creative | 44.00 | 40.50 | +3.50 |
-| design | 41.25 | 38.75 | +2.50 |
-| ethics | 39.50 | 38.33 | +1.17 |
-| explain | 44.25 | 41.58 | +2.67 |
-| history | 45.50 | 43.58 | +1.92 |
-| logic | 38.00 | 37.00 | +1.00 |
-| math | 40.75 | 40.00 | +0.75 |
-| philosophy | 39.75 | 39.08 | +0.67 |
-| science | 42.00 | 39.58 | +2.42 |
+| Category | Self n | Mean self | Peer n | Mean peer | Pooled gap |
+|---|---:|---:|---:|---:|---:|
+| coding | 4 | 7.100 | 12 | 6.633 | +0.467 |
+| creative | 4 | 8.800 | 12 | 8.100 | +0.700 |
+| design | 4 | 8.250 | 12 | 7.750 | +0.500 |
+| ethics | 4 | 7.900 | 12 | 7.667 | +0.233 |
+| explain | 4 | 8.850 | 12 | 8.317 | +0.533 |
+| history | 4 | 9.100 | 12 | 8.717 | +0.383 |
+| logic | 4 | 7.600 | 12 | 7.400 | +0.200 |
+| math | 4 | 8.150 | 12 | 8.000 | +0.150 |
+| philosophy | 4 | 7.950 | 12 | 7.817 | +0.133 |
+| science | 4 | 8.400 | 12 | 7.917 | +0.483 |
 
-## Per-Judge Gap by Category
+## Per-judge gap by category
 
-| Category | Judge | Mean Score (Self) | Mean Score (Peer) | Gap |
-|---|---|---|---|---|
-| coding | claude-opus-4.7 | 48.00 | 31.00 | +17.00 |
-| coding | gemini-3.1-pro | 29.00 | 34.33 | -5.33 |
-| coding | gpt-5.5 | 40.00 | 28.00 | +12.00 |
-| coding | kimi-k2.6 | 25.00 | 39.33 | -14.33 |
-| creative | claude-opus-4.7 | 50.00 | 36.33 | +13.67 |
-| creative | gemini-3.1-pro | 48.00 | 40.00 | +8.00 |
-| creative | gpt-5.5 | 49.00 | 39.00 | +10.00 |
-| creative | kimi-k2.6 | 29.00 | 46.67 | -17.67 |
-| design | claude-opus-4.7 | 50.00 | 36.67 | +13.33 |
-| design | gemini-3.1-pro | 43.00 | 38.00 | +5.00 |
-| design | gpt-5.5 | 44.00 | 39.33 | +4.67 |
-| design | kimi-k2.6 | 28.00 | 41.00 | -13.00 |
-| ethics | claude-opus-4.7 | 49.00 | 34.67 | +14.33 |
-| ethics | gemini-3.1-pro | 40.00 | 39.00 | +1.00 |
-| ethics | gpt-5.5 | 44.00 | 39.00 | +5.00 |
-| ethics | kimi-k2.6 | 25.00 | 40.67 | -15.67 |
-| explain | claude-opus-4.7 | 50.00 | 41.33 | +8.67 |
-| explain | gemini-3.1-pro | 43.00 | 42.00 | +1.00 |
-| explain | gpt-5.5 | 44.00 | 41.00 | +3.00 |
-| explain | kimi-k2.6 | 40.00 | 42.00 | -2.00 |
-| history | claude-opus-4.7 | 50.00 | 43.67 | +6.33 |
-| history | gemini-3.1-pro | 44.00 | 43.33 | +0.67 |
-| history | gpt-5.5 | 46.00 | 43.33 | +2.67 |
-| history | kimi-k2.6 | 42.00 | 44.00 | -2.00 |
-| logic | claude-opus-4.7 | 47.00 | 35.33 | +11.67 |
-| logic | gemini-3.1-pro | 44.00 | 35.67 | +8.33 |
-| logic | gpt-5.5 | 46.00 | 35.00 | +11.00 |
-| logic | kimi-k2.6 | 15.00 | 42.00 | -27.00 |
-| math | claude-opus-4.7 | 49.00 | 38.00 | +11.00 |
-| math | gemini-3.1-pro | 46.00 | 38.33 | +7.67 |
-| math | gpt-5.5 | 45.00 | 38.33 | +6.67 |
-| math | kimi-k2.6 | 23.00 | 45.33 | -22.33 |
-| philosophy | claude-opus-4.7 | 46.00 | 35.33 | +10.67 |
-| philosophy | gemini-3.1-pro | 36.00 | 38.00 | -2.00 |
-| philosophy | gpt-5.5 | 44.00 | 38.00 | +6.00 |
-| philosophy | kimi-k2.6 | 33.00 | 45.00 | -12.00 |
-| science | claude-opus-4.7 | 50.00 | 35.00 | +15.00 |
-| science | gemini-3.1-pro | 46.00 | 39.00 | +7.00 |
-| science | gpt-5.5 | 45.00 | 39.67 | +5.33 |
-| science | kimi-k2.6 | 27.00 | 44.67 | -17.67 |
+| Category | Judge | Self n | Mean self | Peer n | Mean peer | Gap |
+|---|---|---:|---:|---:|---:|---:|
+| coding | Claude | 1 | 9.600 | 3 | 6.200 | +3.400 |
+| coding | Gemini | 1 | 5.800 | 3 | 6.867 | -1.067 |
+| coding | GPT-5.5 | 1 | 8.000 | 3 | 5.600 | +2.400 |
+| coding | Kimi | 1 | 5.000 | 3 | 7.867 | -2.867 |
+| creative | Claude | 1 | 10.000 | 3 | 7.267 | +2.733 |
+| creative | Gemini | 1 | 9.600 | 3 | 8.000 | +1.600 |
+| creative | GPT-5.5 | 1 | 9.800 | 3 | 7.800 | +2.000 |
+| creative | Kimi | 1 | 5.800 | 3 | 9.333 | -3.533 |
+| design | Claude | 1 | 10.000 | 3 | 7.333 | +2.667 |
+| design | Gemini | 1 | 8.600 | 3 | 7.600 | +1.000 |
+| design | GPT-5.5 | 1 | 8.800 | 3 | 7.867 | +0.933 |
+| design | Kimi | 1 | 5.600 | 3 | 8.200 | -2.600 |
+| ethics | Claude | 1 | 9.800 | 3 | 6.933 | +2.867 |
+| ethics | Gemini | 1 | 8.000 | 3 | 7.800 | +0.200 |
+| ethics | GPT-5.5 | 1 | 8.800 | 3 | 7.800 | +1.000 |
+| ethics | Kimi | 1 | 5.000 | 3 | 8.133 | -3.133 |
+| explain | Claude | 1 | 10.000 | 3 | 8.267 | +1.733 |
+| explain | Gemini | 1 | 8.600 | 3 | 8.400 | +0.200 |
+| explain | GPT-5.5 | 1 | 8.800 | 3 | 8.200 | +0.600 |
+| explain | Kimi | 1 | 8.000 | 3 | 8.400 | -0.400 |
+| history | Claude | 1 | 10.000 | 3 | 8.733 | +1.267 |
+| history | Gemini | 1 | 8.800 | 3 | 8.667 | +0.133 |
+| history | GPT-5.5 | 1 | 9.200 | 3 | 8.667 | +0.533 |
+| history | Kimi | 1 | 8.400 | 3 | 8.800 | -0.400 |
+| logic | Claude | 1 | 9.400 | 3 | 7.067 | +2.333 |
+| logic | Gemini | 1 | 8.800 | 3 | 7.133 | +1.667 |
+| logic | GPT-5.5 | 1 | 9.200 | 3 | 7.000 | +2.200 |
+| logic | Kimi | 1 | 3.000 | 3 | 8.400 | -5.400 |
+| math | Claude | 1 | 9.800 | 3 | 7.600 | +2.200 |
+| math | Gemini | 1 | 9.200 | 3 | 7.667 | +1.533 |
+| math | GPT-5.5 | 1 | 9.000 | 3 | 7.667 | +1.333 |
+| math | Kimi | 1 | 4.600 | 3 | 9.067 | -4.467 |
+| philosophy | Claude | 1 | 9.200 | 3 | 7.067 | +2.133 |
+| philosophy | Gemini | 1 | 7.200 | 3 | 7.600 | -0.400 |
+| philosophy | GPT-5.5 | 1 | 8.800 | 3 | 7.600 | +1.200 |
+| philosophy | Kimi | 1 | 6.600 | 3 | 9.000 | -2.400 |
+| science | Claude | 1 | 10.000 | 3 | 7.000 | +3.000 |
+| science | Gemini | 1 | 9.200 | 3 | 7.800 | +1.400 |
+| science | GPT-5.5 | 1 | 9.000 | 3 | 7.933 | +1.067 |
+| science | Kimi | 1 | 5.400 | 3 | 8.933 | -3.533 |
+
+## Reading
+
+- Largest pooled category gap: creative +0.700.
+- Smallest pooled category gap: philosophy +0.133.
+- Largest per-judge/category positive gap: Claude on coding +3.400.
+- Largest per-judge/category negative gap: Kimi on logic -5.400.
+- Category patterns are heavily confounded with prompt-specific response quality; use leave-one-prompt/category sensitivity for robustness, not as a causal category test.
+
+*Generated by `analysis/prompt_category_bias.py` from `results/long_scores.csv`.*
