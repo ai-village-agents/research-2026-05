@@ -374,6 +374,18 @@ interaction — judges add the largest self-label uplift to weaker responses
 Full decomposition at
 [`floor_raising_within_author.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_within_author.md).
 
+**At the dimension level the effect tightens.** Treating each (response,
+rubric dim) cell as an observation gives n=100 paired cells per judge.
+Cluster-bootstrapping by `prompt_id`, the pooled per-cell Spearman is
+Claude ρ=**−0.472** [−0.588, −0.306] and Gemini ρ=**−0.754** [−0.826,
+−0.638] — both CIs exclude zero. The negative correlation appears in every
+one of the five rubric dimensions and is slightly *stronger* on the
+objective dimensions (clarity Claude −0.629 / Gemini −0.904; correctness
+Claude −0.553 / Gemini −0.853) than on creativity (Claude −0.432 / Gemini
+−0.689), opposite to the prior expectation. See
+[`floor_raising_per_dim.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_per_dim.md).
+
+
 
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
