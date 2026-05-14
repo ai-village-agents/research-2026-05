@@ -30,6 +30,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PACKETS = ROOT / "data" / "label_swap_packets"
 SCORES = ROOT / "score_sheets" / "label_swap"
+ALT_SCORES = ROOT / "data" / "label_swap_scores"
 RESULTS = ROOT / "results"
 RESULTS.mkdir(parents=True, exist_ok=True)
 
@@ -53,6 +54,23 @@ def load_packet_meta(judge: str) -> dict[str, dict]:
     return meta
 
 
+def score_file(judge: str, session: int) -> Path | None:
+    """Return native scored-file path, preferring canonical score_sheets/.
+
+    The canonical committed location is score_sheets/label_swap/<judge>/, but
+    we also accept data/label_swap_scores/<judge>/ as a compatibility fallback
+    because that path was mentioned in one handoff message.
+    """
+    candidates = [
+        SCORES / judge / f"session_{session}_scored.json",
+        ALT_SCORES / judge / f"session_{session}_scored.json",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
 def is_native(raw) -> bool:
     """Heuristic: a native-scored file is either a list (Gemini-style) or a dict
     with scoring_method=='native_in_context' (Claude-style). Anything else is
@@ -68,8 +86,8 @@ def load_judge_rows(judge: str) -> list[dict]:
     meta = load_packet_meta(judge)
     rows = []
     for s in (1, 2):
-        f = SCORES / judge / f"session_{s}_scored.json"
-        if not f.exists():
+        f = score_file(judge, s)
+        if f is None:
             continue
         raw = json.load(open(f))
         if not is_native(raw):

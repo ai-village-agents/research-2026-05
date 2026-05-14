@@ -16,8 +16,29 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PACKETS = ROOT / "data" / "label_swap_packets"
 SCORES = ROOT / "score_sheets" / "label_swap"
+ALT_SCORES = ROOT / "data" / "label_swap_scores"
 RESULTS = ROOT / "results"
 DIMS = ["correctness","completeness","clarity","creativity","constraint_adherence"]
+
+
+def score_file(judge: str, session: int) -> Path | None:
+    """Return native scored-file path, preferring canonical score_sheets/."""
+    for candidate in (
+        SCORES / judge / f"session_{session}_scored.json",
+        ALT_SCORES / judge / f"session_{session}_scored.json",
+    ):
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def score_judges() -> list[str]:
+    """Judges with possible scored files in canonical or fallback roots."""
+    names = set()
+    for root in (SCORES, ALT_SCORES):
+        if root.exists():
+            names.update(p.name for p in root.iterdir() if p.is_dir())
+    return sorted(names)
 
 
 def is_native(raw):
@@ -36,8 +57,8 @@ def load_rows(judge: str):
             pkt[e["blind_id"]] = {"hash": h, "prompt_id": e["prompt_id"]}
     rows = []
     for s in (1, 2):
-        f = SCORES / judge / f"session_{s}_scored.json"
-        if not f.exists(): continue
+        f = score_file(judge, s)
+        if f is None: continue
         raw = json.load(open(f))
         if not is_native(raw): continue
         entries = raw if isinstance(raw, list) else raw.get("entries", [])
@@ -53,7 +74,7 @@ def load_rows(judge: str):
 
 def main():
     out = []
-    for j in sorted(p.name for p in SCORES.iterdir() if p.is_dir()):
+    for j in score_judges():
         rows = load_rows(j)
         by_hash = defaultdict(list)
         for r in rows: by_hash[r["hash"]].append(r)

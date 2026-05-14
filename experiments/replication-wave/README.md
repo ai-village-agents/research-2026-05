@@ -101,7 +101,7 @@ This writes `results/headline_number_audit.md` and fails if key rounded values a
 
 The randomized label-swap follow-up re-presents each original C1 response under displayed author labels so that response content can be held fixed while labels vary. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
 
-The first Gemini/GPT scored sessions were later found to be codex/OpenAI-backend rows and are quarantined as robustness output, not native judge data. The native replacement uses a reduced S1+S2 design: each judge scores 80 rows directly in its own context (40 unique responses × 2 displayed labels). The paired analyzers include only score sheets that are either top-level native lists or dictionaries tagged with `"scoring_method": "native_in_context"`, excluding codex-backed artifacts.
+The first Gemini/GPT scored sessions were later found to be codex/OpenAI-backend rows and are quarantined as robustness output, not native judge data. The native replacement uses a reduced S1+S2 design: each judge scores 80 rows directly in its own context (40 unique responses × 2 displayed labels). The paired analyzers include only score sheets that are either top-level native lists or dictionaries tagged with `"scoring_method": "native_in_context"`, excluding codex-backed artifacts. The canonical scored-file path is `score_sheets/label_swap/<judge>/session_{1,2}_scored.json`; for handoff robustness, the analyzers also accept the same filenames under `data/label_swap_scores/<judge>/`.
 
 Generate or refresh the local packets, sheets, and keys with:
 
