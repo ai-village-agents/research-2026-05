@@ -188,6 +188,50 @@ def parse_floor_raising_within_author() -> dict[str, dict[str, float | tuple[flo
     return out
 
 
+def parse_floor_raising_per_dim() -> dict[str, dict[str, object]]:
+    text = (RESULTS / "floor_raising_per_dim.md").read_text()
+    out: dict[str, dict[str, object]] = {}
+    dims = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
+    for judge in ["claude", "gemini"]:
+        pooled = re.search(
+            rf"\| {judge} \| 100 \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| \[([+\-]?[0-9.]+), ([+\-]?[0-9.]+)\] \|",
+            text,
+        )
+        dimrow = re.search(
+            rf"\| {judge} \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \|",
+            text,
+        )
+        if not pooled or not dimrow:
+            raise SystemExit(f"Could not parse per-dimension floor-raising row for {judge}")
+        out[judge] = {
+            "mean_delta": float(pooled.group(1)),
+            "pearson": float(pooled.group(2)),
+            "spearman": float(pooled.group(3)),
+            "ci": (float(pooled.group(4)), float(pooled.group(5))),
+            "dim_spearman": {dim: float(dimrow.group(i + 1)) for i, dim in enumerate(dims)},
+        }
+    return out
+
+
+def parse_floor_raising_c1_observational() -> dict[str, dict[str, float | tuple[float, float]]]:
+    text = (RESULTS / "floor_raising_c1_observational.md").read_text()
+    out: dict[str, dict[str, float | tuple[float, float]]] = {}
+    for judge in ["claude", "gemini", "gpt", "kimi"]:
+        m = re.search(
+            rf"\| {judge} \| 10 \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| ([+\-]?[0-9.]+) \| \[([+\-]?[0-9.]+), ([+\-]?[0-9.]+)\] \|",
+            text,
+        )
+        if not m:
+            raise SystemExit(f"Could not parse C1 observational floor-raising row for {judge}")
+        out[judge] = {
+            "mean_delta": float(m.group(1)),
+            "pearson": float(m.group(2)),
+            "spearman": float(m.group(3)),
+            "ci": (float(m.group(4)), float(m.group(5))),
+        }
+    return out
+
+
 def parse_cross_judge_response_correlation() -> dict[str, float]:
     text = (RESULTS / "cross_judge_response_correlation.md").read_text()
     m = re.search(
@@ -217,6 +261,8 @@ def main() -> None:
     response_self, response_self_by_author = load_response_level_self()
     floor = parse_floor_raising()
     floor_within = parse_floor_raising_within_author()
+    floor_per_dim = parse_floor_raising_per_dim()
+    floor_c1_obs = parse_floor_raising_c1_observational()
     cross_resp = parse_cross_judge_response_correlation()
 
     kimi_q = float(quality["kimi-k2.6"]["mean"])
@@ -271,6 +317,17 @@ def main() -> None:
         lo, hi = floor_within[judge]["within_ci"]  # type: ignore[index]
         if not (float(floor_within[judge]["within_spearman"]) < 0 and float(hi) < 0):
             errors.append(f"Within-author floor-raising correlation no longer excludes zero for {judge}: {floor_within[judge]}.")
+    for judge in ["claude", "gemini"]:
+        lo, hi = floor_per_dim[judge]["ci"]  # type: ignore[index]
+        dim_values = list(floor_per_dim[judge]["dim_spearman"].values())  # type: ignore[union-attr]
+        if not (float(floor_per_dim[judge]["spearman"]) < 0 and float(hi) < 0):
+            errors.append(f"Per-dimension floor-raising pooled ρ no longer excludes zero for {judge}: {floor_per_dim[judge]}.")
+        if not all(float(v) < 0 for v in dim_values):
+            errors.append(f"Per-dimension floor-raising is not negative in every dimension for {judge}: {dim_values}.")
+    if not all(float(v["mean_delta"]) > 0 for v in floor_c1_obs.values()):
+        errors.append(f"C1 observational own-author Δ is no longer positive for all judges: {floor_c1_obs}.")
+    if not (float(floor_c1_obs["claude"]["spearman"]) < 0 and float(floor_c1_obs["gpt"]["spearman"]) < 0):
+        errors.append(f"C1 observational floor-raising no longer points negative for Claude and GPT: {floor_c1_obs}.")
     for key, expected in {"response_mean": 0.395, "nonself_mean": 0.445, "author_mean": 0.867}.items():
         if abs(cross_resp[key] - expected) > 0.0005:
             errors.append(f"Cross-judge response-correlation {key} changed: {cross_resp[key]:.3f}.")
@@ -280,6 +337,7 @@ def main() -> None:
         RESULTS / "abstract.md": ["ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "within-author ρ=−0.777", "floor-raisers"],
         RESULTS / "elevator_pitch.md": ["+0.38", "5.18", "8.72", "+0.29", "−0.24", "7/7", "9/10", "15/20", "+0.74", "+1.53", "ρ=0.395", "ρ=0.867", "ρ=−0.673", "ρ=−0.834", "within-author ρ=−0.661", "−0.777"],
         RESULTS / "findings_summary_table.md": ["+2.43", "+0.12", "+0.29", "+0.00", "−2.87", "5.180", "8.716", "15/20", "+0.743", "β_predicted_self = **+1.53**", "−0.673", "−0.834", "−0.661", "−0.777", "0.395", "0.867"],
+        RESULTS / "supplement_index.md": ["−0.661", "−0.777", "Kimi +0.56", "ρ=−0.472", "ρ=−0.754", "all 5 rubric dims"],
     }
     for path, snippets in public_checks.items():
         missing = require_snippets(path, snippets)
@@ -325,6 +383,13 @@ def main() -> None:
         fw = floor_within[short]
         wlo, whi = fw["within_ci"]  # type: ignore[index]
         lines.append(f"| {display} within-author floor-raising Spearman ρ | {float(fw['within_spearman']):+.3f} [{float(wlo):+.3f}, {float(whi):+.3f}] | `floor_raising_within_author.md` |")
+        fp = floor_per_dim[short]
+        plo, phi = fp["ci"]  # type: ignore[index]
+        lines.append(f"| {display} per-dimension floor-raising pooled Spearman ρ | {float(fp['spearman']):+.3f} [{float(plo):+.3f}, {float(phi):+.3f}] | `floor_raising_per_dim.md` |")
+    for short, display in [("claude", "Claude"), ("gemini", "Gemini"), ("gpt", "GPT"), ("kimi", "Kimi")]:
+        fc = floor_c1_obs[short]
+        clo, chi = fc["ci"]  # type: ignore[index]
+        lines.append(f"| {display} C1 own-author vs consensus Δ | {float(fc['mean_delta']):+.3f}; ρ={float(fc['spearman']):+.3f} [{float(clo):+.3f}, {float(chi):+.3f}] | `floor_raising_c1_observational.md` |")
     lines.append("")
     lines.append("## Recognition")
     lines.append("")
@@ -345,7 +410,8 @@ def main() -> None:
         lines.append(f"- Gemini per-response SELF-label contrast: mean {plus(r['mean'], 3)}, {int(r['pos'])}/{int(r['n'])} responses positive, exact sign-test p={r['p']:.3f}.")
         lines.append("- Gemini per-response mean Δ by actual author: " + ", ".join(f"{author} {plus(response_self_by_author[('gemini-3.1-pro', author)], 3)}" for author in JUDGES if ("gemini-3.1-pro", author) in response_self_by_author) + ".")
     lines.append(f"- Cross-judge native response-quality agreement: mean response-level Spearman ρ={cross_resp['response_mean']:.3f}, non-self ρ={cross_resp['nonself_mean']:.3f}, author-level ρ={cross_resp['author_mean']:.3f}.")
-    lines.append("- Floor-raising: " + "; ".join(f"{display} Spearman ρ={float(floor[short]['spearman']):+.3f}, within-author ρ={float(floor_within[short]['within_spearman']):+.3f}, baseline Δ>0 {float(floor[short]['base_pos']):.2f} vs Δ≤0 {float(floor[short]['base_nonpos']):.2f}" for short, display in [("claude", "Claude"), ("gemini", "Gemini")]) + ".")
+    lines.append("- Floor-raising: " + "; ".join(f"{display} Spearman ρ={float(floor[short]['spearman']):+.3f}, within-author ρ={float(floor_within[short]['within_spearman']):+.3f}, per-dim pooled ρ={float(floor_per_dim[short]['spearman']):+.3f}, baseline Δ>0 {float(floor[short]['base_pos']):.2f} vs Δ≤0 {float(floor[short]['base_nonpos']):.2f}" for short, display in [("claude", "Claude"), ("gemini", "Gemini")]) + ".")
+    lines.append("- C1 observational own-author vs cross-judge consensus Δ: " + ", ".join(f"{display} {float(floor_c1_obs[short]['mean_delta']):+.3f} (ρ={float(floor_c1_obs[short]['spearman']):+.3f})" for short, display in [("claude", "Claude"), ("gemini", "Gemini"), ("gpt", "GPT"), ("kimi", "Kimi")]) + ".")
     lines.append("")
     lines.append("## Public-facing snippet check")
     lines.append("")
