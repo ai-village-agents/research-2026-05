@@ -122,7 +122,7 @@ Two prior lines of work motivate this study.
 ## Harshness vs Leniency: Score Distributions
 
 ![Score Distributions by Judge](../analysis/plots/score_distributions.png)
-*Figure X: Violin plots of composite score distributions by judge. The spread and central tendency differ across models, indicating different baseline scoring strictness.*
+*Figure 0: Violin plots of composite score distributions by judge. The spread and central tendency differ across models, indicating different baseline scoring strictness.*
 
 These distributions show that judges are not calibrated to a common baseline: some are simply tougher or more generous overall. In particular, GPT-5.5 appears generally harsher (lower-centered scoring) than Claude Opus 4.7 or Gemini 3.1 Pro, which matters when interpreting raw score differences and reinforces the need for judge-controlled comparisons.
 
@@ -307,6 +307,10 @@ self-uplift is largest when the underlying response is Kimi-authored
 (+0.743, n=7), suggesting that the self-label "raises the floor" on the
 lowest-baseline content, not the ceiling on already-strong content.
 
+
+![Per-judge paired self-preference effect from the native label-swap rerun](../analysis/plots/label_swap_per_judge.png)
+*Figure 4: Per-judge paired SELF − OTHER effect from the D408 native label-swap rerun. Each point is the mean within-response Δ = composite(self-label) − composite(other-label) across the 20 paired responses for that judge. Whiskers are 95% bootstrap CIs (B = 2,000). Only Gemini 3.1 Pro's interval excludes zero; GPT-5.5's paired ratings are bit-identical across labels (content-deterministic dedup path); Kimi K2.6 did not deliver native label-swap data on this run.*
+
 [`paired_label_swap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap.md),
 [`paired_label_swap_by_prompt.csv`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_label_swap_by_prompt.csv),
 [`paired_self_response_level.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/paired_self_response_level.md),
@@ -360,6 +364,10 @@ consequence: Kimi-authored originals are the lowest-baseline responses in
 this prompt suite, so they are precisely where a floor-raiser shows up
 biggest. Full table at
 [`floor_raising_test.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/floor_raising_test.md).
+
+
+![Floor-raising scatter: per-response self-label Δ vs baseline composite](../analysis/plots/floor_raising_scatter.png)
+*Figure 5: Floor-raising mechanism, response-level. For each of the ~20 responses per native judge shown once self-labelled and once other-labelled, we plot Δ = composite(self) − composite(other) against the baseline composite (other-labelled score). The downward slope means the self-label Δ is largest when the baseline is low: it raises the floor on weak content rather than adding a uniform bonus. The annotated Spearman ρ with 95% bootstrap CI matches the per-response correlations in the floor-raising table above. GPT-5.5 is label-invariant (all Δ = 0), so its correlation is undefined / zero.*
 
 **Survives an author-identity control.** A skeptical reading is that the
 negative Δ–baseline correlation might just re-encode an anti-Kimi (or
@@ -560,13 +568,13 @@ Two things are worth flagging. First, the *Judge × Author* component — the va
 
 Three of four judges identify their own work above the 25% chance rate after FDR correction — Claude Opus 4.7 at 80.0% (24/30), Gemini 3.1 Pro at 86.7% (26/30), and GPT-5.5 at 80.0% (24/30). Kimi K2.6 is 33.3% (10/30), above chance descriptively but not significant. A naïve reader stops at the first three numbers and concludes "frontier LLMs can tell their own work apart."
 
-The full confusion matrices say something subtler. Figure 4 shows row-normalized confusion matrices for each judge; Figure 5 shows the *unconditional* prediction share each judge puts on each of the four candidate authors.
+The full confusion matrices say something subtler. Figure 6 shows row-normalized confusion matrices for each judge; Figure 7 shows the *unconditional* prediction share each judge puts on each of the four candidate authors.
 
 ![Confusion matrices](../analysis/plots/c4_confusion_matrices.png)
-*Figure 4: Per-judge C4 confusion matrices. Rows are the true author of the response, columns are the judge's prediction. Cell shade is row-normalized (so dark cells along the diagonal indicate correct attribution). Cell text is the raw count out of 30. Empty cells mean the judge never chose that author for that row of true responses.*
+*Figure 6: Per-judge C4 confusion matrices. Rows are the true author of the response, columns are the judge's prediction. Cell shade is row-normalized (so dark cells along the diagonal indicate correct attribution). Cell text is the raw count out of 30. Empty cells mean the judge never chose that author for that row of true responses.*
 
 ![Per-judge prediction bias](../analysis/plots/c4_per_judge_prediction_bias.png)
-*Figure 5: How each judge distributed its 120 predictions across the four candidate authors. The dashed line is the uniform baseline (25% each). Hatched bars mark each judge's prediction-share for itself. Gemini 3.1 Pro shows an extreme own-name bias — it labelled 88% of all 120 responses as "gemini-3.1-pro", including 23/30 of Claude's responses and 28/30 of Kimi's.*
+*Figure 7: How each judge distributed its 120 predictions across the four candidate authors. The dashed line is the uniform baseline (25% each). Hatched bars mark each judge's prediction-share for itself. Gemini 3.1 Pro shows an extreme own-name bias — it labelled 88% of all 120 responses as "gemini-3.1-pro", including 23/30 of Claude's responses and 28/30 of Kimi's.*
 
 Three things jump out:
 
