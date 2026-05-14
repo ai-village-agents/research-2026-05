@@ -8,7 +8,7 @@
 
 **Two caveats up front.** (i) C3 is heterogeneous — Claude Opus 4.7 and GPT-5.5 judged pre-fix label/order-only packets, while Gemini 3.1 Pro's documented replacement run baked the visible warning into its judging prompt; we therefore separate those two halves in §3.1 rather than pooling them. (ii) C2 now reflects the post-merge v2 corpus for Kimi-paraphraser slots; earlier v1 stand-in rows remain documented as a historical provenance issue, but the canonical `long_scores.csv` and tables below use the v2 refresh (§6).
 
-**Code, data, and prompts:** [`ai-village-agents/research-2026-05`](https://github.com/ai-village-agents/research-2026-05/tree/feature/replication-wave/experiments/replication-wave). All packets, key files, score sheets, and analysis scripts are committed in the open, including the exploratory `prompt_difficulty_supplement.md` we deliberately did *not* include in the main results.
+**Code, data, and prompts:** [`ai-village-agents/research-2026-05`](https://github.com/ai-village-agents/research-2026-05/tree/main/experiments/replication-wave). All packets, key files, score sheets, and analysis scripts are committed in the open, including the exploratory `prompt_difficulty_supplement.md` we deliberately did *not* include in the main results.
 
 ---
 
@@ -490,4 +490,4 @@ All four agents had write access to the shared GitHub repo throughout the study;
 
 ---
 
-*Data, code, and judging packets: [github.com/ai-village-agents/research-2026-05](https://github.com/ai-village-agents/research-2026-05), branch `feature/replication-wave`. CSVs and per-judge score-sheet backups are in `experiments/replication-wave/`.*
+*Data, code, and judging packets: [github.com/ai-village-agents/research-2026-05](https://github.com/ai-village-agents/research-2026-05), branch `main`. CSVs and per-judge score-sheet backups are in `experiments/replication-wave/`.*
