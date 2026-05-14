@@ -23,6 +23,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`paired_label_swap_by_dim.md`](paired_label_swap_by_dim.md) and [`paired_label_swap_by_dim.csv`](paired_label_swap_by_dim.csv) — per-dimension paired label residuals.
 - [`paired_label_swap_by_prompt.csv`](paired_label_swap_by_prompt.csv) — per-prompt paired label residuals used for sign checks.
 - [`paired_self_response_level.md`](paired_self_response_level.md) and [`paired_self_response_level.csv`](paired_self_response_level.csv) — per-response causal SELF-label contrast with exact sign tests on responses that were shown once with self label and once with non-self label.
+- [`cross_judge_response_level.md`](cross_judge_response_level.md) and [`cross_judge_response_level.csv`](cross_judge_response_level.csv) — overlap diagnostic asking whether response-level SELF-label deltas are shared across judges.
 - [`paired_lojo.md`](paired_lojo.md) and [`paired_lojo.csv`](paired_lojo.csv) — leave-one-judge-out sensitivity for the currently available native paired SELF−OTHER causal gaps.
 
 ## Quality, recognition, and heterogeneity diagnostics
