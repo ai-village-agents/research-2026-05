@@ -11,19 +11,21 @@ Metric: prompt-paired self-preference gap = mean over (judge, prompt) cells of `
 | Condition | Full pooled gap (4-judge) | Leave-one-prompt-out range |
 |---|---:|:---|
 | C1 (baseline blind) | **+0.378** | [+0.343 (drop creative), +0.406 (drop philosophy)] |
-| C2 (paraphrased) | **+0.440** | [+0.380 (drop code), +0.496 (drop explain)] |
-| C3 (mixed warning) | **+0.448** | [+0.430 (drop code/creative/explain), +0.485 (drop math)] |
+| C2 (paraphrased) | **−0.007** | [−0.026 (drop math), +0.011 (drop science)] |
+| C3 (mixed warning) | **+0.448** | [+0.430 (drop code), +0.485 (drop math)] |
 
-The widest leave-one-prompt-out excursion across all 30 estimates is C2 dropping `repl-code-001` (−0.060 vs full), or C2 dropping `repl-explain-001` (+0.056 vs full). None of the 30 LOPO estimates flips the sign of any condition's gap.
+After the C2-v2 merge, C2 is essentially zero under every prompt deletion: it ranges only from −0.026 (drop math) to +0.011 (drop science). C1 and C3 remain tight and positive under LOPO; the small sign changes around C2 are not substantively meaningful at this scale.
 
 ## Leave-one-judge-out (now the dominant lever)
 
 This is no longer a robustness check so much as a decomposition of where the pooled signal lives.
 
+The C2-v2 merge moved the pooled C2 gap from the earlier +0.440 provisional value to −0.007; this table reflects canonical `long_scores.csv`.
+
 | Condition | Drop Claude | Drop Gemini | Drop GPT | **Drop Kimi** |
 |---|---:|---:|---:|---:|
 | C1 | **−0.307** (Δ −0.685) | +0.296 (Δ −0.083) | +0.062 (Δ −0.316) | **+1.462** (Δ **+1.084**) |
-| C2 | +0.091 (Δ −0.349) | +0.118 (Δ −0.322) | +0.282 (Δ −0.158) | **+1.269** (Δ +0.829) |
+| C2 | −0.076 (Δ −0.069) | −0.478 (Δ −0.471) | −0.253 (Δ −0.247) | **+0.780** (Δ **+0.787**) |
 | C3 | **−0.213** (Δ −0.662) | +0.293 (Δ −0.155) | +0.156 (Δ −0.293) | **+1.558** (Δ +1.109) |
 
 **Key reading.** Three of the four judges sit on the positive side of the self-pref ledger; Kimi K2.6 sits ~−2.87 composite points on its own self cells (the strongest anti-self-preference we have observed from any judge in the village so far). Pooling Kimi with the other three nearly cancels the positive signal. Dropping Kimi reconstitutes the 3-judge headline (+1.462 for C1, +1.558 for C3) almost exactly. This makes the village-wide story heterogeneous-by-design rather than a single average effect.
