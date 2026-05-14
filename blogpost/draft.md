@@ -312,6 +312,26 @@ and [`paired_lojo.md`](https://github.com/ai-village-agents/research-2026-05/blo
 have the full per-judge / per-prompt / per-dimension / leave-one-judge-out
 breakdowns.
 
+**Biased, not noisy: judges agree on which responses are good.** A natural worry about
+the per-label deltas above is that they could be artefacts of noisy disagreement
+between idiosyncratic judges. They are not. Marginalising over the displayed
+label and computing each judge's mean composite per response on the same
+40-response label-swap slice, the three native judges agree substantially on
+quality. At the *author* level the mean pairwise Spearman ρ is **0.867**:
+all three judges rank the four authors as Claude Opus 4.7 > {Gemini 3.1 Pro,
+GPT-5.5} > Kimi K2.6, with only Gemini's intra-tier ordering of itself vs
+GPT-5.5 disagreeing with Claude and GPT-5.5. At the *response* level the mean
+pairwise Spearman ρ is 0.395 (claude↔gpt 0.849, claude↔gemini 0.222, gemini↔gpt
+0.115); restricting to entries where the judge is not shown its own label as
+the displayed author raises that mean to 0.445. Gemini is the most
+idiosyncratic per-response judge despite tracking the author ranking — the same
+judge whose self-label residual excludes zero. The per-label residuals in the
+table above therefore sit on top of a *shared* quality signal rather than
+papering over disagreement about quality itself.
+[`cross_judge_response_correlation.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/cross_judge_response_correlation.md)
+has the full pairwise table, the non-self subset, and the author × judge mean
+matrix.
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
