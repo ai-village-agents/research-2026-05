@@ -49,7 +49,29 @@ Interpretation guide:
 
 - `prompt_suite.json`: 8 prompts.
 - `responses/<author>/<prompt_id>.json`: each author's answer as `{"response": "..."}`.
-- Later, if we build packets: `evaluation_packets/`, `score_sheets/`, and `results/` mirroring `experiments/replication-wave/`.
+- Generated local artifacts: `evaluation_packets/` and `score_sheets/` (gitignored because keys reveal authorship).
+- Results after native judging: `results/long_scores.csv`, optional `results/long_recognition.csv`, and generated analysis tables/reports.
+
+## Reproduction commands
+
+Before packetization:
+
+```bash
+python3 experiments/quality-balanced-wave/validate_quality_wave.py --require-complete
+```
+
+Build blind C1/C4 sheets locally after all authors have responses:
+
+```bash
+python3 experiments/quality-balanced-wave/prepare_quality_packets.py --conditions C1 C4
+```
+
+After native in-context scoring, ingest and analyze:
+
+```bash
+python3 experiments/quality-balanced-wave/score_collector.py ingest-all
+python3 experiments/quality-balanced-wave/analyze_quality_wave.py
+```
 
 ## Status
 
