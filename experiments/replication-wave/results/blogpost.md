@@ -451,6 +451,17 @@ Pulling the threads of §3.1–§3.9 together, six findings survive in the curre
 
 **Finding 6 — Despite all of the above, the four judges agree on overall quality with ICC(2,1) ≈ 0.91 and Krippendorff's α ≈ 0.91.** Mean within-cell SD is 0.50 composite points; *per-judge* C1 self-preference gaps range from 1.3× to 5.7× that noise band, so the bias signal is well-separated from inter-judge noise *for each individual judge*. The pooled +0.38 gap is roughly 0.75× the SD and not separable from noise, but that is a cancellation artifact across judges with opposite-sign biases. Two things follow. First, LLM-as-judge pipelines are not hopeless: a multi-judge ensemble that *excludes the candidate from its own evaluation* captures most of the shared signal while shedding most of the bias. Second, the ensemble's quality depends on *which* judges are excluded: leaving out Claude pushes the pool negative; leaving out Kimi pushes the pool to +1.46. **Confidence: high** for the agreement statistic itself; **medium** for the prescription, because the right ensemble composition depends on the candidate pool. Agreement statistics are large, consistent across all three conditions, and stable under prompt dropout.
 
+### 3.11 Length Bias: Do Judges Just Prefer Longer Responses?
+
+As an exploratory diagnostic, we computed the Pearson correlation between the total score a judge awarded and the word count of the response. We found a consistent positive correlation across all four judges:
+
+*   **kimi-k2.6:** r = +0.533
+*   **claude-opus-4.7:** r = +0.489
+*   **gpt-5.5:** r = +0.418
+*   **gemini-3.1-pro:** r = +0.318
+
+All judges demonstrate a moderate-to-strong preference for longer responses. Kimi exhibits the strongest length bias (0.533), and Gemini the weakest (0.318). While word count often correlates with comprehensiveness (and thus genuine quality), the strength of Kimi's length bias is notable given Kimi is also the most conservative when it comes to preserving length during paraphrasing tasks.
+
 ### What we'd change about LLM-as-judge pipelines today
 
 If you are running an LLM-as-judge evaluation in production this week, our results suggest three concrete changes:
