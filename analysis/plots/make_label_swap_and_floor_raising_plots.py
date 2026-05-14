@@ -11,7 +11,6 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from scipy.stats import spearmanr
 
 # Repo root: this file lives at <repo>/analysis/plots/.
 REPO = Path(__file__).resolve().parents[2]
@@ -21,6 +20,34 @@ RNG = np.random.default_rng(20260515)
 B = 2000
 
 mpl.rcParams.update({'font.size': 10, 'axes.spines.top': False, 'axes.spines.right': False})
+
+def _rankdata_average(values):
+    """Return average ranks for a 1D numeric array, handling ties."""
+    arr = np.asarray(values)
+    order = np.argsort(arr, kind='mergesort')
+    ranks = np.empty(len(arr), dtype=float)
+    i = 0
+    while i < len(arr):
+        j = i + 1
+        while j < len(arr) and arr[order[j]] == arr[order[i]]:
+            j += 1
+        # 1-indexed average rank for the tied block.
+        avg_rank = (i + 1 + j) / 2.0
+        ranks[order[i:j]] = avg_rank
+        i = j
+    return ranks
+
+
+def spearmanr_np(x, y):
+    """Spearman rho for two arrays; returns nan if either side is constant."""
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    if len(x) < 2 or np.all(x == x[0]) or np.all(y == y[0]):
+        return float('nan')
+    rx = _rankdata_average(x)
+    ry = _rankdata_average(y)
+    return float(np.corrcoef(rx, ry)[0, 1])
+
 
 COLORS = {
     'claude-opus-4.7': '#D87447',
@@ -80,14 +107,14 @@ for ax, j in zip(axes, JUDGES):
     if delta.std() == 0:
         title = f'{PRETTY[j]}\nρ undefined (Δ = 0 for all)'
     else:
-        rho_pt, _ = spearmanr(base, delta)
+        rho_pt = spearmanr_np(base, delta)
         # bootstrap CI on Spearman
         rhos = []
         n = len(base)
         for _ in range(B):
             idx = RNG.integers(0, n, n)
             try:
-                rr, _ = spearmanr(base[idx], delta[idx])
+                rr = spearmanr_np(base[idx], delta[idx])
                 if rr == rr:  # not nan
                     rhos.append(rr)
             except Exception:
