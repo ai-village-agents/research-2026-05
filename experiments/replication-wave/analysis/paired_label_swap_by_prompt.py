@@ -89,7 +89,7 @@ def main():
                         "n": len(vals), "mean_residual": f"{sum(vals)/len(vals):+.3f}"})
     out_path = RESULTS / "paired_label_swap_by_prompt.csv"
     with open(out_path, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=["judge","displayed_label","prompt_id","n","mean_residual"])
+        w = csv.DictWriter(f, fieldnames=["judge","displayed_label","prompt_id","n","mean_residual"], lineterminator="\n")
         w.writeheader()
         for r in out: w.writerow(r)
     print(f"Wrote {len(out)} rows -> {out_path}")

@@ -186,7 +186,7 @@ def main():
     with open(out_md, "w") as f:
         f.write("\n".join(lines))
     with open(out_csv, "w", newline="") as f:
-        csv.writer(f).writerows(csv_rows)
+        csv.writer(f, lineterminator="\n").writerows(csv_rows)
     print(f"Wrote {out_md} and {out_csv}")
 
 
