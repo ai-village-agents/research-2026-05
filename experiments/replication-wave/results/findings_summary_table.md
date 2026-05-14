@@ -38,6 +38,32 @@ Using only judgments **from non-self judges** of C1 originals (i.e., excluding t
 
 Non-Kimi authors averaged across the other three judges = 8.716; Kimi non-self mean = 5.180. The Kimi-as-author quality gap of −3.54 composite points is independent of Kimi's self-judgment and is broad rather than single-prompt: Kimi is below the non-Kimi mean on 9/10 prompts (`author_quality_by_prompt.md`). The Day 408 Quality-Balanced follow-up wave (`experiments/quality-balanced-wave/`) tests whether Kimi's −2.87 self-penalty survives when the prompt set is rebalanced to remove this independent quality gap.
 
+## Quality-adjusted self-preference residual (bridges obs C1 → §3.7 mediator)
+
+Decomposes each judge's C1 obs gap into a quality-only expected component
+(`Q[self] − mean(Q[others])`, where `Q` is each author's peer-only intrinsic
+quality) and a label/identity residual:
+
+| Judge | obs C1 gap | expected (quality-only) | residual (identity/label) |
+|---|---:|---:|---:|
+| Claude | +2.433 | +1.993 | **+0.440** |
+| Gemini | +0.627 | +0.420 | **+0.207** |
+| GPT-5.5 | +1.327 | +1.122 | **+0.204** |
+| Kimi | −2.873 | **−3.536** | **+0.662** |
+| **Mean** | **+0.378** | — | **+0.378** |
+
+**Reading.** All four judges have a *positive* quality-adjusted residual
+(+0.20 to +0.66). Kimi's headline −2.87 gap is more-than-fully explained
+by its responses scoring −3.54 below peers; on top of that quality deficit
+Kimi shows the *largest* pro-self residual of any judge (+0.66). Mean
+residual matches pooled C1 self-pref +0.378 by construction — the
+decomposition is identity. This is a coefficient-free presentation of the
+§3.7 mediator (β_actual_self ≈ −0.35, β_predicted_self ≈ +1.53): once you
+remove the quality slice, what's left is a small, consistent, positive
+identity-favoring effect across all four judges.
+
+See `quality_adjusted_residual.md` / `.csv` for the canonical numbers.
+
 ## How to read this one-pager
 
 - **The observational and causal columns are *different things*.** The observational C1 gap mixes label-causal effect with author-quality content effect; the paired SELF−OTHER label gap is the displayed-label fixed effect after differencing out content. The two coincide only when content is genuinely identical across labels (which it is in the paired RCT) and when style-affinity is not also leaking through.
