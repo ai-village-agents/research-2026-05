@@ -1,64 +1,116 @@
 #!/usr/bin/env python3
-"""Generate data for a radar/spider chart comparing C1, C2, and C3 gaps.
+"""Generate stable radar/spider-chart data for per-dimension self gaps.
 
-This script calculates the per-dimension self-preference gaps for each
-condition (C1, C2, C3) and formats them into a CSV suitable for plotting
-a radar chart in the final blog post or presentation.
+For each judge and condition (C1/C2/C3), this script computes the
+self-preference gap separately for each rubric dimension:
+
+    mean(score | judge == author) - mean(score | judge != author)
+
+It writes both a plotting CSV and a short markdown companion. Values are
+rounded and sorted in canonical judge/condition order so small regenerated
+output diffs are meaningful.
 """
 
-import pandas as pd
-import numpy as np
+from __future__ import annotations
+
 from pathlib import Path
+
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
 SCORES_CSV = RESULTS / "long_scores.csv"
+OUT_CSV = RESULTS / "radar_chart_data.csv"
+OUT_MD = RESULTS / "radar_chart_data.md"
 
-def main():
+JUDGES = ["claude-opus-4.7", "gemini-3.1-pro", "gpt-5.5", "kimi-k2.6"]
+CONDITIONS = ["c1", "c2", "c3"]
+DIMS = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
+SHORT = {"claude-opus-4.7": "Claude", "gemini-3.1-pro": "Gemini", "gpt-5.5": "GPT-5.5", "kimi-k2.6": "Kimi"}
+
+
+def main() -> None:
     if not SCORES_CSV.exists():
-        print(f"Scores file not found: {SCORES_CSV}")
-        return
-        
+        raise SystemExit(f"Scores file not found: {SCORES_CSV}")
+
     df = pd.read_csv(SCORES_CSV)
-    
-    # We care about C1, C2, and C3
-    df = df[df["condition"].str.lower().isin(["c1", "c2", "c3"])].copy()
-    
-    dims = ["correctness", "completeness", "clarity", "creativity", "constraint_adherence"]
-    
-    rows = []
-    
-    for judge in df["judge"].unique():
+    df = df[df["condition"].str.lower().isin(CONDITIONS)].copy()
+    df["condition"] = df["condition"].str.lower()
+
+    rows: list[dict[str, object]] = []
+    for judge in JUDGES:
         judge_df = df[df["judge"] == judge]
-        
-        for cond in ["c1", "c2", "c3"]:
-            cond_df = judge_df[judge_df["condition"].str.lower() == cond]
-            
+        for cond in CONDITIONS:
+            cond_df = judge_df[judge_df["condition"] == cond]
             if cond_df.empty:
                 continue
-                
             self_df = cond_df[cond_df["author"] == judge]
             other_df = cond_df[cond_df["author"] != judge]
-            
-            row = {
-                "judge": judge,
-                "condition": cond.upper()
-            }
-            
-            for dim in dims:
-                self_mean = self_df[dim].mean() if not self_df.empty else np.nan
-                other_mean = other_df[dim].mean() if not other_df.empty else np.nan
-                row[dim + "_gap"] = self_mean - other_mean
-                
+            if len(self_df) != 10 or len(other_df) != 30:
+                raise SystemExit(f"Unexpected row count for {judge} {cond}: self={len(self_df)} other={len(other_df)}")
+            row: dict[str, object] = {"judge": judge, "condition": cond.upper()}
+            for dim in DIMS:
+                row[f"{dim}_gap"] = self_df[dim].mean() - other_df[dim].mean()
             rows.append(row)
-            
+
     radar_df = pd.DataFrame(rows)
-    output_path = RESULTS / "radar_chart_data.csv"
-    radar_df.to_csv(output_path, index=False)
-    
-    print(f"Wrote radar chart data to {output_path}")
-    print("\nSample Data:")
-    print(radar_df.head())
+    expected_rows = len(JUDGES) * len(CONDITIONS)
+    if len(radar_df) != expected_rows:
+        raise SystemExit(f"Expected {expected_rows} rows, found {len(radar_df)}")
+
+    radar_df.to_csv(OUT_CSV, index=False, float_format="%.3f", lineterminator="\n")
+
+    long = radar_df.melt(id_vars=["judge", "condition"], var_name="dimension", value_name="gap")
+    long["dimension"] = long["dimension"].str.replace("_gap", "", regex=False)
+    strongest_pos = long.sort_values("gap", ascending=False).iloc[0]
+    strongest_neg = long.sort_values("gap", ascending=True).iloc[0]
+    condition_means = radar_df.groupby("condition")[[f"{d}_gap" for d in DIMS]].mean().mean(axis=1)
+
+    lines = [
+        "# Radar chart data: per-dimension self-preference gaps",
+        "",
+        "This companion to `radar_chart_data.csv` summarizes the values used for",
+        "judge × condition radar/spider plots. Each cell is the self-authored",
+        "mean minus other-authored mean for one judge, condition, and rubric dimension.",
+        "Positive values indicate self-favoring scores; negative values indicate",
+        "self-penalizing scores.",
+        "",
+        "## Mean gap across all judges and dimensions",
+        "",
+        "| Condition | Mean per-dimension gap |",
+        "|---|---:|",
+    ]
+    for cond in ["C1", "C2", "C3"]:
+        lines.append(f"| {cond} | {condition_means.loc[cond]:+.3f} |")
+    lines += [
+        "",
+        "## Extremes",
+        "",
+        f"- Largest positive cell: {SHORT[strongest_pos['judge']]} {strongest_pos['condition']} {strongest_pos['dimension']} {strongest_pos['gap']:+.3f}.",
+        f"- Largest negative cell: {SHORT[strongest_neg['judge']]} {strongest_neg['condition']} {strongest_neg['dimension']} {strongest_neg['gap']:+.3f}.",
+        "",
+        "## Full table",
+        "",
+        "| Judge | Condition | Correctness | Completeness | Clarity | Creativity | Constraint adherence |",
+        "|---|---|---:|---:|---:|---:|---:|",
+    ]
+    for _, row in radar_df.iterrows():
+        lines.append(
+            f"| {SHORT[row['judge']]} | {row['condition']} | "
+            f"{row['correctness_gap']:+.3f} | {row['completeness_gap']:+.3f} | "
+            f"{row['clarity_gap']:+.3f} | {row['creativity_gap']:+.3f} | "
+            f"{row['constraint_adherence_gap']:+.3f} |"
+        )
+    lines += [
+        "",
+        "*Generated by `analysis/condition_comparison_radar.py` from `results/long_scores.csv`.*",
+        "",
+    ]
+    OUT_MD.write_text("\n".join(lines), encoding="utf-8")
+
+    print(f"Wrote {OUT_CSV}")
+    print(f"Wrote {OUT_MD}")
+
 
 if __name__ == "__main__":
     main()
