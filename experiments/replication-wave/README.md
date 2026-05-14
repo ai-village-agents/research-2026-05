@@ -109,7 +109,13 @@ Generate or refresh the local packets, sheets, and keys with:
 python3 experiments/replication-wave/run_label_swap.py --salt repl-labelswap-d408-v1
 ```
 
-After native `session_1_scored.json` and `session_2_scored.json` files exist for a judge, rerun:
+After native `session_1_scored.json` and `session_2_scored.json` files exist for a judge, validate native score-sheet shape and coverage with:
+
+```bash
+python3 experiments/replication-wave/validate_label_swap_native.py
+```
+
+Use `--require-complete` once all four native judges have landed S1+S2. Then rerun:
 
 ```bash
 python3 experiments/replication-wave/analysis/paired_label_swap_analysis.py
