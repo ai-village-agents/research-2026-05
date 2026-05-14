@@ -89,6 +89,14 @@ python3 experiments/replication-wave/analysis/author_quality_diagnostics.py
 
 This writes `results/author_quality_diagnostics.md` plus CSV tables estimating author quality from non-self C1 judgments only.
 
+Before publishing or tagging a summary-facing release, audit the README/elevator-pitch/one-page headline numbers against the canonical CSVs with:
+
+```bash
+python3 experiments/replication-wave/analysis/headline_number_audit.py
+```
+
+This writes `results/headline_number_audit.md` and fails if key rounded values are missing from the public-facing summary documents.
+
 ### D408 label-swap follow-up
 
 The randomized label-swap follow-up re-presents each original C1 response under displayed author labels so that response content can be held fixed while labels vary. Blinded packets live in `data/label_swap_packets/`; answer keys under `data/label_swap_keys/` are gitignored because they reveal actual authors.
