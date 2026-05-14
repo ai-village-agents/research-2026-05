@@ -28,6 +28,8 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Quality, recognition, and heterogeneity diagnostics
 
+- [`author_length_diagnostic.md`](author_length_diagnostic.md) and [`author_length_diagnostic.csv`](author_length_diagnostic.csv) — exploratory check asking whether an author's peer-quality deficit is purely driven by raw response word count.
+- [`cross_judge_correlation.md`](cross_judge_correlation.md) and [`cross_judge_correlation.csv`](cross_judge_correlation.csv) — cross-judge response-level correlation in C1, checking if judges agree on which responses are good/bad independent of authorship.
 - [`author_quality_diagnostics.md`](author_quality_diagnostics.md) plus `author_quality_*.csv` — non-self C1 author-quality checks showing Kimi-authored originals are independently lower-rated on this prompt set.
 - [`author_quality_by_prompt.md`](author_quality_by_prompt.md) plus `author_quality_*_by_prompt.csv` — prompt-level version of the author-quality diagnostic.
 - [`quality_adjusted_residual.md`](quality_adjusted_residual.md) and [`quality_adjusted_residual.csv`](quality_adjusted_residual.csv) — decomposes observational C1 self gaps into peer-quality expected component plus residual.
