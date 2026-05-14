@@ -46,6 +46,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`inter_rater_agreement.md`](inter_rater_agreement.md) and [`icc_agreement_report.md`](icc_agreement_report.md) — inter-rater agreement summaries.
 - [`c3_warning_failure_analysis.md`](c3_warning_failure_analysis.md) — C1→C3 delta diagnostic with caveat about heterogeneous C3 delivery.
 - [`paraphrase_shifts_report.md`](paraphrase_shifts_report.md) — stylometric changes introduced by C2 paraphrasers.
+- [`packet_order_diagnostic.md`](packet_order_diagnostic.md) plus `packet_order_*.csv` — packet-position/fatigue smoke test using public score-sheet order and exact response-text author matching, with item/judge adjusted residuals.
 - [`c2_stimulus_sheet_audit.csv`](c2_stimulus_sheet_audit.csv) and related C2-v2 preview reports — provenance checks for the Kimi-paraphraser v1→v2 refresh.
 
 ## Pending follow-up
