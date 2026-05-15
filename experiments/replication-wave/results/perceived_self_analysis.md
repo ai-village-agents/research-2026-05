@@ -127,7 +127,7 @@ A native causal label-swap experiment was subsequently completed for all four ju
 
 1. **The 4-judge OOD replication recovers the D406 mediator *direction***. Perceived authorship is the coefficient that excludes zero; actual authorship is not. But it is identified almost entirely off Kimi's belief-vs-actual decoupling, not from a within-judge pattern that holds in the three judges with high self-recognition.
 
-2. **A real *predicted-label* component to scoring persists descriptively**, worth ~+1.0–1.3 rubric points of variation between predicted-Kimi and predicted-anyone-else, even controlling for actual author. The 3-judge native causal label-swap test (detailed elsewhere) confirms that at least some of this represents a literal displayed-label effect for certain judges (Gemini, Claude), rather than pure style cues.
+2. **A real *predicted-label* component to scoring persists descriptively**, worth ~+1.0–1.3 rubric points of variation between predicted-Kimi and predicted-anyone-else, even controlling for actual author. The native paired label-swap follow-up (now complete for all four judges) confirms that at least some of this represents a literal displayed-label effect for certain judges — robustly for Gemini, directionally/non-robustly for Claude — rather than pure style cues.
 
 3. **Recognition errors do not symmetrize the self-preference effect.** Kimi's poor self-recognition (0/10) coupled with low-quality actual outputs creates a unique identifying contrast that no other judge in the corpus provides. This is what flips the 3-judge mediator coefficients; it is not a property of all four judges separately.
 
