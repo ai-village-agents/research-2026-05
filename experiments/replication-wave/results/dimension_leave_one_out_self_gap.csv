@@ -1,0 +1,6 @@
+dropped_dimension,kept_dimensions,c1_pooled_self_gap,delta_vs_full_composite
+completeness,correctness+clarity+creativity+constraint_adherence,0.29583333333333334,-0.08249999999999985
+correctness,completeness+clarity+creativity+constraint_adherence,0.3583333333333333,-0.019999999999999907
+creativity,correctness+completeness+clarity+constraint_adherence,0.3895833333333333,0.011250000000000093
+constraint_adherence,correctness+completeness+clarity+creativity,0.4125,0.03416666666666679
+clarity,correctness+completeness+creativity+constraint_adherence,0.4354166666666668,0.0570833333333336
