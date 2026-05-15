@@ -92,3 +92,4 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 ## Pending follow-up
 
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
+- [`next_steps_future_work.md`](next_steps_future_work.md) - A roadmap for future replicators based on post-hoc power analysis.
