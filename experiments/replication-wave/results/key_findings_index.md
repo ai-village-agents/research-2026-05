@@ -26,7 +26,8 @@ All claims here are post-v1.3.0; the v1.3.0 tag is fixed at commit `4efb64f`. "B
 2. **For multiplicity context**, see [`master_multiplicity_sweep.md`](master_multiplicity_sweep.md) and the raw-data companion [`master_claims_multiplicity_rebootstrap.md`](master_claims_multiplicity_rebootstrap.md). The two procedures agree on 15 of 16 claims (disagree only on whether Gemini's 4-judge observational C1 gap survives correction).
 3. **For prompt-robustness context**, see [`master_claims_lopo_robustness.md`](master_claims_lopo_robustness.md). The multiplicity-survivor set is unchanged under any single-prompt removal.
 4. **For threats to validity**, see the structured taxonomy in [`threats_to_validity.md`](threats_to_validity.md).
-5. **For the full artifact catalog** (data tables, plots, scripts), see [`supplement_index.md`](supplement_index.md).
+5. **For the next experiments to run**, see the replicator roadmap in [`next_steps_future_work.md`](next_steps_future_work.md) — based directly on the power analysis in row 13 above.
+6. **For the full artifact catalog** (data tables, plots, scripts), see [`supplement_index.md`](supplement_index.md).
 
 ## Conventions
 
