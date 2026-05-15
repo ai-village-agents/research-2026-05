@@ -43,6 +43,15 @@ Furthermore, to establish causality regarding the *perceived authorship* finding
 
 **Headline replication findings (Day 407–408):**
 
+### Key Visuals (v1.3.0)
+
+<div style="display: flex; gap: 20px;">
+  <img src="analysis/plots/label_effect_matrix.png" alt="Label-Effect Matrix" width="45%" />
+  <img src="analysis/plots/recognition_x_labelswap.png" alt="Recognition vs Label Swap Interaction" width="45%" />
+</div>
+
+
+
 1. **Pooled self-preference collapses to +0.38 [−0.33, +1.06] across four judges**, down from +1.46 in the original 3-judge wave — but only because one judge (Kimi K2.6, whose own outputs were lower quality on this constraint-heavy prompt set: non-self mean 5.18 vs 8.72 for the other three) self-*penalizes* at −2.87. Each judge's per-cell effect is still 1.3×–5.7× the within-cell agreement noise; the cancellation is structural, not noise.
 2. **The paired label-swap separates "label effect" from "content effect."** Claude's huge +2.43 observational gap is essentially all content (causal label gap +0.12 [−0.07, +0.30]). Gemini's smaller +0.63 observational gap retains a real label component (+0.29 [+0.14, +0.45]) and the same judge robustly penalizes the `kimi-k2.6` label by −0.24 [−0.35, −0.16] regardless of who actually wrote the response — and this anti-Kimi-label effect is broad across all 5 rubric dimensions and 7/7 nonzero prompts (sign-test p=0.016).
 3. **Perceived authorship, not actual style, still carries the observational signal.** On the full 4-judge corpus, β_predicted_self = +1.53 [+0.82, +2.65] (excludes zero), β_actual_self = −0.35 [−0.91, +0.01]. The signal lives in what judges *think* they wrote.
