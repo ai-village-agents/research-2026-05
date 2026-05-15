@@ -1,0 +1,5 @@
+judge,overall_recog_acc,self_recog_hits,self_recog_n,self_recog_rate,mean_confidence,pred_self_total,false_self_n,false_self_rate_among_others,label_swap_self_effect,label_swap_self_ci_lo,label_swap_self_ci_hi,label_swap_self_n
+claude-opus-4.7,0.9,10,10,1.0,3.375,10,0,0.0,0.09,-0.0455,0.23,20
+gemini-3.1-pro,0.625,1,10,0.1,3.175,3,2,0.06666666666666667,0.22,0.1059,0.3316,20
+gpt-5.5,1.0,10,10,1.0,4.0,10,0,0.0,0.0,0.0,0.0,20
+kimi-k2.6,0.3,0,10,0.0,3.4,4,4,0.13333333333333333,0.005,-0.2412,0.2632,20

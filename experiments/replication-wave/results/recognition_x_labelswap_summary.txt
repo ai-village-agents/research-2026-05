@@ -1,0 +1,10 @@
+Recognition x label-swap, per judge
+  claude-opus-4.7     selfRecog=1.00  overallRecog=0.90  falseSelf=0.00  labelSelf=+0.090 CI=[-0.05, +0.23]
+  gemini-3.1-pro      selfRecog=0.10  overallRecog=0.62  falseSelf=0.07  labelSelf=+0.220 CI=[+0.11, +0.33]
+  gpt-5.5             selfRecog=1.00  overallRecog=1.00  falseSelf=0.00  labelSelf=+0.000 CI=[+0.00, +0.00]
+  kimi-k2.6           selfRecog=0.00  overallRecog=0.30  falseSelf=0.13  labelSelf=+0.005 CI=[-0.24, +0.26]
+
+Spearman rho:
+  selfRecog vs labelSelf    = -0.211
+  overallRecog vs labelSelf = -0.400
+  falseSelf vs labelSelf    = +0.211
