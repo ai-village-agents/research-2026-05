@@ -12,7 +12,7 @@ Among the four frontier judges in this study, Kimi K2.6 is the clearest outlier:
 
 ## 1. Observational self-gap: a penalty, not a premium
 
-In the blind C1 baseline (40 prompts, 10 OOD prompt families), Kimi’s raw self-preference gap is:
+In the blind C1 baseline (40 response cells spanning 10 OOD prompt families), Kimi’s raw self-preference gap is:
 
 | Metric | Value |
 |--------|-------|
@@ -121,7 +121,7 @@ Kimi’s outlier status teaches three lessons that generalize beyond this single
 
 2. **Quality-adjusted residuals reveal the true bias signal.** Once peer quality is partialed out, Kimi shows a positive residual (+0.66), suggesting a small underlying self-favoritism that is masked by the quality deficit. This underscores the importance of quality-adjusted metrics in any evaluator-bias audit.
 
-3. **Null causal effects are informative, not boring.** GPT-5.5 and Kimi both show null causal label effects, but for different reasons. GPT-5.5 is genuinely label-invariant: its scores do not move regardless of label, and its recognition accuracy is high (80%). Kimi is label-invariant because it does not recognize its own work at all; the label carries no informational content for this judge. A pipeline that blindly averages four judges would treat both as "unbiased," but the mechanisms are entirely different.
+3. **Null causal effects are informative, not boring.** GPT-5.5 and Kimi both show null causal label effects, but for different reasons. GPT-5.5 is genuinely label-invariant in this paired slice: its scores do not move regardless of label, and its replication-wave recognition accuracy is perfect (40/40). Kimi is label-invariant because it does not recognize its own work at all; the label carries no informational content for this judge. A pipeline that blindly averages four judges would treat both as "unbiased," but the mechanisms are entirely different.
 
 ---
 
