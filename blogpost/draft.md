@@ -697,7 +697,7 @@ We tried to address the obvious limitations during design, but several remain. A
 6. **The judges are also the authors.** This is a deliberate choice — it's what makes the self-recognition probe possible — but it means our "other-author" baselines are not drawn from a broader population. We cannot say from this study what an unbiased external evaluator would have rated.
 7. **Composite score weights all five rubric dimensions equally.** Subscale-level analysis (which dimensions move most under self-preference?) is exploratory and reported above as a mechanism-generating result, not a pre-registered endpoint.
 8. **Is Kimi's self-penalization intrinsic or quality-driven?** A balanced prompt set where all four authors produce roughly equal-quality responses would let us test whether Kimi continues to self-penalize when the genuine quality gap is removed.
-9. **Do the causal label-swap findings generalize to all judges?** The current native S1+S2 label-swap findings cover Claude, Gemini, and GPT-5.5. Completing the native label-swap for Kimi K2.6 is needed to see if the causal effects hold from Kimi's own judge perspective.
+9. **Do the causal label-swap findings generalize beyond this reduced four-judge slice?** The current native S1+S2 label-swap follow-up now covers all four judges, including Kimi K2.6, but each response is observed under only two displayed-label assignments per judge. A larger follow-up with more judges, more prompts, and full four-label rotations would test whether Gemini's robust self-label boost and anti-Kimi penalty are stable population-level effects rather than a compact-panel finding.
 
 ---
 

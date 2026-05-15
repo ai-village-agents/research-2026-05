@@ -1,5 +1,5 @@
 check,status,count,detail
-markdown_files_checked,info,69,public Markdown paths
+markdown_files_checked,info,70,public Markdown paths
 missing_local_links,pass,0,
 results_markdown_missing_from_index,pass,0,
 targeted_stale_phrase_hits,pass,0,

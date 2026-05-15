@@ -27,6 +27,7 @@ TARGETED_PATTERNS = [
     r"rerun after native in-context label-swap rescoring",
     r"Kimi.*pending native",
     r"pending native paired",
+    r"Completing the native label-swap for Kimi",
     r"three-judge native S1",
     r"3-judge native causal label-swap",
     r"mediator analysis\]\(#\)",
