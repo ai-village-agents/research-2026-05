@@ -88,7 +88,7 @@ def git_rev(tag: str) -> str:
 
 def write_outputs(rows: list[dict[str, str]], summary: dict[str, str]) -> None:
     with OUT_CSV.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["check", "status", "count", "detail"])
+        writer = csv.DictWriter(f, fieldnames=["check", "status", "count", "detail"], lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

@@ -80,19 +80,25 @@ This is meant as a methodological "footnoting" of the v1.3.0 release - a reader 
 - **Standing**: addressed.
 
 ### 4.2 Master multiplicity sweep across the full claim inventory
-- **Mechanism**: The `master_claims_summary.md` aggregates ~15 inferential claims. A bona fide family-wise correction across the entire claim set would be even more conservative than the within-matrix correction. We have not run that sweep.
-- **Standing**: open.
+- **Mechanism**: The `master_claims_summary.md` aggregates 16 inferential claims. A bona fide family-wise correction across the entire claim set is more conservative than the within-matrix correction.
+- **Evidence**: `master_multiplicity_sweep.md` applies BH/Bonferroni correction to the originally reported claim p-values, and `master_claims_multiplicity_rebootstrap.md` re-bootstraps every claim from raw data before applying the same corrections. The raw-data rebootstrap agrees with the first sweep on 15/16 claims; the one correction is that Gemini's small observational C1 gap (+0.627) is marginal unadjusted (raw p = 0.034) but does **not** survive family-wise correction (BH-q = 0.060; Bonferroni p = 0.54). The Gemini causal self-label and anti-Kimi label effects remain Bonferroni-robust.
+- **Standing**: addressed.
 
-### 4.3 Bootstrap CIs are cluster-bootstrap on response_hash
+### 4.3 Single-prompt leverage across the master claim family
+- **Mechanism**: With only 10 prompts, a headline claim might be driven by one idiosyncratic prompt even if its family-wise p-value is small.
+- **Evidence**: `master_claims_lopo_robustness.md` recomputes the 14 prompt-driven master claims after dropping each prompt in turn. All 8 multiplicity survivors keep their sign under every single-prompt deletion; the only sign-flipping claim is Kimi's causal self-effect, which is already null under multiplicity.
+- **Standing**: addressed.
+
+### 4.4 Bootstrap CIs are cluster-bootstrap on response_hash
 - **Mechanism**: All headline CIs in the label-swap matrix and bias-profile supplements use B = 4000 cluster bootstraps on `response_hash`. We chose response_hash (not prompt_id) because the experimental unit is the specific text being label-swapped. Clustering on prompt_id would conflate within-prompt author variability with within-response noise.
 - **Standing**: addressed.
 
-### 4.4 n = 4 judges - cross-judge generalizations are descriptive
+### 4.5 n = 4 judges - cross-judge generalizations are descriptive
 - **Mechanism**: Statements like "Spearman rho (self-recog, label-self-effect) = -0.211 across 4 judges" are descriptive, not inferential, at this sample size.
 - **Evidence**: We label these in the recognition x label-swap supplement.
 - **Standing**: addressed by labeling.
 
-### 4.5 GPT-5.5's exactly-zero label-swap is informative but degenerate
+### 4.6 GPT-5.5's exactly-zero label-swap is informative but degenerate
 - **Mechanism**: GPT-5.5 returns identical composite scores under every displayed-label permutation, so every cell of its row of the matrix is exactly 0.000. This is a real finding (GPT is label-invariant) but it also collapses several otherwise-useful contrasts to degenerate denominators.
 - **Standing**: addressed via per-judge reporting.
 

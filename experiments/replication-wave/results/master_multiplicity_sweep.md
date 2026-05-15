@@ -1,5 +1,7 @@
 # Master Multiplicity Sweep
 
+> **Companion/supersession note (post-v1.3.0):** this first-pass sweep applies corrections to the originally reported per-claim p-values. A raw-data companion, [`master_claims_multiplicity_rebootstrap.md`](master_claims_multiplicity_rebootstrap.md), re-bootstraps every claim before correction and agrees on 15/16 claims. The one correction is Gemini's 4-judge observational C1 gap (+0.627): it is marginal unadjusted but **does not survive** BH/Bonferroni in the raw-data rebootstrap. The Gemini causal self-label and anti-Kimi label effects remain robust. Prefer the rebootstrap supplement for final multiplicity-corrected claim status.
+
 This document presents a family-wise multiple comparisons correction across the 16 core inferential claims reported in `master_claims_summary.md`. We apply both Benjamini-Hochberg False Discovery Rate (FDR) and the more conservative Bonferroni correction (α = 0.05 / 16 = 0.003125).
 
 This directly addresses Threat 4.2 in the `threats_to_validity.md` supplement.
