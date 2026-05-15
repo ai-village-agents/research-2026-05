@@ -9,6 +9,8 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`elevator_pitch.md`](elevator_pitch.md) — short version of the headline findings.
 - [`findings_summary_table.md`](findings_summary_table.md) — one-page table contrasting observational gaps, causal label-swap gaps, paraphrase gaps, recognition, author quality, and quality-adjusted residuals.
 - [`headline_number_audit.md`](headline_number_audit.md) — reproducibility/audit check that recomputes headline values and confirms key snippets are present in public-facing summaries.
+- [`analysis_report.md`](analysis_report.md) — generated descriptive replication-wave analysis report with coverage, condition summaries, and self-preference tables.
+- [`master_claims_summary.md`](master_claims_summary.md) — post-v1.3.0 inventory of formal statistical claims, estimates, methods, and results across the release.
 - [`threats_to_validity.md`](threats_to_validity.md) — post-v1.3.0 structured threats-to-validity taxonomy (internal, external, construct, statistical-conclusion) covering 16+ specific threats with mechanism, evidence, and status.
 
 ## Canonical data tables
@@ -41,6 +43,10 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Quality, recognition, and heterogeneity diagnostics
 
+- [`per_dim_self_pref.md`](per_dim_self_pref.md) — backing data for C1 self-preference by rubric dimension, including pooled and per-judge dimension gaps.
+- [`perceived_self_analysis.md`](perceived_self_analysis.md) and [`perceived_self_reproducible_summary.md`](perceived_self_reproducible_summary.md) — C1 perceived-vs-actual authorship mediator analysis with fixed-effect OLS/bootstrap summaries and reproducible tables.
+- [`prompt_difficulty_supplement.md`](prompt_difficulty_supplement.md) — exploratory prompt-difficulty moderation analysis for self-preference gaps.
+- [`style_mediator_preview.md`](style_mediator_preview.md) — exploratory style-feature mediator preview for predicted-label effects across C1-C3.
 - [`dimension_redundancy_profile.md`](dimension_redundancy_profile.md), [`dimension_redundancy_profile.csv`](dimension_redundancy_profile.csv), [`dimension_pairwise_correlations.csv`](dimension_pairwise_correlations.csv), [`dimension_pca_loadings.csv`](dimension_pca_loadings.csv), and [`dimension_leave_one_out_self_gap.csv`](dimension_leave_one_out_self_gap.csv) — post-v1.3.0 exploratory measurement-validity profile of rubric-dimension redundancy, first-principal-component structure, and leave-one-dimension self-gap sensitivity.
 - [`judge_calibration_profile.md`](judge_calibration_profile.md), [`judge_calibration_profile.csv`](judge_calibration_profile.csv), [`judge_calibration_by_condition.csv`](judge_calibration_by_condition.csv), [`judge_calibration_by_author.csv`](judge_calibration_by_author.csv), [`judge_pairwise_disagreement.csv`](judge_pairwise_disagreement.csv), and [`judge_calibration_outliers.csv`](judge_calibration_outliers.csv) — post-v1.3.0 exploratory profile of judge leniency/harshness, scale spread, peer-consensus deviation, and matched-cell pairwise disagreement.
 - [`author_length_diagnostic.md`](author_length_diagnostic.md) and [`author_length_diagnostic.csv`](author_length_diagnostic.csv) — exploratory check asking whether an author's peer-quality deficit is purely driven by raw response word count.
@@ -66,7 +72,12 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`scale_normalized_self_gap.md`](scale_normalized_self_gap.md) and [`scale_normalized_self_gap.csv`](scale_normalized_self_gap.csv) — recomputes self-preference gaps after within-judge/condition z-score and percentile normalization to check whether heterogeneity is a score-scale artifact.
 - [`c2_stimulus_sheet_audit.csv`](c2_stimulus_sheet_audit.csv) and related C2-v2 preview reports — provenance checks for the Kimi-paraphraser v1→v2 refresh.
 
+## Legacy or caveated preliminary artifacts
+
+- [`label_swap_analysis.md`](label_swap_analysis.md) — historical Day 407 label-swap analysis generated from codex/OpenAI-backed rows; retained for provenance only and superseded by native paired label-swap outputs above.
+- [`within_judge_replicate_noise.md`](within_judge_replicate_noise.md) — historical replicate-noise report from the same backend-contaminated preliminary label-swap rows; retained as a placeholder/provenance artifact, not as a native-judge result.
+- [`C2_v2_cross_judge_preview.md`](C2_v2_cross_judge_preview.md), [`C2_v2_preview_claude.md`](C2_v2_preview_claude.md), [`C2_v2_preview_gemini.md`](C2_v2_preview_gemini.md), and [`C2_v2_preview_gpt-5.5.md`](C2_v2_preview_gpt-5.5.md) — historical previews from the Kimi-paraphraser C2-v2 refresh; canonical C2-v2 numbers now live in `long_scores.csv`, `blogpost.md`, `findings_summary_table.md`, and `headline_number_audit.md`.
+
 ## Pending follow-up
 
-- Kimi K2.6 native label-swap S1+S2 rows are complete; the Kimi-inclusive paired analyses are regenerated.
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
