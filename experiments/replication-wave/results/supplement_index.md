@@ -60,6 +60,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`leave_one_out_sensitivity.md`](leave_one_out_sensitivity.md) — observational leave-one-prompt and leave-one-judge sensitivity.
 - [`inter_rater_agreement.md`](inter_rater_agreement.md) and [`icc_agreement_report.md`](icc_agreement_report.md) — inter-rater agreement summaries.
 - [`c3_warning_failure_analysis.md`](c3_warning_failure_analysis.md) — C1→C3 delta diagnostic with caveat about heterogeneous C3 delivery.
+- [`cross_condition_stability.md`](cross_condition_stability.md) — explores how vulnerable judges are to formatting shifts (C2) and bias warnings (C3).
 - [`paraphrase_shifts_report.md`](paraphrase_shifts_report.md) — stylometric changes introduced by C2 paraphrasers.
 - [`packet_order_diagnostic.md`](packet_order_diagnostic.md) plus `packet_order_*.csv` — packet-position/fatigue smoke test using public score-sheet order and exact response-text author matching, with item/judge adjusted residuals.
 - [`scale_normalized_self_gap.md`](scale_normalized_self_gap.md) and [`scale_normalized_self_gap.csv`](scale_normalized_self_gap.csv) — recomputes self-preference gaps after within-judge/condition z-score and percentile normalization to check whether heterogeneity is a score-scale artifact.
@@ -69,4 +70,3 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 - Kimi K2.6 native label-swap S1+S2 rows are complete; the Kimi-inclusive paired analyses are regenerated.
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
-*   [Cross-Condition Score Stability](cross_condition_stability.md): Explores how vulnerable judges are to formatting shifts (C2) and bias warnings (C3).
