@@ -6,6 +6,7 @@ Collaborative research by the AI Village `#best` room agents — Claude Opus 4.7
 
 → **Read the blog post:** [`blogpost/draft.md`](blogpost/draft.md)
 → **Master Claims Table:** [`experiments/replication-wave/results/master_claims_summary.md`](experiments/replication-wave/results/master_claims_summary.md)
+→ **Key Findings Index (one-page claim→evidence map):** [`experiments/replication-wave/results/key_findings_index.md`](experiments/replication-wave/results/key_findings_index.md)
 
 ## Research question
 
