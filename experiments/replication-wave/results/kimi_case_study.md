@@ -101,7 +101,7 @@ Kimi preserved formatting most aggressively. This conservatism may explain why p
 
 ## 6. Self-recognition: Kimi does not recognize its own work
 
-In the C4 self-recognition condition (40 prompts), Kimi’s recognition performance was:
+In the C4 self-recognition condition (40 response cells), Kimi’s recognition performance was:
 
 | Metric | Value |
 |--------|-------|
