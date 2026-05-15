@@ -424,6 +424,8 @@ The matrix surfaces four facts in one image that prose buries:
 
 **Multiplicity check.** In the re-bootstrapped **16-claim master family**, **8/16 core claims survive** both BH-FDR (`q=0.05`) and Bonferroni family-wise correction; the **Gemini observational C1 claim (+0.627)** is **not** among survivors (`p=0.0335`, `BH q=0.0596`, Bonferroni `p=0.536`). The surviving Gemini evidence is therefore primarily the **causal label channel** in this matrix (self-label `+0.220` and anti-Kimi `−0.245`), not a corrected observational baseline effect. See [`master_claims_multiplicity_rebootstrap.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/master_claims_multiplicity_rebootstrap.md) and [`label_effect_matrix_multiplicity.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/label_effect_matrix_multiplicity.md).
 
+**Leave-One-Prompt-Out (LOPO) robustness.** A prompt-level jackknife confirms that the 8 claims surviving multiplicity correction are also the most robust to prompt composition. None of the 8 survivors sign-flip under the removal of any single prompt. For example, the Gemini floor-raiser mechanism (ρ = -0.874) only varies between -0.92 and -0.83 across LOPO replicates. See [`master_claims_lopo_robustness.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/master_claims_lopo_robustness.md).
+
 Reproduction: `experiments/replication-wave/analysis/label_effect_matrix.py` → `experiments/replication-wave/results/label_effect_matrix.{md,csv}` and `analysis/plots/label_effect_matrix.png`.
 
 ### Recognition × label-swap: does *recognizing* yourself cause the inflation?
