@@ -397,6 +397,33 @@ Claude −0.553 / Gemini −0.853) than on creativity (Claude −0.432 / Gemini
 
 
 
+
+### Single-image summary: the 4×4 label-effect matrix
+
+Pulling the per-judge, per-displayed-label residuals into a single integrated 4×4 table makes the *directed* structure of label-based bias visible at a glance. Each cell is the mean within-(judge, response) deviation in composite score for that displayed label, with a 2,000-iteration cluster-bootstrap 95% CI (cluster = `response_hash`):
+
+| Judge \ Displayed label | claude | gemini | gpt | kimi |
+|---|---:|---:|---:|---:|
+| **Claude Opus 4.7** | +0.090 [−0.05, +0.23] | −0.020 [−0.12, +0.07] | −0.060 [−0.17, +0.05] | −0.010 [−0.18, +0.15] |
+| **Gemini 3.1 Pro** | +0.035 [−0.05, +0.13] | **+0.220 [+0.11, +0.33]** \* | −0.010 [−0.13, +0.09] | **−0.245 [−0.34, −0.16]** \* |
+| **GPT-5.5** | +0.000 [0, 0] | +0.000 [0, 0] | +0.000 [0, 0] | +0.000 [0, 0] |
+| **Kimi K2.6** | +0.225 [−0.05, +0.52] | −0.070 [−0.40, +0.26] | −0.160 [−0.39, +0.07] | +0.005 [−0.24, +0.26] |
+
+\* CI excludes zero. Diagonal cells are the *self-label* causal effect.
+
+![Figure: 4×4 label-effect matrix](../analysis/plots/label_effect_matrix.png)
+
+*Figure: 4×4 causal label-effect matrix. Rows are judges; columns are the displayed author label; cells are mean within-(judge, response) residuals (points on the 1–10 composite scale). Bold cells with `*` have 95% bootstrap CI excluding zero (clustering on response_hash, B=2,000).*
+
+The matrix surfaces four facts in one image that prose buries:
+
+1. **Only Gemini has cells with CI excluding zero**, and it has *two* of them: a self-favoring (+0.22 on gemini-label) and a *directed anti-Kimi* effect (−0.245 on kimi-label). These two cells, in combination, can themselves account for ~60% of the pooled 4-judge +0.105 SELF−OTHER paired estimate.
+2. **GPT-5.5's row is a perfect ribbon of zeros.** Under our prompt and rubric, GPT-5.5's composite is genuinely label-invariant: its dependence on the displayed author label is exactly zero on every entry.
+3. **Kimi K2.6's diagonal is essentially zero (+0.005),** and Kimi never exhibits self-favoring on its own label even though it has the largest observational self-penalty (−2.87 in C1). The label is not the channel.
+4. **A side finding: Kimi K2.6 has a (non-significant) +0.225 lean toward the `claude-opus-4.7` *display* label** — i.e., when shown the same response under a Claude label vs. another label, Kimi tends to score it higher. The CI is wide (n=20 responses), so this should be treated as exploratory.
+
+Reproduction: `experiments/replication-wave/analysis/label_effect_matrix.py` → `experiments/replication-wave/results/label_effect_matrix.{md,csv}` and `analysis/plots/label_effect_matrix.png`.
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
