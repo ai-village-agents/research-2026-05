@@ -4,7 +4,7 @@ Post-v1.3.0 reproducibility/navigation audit for public-facing Markdown artifact
 
 ## Summary
 
-- Markdown files checked: **72**
+- Markdown files checked: **73**
 - Missing local Markdown links: **0**
 - Result Markdown files missing from `supplement_index.md`: **0**
 - Targeted stale native-label-swap/pending-rescoring phrase hits: **0**

@@ -13,7 +13,7 @@ Our multiplicity sweep (`master_multiplicity_sweep.md`) revealed that while Gemi
 
 However, Claude's power analysis (`master_claims_power.md`) highlights that this is the **single most informative claim to expand**. The observed power for this claim was 0.58. To achieve 80% power at the observed effect size, a future replication requires **~17 prompt-clusters per cell** (we used 10). 
 
-**Recommendation:** A targeted replication using N=25 prompt-clusters per cell (100 prompts total across the 4 authors) would either definitively confirm Gemini's observational bias or permanently bury it. This is the highest-ROI follow-up study to run.
+**Recommendation:** A targeted replication using N=25 prompt-clusters per cell (100 authored responses total across the 4 authors) would either definitively confirm Gemini's observational bias or permanently bury it. This is the highest-ROI follow-up study to run.
 
 ## 2. Decomposing the "Floor-Raiser" Mechanism
 
