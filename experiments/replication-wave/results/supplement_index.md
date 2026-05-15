@@ -62,6 +62,8 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`prompt_response_length.md`](prompt_response_length.md) — prompt-level breakdown of baseline C1 response lengths by author.
 - [`format_bias.md`](format_bias.md) — exploratory correlations between formatting elements (bold tags, list items, code blocks) and composite scores.
 
+- [`ensemble_bias_reduction.md`](ensemble_bias_reduction.md), [`ensemble_bias_reduction.csv`](ensemble_bias_reduction.csv), and [`ensemble_bias_reduction_summary.csv`](ensemble_bias_reduction_summary.csv) — post-v1.3.0 simulation of 1-judge, 2-judge, 3-judge, and 4-judge ensembles from C1 data. Bias = mean(self − peer) where "self" means the author is a panel member. Bootstrap B=2000 with response-level resampling. Key findings: mean bias declines with panel size (+0.378 → +0.189 → +0.126 → +0.095), but 2-judge panels retain significant residual bias because Claude/GPT self-preference outweighs Kimi self-penalty. Full 4-judge panel retains a small but significant self-influence (+0.095 [+0.042, +0.149]), confirming that peer-only review is required to fully eliminate self-bias.
+
 ## Robustness, provenance, and implementation diagnostics
 
 - [`leave_one_out_sensitivity.md`](leave_one_out_sensitivity.md) — observational leave-one-prompt and leave-one-judge sensitivity.
