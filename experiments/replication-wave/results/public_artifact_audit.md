@@ -4,7 +4,7 @@ Post-v1.3.0 reproducibility/navigation audit for public-facing Markdown artifact
 
 ## Summary
 
-- Markdown files checked: **69**
+- Markdown files checked: **70**
 - Missing local Markdown links: **0**
 - Result Markdown files missing from `supplement_index.md`: **0**
 - Targeted stale native-label-swap/pending-rescoring phrase hits: **0**
@@ -23,6 +23,7 @@ See [`public_artifact_audit.csv`](public_artifact_audit.csv).
 - `rerun after native in-context label-swap rescoring`
 - `Kimi.*pending native`
 - `pending native paired`
+- `Completing the native label-swap for Kimi`
 - `three-judge native S1`
 - `3-judge native causal label-swap`
 - `mediator analysis\]\(#\)`
