@@ -1,0 +1,17 @@
+family,claim,est,ci_low,ci_high,p,n,method,bonferroni_p,rank,bh_q,sig_raw,sig_bh,sig_bonferroni
+Observational (C1),Claude 4J Observational Baseline (C1),2.4333333333333336,2.046666666666666,2.7933333333333334,0.0,10.0,non-parametric bootstrap on per-prompt self-other gaps,0.0,1,0.0,True,True,True
+Observational (C1),GPT 4J Observational Baseline (C1),1.3266666666666667,0.9666666666666662,1.7333333333333336,0.0,10.0,non-parametric bootstrap on per-prompt self-other gaps,0.0,2,0.0,True,True,True
+Observational (C1),Kimi 4J Observational Baseline (C1),-2.8733333333333335,-3.7401666666666666,-1.913166666666666,0.0,10.0,non-parametric bootstrap on per-prompt self-other gaps,0.0,3,0.0,True,True,True
+Observational (C1),Pooled 3J Observational Baseline (C1),1.4622222222222225,1.0844444444444443,1.8177777777777782,0.0,30.0,"non-parametric bootstrap on per-(judge,prompt) gaps (3J)",0.0,4,0.0,True,True,True
+Causal RCT,Causal Label-Swap: Gemini Self-Effect,0.4400000000000002,0.22999999999999998,0.6699999999999999,0.0,20.0,cluster-boot on response_hash,0.0,5,0.0,True,True,True
+Causal RCT,Causal Label-Swap: Gemini anti-Kimi,-0.24499999999999988,-0.3399999999999999,-0.1549999999999999,0.0,20.0,cluster-boot on response_hash,0.0,6,0.0,True,True,True
+Mechanism,Floor-Raiser Mechanism (Gemini),-0.874292886300084,-0.9717002532847656,-0.6693920660868856,0.0,20.0,"Spearman ρ, bootstrap on response pairs",0.0,7,0.0,True,True,True
+Mechanism,Mediation: Perceived Authorship (pooled β_predicted_self),1.532,0.818,2.653,0.001065181872107246,,OLS β with bootstrap CI (Wald p),0.017042909953715935,8,0.002130363744214492,True,True,True
+Observational (C1),Gemini 4J Observational Baseline (C1),0.6266666666666667,0.03999999999999977,1.1733333333333333,0.0335,10.0,non-parametric bootstrap on per-prompt self-other gaps,0.536,9,0.059555555555555556,True,False,False
+Causal RCT,Causal Label-Swap: Kimi pro-Claude,0.2250000000000001,-0.039999999999999994,0.5250000000000001,0.1,20.0,cluster-boot on response_hash,1.0,10,0.16,False,False,False
+Mechanism,Mediation: Actual Authorship (pooled β_actual_self),-0.349,-0.912,0.008,0.1370033281168448,,OLS β with bootstrap CI (Wald p),1.0,11,0.19927756816995607,False,False,False
+Causal RCT,Causal Label-Swap: Claude Self-Effect,0.18,-0.08000000000000025,0.4600000000000001,0.18,20.0,cluster-boot on response_hash,1.0,12,0.24,False,False,False
+Causal RCT,Causal Label-Swap: Claude pro-Claude,0.08999999999999994,-0.050000000000000135,0.22999999999999998,0.2125,20.0,cluster-boot on response_hash,1.0,13,0.26153846153846155,False,False,False
+Observational (C1),Pooled 4J Observational Baseline (C1),0.3783333333333332,-0.3167083333333336,1.030083333333334,0.2605,40.0,"non-parametric bootstrap on per-(judge,prompt) gaps",1.0,14,0.2977142857142857,False,False,False
+Causal RCT,Causal Label-Swap: Kimi Self-Effect,0.00999999999999992,-0.4700000000000003,0.5202500000000011,0.965,20.0,cluster-boot on response_hash,1.0,15,1.0,False,False,False
+Causal RCT,Causal Label-Swap: GPT Self-Effect,0.0,0.0,0.0,1.0,20.0,cluster-boot on response_hash,1.0,16,1.0,False,False,False
