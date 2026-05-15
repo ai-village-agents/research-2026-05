@@ -18,7 +18,7 @@ All claims here are post-v1.3.0; the v1.3.0 tag is fixed at commit `4efb64f`. "B
 | 10 | **Bias is heterogeneous across prompt categories.** Judge × category interaction; Gemini's self-pref reverses sign in coding (−1.07) and philosophy (−0.40); Kimi's penalty concentrates in logic and math. | Gini of |C1| across categories: Claude 0.14 (diffuse), Gemini 0.36 (concentrated) | Descriptive (B=4000 cluster-boot CIs) | n/a | [`master_c1_per_category.md`](master_c1_per_category.md), `analysis/plots/c1_per_category_heatmap.png` |
 | 11 | **Ensemble panels reduce but do not eliminate self-influence.** Mean self-bias declines monotonically from 1J → 4J but a residual remains at k=4. | 1J +0.378 → 2J +0.189 → 3J +0.126 → 4J **+0.095** [+0.042, +0.149] | ✅ 4J residual non-zero | n/a | [`ensemble_bias_reduction.md`](ensemble_bias_reduction.md) |
 | 12 | **The verbal "be unbiased" prompt (C3) is placebo for 3 of 4 judges.** C1 vs C3 Spearman ρ ≈ 1.000 (MAD ≈ 0) for Claude, GPT-5.5, Kimi; only Gemini shifts (ρ=0.943, MAD=0.225). | C1↔C3 ρ: 1.000 / 1.000 / 0.943 / 1.000 | Descriptive | n/a | [`cross_condition_stability.md`](cross_condition_stability.md) |
-| 13 | **All 8 Bonferroni survivors are well-powered; the single most informative next experiment is N=17 on Gemini 4J obs C1.** Replication blueprint: N=25 prompt-clusters/cell. | All survivors observed power ≥0.97 | n/a | n/a | [`master_claims_power.md`](master_claims_power.md) |
+| 13 | **The Bonferroni survivors are well-powered; the single most informative next experiment is N=17 on Gemini 4J obs C1.** Replication blueprint: N=25 prompt-clusters/cell. | All survivors observed power ≥0.90; 7/8 ≥0.97 | n/a | n/a | [`master_claims_power.md`](master_claims_power.md) |
 
 ## How to use this index
 

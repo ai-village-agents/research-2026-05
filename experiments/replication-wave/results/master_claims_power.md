@@ -56,8 +56,8 @@ clusters used in the original estimate.
 
 ## Interpretation
 
-1. **All 8 Bonferroni survivors have observed power ≥ 0.97.** With the
-   sample sizes used, these claims had enormous power for the effects
+1. **All 8 Bonferroni survivors have observed power ≥ 0.90; 7 of 8 are ≥ 0.97.** With the
+   sample sizes used, these claims had high observed power for the effects
    actually observed — they are not knife-edge-positive results.
 
 2. **The Gemini 4J observational C1 (+0.627) is the only multiplicity
