@@ -1,0 +1,6 @@
+check,status,count,detail
+markdown_files_checked,info,66,public Markdown paths
+missing_local_links,pass,0,
+results_markdown_missing_from_index,pass,0,
+targeted_stale_phrase_hits,pass,0,
+v1.3.0_tag_target,pass,1,4efb64f507037911de958de673b3c24a5d5d4034

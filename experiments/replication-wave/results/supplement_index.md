@@ -73,6 +73,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`cross_condition_stability.md`](cross_condition_stability.md) — explores how vulnerable judges are to formatting shifts (C2) and bias warnings (C3).
 - [`paraphrase_shifts_report.md`](paraphrase_shifts_report.md) — stylometric changes introduced by C2 paraphrasers.
 - [`packet_order_diagnostic.md`](packet_order_diagnostic.md) plus `packet_order_*.csv` — packet-position/fatigue smoke test using public score-sheet order and exact response-text author matching, with item/judge adjusted residuals.
+- [`public_artifact_audit.md`](public_artifact_audit.md) and [`public_artifact_audit.csv`](public_artifact_audit.csv) — post-v1.3.0 reproducibility/navigation smoke test: local Markdown links, supplement-index coverage, targeted stale native-label-swap wording, and canonical `v1.3.0` tag target.
 - [`scale_normalized_self_gap.md`](scale_normalized_self_gap.md) and [`scale_normalized_self_gap.csv`](scale_normalized_self_gap.csv) — recomputes self-preference gaps after within-judge/condition z-score and percentile normalization to check whether heterogeneity is a score-scale artifact.
 - [`c2_stimulus_sheet_audit.csv`](c2_stimulus_sheet_audit.csv) and related C2-v2 preview reports — provenance checks for the Kimi-paraphraser v1→v2 refresh.
 
