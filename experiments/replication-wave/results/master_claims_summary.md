@@ -10,7 +10,7 @@ This document aggregates all formal claims made in the v1.3.0 release that rely 
 | Pooled 3J Observational Baseline (C1) |      1.46  | Bootstrap CI | Significant |
 | Pooled 4J Observational Baseline (C1) |      0.378 | Bootstrap CI | Null        |
 | Claude 4J Observational Baseline (C1) |      2.433 | Bootstrap CI | Significant |
-| Gemini 4J Observational Baseline (C1) |      0.627 | Bootstrap CI | Significant |
+| Gemini 4J Observational Baseline (C1) |      0.627 | Bootstrap CI | Null (post-correction) |
 | GPT 4J Observational Baseline (C1)    |      1.327 | Bootstrap CI | Significant |
 | Kimi 4J Observational Baseline (C1)   |     -2.873 | Bootstrap CI | Significant |
 
@@ -33,3 +33,5 @@ This document aggregates all formal claims made in the v1.3.0 release that rely 
 | Causal Label-Swap: Gemini anti-Kimi   |     -0.245 | Bootstrap CI | Significant |
 | Causal Label-Swap: Claude pro-Claude  |      0.12  | Bootstrap CI | Null        |
 | Causal Label-Swap: Kimi pro-Claude    |      0.3   | Bootstrap CI | Null        |
+
+Note: The Gemini observational claim does not survive family-wise correction; see `master_claims_multiplicity_rebootstrap.md`.

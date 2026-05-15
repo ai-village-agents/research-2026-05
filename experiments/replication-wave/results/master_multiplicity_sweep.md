@@ -10,7 +10,7 @@ This directly addresses Threat 4.2 in the `threats_to_validity.md` supplement.
 | Causal Label-Swap: Gemini anti-Kimi   |    0.0003 | 0.0018 | Yes                    | Yes                   |
 | Pooled 3J Observational Baseline (C1) |    0.001  | 0.0018 | Yes                    | Yes                   |
 | Claude 4J Observational Baseline (C1) |    0.001  | 0.0018 | Yes                    | Yes                   |
-| Gemini 4J Observational Baseline (C1) |    0.001  | 0.0018 | Yes                    | Yes                   |
+| Gemini 4J Observational Baseline (C1) |    0.0335 | 0.0596 | No                     | No                    |
 | GPT 4J Observational Baseline (C1)    |    0.001  | 0.0018 | Yes                    | Yes                   |
 | Kimi 4J Observational Baseline (C1)   |    0.001  | 0.0018 | Yes                    | Yes                   |
 | Mediation: Perceived Authorship       |    0.001  | 0.0018 | Yes                    | Yes                   |
@@ -23,4 +23,4 @@ This directly addresses Threat 4.2 in the `threats_to_validity.md` supplement.
 | Causal Label-Swap: Kimi Self-Effect   |    0.975  | 1      | No                     | No                    |
 | Causal Label-Swap: GPT Self-Effect    |    1      | 1      | No                     | No                    |
 
-**Conclusion:** The structural findings (observational biases, mediation pathways, floor-raiser mechanism) and Gemini's causal label effects easily survive both FDR and Bonferroni corrections at the family-wise level. The null causal effects for Claude and Kimi remain null.
+**Conclusion:** Under multiplicity control, 8 of 16 core claims survive (not 9 of 16). The Gemini C1 observational gap does not survive correction (p=0.0335, BH-q=0.0596), indicating Gemini's bias is primarily a causal label effect rather than a robust observational baseline gap.
