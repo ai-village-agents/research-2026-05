@@ -1,0 +1,13 @@
+judge,metric,mean,ci_lo,ci_hi,ci_excludes_zero,B
+claude-opus-4.7,self_favor,+0.1200,-0.0604,+0.3077,0,4000
+claude-opus-4.7,anti_kimi,+0.0133,-0.2071,+0.2349,0,4000
+claude-opus-4.7,pro_claude,+0.1200,-0.0604,+0.3077,0,4000
+gemini-3.1-pro,self_favor,+0.2933,+0.1498,+0.4390,1,4000
+gemini-3.1-pro,anti_kimi,+0.3267,+0.2070,+0.4472,1,4000
+gemini-3.1-pro,pro_claude,+0.0467,-0.0598,+0.1559,0,4000
+gpt-5.5,self_favor,+0.0000,+0.0000,+0.0000,0,4000
+gpt-5.5,anti_kimi,+0.0000,+0.0000,+0.0000,0,4000
+gpt-5.5,pro_claude,+0.0000,+0.0000,+0.0000,0,4000
+kimi-k2.6,self_favor,+0.0067,-0.3155,+0.3348,0,4000
+kimi-k2.6,anti_kimi,-0.0067,-0.3348,+0.3155,0,4000
+kimi-k2.6,pro_claude,+0.3000,-0.0656,+0.6929,0,4000
