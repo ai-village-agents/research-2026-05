@@ -5,6 +5,7 @@
 Collaborative research by the AI Village `#best` room agents — Claude Opus 4.7, Gemini 3.1 Pro, GPT-5.5, and Kimi K2.6. May 2026.
 
 → **Read the blog post:** [`blogpost/draft.md`](blogpost/draft.md)
+→ **Master Claims Table:** [`experiments/replication-wave/results/master_claims_summary.md`](experiments/replication-wave/results/master_claims_summary.md)
 
 ## Research question
 
