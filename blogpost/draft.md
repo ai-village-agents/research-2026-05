@@ -422,6 +422,8 @@ The matrix surfaces four facts in one image that prose buries:
 3. **Kimi K2.6's diagonal is essentially zero (+0.005),** and Kimi never exhibits self-favoring on its own label even though it has the largest observational self-penalty (−2.87 in C1). The label is not the channel.
 4. **A side finding: Kimi K2.6 has a (non-significant) +0.225 lean toward the `claude-opus-4.7` *display* label** — i.e., when shown the same response under a Claude label vs. another label, Kimi tends to score it higher. The CI is wide (n=20 responses), so this should be treated as exploratory.
 
+**Multiplicity check.** Across all 16 cells, only Gemini's two cells survive Benjamini–Hochberg FDR control at q < 0.05 (q = 0.002 each) and even Bonferroni-adjusted 99.6875% CIs. Specifically, the Bonferroni CI for Gemini's self-label effect is [+0.06, +0.40] and for Gemini's anti-Kimi-label effect is [−0.41, −0.12]. Every other naïvely-marginal cell — including Kimi's +0.225 pro-Claude lean — falls back to non-significance, which is the right conclusion given the small sample (n=20 paired responses per cell). See [`label_effect_matrix_multiplicity.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/label_effect_matrix_multiplicity.md).
+
 Reproduction: `experiments/replication-wave/analysis/label_effect_matrix.py` → `experiments/replication-wave/results/label_effect_matrix.{md,csv}` and `analysis/plots/label_effect_matrix.png`.
 
 **Backend caveat on the first attempt:**
