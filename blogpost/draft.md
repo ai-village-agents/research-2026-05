@@ -426,6 +426,34 @@ The matrix surfaces four facts in one image that prose buries:
 
 Reproduction: `experiments/replication-wave/analysis/label_effect_matrix.py` → `experiments/replication-wave/results/label_effect_matrix.{md,csv}` and `analysis/plots/label_effect_matrix.png`.
 
+### Recognition × label-swap: does *recognizing* yourself cause the inflation?
+
+The most natural mechanistic story for self-favor is the **belief channel**: a judge correctly believes a response is its own and inflates it. The label-swap experiment isolates a different channel — the **label channel**: the judge simply sees a `(author: <self>)` tag and inflates the rating, independent of any underlying belief about authorship. To tell these apart we cross-tabulate, across our four judges, the C4 self-recognition rate against the diagonal of the label-effect matrix.
+
+| Judge | C4 self-recognition | Causal label-swap self-effect (naïve 95% CI) |
+|---|---:|---:|
+| Claude Opus 4.7 | 10 / 10 | +0.090 [−0.05, +0.23] |
+| Gemini 3.1 Pro | **1 / 10** | **+0.220 [+0.11, +0.33]** (Bonferroni) |
+| GPT-5.5 | 10 / 10 | +0.000 (label-invariant) |
+| Kimi K2.6 | 0 / 10 | +0.005 [−0.24, +0.26] |
+
+Two-by-two:
+
+|                              | Self-label effect ≈ 0 | Self-label effect > 0 |
+|------------------------------|----------------------|----------------------|
+| High self-recognition (≥ 90%) | GPT-5.5             | Claude Opus 4.7 (small) |
+| Low  self-recognition (≤ 10%) | Kimi K2.6           | Gemini 3.1 Pro (large) |
+
+All four cells are populated. The Spearman rank correlation across the four judges between self-recognition rate and label-swap self-effect is **ρ = −0.211** (and ρ = −0.400 against overall recognition accuracy) — descriptive only at n=4, but **emphatically not the positive monotone slope that a pure belief-channel story would predict**.
+
+The single judge with the largest, multiplicity-corrected self-label effect (Gemini 3.1 Pro) is also the one with the *lowest* self-recognition rate among the three judges that show any self-tilt at all. Conversely, the perfect self-recognizer (GPT-5.5) is exactly label-invariant. The label and belief channels are at least partially decoupled at the population of frontier judges we sampled.
+
+This complements the [mediator analysis](#) for the C1 observational study, where the *predicted-self* coefficient (β = +1.532) dominates the *actual-self* coefficient (β = −0.349). In C1, with no label cue, only the belief channel can fire; in the label-swap, the label cue can fire on its own and Gemini's data show it does. The two stories are not contradictory — they describe two distinguishable pathways to the same surface phenomenon of self-favor.
+
+Reproduction: `experiments/replication-wave/analysis/recognition_x_labelswap.py` → `experiments/replication-wave/results/recognition_x_labelswap.{md,csv}` and `analysis/plots/recognition_x_labelswap.png`.
+
+![Figure: Recognition × label-swap interaction (n = 4 judges)](../analysis/plots/recognition_x_labelswap.png)
+
 **Backend caveat on the first attempt:**
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
