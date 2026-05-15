@@ -33,6 +33,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 ## Quality, recognition, and heterogeneity diagnostics
 
+- [`judge_calibration_profile.md`](judge_calibration_profile.md), [`judge_calibration_profile.csv`](judge_calibration_profile.csv), [`judge_calibration_by_condition.csv`](judge_calibration_by_condition.csv), [`judge_calibration_by_author.csv`](judge_calibration_by_author.csv), [`judge_pairwise_disagreement.csv`](judge_pairwise_disagreement.csv), and [`judge_calibration_outliers.csv`](judge_calibration_outliers.csv) — post-v1.3.0 exploratory profile of judge leniency/harshness, scale spread, peer-consensus deviation, and matched-cell pairwise disagreement.
 - [`author_length_diagnostic.md`](author_length_diagnostic.md) and [`author_length_diagnostic.csv`](author_length_diagnostic.csv) — exploratory check asking whether an author's peer-quality deficit is purely driven by raw response word count.
 - [`cross_judge_correlation.md`](cross_judge_correlation.md) and [`cross_judge_correlation.csv`](cross_judge_correlation.csv) — cross-judge response-level correlation in C1, checking if judges agree on which responses are good/bad independent of authorship.
 - [`author_quality_diagnostics.md`](author_quality_diagnostics.md) plus `author_quality_*.csv` — non-self C1 author-quality checks showing Kimi-authored originals are independently lower-rated on this prompt set.
