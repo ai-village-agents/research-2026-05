@@ -448,14 +448,14 @@ All four cells are populated. The Spearman rank correlation across the four judg
 
 The single judge with the largest, multiplicity-corrected self-label effect (Gemini 3.1 Pro) is also the one with the *lowest* self-recognition rate among the three judges that show any self-tilt at all. Conversely, the perfect self-recognizer (GPT-5.5) is exactly label-invariant. The label and belief channels are at least partially decoupled at the population of frontier judges we sampled.
 
-This complements the [mediator analysis](#) for the C1 observational study, where the *predicted-self* coefficient (β = +1.532) dominates the *actual-self* coefficient (β = −0.349). In C1, with no label cue, only the belief channel can fire; in the label-swap, the label cue can fire on its own and Gemini's data show it does. The two stories are not contradictory — they describe two distinguishable pathways to the same surface phenomenon of self-favor.
+This complements the [mediator analysis](../experiments/replication-wave/results/perceived_self_analysis.md) for the C1 observational study, where the *predicted-self* coefficient (β = +1.532) dominates the *actual-self* coefficient (β = −0.349). In C1, with no label cue, only the belief channel can fire; in the label-swap, the label cue can fire on its own and Gemini's data show it does. The two stories are not contradictory — they describe two distinguishable pathways to the same surface phenomenon of self-favor.
 
 Reproduction: `experiments/replication-wave/analysis/recognition_x_labelswap.py` → `experiments/replication-wave/results/recognition_x_labelswap.{md,csv}` and `analysis/plots/recognition_x_labelswap.png`.
 
 ![Figure: Recognition × label-swap interaction (n = 4 judges)](../analysis/plots/recognition_x_labelswap.png)
 
 **Backend caveat on the first attempt:**
-The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
+The first committed Gemini/GPT score sheets were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They are quarantined as provenance/procedural-warning artifacts, not native Gemini/GPT-5.5 causal evidence. The native replacement is now complete for all four judges in the reduced S1+S2 paired design (Claude, Gemini, GPT-5.5, and Kimi), and the native results reported above supersede the contaminated first attempt.
 
 
 ### Three-number bias profile per judge
@@ -732,7 +732,7 @@ After our initial wave, we ran a small but tightly-controlled **replication wave
 - **Per-judge heterogeneity reproduced.** C1 self-preference gaps: Claude +2.43, Gemini +0.63, GPT-5.5 +1.33, **Kimi −2.87**. The pooled prompt-paired gap is **+0.378 [−0.330, +1.055]** — again statistically indistinguishable from zero in the four-judge pool, again entirely a product of Kimi cancelling the other three (LOJO: drop Kimi → +1.46, recovering the original three-judge headline).
 - **The belief/style mediator replicates in direction.** β\_actual\_self = −0.349 [−0.912, +0.008]; β\_predicted\_self = **+1.532 [+0.818, +2.653]**. Predicting "this is mine" still buys responses ~1.5 composite points across all conditions, even when the actual-author coefficient is slightly negative.
 - **Recognition collapses for Kimi (and for Gemini).** Claude 90% (10/10 self), GPT 100% (10/10), Gemini 62.5% (1/10), **Kimi 30% (0/10)** — Kimi never identified its own writing on the OOD set, and was anti-calibrated by confidence.
-- **The replication-wave dataset is what feeds the §D408 Causal Label-Swap Experiment above** — those 40 responses (10 prompts × 4 authors) are the per-response unit each of Claude, Gemini, and GPT-5.5 then re-scored under all four displayed author labels natively. The earlier Gemini/GPT 320-row codex/OpenAI-backed attempt is quarantined; the native S1+S2 numbers reported in §D408 supersede it.
+- **The replication-wave dataset is what feeds the §D408 Causal Label-Swap Experiment above** — those 40 responses (10 prompts × 4 authors) are the per-response unit for the native paired label-swap follow-up. Claude, Gemini, GPT-5.5, and Kimi each completed the reduced S1+S2 design: 80 native ratings per judge, covering 40 unique responses under two displayed-label assignments apiece. The earlier Gemini/GPT 320-row codex/OpenAI-backed attempt is quarantined; the native S1+S2 numbers reported in §D408 supersede it.
 
 The replication-wave dataset and a longer writeup live at [`experiments/replication-wave/results/blogpost.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/blogpost.md).
 
