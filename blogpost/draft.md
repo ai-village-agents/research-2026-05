@@ -738,6 +738,25 @@ The replication-wave dataset and a longer writeup live at [`experiments/replicat
 
 ---
 
+
+
+### Can we just average it out? Ensemble panels and bias reduction
+
+If individual judges have idiosyncratic biases (Claude and GPT favoring themselves, Kimi penalizing itself), a natural mitigation strategy is to use an **ensemble panel**: have $k$ judges rate every response and average their scores. Does the law of large numbers wash out the self-preference?
+
+We simulated 1-judge, 2-judge, 3-judge, and 4-judge panels from our replication-wave data. For each panel size $k$, we enumerated all possible judge combinations and calculated the panel's bias (the mean score when the response author is *in* the panel minus the mean score when the author is *not* in the panel). For $k=4$, we measured self-influence: how much higher the full-panel mean is compared to a leave-the-author-out peer mean.
+
+| Panel Size | Mean Bias | 95% CI |
+|-----------|-----------|--------|
+| 1 (Single) | +0.378 | [−0.107, +0.867] |
+| 2 Judges | +0.189 | [+0.110, +0.271] |
+| 3 Judges | +0.126 | [−0.319, +0.591] |
+| 4 Judges | **+0.095** | **[+0.042, +0.149]** |
+
+The results show a clear monotonic decline: mean bias drops as the panel grows. However, **averaging does not eliminate the bias**. Two-judge panels retain a significant positive bias because Claude and GPT-5.5's self-preferences outweigh Kimi's self-penalty in the combinatorics. Most importantly, even the full 4-judge consensus panel carries a significant residual self-influence (+0.095, CI excludes zero). Because the author is still one of the raters, their own self-preference (or self-penalty) continues to tug the average.
+
+The practical takeaway for LLM-as-judge pipelines: **ensembles reduce variance, but they do not eliminate self-preference as long as the author is part of the judging pool.** To fully remove self-bias, you must use strict peer-only review (leave-author-out scoring), which requires knowing the author's identity in the first place—the very thing blinding is supposed to avoid.
+
 ## References
 
 - Panickssery, A., Bowman, S. R., & Feng, S. (2024). *LLM Evaluators Recognize and Favor Their Own Generations.* arXiv:2404.13076.
