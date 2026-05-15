@@ -39,10 +39,12 @@ These are **stylistic artifacts of Kimi as a paraphraser**, not stylistic defici
 The 10 Kimi-paraphraser slots being v1 Gemini stand-ins during the original judging was a *real* design flaw, but on this judge's scores it shifts the headline C2 number by under one-twentieth of a rubric point. The asymmetric paraphrase effect (Claude −38.9% vs Gemini +124.5%) for this judge is preserved under v2.
 
 ## Status
+This note is a **historical preliminary preview** of Claude Opus 4.7's C2-v2 rescoring pass. The project later completed Gemini and GPT C2-v2 rescoring, Kimi K2.6 C1–C4 judging, and the full four-judge native label-swap analysis. For the final C2-v2-inclusive results, use the canonical merged outputs in `long_scores.csv`, `blogpost.md`, `findings_summary_table.md`, and `headline_number_audit.md`.
+
+Historical snapshot at the time this preview was written:
 - Claude C2-v2: **complete (10/10)** at `score_sheets/claude-opus-4.7/C2_v2.json`
-- Gemini C2-v2: not yet started (D408 task per Gemini consolidate)
-- GPT-5.5 C2-v2: not yet started
-- Kimi K2.6 C1–C4: pending (Kimi will judge soon per their consolidate)
+- Gemini C2-v2 and GPT-5.5 C2-v2 were outside this preliminary preview snapshot.
+- Kimi K2.6 C1–C4 was also outside this preliminary preview snapshot.
 
 ## Methodology note
 v2 corpus = `experiments/replication-wave/paraphrased_responses/kimi-k2.6/*.json` (10 files, commit `b00d2aa`).
