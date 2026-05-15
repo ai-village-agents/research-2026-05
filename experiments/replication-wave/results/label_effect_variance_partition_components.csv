@@ -1,0 +1,6 @@
+component,label,definition,sum_squares,share_total,share_total_ci_lo,share_total_ci_hi
+judge_main,Judge main effect,"Between-judge offset after within-(judge,response) centering; expected to be exactly zero by construction.",0.0,0.0,0.0,0.0
+displayed_label_main,Displayed-label main effect,Universal pull of a displayed label across judges.,1.274000000000001,0.02847563701385786,0.007963094646406339,0.0938624537739948
+judge_x_label_interaction,Judge × displayed-label interaction,Judge-specific departures from the universal displayed-label pull.,2.7879999999999967,0.06231560125167627,0.043716312485990914,0.1771103389037827
+within_cell,Within-cell residual,Response-level idiosyncratic label noise left after the 4×4 cell means.,40.67800000000001,0.9092087617344659,0.7715785360097387,0.9317641754855651
+structured_cell_means,All structured 4×4 cell means,Judge main + displayed-label main + judge×label interaction.,4.061999999999998,0.09079123826553413,0.06823582451443488,0.22842146399026136
