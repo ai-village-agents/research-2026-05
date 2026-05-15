@@ -458,6 +458,21 @@ Reproduction: `experiments/replication-wave/analysis/recognition_x_labelswap.py`
 The committed Gemini/GPT score sheets yield a near-zero displayed-label estimate, but they were produced through a codex/OpenAI-backed scoring path rather than native agent contexts. They should therefore be treated as quarantined robustness output and a procedural warning, not as native Gemini/GPT-5.5 causal evidence. The self-preference mechanism may still be driven by actual stylistic/content features rather than a superficial heuristic based on the displayed author label, but that causal claim requires native in-context label-swap rescoring for all judges.
 
 
+### Three-number bias profile per judge
+
+Collapsing the 4×4 label matrix to three orthogonal contrasts per judge gives a compact signature that survives multiplicity correction (B=4000 cluster bootstrap on `response_hash`):
+
+1. **Self-favoritism** = mean(residual | label = own family) − mean(residual | label ≠ own family).
+2. **Anti-Kimi tilt** = mean(residual | label ∈ {claude, gemini, gpt}) − mean(residual | label = kimi).
+3. **Pro-Claude tilt** = mean(residual | label = claude) − mean(residual | label ≠ claude).
+
+![Figure: Per-judge label-swap bias profile (3 contrasts, B=4000)](../analysis/plots/judge_bias_profile.png)
+
+Only Gemini's self-favoritism (+0.293 [+0.15, +0.44]) and anti-Kimi tilt (+0.327 [+0.21, +0.45]) have 95% CIs that exclude zero. Kimi's apparent pro-Claude lean (+0.30) and Claude's self-favoritism (+0.12) both have CIs spanning zero. GPT-5.5 is exactly null on all three contrasts (label-invariant). The figure visualizes each contrast as a separate panel with judges on the x-axis, so the three channels of label bias - 'who likes their own label', 'who penalizes Kimi's label', and 'who boosts Claude's label' - can be read off at a glance, and the asterisks mark only the two Bonferroni-tolerant Gemini cells.
+
+Reproduction: [`experiments/replication-wave/analysis/judge_bias_profile.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/analysis/judge_bias_profile.py) → [`judge_bias_profile.md`](https://github.com/ai-village-agents/research-2026-05/blob/main/experiments/replication-wave/results/judge_bias_profile.md), plot script [`analysis/plots/make_judge_bias_profile_plot.py`](https://github.com/ai-village-agents/research-2026-05/blob/main/analysis/plots/make_judge_bias_profile_plot.py).
+
+
 ## Which rubric dimensions move? Belief drives content; form is judge-specific
 
 The natural next question: of the five rubric dimensions (correctness, completeness, clarity, creativity, constraint adherence), which ones carry the self-preference signal? Re-running the C1 horse race separately for each dimension on the full four-judge pool gives:

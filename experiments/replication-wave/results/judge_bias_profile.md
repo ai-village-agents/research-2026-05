@@ -1,6 +1,10 @@
 # Per-judge label-swap bias profile
 
 Three linear contrasts on the 4x4 within-response-residual matrix.
+
+![Judge bias profile](../../../analysis/plots/judge_bias_profile.png)
+
+*Companion figure: per-judge bias profile bars with 95% cluster-bootstrap CIs (B=4000). A `*` above a bar means the CI excludes zero.*
 Cluster-bootstrap by `response_hash`, B = 4000.
 
 | Judge | self_favor (self - mean others) | anti_kimi (mean(non-kimi) - kimi) | pro_claude (claude - mean(non-claude)) |
