@@ -64,3 +64,4 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 
 - Kimi K2.6 native label-swap S1+S2 rows are complete; the Kimi-inclusive paired analyses are regenerated.
 - Quality-balanced follow-up responses are complete for Claude, Gemini, and GPT-5.5; Kimi responses are still pending before packets and native scoring can proceed.
+*   [Cross-Condition Score Stability](cross_condition_stability.md): Explores how vulnerable judges are to formatting shifts (C2) and bias warnings (C3).
