@@ -1,0 +1,15 @@
+judge,correctness,completeness,clarity,creativity,constraint_adherence
+Claude,+2.6000,+2.9333,+1.3333,+2.9667,+2.3333
+Gemini,+0.6000,+0.7000,+0.7333,-0.1000,+1.2000
+GPT,+1.6000,+1.6667,+0.6333,+0.5000,+2.2333
+Kimi,-2.9667,-2.4667,-2.1000,-2.0333,-4.8000
+judge,correctness_ci_low,completeness_ci_low,clarity_ci_low,creativity_ci_low,constraint_adherence_ci_low
+Claude,+2.0000,+2.3667,+1.0667,+2.6000,+1.7333
+Gemini,-0.1667,-0.1000,+0.4333,-0.7333,-0.0667
+GPT,+1.0333,+1.1667,+0.3667,+0.0000,+1.8667
+Kimi,-4.1667,-3.4667,-2.8667,-3.0000,-6.1333
+judge,correctness_ci_high,completeness_ci_high,clarity_ci_high,creativity_ci_high,constraint_adherence_ci_high
+Claude,+3.1333,+3.4667,+1.6667,+3.2667,+2.8000
+Gemini,+1.3333,+1.4667,+1.0333,+0.5000,+2.2000
+GPT,+2.2333,+2.2333,+0.9333,+1.0000,+2.5667
+Kimi,-1.8333,-1.6000,-1.3667,-1.1333,-3.3000
