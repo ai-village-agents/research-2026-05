@@ -1,0 +1,7 @@
+pair,a_judge,b_judge,a_response_to_b_label,b_response_to_a_label,directed_difference_a_to_b_minus_b_to_a,mean_mutual_effect,mean_abs_mutual_effect
+gemini-3.1-pro ↔ kimi-k2.6,gemini-3.1-pro,kimi-k2.6,-0.245,-0.07,-0.175,-0.1575,0.1575
+claude-opus-4.7 ↔ kimi-k2.6,claude-opus-4.7,kimi-k2.6,-0.01,0.225,-0.23500000000000001,0.1075,0.11750000000000001
+gpt-5.5 ↔ kimi-k2.6,gpt-5.5,kimi-k2.6,0.0,-0.16,0.16,-0.08,0.08
+claude-opus-4.7 ↔ gpt-5.5,claude-opus-4.7,gpt-5.5,-0.06,0.0,-0.06,-0.03,0.03
+claude-opus-4.7 ↔ gemini-3.1-pro,claude-opus-4.7,gemini-3.1-pro,-0.02,0.035,-0.05500000000000001,0.0075000000000000015,0.027500000000000004
+gemini-3.1-pro ↔ gpt-5.5,gemini-3.1-pro,gpt-5.5,-0.01,0.0,-0.01,-0.005,0.005

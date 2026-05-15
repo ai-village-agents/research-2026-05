@@ -1,0 +1,5 @@
+displayed_label,column_mean,column_l1_abs,column_l2_norm,n_positive_judges,n_negative_judges,n_zero_judges,n_bh_sig_judges,strongest_positive_judge,strongest_positive_effect,strongest_negative_judge,strongest_negative_effect
+claude-opus-4.7,0.0875,0.35,0.24484689093390588,3,0,1,0,kimi-k2.6,0.225,gpt-5.5,0.0
+gemini-3.1-pro,0.0325,0.31,0.23173260452512934,1,2,1,1,gemini-3.1-pro,0.22,kimi-k2.6,-0.07
+kimi-k2.6,-0.0625,0.26,0.2452549693686144,1,2,1,1,kimi-k2.6,0.005,gemini-3.1-pro,-0.245
+gpt-5.5,-0.057499999999999996,0.22999999999999998,0.1711724276862369,0,3,1,0,gpt-5.5,0.0,kimi-k2.6,-0.16

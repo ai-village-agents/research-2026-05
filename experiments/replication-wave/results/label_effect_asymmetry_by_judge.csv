@@ -1,0 +1,5 @@
+judge,row_mean,row_l1_abs,row_l2_norm,max_abs_cell,diagonal_self_effect,offdiag_mean,diag_minus_offdiag_mean,diagonal_abs_share,signed_entropy_abs_effects,n_positive_cells,n_negative_cells,n_zero_cells,n_bh_sig_cells,strongest_positive_label,strongest_positive_effect,strongest_negative_label,strongest_negative_effect
+gemini-3.1-pro,0.0,0.51,0.3312853754695489,0.245,0.22,-0.07333333333333333,0.29333333333333333,0.43137254901960786,0.7039221904166816,2,2,0,2,gemini-3.1-pro,0.22,kimi-k2.6,-0.245
+kimi-k2.6,-1.0842021724855044e-18,0.4600000000000001,0.2848683906648823,0.225,0.005,-0.001666666666666668,0.006666666666666668,0.010869565217391302,0.7594094658348008,2,2,0,0,claude-opus-4.7,0.225,gpt-5.5,-0.16
+claude-opus-4.7,-1.3010426069826053e-18,0.18,0.11045361017187261,0.09,0.09,-0.03,0.12,0.5,0.8060986113514965,1,3,0,0,claude-opus-4.7,0.09,gpt-5.5,-0.06
+gpt-5.5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,,0,0,4,0,claude-opus-4.7,0.0,claude-opus-4.7,0.0
