@@ -9,6 +9,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`elevator_pitch.md`](elevator_pitch.md) — short version of the headline findings.
 - [`findings_summary_table.md`](findings_summary_table.md) — one-page table contrasting observational gaps, causal label-swap gaps, paraphrase gaps, recognition, author quality, and quality-adjusted residuals.
 - [`headline_number_audit.md`](headline_number_audit.md) — reproducibility/audit check that recomputes headline values and confirms key snippets are present in public-facing summaries.
+- [`threats_to_validity.md`](threats_to_validity.md) — post-v1.3.0 structured threats-to-validity taxonomy (internal, external, construct, statistical-conclusion) covering 16+ specific threats with mechanism, evidence, and status.
 
 ## Canonical data tables
 
@@ -33,6 +34,10 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`floor_raising_c1_observational.md`](floor_raising_c1_observational.md) and [`floor_raising_c1_observational.csv`](floor_raising_c1_observational.csv) — C1 observational analog of the label-swap floor-raising test (all 4 judges, n=10 prompts each). Headline: all 4 judges (including Kimi +0.56) show a positive mean Δ between their own composite and cross-judge consensus on their own author. Floor-raising negative ρ is directionally present for Claude (ρ=−0.62 [−0.93, +0.05]) and GPT (ρ=−0.62 [−0.96, +0.04]) but underpowered at this N.
 - [`floor_raising_per_dim.md`](floor_raising_per_dim.md) and [`floor_raising_per_dim.csv`](floor_raising_per_dim.csv) — per-dimension extension of the floor-raising test (n=100 cells per judge, cluster-bootstrap CI by prompt_id). Pooled Claude ρ=−0.472 [−0.588, −0.306], Gemini ρ=−0.754 [−0.826, −0.638] (both CIs exclude 0). Floor-raising present in all 5 rubric dims; slightly stronger on objective dims (clarity, correctness) than the most subjective (creativity).
 - [`paired_lojo.md`](paired_lojo.md) and [`paired_lojo.csv`](paired_lojo.csv) — leave-one-judge-out sensitivity for the currently available native paired SELF−OTHER causal gaps.
+- [`label_effect_matrix.md`](label_effect_matrix.md) and [`label_effect_matrix.csv`](label_effect_matrix.csv) — post-v1.3.0 4×4 (judge × displayed-label) mean within-response residual matrix with B=2000 cluster-bootstrap CIs; renders to `analysis/plots/label_effect_matrix.png`.
+- [`label_effect_matrix_multiplicity.md`](label_effect_matrix_multiplicity.md) and [`label_effect_matrix_multiplicity.csv`](label_effect_matrix_multiplicity.csv) — post-v1.3.0 Benjamini–Hochberg FDR and Bonferroni-adjusted 99.6875% CIs across all 16 matrix cells; only Gemini's self-label and anti-Kimi-label cells survive.
+- [`judge_bias_profile.md`](judge_bias_profile.md) and [`judge_bias_profile.csv`](judge_bias_profile.csv) — post-v1.3.0 three-contrast (self_favor, anti_kimi, pro_claude) compression of the matrix into a per-judge bias signature with B=4000 cluster-bootstrap CIs; companion figure at `analysis/plots/judge_bias_profile.png`.
+- [`recognition_x_labelswap.md`](recognition_x_labelswap.md), [`recognition_x_labelswap.csv`](recognition_x_labelswap.csv), and [`recognition_x_labelswap_summary.txt`](recognition_x_labelswap_summary.txt) — post-v1.3.0 interaction analysis between observational C4 self-recognition rate and causal label-swap self-effect (2×2 contingency populated in all four cells; figure at `analysis/plots/recognition_x_labelswap.png`).
 
 ## Quality, recognition, and heterogeneity diagnostics
 
