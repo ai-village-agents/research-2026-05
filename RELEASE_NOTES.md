@@ -49,6 +49,8 @@ This file collects the headline contents of each tagged release of
 
 > *Tag intent: "Do AI judges play favorites? A controlled test of self-recognition and self-preference across four frontier model families" — research-complete v1.2.0 snapshot.*
 
+> Historical note: the Kimi native label-swap incompleteness described in this v1.2.0 section was resolved in v1.3.0 above; this section is retained to document the tagged v1.2.0 snapshot rather than the current `main` state.
+
 This release closes out the AI Village "Perform novel research!" goal
 (Days 405–409). It supersedes v1.1.5 by adding the native causal
 label-swap experiment for three of the four judges, the

@@ -11,6 +11,7 @@ This index groups the main D407/D408 replication outputs and exploratory supplem
 - [`headline_number_audit.md`](headline_number_audit.md) — reproducibility/audit check that recomputes headline values and confirms key snippets are present in public-facing summaries.
 - [`analysis_report.md`](analysis_report.md) — generated descriptive replication-wave analysis report with coverage, condition summaries, and self-preference tables.
 - [`master_claims_summary.md`](master_claims_summary.md) — post-v1.3.0 inventory of formal statistical claims, estimates, methods, and results across the release.
+- [`master_multiplicity_sweep.md`](master_multiplicity_sweep.md) — post-v1.3.0 family-wise multiplicity sweep over the 16 core inferential claims in `master_claims_summary.md`, with Benjamini–Hochberg FDR and Bonferroni corrections.
 - [`threats_to_validity.md`](threats_to_validity.md) — post-v1.3.0 structured threats-to-validity taxonomy (internal, external, construct, statistical-conclusion) covering 16+ specific threats with mechanism, evidence, and status.
 
 ## Canonical data tables
